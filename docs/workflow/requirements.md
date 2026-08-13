@@ -50,7 +50,7 @@ Aktueller Fokus dieses Dokuments: **ausschließlich der Spielmodus "Quizfragen" 
 - **Mehrbenutzer-/Online-Funktionen** (Accounts, Cloud-Sync, Vergleich mit anderen Spielern) — nicht Teil des aktuellen Scopes; aktueller Fokus ist lokale Einzelnutzung.
 - **Native iPad-App** — falls iPad-Nutzung kommt, ist sie browserbasiert gedacht, nicht als native App.
 - **Sound-Effekte** — rein visuelles Feedback in dieser Phase, akustisches Feedback ist eine mögliche spätere Ausbaustufe.
-- **Ergebnis-Persistenz über Sitzungen hinweg** (Highscore, Verlauf) — nicht Teil des aktuellen Scopes, nur ein Ergebnis am Ende der jeweiligen Runde.
+- **Mehrbenutzer-/geräteübergreifende Ergebnis-Persistenz** (Accounts, Cloud-Sync, Vergleich mit anderen Spielern) — weiterhin nicht Teil des Scopes. **Ergänzung 13.08.2026 (Issue #14):** Eine rein lokale, geräteinterne Verlaufsliste der letzten Versuche (`localStorage`, kein Konto, kein Abgleich zwischen Geräten) ist davon ausgenommen und als Nutzer-bestätigte Erweiterung gescoped — siehe Issue #14.
 - **Mehr als zwei Schwierigkeitsstufen** — die zwei Stufen (6–10 / 10–12) decken den aktuellen Bedarf ab, keine feingranularere Staffelung geplant.
 
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
@@ -65,7 +65,7 @@ Alle Punkte aus der ersten Runde offener Fragen wurden geklärt bzw. mit einem b
 | Rundenlänge | 10 Fragen (Standard) |
 | Ergebnis-Persistenz | Nein, nur Ergebnis am Rundenende |
 | Sprache | Deutsch, alleinige Sprache |
-| Veröffentlichung | Noch unklar — Option wird offengehalten (CC0-Datenbasis bleibt dadurch bindend), aber kein zusätzlicher Aufwand für Veröffentlichungs-Vorbereitung (Impressum etc.) in dieser Phase |
+| Veröffentlichung | Noch unklar — Option wird offengehalten (CC0-Datenbasis bleibt dadurch bindend), aber kein zusätzlicher Aufwand für Veröffentlichungs-Vorbereitung (Impressum etc.) in dieser Phase. **Ergänzung 13.08.2026 (Issue #16):** Für die Bild-Rateshilfe wurde Option B (volles lokales Bundling aller Tierbilder, 100 % Abdeckung) für die aktuelle **private** Nutzung entschieden — die Attributionspflicht der ~89,8 % nicht-CC0/PD-Bilder wird dafür bewusst **nicht** umgesetzt. Damit steht jetzt eine konkrete **Bedingung für eine mögliche spätere Veröffentlichung** fest: Vor einer tatsächlichen Veröffentlichung muss zunächst eine eigene Bild-Lizenz-/Attributionslösung erarbeitet werden (siehe Issue #17). |
 | Tierauswahl (500) | Automatisch nach Popularität/Bekanntheit (Wikidata-Sitelinks), siehe `architecture.md` |
 | Sound-Effekte | Nein, rein visuelles Feedback zunächst |
 | Weiter-Mechanik nach Feedback | Manueller "Weiter"-Button (mehr Kontrolle fürs Kind), siehe `design.md` |

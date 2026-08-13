@@ -118,6 +118,25 @@ Details je Schritt:
 - Ausreichend große Klickflächen und Abstände wie beschrieben, da Kinderfinger ungenauer treffen als Erwachsenenfinger bzw. ein Mauszeiger.
 - Performance/Ladezeiten so gestalten, dass auch auf einem älteren/leihweise genutzten iPad die App flüssig bleibt (keine schweren Animationen als Blockierer) — technische Umsetzung liegt bei `web-developer`/`software-architect`, hier nur als UX-relevanter Hinweis vermerkt.
 
+## Fun Fact im Feedback-Schritt (13.08.2026, Anreicherungs-Runde)
+
+Anlass: `zoologe` kuratiert perspektivisch kurze Fun Facts (`fun_fact`-Feld, füllt sich nur schrittweise, viele Tiere bleiben vorerst leer). Empfehlung für die Einbindung im Feedback-Schritt (siehe "4. Feedback richtig/falsch" oben):
+
+- **Platzierung:** Fun Fact erscheint **unterhalb** des bestehenden Richtig/Falsch-Feedbacks, oberhalb des "Weiter"-Buttons — ergänzt das Feedback, ersetzt es nicht. Kein eigener Zwischenbildschirm, um den Ablauf nicht zusätzlich zu verlangsamen (Rundenlänge/Tempo ist laut Requirements bewusst schlicht gehalten).
+- **Kein Fun Fact vorhanden:** Feedback-Bereich sieht exakt wie heute aus, keine leere Box/Platzhalter, kein "Kein Fun Fact verfügbar"-Hinweis — für das Kind darf nicht auffallen, dass hier "etwas fehlt". Layout darf sich also nicht abhängig vom Vorhandensein verschieben (fester Rahmen, der optional befüllt wird, oder Bereich komplett weggelassen).
+- **Vorhanden:** Kurzer, visuell abgesetzter Block (z. B. eigenes Icon wie eine Glühbirne/ein Fragezeichen-Tier, dezente Hintergrundfarbe passend zur bestehenden Farbwelt), Einleitung kindgerecht framen ("Wusstest du schon?") statt trocken als Datenfeld zu präsentieren.
+- **Beide Altersstufen:** Gleiche Darstellung für 6–10 und 10–12 — der Unterschied liegt im Textinhalt selbst (Aufgabe von `zoologe`: altersgerechte Formulierung), nicht in der UI-Behandlung.
+- **Barrierefreiheit:** Gleiche Kontrast-/Schriftgrößen-Vorgaben wie übriger Feedback-Text (siehe "Visuelle Grundlinie"/"Barrierefreiheit" oben), kein separates Regelwerk nötig.
+
+## Verwechslungspaare-Fragetyp (Issue #21, 13.08.2026)
+
+Neuer Fragetyp: zwei häufig verwechselte Tiere (z. B. Alpaka/Lama) werden gegenübergestellt, ein Merkmal wird genannt, das Kind ordnet es dem richtigen Tier zu ("Welches der beiden Tiere hat deutlich längere Ohren?").
+
+- **Antwortoptionen:** bewusst nur **2 statt 4** Kacheln — kein Auffüllen mit zwei zusätzlichen, für diese Frage sinnlosen Distraktor-Tieren. Gleiche Kachel-Optik/-Größe wie bei den bestehenden 4er-Fragen (siehe "Layout-Empfehlungen" oben), nur als 1×2- statt 2×2-Raster, mittig auf dem Frage-Bildschirm. Kein Sonderlayout/eigener Screen nötig.
+- **Frageformulierung:** Merkmalssatz steht wie gewohnt im Frage-Bereich oben, darunter die beiden Tiernamen als große Antwortkacheln — strukturell identisch zum bestehenden Frage-Bildschirm, nur mit reduzierter Optionsanzahl.
+- **Feedback danach:** unverändert bestehender Richtig/Falsch-Mechanismus (siehe "4. Feedback richtig/falsch"), inkl. ggf. vorhandenem Fun Fact/Wikipedia-Link aus den anderen Anreicherungs-Stories — dieser Fragetyp ist rein bei der Antwortoptionen-Anzahl ein Sonderfall, sonst identisch zum bestehenden Ablauf.
+- **Barrierefreiheit:** gleiche Anforderungen wie bestehende Antwortkacheln (Tastaturbedienbarkeit, Tab-Reihenfolge, Kontrast) — durch nur 2 statt 4 Optionen sogar einfacher zu bedienen.
+
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
 
 Alle vorherigen offenen Fragen sind geklärt: Zielalter → zwei Stufen 6–10/10–12 (siehe "Zielgruppe"), Sound-Effekte → nein, Fragenanzahl → 10 pro Runde (fest), Weiter-Mechanik → manueller Button, Sprache → Deutsch. Details jeweils in den Abschnitten oben eingearbeitet.

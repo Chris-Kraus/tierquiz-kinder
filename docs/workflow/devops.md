@@ -128,6 +128,30 @@ Bewusst **kein** englisches Fallback-Label mehr für `name_de` (anders als im ur
 
 **Status:** Issue #10 **geschlossen** (`status:done`). Committen/Pushen bleibt bei PM (nicht durch diese Rolle vorgenommen).
 
+## Issue #16: Messung der P18-/CC0-Bildabdeckung (13.08.2026)
+
+**Kontext:** Issue #16 ("Bild als Rateshilfe"), Abschnitt "Erweiterte Optionsübersicht". `software-architect` empfahl dort Option G ("Hybrid: nur CC0/PD-Bilder lokal bündeln") als vielversprechendste Lösung für das Lizenzproblem bei angezeigten Tierbildern, mit der offenen Frage, wie hoch die reale CC0/Public-Domain-Abdeckung unter den 500 ausgewählten Tieren tatsächlich ist. Reine Mess-/Analyse-Aufgabe, **kein Bundling, keine Schema-/Pipeline-Änderung** in diesem Schritt.
+
+**Methodik:** Neues, eigenständiges Skript `scripts/fetch-animals/measure-image-coverage.js` (klar als reines Analyse-Tool gekennzeichnet, nicht Teil der produktiven Pipeline, keine Schreibzugriffe auf `data/animals.json`):
+1. Alle 500 `id`s (Wikidata-QIDs) aus `data/animals.json` gelesen.
+2. Wikidata `wbgetentities` in 10 Batches à 50 IDs (`props=claims`), Property **P18** ("image") pro Tier extrahiert.
+3. Für alle gefundenen Commons-Dateinamen: Wikimedia-Commons-API (`commons.wikimedia.org/w/api.php`, `action=query&prop=imageinfo&iiprop=extmetadata`) in 10 Batches à 50 Dateititel (MediaWiki-Limit für mehrere `titles` pro Request bei normalen Nutzern), Feld `LicenseShortName` (Fallback `UsageTerms`) ausgelesen.
+4. Kategorisierung: kein Bild / CC0 oder Public Domain (toleranter Musterabgleich auf `LicenseShortName`) / andere Lizenz (mit Auflistung der vorkommenden Lizenzen). Stichprobe der CC0/PD-Kategorie gegengeprüft (45× `"Public domain"`, 6× `"CC0"` — Summe 51, keine Falsch-Positiven durch den Musterabgleich).
+
+**Ergebnis (500/500 Tiere geprüft):**
+
+| Kategorie | Anzahl | Anteil |
+|---|---|---|
+| Kein Bild (P18 fehlt) | 0 | 0,0 % |
+| Bild vorhanden, CC0 oder Public Domain | 51 | 10,2 % |
+| Bild vorhanden, andere Lizenz | 449 | 89,8 % |
+
+P18-Abdeckung ist mit 100 % überraschend hoch (deutlich höher als bei `habitat`/`continent`/`weight_kg` in Issue #2) — plausibel, da die Sitelinks-Popularitäts-Schwelle (> 15) tendenziell Tiere mit gut gepflegten Wikidata-Einträgen selektiert. Die "andere Lizenz"-Kategorie ist erwartungsgemäß dominiert von Commons-Standardlizenzen: CC BY-SA 4.0 (135), CC BY-SA 3.0 (120), CC BY 2.0 (71), CC BY-SA 2.0 (38), CC BY-SA 2.5 (27), CC BY 4.0 (26), sowie kleinere Reste (CC BY 3.0, GFDL 1.2, CC BY 2.5, KOGL Type 1, CC BY-SA 3.0 de/at, "Attribution", "Copyrighted free use", CC BY 2.0 de).
+
+**Einschätzung zu Option G:** Mit 10,2 % CC0/PD-Abdeckung liegt der Wert klar unter der im Issue als Warnschwelle genannten Marke von 20 %. Ergebnis als Issue-#16-Kommentar dokumentiert; Entscheidung über A–G bleibt beim Nutzer/PM.
+
+**Skript-Verbleib:** `measure-image-coverage.js` bleibt im Repo unter `scripts/fetch-animals/` (als Referenz/Wiederholbarkeit, z. B. falls sich die Commons-Datenlage ändert), ist aber klar im Datei-Header als reines Analyse-Tool ohne Pipeline-Anbindung gekennzeichnet — kein Aufräumbedarf, da es weder Abhängigkeiten noch Wartungslast für die produktive Pipeline erzeugt.
+
 ## Offene Infrastruktur-Fragen
 
 - Follow-up-Empfehlung an `web-developer`: totes `color`-Feld aus `src/quiz/difficulty.js` (`EASY_FIELDS`) und `src/quiz/questionGenerator.js` (`FIELD_DEFINITIONS.color`) entfernen (siehe oben) — keine funktionale Dringlichkeit, nur Code-Hygiene.

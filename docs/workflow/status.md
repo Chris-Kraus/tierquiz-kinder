@@ -26,9 +26,13 @@ QA war für #1/#3/#4/#5 zunächst nur Selbsttest der umsetzenden Rolle, keine un
 | 11 | web-developer | Fragevielfalt (Feld-Dominanz-Bug) | done (im Rahmen von #8 gefunden, gefixt+verifiziert) |
 | 8 | qa-engineer | Gesamt-Abnahme End-to-End inkl. Barrierefreiheit | **done — Etappe abgeschlossen** |
 
+## Aktuelle Phase (Fortsetzung)
+
+Etappe 2 (Backlog-Erweiterung) in Scoping: 8 von 9 Backlog-Stories aus der Zoologe/Anreicherungsrunde stehen jetzt auf `status:ready` (#12, #13, #15, #18, #19, #20, #21) bzw. bewusst weiter `status:draft` mit dokumentiertem Grund (#14 wartet auf eine echte Nutzer-Scope-Entscheidung, #17 ist absichtlich geparkt bis Veröffentlichung konkret ansteht). Noch keine Implementierung gestartet — Reihenfolge/Priorisierung unter den ready-Stories ist der nächste PM-Schritt.
+
 ## Nächster Schritt
 
-Etappe 1 ist fertig. Mögliche Folgeschritte (noch nicht gescoped/entschieden): weitere Spielmodi (Tiergeräusche, Fehlerbild, Schatten-Erkennung) laut ursprünglicher Vision, oder Deployment/Veröffentlichung vorbereiten (siehe requirements.md "Veröffentlichung: noch unklar").
+Reihenfolge der `status:ready`-Stories (#12, #13, #15, #18, #19, #20, #21) mit dem Nutzer priorisieren und Umsetzung starten (`web-developer` iterativ, `qa-engineer` zwingend pro Story). Offen: Nutzer-Entscheidung zu #14 (lokale Verlaufsliste als Scope-Erweiterung ja/nein).
 
 ## Bekannte, akzeptierte Einschränkungen (kein Blocker)
 
@@ -48,3 +52,4 @@ Etappe 1 ist fertig. Mögliche Folgeschritte (noch nicht gescoped/entschieden): 
 - 2026-08-13: #7 umgesetzt, QA findet AC-Verstoß ("Nochmal spielen" sollte Schwierigkeitsstufe beibehalten statt zum Start zu führen) — gefixt, re-verifiziert, geschlossen.
 - 2026-08-13: #8 (Gesamt-Abnahme) findet blockierenden Vielfalts-Bug (Feld-Auswahl dominiert von am besten abgedecktem Feld, bis zu 91,7% derselbe Fragetyp) — neues Issue #11, gefixt (Priorisierung unterrepräsentierter Felder pro Frage-Slot), unabhängig verifiziert (0/40 Runden dominiert), geschlossen.
 - 2026-08-13: #8 final gegen frischen Produktions-Build erneut verifiziert und geschlossen. **Etappe 1 vollständig abgeschlossen.**
+- 2026-08-13: Zoologe/Architektur-Anreicherungsrunde ergibt 5 neue Backlog-Stories (#17–#21), zusammen mit zuvor angelegten #12–#15 9 Stories im Backlog. `pm-workflow` koordiniert `software-architect`/`ux-design` für offene Klärungspunkte je Story; 7 Stories auf `status:ready` gehoben (#12, #13, #15, #18, #19, #20, #21), #14 bleibt draft (Nutzer-Scope-Entscheidung offen), #17 bleibt bewusst draft (erst bei Veröffentlichungsabsicht relevant).

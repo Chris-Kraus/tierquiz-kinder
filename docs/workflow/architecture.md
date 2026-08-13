@@ -126,7 +126,7 @@ Die Trennung ist bewusst: Die App selbst hat zur Laufzeit keine Netzwerkabhängi
 - **Fressfeinde/Beute-Beziehungen** — inhaltlich reizvoll ("Wer frisst wen?"), aber strukturell ein Graph statt einer flachen Tabelle — deutlich mehr Komplexität. Als Idee für einen möglichen späteren Spielmodus vermerkt, nicht Teil von Phase 1.
 - **Mehrsprachige Namen** — aktueller Scope ist Deutsch (siehe offene Frage in `requirements.md`); `name_scientific` dient bereits als sprachneutraler Anker, falls Mehrsprachigkeit später kommt.
 - **Geschlechtsspezifische Werte** (z. B. Gewicht getrennt nach Männchen/Weibchen) — unnötige Präzision für ein Kinderquiz, ein einzelner Näherungswert reicht.
-- **Bild-URL/Bildlizenzfelder** — laut Scope explizit ausgeschlossen in dieser Phase. Wenn Bilder für spätere bildbasierte Spielmodi ergänzt werden, braucht das ein eigenes Lizenzmodell **pro Bild** (Wikimedia-Commons-Bilder sind i. d. R. CC-BY-SA/CC-BY mit Attributionspflicht, anders als der CC0-Textdatensatz hier) — bewusst nicht in dieses Schema vorgezogen, da sonst ungenutzte Komplexität entstünde.
+- **Bild-URL/Bildlizenzfelder** — laut Scope explizit ausgeschlossen in dieser Phase. Wenn Bilder für spätere bildbasierte Spielmodi ergänzt werden, braucht das ein eigenes Lizenzmodell **pro Bild** (Wikimedia-Commons-Bilder sind i. d. R. CC-BY-SA/CC-BY mit Attributionspflicht, anders als der CC0-Textdatensatz hier) — bewusst nicht in dieses Schema vorgezogen, da sonst ungenutzte Komplexität entstünde. **Update 13.08.2026 (Issue #16):** Die reale Abdeckung wurde gemessen (100 % P18-Bildabdeckung, aber nur 10,2 % CC0/Public Domain, 89,8 % attributionspflichtig). Der Nutzer hat für die Bild-Rateshilfe **Option B** entschieden (alle P18-Bilder werden lokal gebündelt) — bewusst **ohne** Attributions-Datenfelder/-UI, da die App vorerst privat/unveröffentlicht bleibt. Das Lizenzmodell pro Bild bleibt daher weiterhin bewusst vertagt, jetzt aber konkret an eine mögliche Veröffentlichung gekoppelt (siehe Issue #17, `requirements.md`) statt an ein hypothetisches "später".
 - **Geräusch-Referenzen** (für den späteren "Tiergeräusche erkennen"-Modus) — nur als Randnotiz für später, nicht Teil dieses Schemas.
 - **`color` (Tierfarbe)** — ursprünglich als Pflichtfeld geplant, nach dem realen Pipeline-Testlauf (13.08.2026, Issue #2) komplett aus dem Schema entfernt: 0 von 1.480 populären Tier-Kandidaten hatten eine strukturierte Wikidata-Farbangabe (siehe Korrektur oben und `docs/workflow/devops.md`). Anders als bei den anderen weggelassenen Punkten oben ist das kein Design-Entscheid gegen Overengineering, sondern eine nachträgliche Korrektur einer sich als nicht datenseitig tragfähig erwiesenen Planung.
 
@@ -256,6 +256,8 @@ Gefährdungsstatus vorliegen, aber `habitat`/`continent`/`weight_kg` fehlen
 
 **Wichtiger Hinweis für später:** Sobald in einer späteren Phase Bilder (Wikimedia Commons) hinzukommen, gilt das **nicht** mehr 1:1 — Commons-Bilder haben oft CC-BY/CC-BY-SA-Lizenzen mit Attributionspflicht **pro Bild**. Das braucht dann ein eigenes Lizenzfeld pro Bild-Datensatz. Bewusst nicht in dieses Schema vorgezogen (kein Overengineering für aktuellen Scope), aber als Präzedenzfall hier dokumentiert, damit es beim späteren Schema-Erweitern nicht vergessen wird.
 
+**Update 13.08.2026 (Issue #16):** "Später" ist jetzt konkretisiert — Bilder kommen per Option B (lokales Bundling aller P18-Bilder) tatsächlich hinzu, aber **ohne** das hier skizzierte Lizenzfeld pro Bild-Datensatz, da die App privat/unveröffentlicht bleibt und dieses Datenmodell dafür aktuell nicht gebraucht wird. Das Lizenzfeld-Modell aus diesem Absatz bleibt als Vorlage stehen, wird aber erst bei tatsächlicher Umsetzung von Issue #17 (vor einer möglichen Veröffentlichung) verbindlich.
+
 ### 4. Skizze: Datenbeschaffung aus Wikidata
 
 Dies ist eine **grobe technische Skizze als Grundlage** für die spätere Umsetzung durch `devops-engineer`/`web-developer` — keine fertige Implementierung. Konkrete Property-IDs sollten vor Umsetzung gegen die aktuelle Wikidata-Doku verifiziert werden.
@@ -288,6 +290,18 @@ Der Nutzer hat zwei umschaltbare Schwierigkeitsstufen festgelegt (6–10 Jahre /
 
 Da `habitat`, `continent`, `diet`, `length_cm`, `lifespan_years` und `conservation_status` optionale Felder sind (siehe Datenlücken-Risiko oben), muss die Fragegenerierung pro Tier prüfen, welche optionalen Felder tatsächlich befüllt sind, und nur daraus Fragen bilden. `color` taucht hier bewusst nicht mehr auf (siehe "Korrektur vom 13.08.2026" oben — Feld vollständig aus dem Schema entfernt; QA hat diese Inkonsistenz am 13.08.2026 in Issue #9 gefunden und hier nachgezogen).
 
+### 5. Technische Einschätzung: Anreicherungs-Ideen aus Zoologe/BA-Runde (13.08.2026)
+
+Vier vom `zoologe` vorgeschlagene Anreicherungs-Ideen wurden gegen `src/quiz/questionGenerator.js`/`difficulty.js` geprüft, bevor `business-analyst` daraus Stories schneidet:
+
+1. **Gefährdungsstatus-Fragetyp — bereits vollständig implementiert, kein neuer Code nötig.** `conservation_status` ist bereits als `FIELD_DEFINITIONS.conservation_status` implementiert (inkl. ordinaler `CONSERVATION_STATUS_ORDER` für die "nah dran"-Falschantwort-Strategie in Stufe 10–12) und steht in `HARD_ONLY_FIELDS` (`difficulty.js`). Bei 94,6 % Datenabdeckung läuft dieser Fragetyp vermutlich bereits live in Stufe 10–12 — die Annahme "aktuell ungenutzt" aus der Zoologe-Ideenliste war nicht codebasiert und ist überholt. **Empfehlung an BA:** keine Implementierungs-Story, höchstens eine kleine QA-Verifikations-Story ("kommt der Fragetyp in echten Runden tatsächlich vor?").
+2. **`diet` reaktivieren — reine Daten-Story, kein Architektur-/Code-Bedarf.** `FIELD_DEFINITIONS.diet` existiert bereits und `diet` steht bereits in `HARD_ONLY_FIELDS` — der Fragetyp ist vollständig gebaut, liefert aber mangels Daten (0/500 befüllt) nie Fragen. Sobald `zoologe` Werte kuratiert und diese in `animals.json` eingepflegt sind, greift der Fragetyp automatisch. Offene Architektur-Frage für BA: **wer pflegt die kuratierten Werte ein** — reines Datei-Editieren von `animals.json` nach festem Schema, keine Pipeline-Änderung nötig, daher eher `web-developer`-Aufgabe als `devops-engineer` (dessen Zuständigkeit die Wikidata-Pipeline ist, nicht manuelle Kuration).
+3. **`lifespan_years` reaktivieren — identische Situation wie `diet`.** Ebenfalls fertig im Code (`FIELD_DEFINITIONS.lifespan_years`, in `HARD_ONLY_FIELDS`), 0 % Datenabdeckung. Gleiche Empfehlung: reine Kurations-+Einpflege-Story, kein Code.
+4. **Vergleichs- und Rekordhalter-Fragen (Zoologe-Ideen 4 und 5) — echte Architektur-Erweiterung, sollten zu einer Story zusammengelegt werden.** Beide brauchen denselben neuen Mechanismus: eine Frage, bei der die 4 Antwortoptionen selbst Tiere sind (statt 1 Zieltier + Feldwerte), und die richtige Antwort das Tier mit dem höchsten/niedrigsten Feldwert unter den 4 Kandidaten ist ("Welches der 4 Tiere ist am schwersten?" deckt sowohl freie Vergleichspaare als auch "Rekordhalter"-Fragen ab, wenn einer der 4 Kandidaten der tatsächliche Datensatz-Rekordhalter ist — kein separater Vorberechnungs-Schritt nötig). Neue Funktion parallel zu `buildValueQuestion`/`buildIdentifyQuestion` nötig, arbeitet mit `weight_kg`/`length_cm` (ggf. später weiteren numerischen Feldern), Kandidaten müssen das Feld befüllt haben (bei `weight_kg` 42 % Abdeckung ausreichend Pool, bei `length_cm` mit 2,2 % aktuell zu wenig — bis mehr `length_cm`-Daten kuratiert sind, zunächst nur `weight_kg`). **Empfehlung an BA:** eine Story für den neuen Vergleichsfragen-Mechanismus (zunächst nur `weight_kg`), Rekordhalter-Framing als Erweiterung ohne zusätzlichen Code.
+5. **Verwechslungspaare (Zoologe-Idee 6) — eigenständige, kleinere Erweiterung.** Braucht eine kuratierte Liste von Tierpaaren (z. B. `data/confusionPairs.json` oder ähnlich), die beide im 500er-Datensatz vorkommen, plus einen eigenen, von `FIELD_DEFINITIONS` unabhängigen Fragepfad. Inhaltlich eng an `zoologe` gekoppelt (identifiziert plausible Paare), technisch klein und isoliert vom bestehenden Feld-Mechanismus. Kann unabhängig von Punkt 4 umgesetzt werden.
+
+**Fazit für BA:** Von den 4 geprüften Ideen brauchen nur "Vergleichsfragen/Rekordhalter" (zusammengelegt) und "Verwechslungspaare" tatsächlich neue Implementierung. Gefährdungsstatus ist vermutlich schon erledigt, `diet`/`lifespan_years` sind reine Kurations- + Einpflege-Stories ohne Code-Story.
+
 ## Offene technische Fragen — Entscheidungen (13.08.2026)
 
 1. **Fun Facts — Herkunft und Prozess:** Entscheidung: Feld bleibt optional und wird beim initialen Wikidata-Import **nicht** befüllt (kein Blocker für den ersten Datensatz). Manuelle/KI-gestützte Kuration ist eine mögliche spätere Ausbaustufe, kein Teil der ersten Umsetzung.
@@ -295,9 +309,32 @@ Da `habitat`, `continent`, `diet`, `length_cm`, `lifespan_years` und `conservati
 3. **Auswahlkriterium für die ~500 Tiere:** Entscheidung: automatisiert nach Bekanntheits-/Popularitäts-Proxy (Wikidata-Sitelinks), wie in der Skizze oben beschrieben — keine zusätzliche manuelle Kuratierung der Grundliste.
 4. **`conservation_status` — didaktisch gewünscht?** Entscheidung: Feld bleibt optional im Schema, aber ohne aktiven Pflicht-Fragetyp — kann als gelegentliche Zusatzfrage in Stufe 10–12 genutzt werden, wenn Daten vorhanden sind (siehe oben), ist aber kein zentraler Bestandteil der Fragegenerierung.
 
+## Verwechslungspaare — Datenstruktur & Mindestumfang (Issue #21, 13.08.2026)
+
+**Mindestanzahl kuratierter Paare:** mindestens **15**, Zielgröße **20–30** für die erste Umsetzung. Begründung: Der Fragetyp ist einer von inzwischen ~9 möglichen Fragetypen (Kategorie, Lebensraum, Kontinent, Gewicht, Länge, Lebenserwartung, Ernährung, Gefährdungsstatus, Vergleichsfragen, Verwechslungspaare) und wird durch den bestehenden Diversitäts-Mechanismus aus Issue #11 (`orderFieldsByUsage`) ohnehin nicht öfter als andere Typen gezogen — bei 10 Fragen/Runde realistisch 0–2 Vorkommen. Mit 15 Paaren ist die Wiederholungswahrscheinlichkeit desselben Paars innerhalb einer Runde bzw. über wenige aufeinanderfolgende Runden gering; 20–30 sind komfortabel für Langzeit-Abwechslung, aber kein Blocker für den Start (Liste ist erweiterbar wie `data/animals.json` selbst).
+
+**Datenstruktur:** neue Datei `data/confusionPairs.json`, unabhängig vom bestehenden `FIELD_DEFINITIONS`-Mechanismus. Vorschlag:
+
+```json
+[
+  {
+    "animals": ["Q39201", "Q42314"],
+    "distinctions": [
+      { "text": "Dieses Tier hat deutlich längere Ohren.", "correct": "Q39201" }
+    ]
+  }
+]
+```
+
+- `animals`: die beiden Wikidata-IDs (`id` aus `data/animals.json`), müssen beide im 500er-Datensatz vorhanden sein (bei Kuration prüfen, kein Laufzeit-Check nötig, da Liste statisch kuratiert ist).
+- `distinctions`: mindestens ein unterscheidendes Merkmal pro Paar (mehrere für Abwechslung möglich), `correct` referenziert die Tier-ID, auf die das Merkmal zutrifft. Fragegenerierung wählt zufällig ein Paar + eine Distinction daraus.
+- Kein Bezug zu `FIELD_DEFINITIONS`/`HARD_ONLY_FIELDS` — eigener, kleiner Fragepfad parallel zu `buildValueQuestion`/`buildIdentifyQuestion` (analog zur Vergleichsfragen-Story #20), da hier nicht aus einem Datenfeld generiert, sondern aus der kuratierten Paar-/Distinction-Liste gezogen wird.
+
 ## Änderungshistorie
 
 - 2026-08-13: Erste Version — Datenschema für die Tierdatenbank (Phase 1: Quizfragen-Modus), Lizenz-/Quellenmodell, Skizze zur Wikidata-Datenbeschaffung.
 - 2026-08-13: Schwierigkeitsstufen-Mapping ergänzt, offene technische Fragen anhand der Klärungsrunde mit dem Nutzer aufgelöst.
 - 2026-08-13: Frontend-Tech-Stack entschieden (Issue #1): Vite + Vanilla JavaScript ohne UI-Framework, plain CSS, `data/animals.json` per statischem ES-Modul-Import eingebunden. Projektstruktur um Frontend-Ordner (`src/`, `tests/`) ergänzt.
 - 2026-08-13: Schema-Korrektur nach realem Pipeline-Testlauf (Issue #2): Pflichtfelder auf `id`/`name_de`/`category` reduziert (`habitat`, `continent`, `weight_kg` von Pflicht zu optional herabgestuft), `color` komplett aus dem Schema entfernt — reale Wikidata-Abdeckung dieser Felder bei populären Tier-Kandidaten lag bei 0–14 %, siehe `docs/workflow/devops.md` für die gemessenen Zahlen.
+- 2026-08-13: Technische Einschätzung der Zoologe-Anreicherungsideen für `business-analyst`: Gefährdungsstatus-Fragetyp ist bereits implementiert (Korrektur einer falschen Annahme), `diet`/`lifespan_years` sind reine Daten-Stories ohne Code-Bedarf, Vergleichs-/Rekordhalter-Fragen brauchen einen neuen gemeinsamen Mechanismus, Verwechslungspaare eine eigenständige kleine Erweiterung (siehe Abschnitt "Technische Entscheidungen & Trade-offs" Punkt 5).
+- 2026-08-13: Verwechslungspaare (Issue #21) für `status:ready`-Freigabe konkretisiert: Mindestumfang 15 (Ziel 20–30) kuratierte Paare, Datenstruktur `data/confusionPairs.json` festgelegt (siehe Abschnitt "Verwechslungspaare — Datenstruktur & Mindestumfang").

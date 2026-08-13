@@ -3,3 +3,6 @@ dist/
 .DS_Store
 *.log
 scripts/fetch-animals/.cache/
+
+# KI-Tooling (Claude Code), bewusst getrennt vom Projekt-Code gehalten
+.claude/
