@@ -10,6 +10,7 @@
       "name_de": "Löwe",
       "name_scientific": "Panthera leo",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 126,
       "conservation_status": "gefährdet"
     },
@@ -21,6 +22,7 @@
       "habitat": [
         "Wald"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 120,
       "conservation_status": "stark gefährdet"
     },
@@ -29,6 +31,7 @@
       "name_de": "Wolf",
       "name_scientific": "Canis lupus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -40,6 +43,7 @@
         "Buschland",
         "Wald"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -47,6 +51,7 @@
       "name_de": "Wildschwein",
       "name_scientific": "Sus scrofa",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -54,6 +59,7 @@
       "name_de": "Eisbär",
       "name_scientific": "Ursus maritimus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 225.3,
       "conservation_status": "gefährdet"
     },
@@ -70,6 +76,7 @@
         "Feuchtgebiet",
         "städtisches Gebiet"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -77,6 +84,7 @@
       "name_de": "Gepard",
       "name_scientific": "Acinonyx jubatus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 35,
       "conservation_status": "gefährdet"
     },
@@ -85,6 +93,7 @@
       "name_de": "Afrikanischer Strauß",
       "name_scientific": "Struthio camelus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 100,
       "conservation_status": "nicht gefährdet"
     },
@@ -93,6 +102,7 @@
       "name_de": "Flusspferd",
       "name_scientific": "Hippopotamus amphibius",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -106,6 +116,7 @@
       "continent": [
         "Asien"
       ],
+      "diet": "Pflanzenfresser",
       "weight_kg": 58.802,
       "conservation_status": "gefährdet"
     },
@@ -120,6 +131,7 @@
         "Feuchtgebiet",
         "Grasland"
       ],
+      "diet": "Allesfresser",
       "weight_kg": 0.0305,
       "conservation_status": "nicht gefährdet"
     },
@@ -128,6 +140,7 @@
       "name_de": "Nord-Giraffe",
       "name_scientific": "Giraffa camelopardalis",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 54.5,
       "conservation_status": "gefährdet"
     },
@@ -141,6 +154,7 @@
         "Wald",
         "Borealer Nadelwald"
       ],
+      "diet": "Allesfresser",
       "weight_kg": 500,
       "conservation_status": "nicht gefährdet"
     },
@@ -149,6 +163,7 @@
       "name_de": "Kolkrabe",
       "name_scientific": "Corvus corax",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.9205,
       "length_cm": 68,
       "conservation_status": "nicht gefährdet"
@@ -158,6 +173,7 @@
       "name_de": "Elster",
       "name_scientific": "Pica pica",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.191,
       "conservation_status": "nicht gefährdet"
     },
@@ -166,6 +182,7 @@
       "name_de": "Stockente",
       "name_scientific": "Anas platyrhynchos",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -173,6 +190,7 @@
       "name_de": "Wiedehopf",
       "name_scientific": "Upupa epops",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -184,19 +202,22 @@
         "Berg",
         "Wald"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
       "id": "Q42710",
       "name_de": "Wasserbüffel",
       "name_scientific": "Bubalus bubalis",
-      "category": "Säugetier"
+      "category": "Säugetier",
+      "diet": "Pflanzenfresser"
     },
     {
       "id": "Q35694",
       "name_de": "Jaguar",
       "name_scientific": "Panthera onca",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 0.8,
       "conservation_status": "nicht gefährdet"
     },
@@ -208,6 +229,7 @@
       "habitat": [
         "Buschland"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -219,6 +241,7 @@
         "Ozeanien",
         "Australien"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -226,6 +249,7 @@
       "name_de": "Amsel",
       "name_scientific": "Turdus merula",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -233,6 +257,7 @@
       "name_de": "Puma",
       "name_scientific": "Puma concolor",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -240,6 +265,7 @@
       "name_de": "Europäischer Dachs",
       "name_scientific": "Meles meles",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -247,6 +273,7 @@
       "name_de": "Wachtel",
       "name_scientific": "Coturnix coturnix",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.008199999999999999,
       "conservation_status": "nicht gefährdet"
     },
@@ -258,6 +285,7 @@
       "habitat": [
         "Wald"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 0.0014,
       "conservation_status": "nicht gefährdet"
     },
@@ -275,6 +303,7 @@
         "Auwald",
         "Feuchtgebiet"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 0.11,
       "conservation_status": "nicht gefährdet"
     },
@@ -286,6 +315,7 @@
       "habitat": [
         "Wald"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -293,6 +323,7 @@
       "name_de": "Rotkehlchen",
       "name_scientific": "Erithacus rubecula",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.0024,
       "conservation_status": "nicht gefährdet"
     },
@@ -304,6 +335,7 @@
       "habitat": [
         "Grasland"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -311,6 +343,7 @@
       "name_de": "Walross",
       "name_scientific": "Odobenus rosmarus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -322,6 +355,7 @@
         "Ozeanien",
         "Australien"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -329,6 +363,7 @@
       "name_de": "Felsentaube",
       "name_scientific": "Columba livia",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.28049999999999997,
       "conservation_status": "nicht gefährdet"
     },
@@ -337,6 +372,7 @@
       "name_de": "Kuckuck",
       "name_scientific": "Cuculus canorus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.106,
       "conservation_status": "nicht gefährdet"
     },
@@ -345,6 +381,7 @@
       "name_de": "Pirol",
       "name_scientific": "Oriolus oriolus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.0073,
       "conservation_status": "nicht gefährdet"
     },
@@ -357,6 +394,7 @@
         "Wald",
         "Buschland"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -366,13 +404,15 @@
       "category": "Säugetier",
       "habitat": [
         "Weltmeere"
-      ]
+      ],
+      "diet": "Fleischfresser"
     },
     {
       "id": "Q25273",
       "name_de": "Graureiher",
       "name_scientific": "Ardea cinerea",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.061,
       "conservation_status": "nicht gefährdet"
     },
@@ -381,6 +421,7 @@
       "name_de": "Eichelhäher",
       "name_scientific": "Garrulus glandarius",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.0085,
       "conservation_status": "nicht gefährdet"
     },
@@ -393,6 +434,7 @@
         "Buschland",
         "Wald"
       ],
+      "diet": "Pflanzenfresser",
       "weight_kg": 2.535,
       "conservation_status": "stark gefährdet"
     },
@@ -401,6 +443,7 @@
       "name_de": "Kohlmeise",
       "name_scientific": "Parus major",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.01009,
       "conservation_status": "nicht gefährdet"
     },
@@ -409,6 +452,7 @@
       "name_de": "Star",
       "name_scientific": "Sturnus vulgaris",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -420,6 +464,7 @@
         "Wald",
         "urban habitat"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -427,6 +472,7 @@
       "name_de": "Blauwal",
       "name_scientific": "Balaenoptera musculus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "length_cm": 2710,
       "conservation_status": "stark gefährdet"
     },
@@ -435,6 +481,7 @@
       "name_de": "Bachstelze",
       "name_scientific": "Motacilla alba",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -442,6 +489,7 @@
       "name_de": "Rauchschwalbe",
       "name_scientific": "Hirundo rustica",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -449,6 +497,7 @@
       "name_de": "Steinadler",
       "name_scientific": "Aquila chrysaetos",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 4.383,
       "conservation_status": "nicht gefährdet"
     },
@@ -457,6 +506,7 @@
       "name_de": "Rothirsch",
       "name_scientific": "Cervus elaphus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -464,6 +514,7 @@
       "name_de": "Eurasisches Eichhörnchen",
       "name_scientific": "Sciurus vulgaris",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -478,6 +529,7 @@
       "continent": [
         "Nordamerika"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 0.219,
       "conservation_status": "nicht gefährdet"
     },
@@ -486,19 +538,22 @@
       "name_de": "Karakal",
       "name_scientific": "Caracal caracal",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
       "id": "Q25345384",
       "name_de": "Dohle",
       "name_scientific": "Coloeus monedula",
-      "category": "Vogel"
+      "category": "Vogel",
+      "diet": "Allesfresser"
     },
     {
       "id": "Q123141",
       "name_de": "Goldfisch",
       "name_scientific": "Carassius auratus",
       "category": "Fisch",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -508,13 +563,15 @@
       "category": "Säugetier",
       "habitat": [
         "Peru"
-      ]
+      ],
+      "diet": "Pflanzenfresser"
     },
     {
       "id": "Q44299",
       "name_de": "Kojote",
       "name_scientific": "Canis latrans",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "weight_kg": 0.2625,
       "conservation_status": "nicht gefährdet"
     },
@@ -523,6 +580,7 @@
       "name_de": "Weißstorch",
       "name_scientific": "Ciconia ciconia",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.11,
       "conservation_status": "nicht gefährdet"
     },
@@ -531,6 +589,7 @@
       "name_de": "Kormoran",
       "name_scientific": "Phalacrocorax carbo",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 2.2,
       "conservation_status": "nicht gefährdet"
     },
@@ -543,6 +602,7 @@
         "Asien",
         "Ozeanien"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -550,6 +610,7 @@
       "name_de": "Kaffernbüffel",
       "name_scientific": "Syncerus caffer",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -557,6 +618,7 @@
       "name_de": "Reh",
       "name_scientific": "Capreolus capreolus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 1.35,
       "conservation_status": "nicht gefährdet"
     },
@@ -565,6 +627,7 @@
       "name_de": "Uhu",
       "name_scientific": "Bubo bubo",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 2.38,
       "conservation_status": "nicht gefährdet"
     },
@@ -573,6 +636,7 @@
       "name_de": "Fischadler",
       "name_scientific": "Pandion haliaetus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 1.4,
       "conservation_status": "nicht gefährdet"
     },
@@ -580,13 +644,15 @@
       "id": "Q134747",
       "name_de": "Seidenspinner",
       "name_scientific": "Bombyx mori",
-      "category": "Insekt"
+      "category": "Insekt",
+      "diet": "Pflanzenfresser"
     },
     {
       "id": "Q14334",
       "name_de": "Vielfraß",
       "name_scientific": "Gulo gulo",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 10.6,
       "conservation_status": "nicht gefährdet"
     },
@@ -595,6 +661,7 @@
       "name_de": "Erdferkel",
       "name_scientific": "Orycteropus afer",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 1.9,
       "conservation_status": "nicht gefährdet"
     },
@@ -603,6 +670,7 @@
       "name_de": "Turmfalke",
       "name_scientific": "Falco tinnunculus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.167,
       "conservation_status": "nicht gefährdet"
     },
@@ -610,13 +678,15 @@
       "id": "Q30034",
       "name_de": "Westliche Honigbiene",
       "name_scientific": "Apis mellifera",
-      "category": "Insekt"
+      "category": "Insekt",
+      "diet": "Pflanzenfresser"
     },
     {
       "id": "Q131538",
       "name_de": "Capybara",
       "name_scientific": "Hydrochoerus hydrochaeris",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 25.2,
       "conservation_status": "nicht gefährdet"
     },
@@ -625,19 +695,22 @@
       "name_de": "Polarfuchs",
       "name_scientific": "Vulpes lagopus",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
       "id": "Q42569",
       "name_de": "Lama",
       "name_scientific": "Lama glama",
-      "category": "Säugetier"
+      "category": "Säugetier",
+      "diet": "Pflanzenfresser"
     },
     {
       "id": "Q25882",
       "name_de": "Graugans",
       "name_scientific": "Anser anser",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 3.237,
       "conservation_status": "nicht gefährdet"
     },
@@ -646,6 +719,7 @@
       "name_de": "Sperber",
       "name_scientific": "Accipiter nisus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.13,
       "conservation_status": "nicht gefährdet"
     },
@@ -654,6 +728,7 @@
       "name_de": "Kranich",
       "name_scientific": "Grus grus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -661,6 +736,7 @@
       "name_de": "Schleiereule",
       "name_scientific": "Tyto alba",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.58,
       "conservation_status": "nicht gefährdet"
     },
@@ -669,6 +745,7 @@
       "name_de": "Stieglitz",
       "name_scientific": "Carduelis carduelis",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.0015300000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -681,19 +758,22 @@
         "Savanne",
         "Wald"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
       "id": "Q137474876",
       "name_de": "Habicht",
       "name_scientific": "Astur gentilis",
-      "category": "Vogel"
+      "category": "Vogel",
+      "diet": "Fleischfresser"
     },
     {
       "id": "Q25376",
       "name_de": "Blässhuhn",
       "name_scientific": "Fulica atra",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.715,
       "conservation_status": "nicht gefährdet"
     },
@@ -702,6 +782,7 @@
       "name_de": "Saatkrähe",
       "name_scientific": "Corvus frugilegus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.4535,
       "conservation_status": "nicht gefährdet"
     },
@@ -710,6 +791,7 @@
       "name_de": "Kiebitz",
       "name_scientific": "Vanellus vanellus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.025500000000000002,
       "conservation_status": "nicht gefährdet"
     },
@@ -718,6 +800,7 @@
       "name_de": "Spießente",
       "name_scientific": "Anas acuta",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.9455,
       "conservation_status": "nicht gefährdet"
     },
@@ -726,6 +809,7 @@
       "name_de": "Schwarzmilan",
       "name_scientific": "Milvus migrans",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.44200000000000006,
       "conservation_status": "nicht gefährdet"
     },
@@ -738,6 +822,7 @@
         "Wald",
         "Buschland"
       ],
+      "diet": "Allesfresser",
       "weight_kg": 0.026000000000000002,
       "conservation_status": "nicht gefährdet"
     },
@@ -750,6 +835,7 @@
         "Asien",
         "Ozeanien"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 70,
       "length_cm": 150,
       "conservation_status": "stark gefährdet"
@@ -759,6 +845,7 @@
       "name_de": "Karpfen",
       "name_scientific": "Cyprinus carpio",
       "category": "Fisch",
+      "diet": "Allesfresser",
       "length_cm": 53,
       "conservation_status": "nicht gefährdet"
     },
@@ -771,6 +858,7 @@
         "Savanne",
         "Wald"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -778,6 +866,7 @@
       "name_de": "Dromedar",
       "name_scientific": "Camelus dromedarius",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 450
     },
     {
@@ -785,6 +874,7 @@
       "name_de": "Serval",
       "name_scientific": "Leptailurus serval",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -792,6 +882,7 @@
       "name_de": "Eisvogel",
       "name_scientific": "Alcedo atthis",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.0043,
       "conservation_status": "nicht gefährdet"
     },
@@ -800,6 +891,7 @@
       "name_de": "Nachtigall",
       "name_scientific": "Luscinia megarhynchos",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.00265,
       "conservation_status": "nicht gefährdet"
     },
@@ -808,6 +900,7 @@
       "name_de": "Wildkaninchen",
       "name_scientific": "Oryctolagus cuniculus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "stark gefährdet"
     },
     {
@@ -815,6 +908,7 @@
       "name_de": "Blauer Pfau",
       "name_scientific": "Pavo cristatus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -822,6 +916,7 @@
       "name_de": "Gimpel",
       "name_scientific": "Pyrrhula pyrrhula",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.016705,
       "conservation_status": "nicht gefährdet"
     },
@@ -829,13 +924,15 @@
       "id": "Q25405",
       "name_de": "Nebelkrähe",
       "name_scientific": "Corvus cornix",
-      "category": "Vogel"
+      "category": "Vogel",
+      "diet": "Allesfresser"
     },
     {
       "id": "Q25421",
       "name_de": "Zwergtaucher",
       "name_scientific": "Tachybaptus ruficollis",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.0137,
       "conservation_status": "nicht gefährdet"
     },
@@ -844,6 +941,7 @@
       "name_de": "Amerikanischer Schwarzbär",
       "name_scientific": "Ursus americanus",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -851,6 +949,7 @@
       "name_de": "Gemeiner Schimpanse",
       "name_scientific": "Pan troglodytes",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "stark gefährdet"
     },
     {
@@ -858,6 +957,7 @@
       "name_de": "Bonobo",
       "name_scientific": "Pan paniscus",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "weight_kg": 38,
       "conservation_status": "stark gefährdet"
     },
@@ -866,6 +966,7 @@
       "name_de": "Teichralle",
       "name_scientific": "Gallinula chloropus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.34800000000000003,
       "conservation_status": "nicht gefährdet"
     },
@@ -874,6 +975,7 @@
       "name_de": "Mäusebussard",
       "name_scientific": "Buteo buteo",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.8575,
       "conservation_status": "nicht gefährdet"
     },
@@ -882,19 +984,22 @@
       "name_de": "Schwarzstorch",
       "name_scientific": "Ciconia nigra",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
       "id": "Q81564",
       "name_de": "Alpaka",
       "name_scientific": "Vicugna pacos",
-      "category": "Säugetier"
+      "category": "Säugetier",
+      "diet": "Pflanzenfresser"
     },
     {
       "id": "Q82037",
       "name_de": "Okapi",
       "name_scientific": "Okapia johnstoni",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 136,
       "conservation_status": "stark gefährdet"
     },
@@ -903,6 +1008,7 @@
       "name_de": "Höckerschwan",
       "name_scientific": "Cygnus olor",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 10.735,
       "length_cm": 147.5,
       "conservation_status": "nicht gefährdet"
@@ -912,6 +1018,7 @@
       "name_de": "Blaumeise",
       "name_scientific": "Cyanistes caeruleus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.006470000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -919,13 +1026,15 @@
       "id": "Q132922",
       "name_de": "Trampeltier",
       "name_scientific": "Camelus bactrianus",
-      "category": "Säugetier"
+      "category": "Säugetier",
+      "diet": "Pflanzenfresser"
     },
     {
       "id": "Q81214",
       "name_de": "Pottwal",
       "name_scientific": "Physeter macrocephalus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -933,6 +1042,7 @@
       "name_de": "Auerhuhn",
       "name_scientific": "Tetrao urogallus",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 1.97,
       "conservation_status": "nicht gefährdet"
     },
@@ -941,6 +1051,7 @@
       "name_de": "Buchfink",
       "name_scientific": "Fringilla coelebs",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.012079999999999999,
       "conservation_status": "nicht gefährdet"
     },
@@ -952,6 +1063,7 @@
       "habitat": [
         "Feuchtgebiet"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 0.8300000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -979,6 +1091,7 @@
         "Russland",
         "Republik China"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -986,6 +1099,7 @@
       "name_de": "Seeadler",
       "name_scientific": "Haliaeetus albicilla",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 4.014,
       "conservation_status": "nicht gefährdet"
     },
@@ -994,6 +1108,7 @@
       "name_de": "Baummarder",
       "name_scientific": "Martes martes",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1001,6 +1116,7 @@
       "name_de": "Steinkauz",
       "name_scientific": "Athene noctua",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1012,6 +1128,7 @@
         "Ozeanien",
         "Australien"
       ],
+      "diet": "Allesfresser",
       "weight_kg": 32.7,
       "conservation_status": "nicht gefährdet"
     },
@@ -1020,6 +1137,7 @@
       "name_de": "Bartgeier",
       "name_scientific": "Gypaetus barbatus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 4.913,
       "conservation_status": "nicht gefährdet"
     },
@@ -1028,19 +1146,22 @@
       "name_de": "Krickente",
       "name_scientific": "Anas crecca",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
       "id": "Q166111",
       "name_de": "Stubenfliege",
       "name_scientific": "Musca domestica",
-      "category": "Insekt"
+      "category": "Insekt",
+      "diet": "Allesfresser"
     },
     {
       "id": "Q132576",
       "name_de": "Impala",
       "name_scientific": "Aepyceros melampus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1051,6 +1172,7 @@
       "habitat": [
         "Wald"
       ],
+      "diet": "Pflanzenfresser",
       "weight_kg": 95,
       "conservation_status": "stark gefährdet"
     },
@@ -1059,6 +1181,7 @@
       "name_de": "Wisent",
       "name_scientific": "Bison bonasus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1066,6 +1189,7 @@
       "name_de": "Amerikanischer Bison",
       "name_scientific": "Bison bison",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 645.029318,
       "conservation_status": "nicht gefährdet"
     },
@@ -1074,6 +1198,7 @@
       "name_de": "Feldlerche",
       "name_scientific": "Alauda arvensis",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1081,6 +1206,7 @@
       "name_de": "Hecht",
       "name_scientific": "Esox lucius",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "length_cm": 47.5,
       "conservation_status": "nicht gefährdet"
     },
@@ -1089,6 +1215,7 @@
       "name_de": "Silberreiher",
       "name_scientific": "Ardea alba",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1096,6 +1223,7 @@
       "name_de": "Weißkopfseeadler",
       "name_scientific": "Haliaeetus leucocephalus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 4.13,
       "conservation_status": "nicht gefährdet"
     },
@@ -1104,6 +1232,7 @@
       "name_de": "Rebhuhn",
       "name_scientific": "Perdix perdix",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1111,6 +1240,7 @@
       "name_de": "Schmutzgeier",
       "name_scientific": "Neophron percnopterus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 1.0355,
       "conservation_status": "stark gefährdet"
     },
@@ -1119,6 +1249,7 @@
       "name_de": "Erdmännchen",
       "name_scientific": "Suricata suricatta",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "weight_kg": 0.37775,
       "conservation_status": "nicht gefährdet"
     },
@@ -1131,6 +1262,7 @@
         "Ozeanien",
         "Australien"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "stark gefährdet"
     },
     {
@@ -1138,6 +1270,7 @@
       "name_de": "Rostgans",
       "name_scientific": "Tadorna ferruginea",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 1.1,
       "conservation_status": "nicht gefährdet"
     },
@@ -1146,6 +1279,7 @@
       "name_de": "Kuhreiher",
       "name_scientific": "Ardea ibis",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1153,6 +1287,7 @@
       "name_de": "Ringeltaube",
       "name_scientific": "Columba palumbus",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.0189,
       "conservation_status": "nicht gefährdet"
     },
@@ -1161,6 +1296,7 @@
       "name_de": "Honigdachs",
       "name_scientific": "Mellivora capensis",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "weight_kg": 12,
       "conservation_status": "nicht gefährdet"
     },
@@ -1169,6 +1305,7 @@
       "name_de": "Ozelot",
       "name_scientific": "Leopardus pardalis",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 13.5,
       "conservation_status": "nicht gefährdet"
     },
@@ -1180,6 +1317,7 @@
       "habitat": [
         "Wald"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1187,6 +1325,7 @@
       "name_de": "Nachtreiher",
       "name_scientific": "Nycticorax nycticorax",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.636,
       "conservation_status": "nicht gefährdet"
     },
@@ -1195,6 +1334,7 @@
       "name_de": "Schnee-Eule",
       "name_scientific": "Bubo scandiacus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -1202,6 +1342,7 @@
       "name_de": "Rohrdommel",
       "name_scientific": "Botaurus stellaris",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 2.017,
       "conservation_status": "nicht gefährdet"
     },
@@ -1210,6 +1351,7 @@
       "name_de": "Schafstelze",
       "name_scientific": "Motacilla flava",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1217,6 +1359,7 @@
       "name_de": "Mauersegler",
       "name_scientific": "Apus apus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.0035,
       "conservation_status": "nicht gefährdet"
     },
@@ -1231,6 +1374,7 @@
         "Berg",
         "Steppe"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1238,6 +1382,7 @@
       "name_de": "Afrikanischer Wildhund",
       "name_scientific": "Lycaon pictus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "stark gefährdet"
     },
     {
@@ -1248,6 +1393,7 @@
       "habitat": [
         "Wald"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -1255,6 +1401,7 @@
       "name_de": "Afrikanischer Buschelefant",
       "name_scientific": "Loxodonta africana",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "stark gefährdet"
     },
     {
@@ -1262,6 +1409,7 @@
       "name_de": "Seidenreiher",
       "name_scientific": "Egretta garzetta",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.28,
       "conservation_status": "nicht gefährdet"
     },
@@ -1270,6 +1418,7 @@
       "name_de": "Gänsegeier",
       "name_scientific": "Gyps fulvus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 4.29,
       "conservation_status": "nicht gefährdet"
     },
@@ -1278,6 +1427,7 @@
       "name_de": "Schnatterente",
       "name_scientific": "Mareca strepera",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1285,6 +1435,7 @@
       "name_de": "Singschwan",
       "name_scientific": "Cygnus cygnus",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 8.75,
       "conservation_status": "nicht gefährdet"
     },
@@ -1293,6 +1444,7 @@
       "name_de": "Türkentaube",
       "name_scientific": "Streptopelia decaocto",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.1011,
       "conservation_status": "nicht gefährdet"
     },
@@ -1301,6 +1453,7 @@
       "name_de": "Purpurreiher",
       "name_scientific": "Ardea purpurea",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.051000000000000004,
       "conservation_status": "nicht gefährdet"
     },
@@ -1309,6 +1462,7 @@
       "name_de": "Bienenfresser",
       "name_scientific": "Merops apiaster",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.006500000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -1317,6 +1471,7 @@
       "name_de": "Rosapelikan",
       "name_scientific": "Pelecanus onocrotalus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 7.59,
       "conservation_status": "nicht gefährdet"
     },
@@ -1325,6 +1480,7 @@
       "name_de": "Waldschnepfe",
       "name_scientific": "Scolopax rusticola",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.0245,
       "conservation_status": "nicht gefährdet"
     },
@@ -1333,6 +1489,7 @@
       "name_de": "Aaskrähe",
       "name_scientific": "Corvus corone",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1343,6 +1500,7 @@
       "habitat": [
         "Land"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1350,6 +1508,7 @@
       "name_de": "Feldhase",
       "name_scientific": "Lepus europaeus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1361,6 +1520,7 @@
         "Ozeanien",
         "Australien"
       ],
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.00215,
       "conservation_status": "nicht gefährdet"
     },
@@ -1369,6 +1529,7 @@
       "name_de": "Pfeifente",
       "name_scientific": "Mareca penelope",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1376,6 +1537,7 @@
       "name_de": "Baumfalke",
       "name_scientific": "Falco subbuteo",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.1815,
       "conservation_status": "nicht gefährdet"
     },
@@ -1384,6 +1546,7 @@
       "name_de": "Wachtelkönig",
       "name_scientific": "Crex crex",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.0132,
       "conservation_status": "nicht gefährdet"
     },
@@ -1391,13 +1554,15 @@
       "id": "Q940337",
       "name_de": "Bettwanze",
       "name_scientific": "Cimex lectularius",
-      "category": "Insekt"
+      "category": "Insekt",
+      "diet": "Fleischfresser"
     },
     {
       "id": "Q132585",
       "name_de": "Rothund",
       "name_scientific": "Cuon alpinus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "stark gefährdet"
     },
     {
@@ -1405,6 +1570,7 @@
       "name_de": "Narwal",
       "name_scientific": "Monodon monoceros",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 80,
       "conservation_status": "nicht gefährdet"
     },
@@ -1413,6 +1579,7 @@
       "name_de": "Turteltaube",
       "name_scientific": "Streptopelia turtur",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.0721,
       "conservation_status": "gefährdet"
     },
@@ -1421,6 +1588,7 @@
       "name_de": "Sekretär",
       "name_scientific": "Sagittarius serpentarius",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 2.0909999999999997,
       "conservation_status": "stark gefährdet"
     },
@@ -1429,6 +1597,7 @@
       "name_de": "Löffelente",
       "name_scientific": "Spatula clypeata",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1436,6 +1605,7 @@
       "name_de": "Knäkente",
       "name_scientific": "Spatula querquedula",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1448,6 +1618,7 @@
         "Schotterbank",
         "Steinbruch"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1455,6 +1626,7 @@
       "name_de": "Fennek",
       "name_scientific": "Vulpes zerda",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1462,6 +1634,7 @@
       "name_de": "Buckelwal",
       "name_scientific": "Megaptera novaeangliae",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 23250,
       "length_cm": 1025,
       "conservation_status": "nicht gefährdet"
@@ -1471,6 +1644,7 @@
       "name_de": "Breitmaulnashorn",
       "name_scientific": "Ceratotherium simum",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1481,6 +1655,7 @@
       "habitat": [
         "Wald"
       ],
+      "diet": "Allesfresser",
       "weight_kg": 0.0275,
       "conservation_status": "nicht gefährdet"
     },
@@ -1489,6 +1664,7 @@
       "name_de": "Rosaflamingo",
       "name_scientific": "Phoenicopterus roseus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "length_cm": 132.5,
       "conservation_status": "nicht gefährdet"
     },
@@ -1497,6 +1673,7 @@
       "name_de": "Bekassine",
       "name_scientific": "Gallinago gallinago",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.1195,
       "conservation_status": "nicht gefährdet"
     },
@@ -1505,6 +1682,7 @@
       "name_de": "Zaunkönig",
       "name_scientific": "Troglodytes troglodytes",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1512,6 +1690,7 @@
       "name_de": "Rotschenkel",
       "name_scientific": "Tringa totanus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.07565,
       "conservation_status": "nicht gefährdet"
     },
@@ -1520,6 +1699,7 @@
       "name_de": "Waldohreule",
       "name_scientific": "Asio otus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1527,6 +1707,7 @@
       "name_de": "Rotluchs",
       "name_scientific": "Lynx rufus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 0.31,
       "conservation_status": "nicht gefährdet"
     },
@@ -1535,6 +1716,7 @@
       "name_de": "Damhirsch",
       "name_scientific": "Dama dama",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 5,
       "conservation_status": "nicht gefährdet"
     },
@@ -1543,6 +1725,7 @@
       "name_de": "Spitzmaulnashorn",
       "name_scientific": "Diceros bicornis",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 36,
       "conservation_status": "vom Aussterben bedroht"
     },
@@ -1551,6 +1734,7 @@
       "name_de": "Bisamratte",
       "name_scientific": "Ondatra zibethicus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1558,6 +1742,7 @@
       "name_de": "Mönchsgeier",
       "name_scientific": "Aegypius monachus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.243,
       "conservation_status": "nicht gefährdet"
     },
@@ -1566,6 +1751,7 @@
       "name_de": "Brauner Sichler",
       "name_scientific": "Plegadis falcinellus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.633,
       "conservation_status": "nicht gefährdet"
     },
@@ -1578,6 +1764,7 @@
         "Ozeanien",
         "Australien"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht"
     },
     {
@@ -1585,6 +1772,7 @@
       "name_de": "Brandgans",
       "name_scientific": "Tadorna tadorna",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 1.043,
       "conservation_status": "nicht gefährdet"
     },
@@ -1593,6 +1781,7 @@
       "name_de": "Buntspecht",
       "name_scientific": "Dendrocopos major",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.047349999999999996,
       "conservation_status": "nicht gefährdet"
     },
@@ -1604,6 +1793,7 @@
       "habitat": [
         "Arktischer Ozean"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 60,
       "conservation_status": "nicht gefährdet"
     },
@@ -1612,6 +1802,7 @@
       "name_de": "Moschusochse",
       "name_scientific": "Ovibos moschatus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1619,6 +1810,7 @@
       "name_de": "Europäischer Iltis",
       "name_scientific": "Mustela putorius",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1626,6 +1818,7 @@
       "name_de": "Merlin",
       "name_scientific": "Falco columbarius",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.187,
       "conservation_status": "nicht gefährdet"
     },
@@ -1634,6 +1827,7 @@
       "name_de": "Rotmilan",
       "name_scientific": "Milvus milvus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 1.012,
       "conservation_status": "nicht gefährdet"
     },
@@ -1642,6 +1836,7 @@
       "name_de": "Andenkondor",
       "name_scientific": "Vultur gryphus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -1649,6 +1844,7 @@
       "name_de": "Stelzenläufer",
       "name_scientific": "Himantopus himantopus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.09090000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -1657,6 +1853,7 @@
       "name_de": "Bluthänfling",
       "name_scientific": "Linaria cannabina",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.010329999999999999,
       "conservation_status": "nicht gefährdet"
     },
@@ -1665,6 +1862,7 @@
       "name_de": "Kornweihe",
       "name_scientific": "Circus cyaneus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.4365,
       "conservation_status": "nicht gefährdet"
     },
@@ -1673,6 +1871,7 @@
       "name_de": "Lachmöwe",
       "name_scientific": "Chroicocephalus ridibundus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.28049999999999997,
       "conservation_status": "nicht gefährdet"
     },
@@ -1681,6 +1880,7 @@
       "name_de": "Goldammer",
       "name_scientific": "Emberiza citrinella",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.00294,
       "conservation_status": "nicht gefährdet"
     },
@@ -1689,6 +1889,7 @@
       "name_de": "Reiherente",
       "name_scientific": "Aythya fuligula",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.056,
       "conservation_status": "nicht gefährdet"
     },
@@ -1697,6 +1898,7 @@
       "name_de": "Flussuferläufer",
       "name_scientific": "Actitis hypoleucos",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1707,6 +1909,7 @@
       "habitat": [
         "Berg"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1714,6 +1917,7 @@
       "name_de": "Braunbrustigel",
       "name_scientific": "Erinaceus europaeus",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1724,6 +1928,7 @@
       "habitat": [
         "Dschungel"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -1731,6 +1936,7 @@
       "name_de": "Bengalkatze",
       "name_scientific": "Prionailurus bengalensis",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1742,6 +1948,7 @@
         "Ozeanien",
         "Australien"
       ],
+      "diet": "Pflanzenfresser",
       "weight_kg": 5.1,
       "conservation_status": "nicht gefährdet"
     },
@@ -1750,6 +1957,7 @@
       "name_de": "Schwarzspecht",
       "name_scientific": "Dryocopus martius",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.011800000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -1758,6 +1966,7 @@
       "name_de": "Löffler",
       "name_scientific": "Platalea leucorodia",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.076,
       "conservation_status": "nicht gefährdet"
     },
@@ -1766,6 +1975,7 @@
       "name_de": "Erlenzeisig",
       "name_scientific": "Spinus spinus",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.0075450000000000005,
       "conservation_status": "nicht gefährdet"
     },
@@ -1774,6 +1984,7 @@
       "name_de": "Tafelente",
       "name_scientific": "Aythya ferina",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.066,
       "conservation_status": "gefährdet"
     },
@@ -1782,6 +1993,7 @@
       "name_de": "Nilkrokodil",
       "name_scientific": "Crocodylus niloticus",
       "category": "Reptil",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1789,6 +2001,7 @@
       "name_de": "Leistenkrokodil",
       "name_scientific": "Crocodylus porosus",
       "category": "Reptil",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1796,6 +2009,7 @@
       "name_de": "Europäischer Wels",
       "name_scientific": "Silurus glanis",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1803,6 +2017,7 @@
       "name_de": "Schwertfisch",
       "name_scientific": "Xiphias gladius",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1813,6 +2028,7 @@
       "habitat": [
         "Buschland"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1820,6 +2036,7 @@
       "name_de": "Sandkatze",
       "name_scientific": "Felis margarita",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1830,6 +2047,7 @@
       "habitat": [
         "Wald"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1837,6 +2055,7 @@
       "name_de": "Steinmarder",
       "name_scientific": "Martes foina",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1844,6 +2063,7 @@
       "name_de": "Birkhuhn",
       "name_scientific": "Lyrurus tetrix",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.925,
       "conservation_status": "nicht gefährdet"
     },
@@ -1852,6 +2072,7 @@
       "name_de": "Kaiserpinguin",
       "name_scientific": "Aptenodytes forsteri",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.425,
       "conservation_status": "nicht gefährdet"
     },
@@ -1860,6 +2081,7 @@
       "name_de": "Schlangenadler",
       "name_scientific": "Circaetus gallicus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.136,
       "conservation_status": "nicht gefährdet"
     },
@@ -1868,6 +2090,7 @@
       "name_de": "Mandarinente",
       "name_scientific": "Aix galericulata",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.041,
       "conservation_status": "nicht gefährdet"
     },
@@ -1876,6 +2099,7 @@
       "name_de": "Steppenadler",
       "name_scientific": "Aquila nipalensis",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 2.459,
       "conservation_status": "stark gefährdet"
     },
@@ -1884,6 +2108,7 @@
       "name_de": "Bankivahuhn",
       "name_scientific": "Gallus gallus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.6719999999999999,
       "conservation_status": "nicht gefährdet"
     },
@@ -1892,6 +2117,7 @@
       "name_de": "Kampfläufer",
       "name_scientific": "Calidris pugnax",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.10200000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -1900,6 +2126,7 @@
       "name_de": "Waldkauz",
       "name_scientific": "Strix aluco",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.475,
       "conservation_status": "nicht gefährdet"
     },
@@ -1908,6 +2135,7 @@
       "name_de": "Rohrweihe",
       "name_scientific": "Circus aeruginosus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.04,
       "conservation_status": "nicht gefährdet"
     },
@@ -1916,6 +2144,7 @@
       "name_de": "Schuhschnabel",
       "name_scientific": "Balaeniceps rex",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -1923,6 +2152,7 @@
       "name_de": "Großer Brachvogel",
       "name_scientific": "Numenius arquata",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.742,
       "conservation_status": "nicht gefährdet"
     },
@@ -1931,6 +2161,7 @@
       "name_de": "Königskobra",
       "name_scientific": "Ophiophagus hannah",
       "category": "Reptil",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -1941,6 +2172,7 @@
       "habitat": [
         "Meer"
       ],
+      "diet": "Pflanzenfresser",
       "weight_kg": 200,
       "conservation_status": "gefährdet"
     },
@@ -1954,6 +2186,7 @@
         "Afrika",
         "Amerika"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -1968,6 +2201,7 @@
         "Asien",
         "Ozeanien"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -1975,6 +2209,7 @@
       "name_de": "Wapiti",
       "name_scientific": "Cervus canadensis",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1986,6 +2221,7 @@
         "Landfläche",
         "Buschland"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -1993,6 +2229,7 @@
       "name_de": "Sumpfohreule",
       "name_scientific": "Asio flammeus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2000,6 +2237,7 @@
       "name_de": "Kanadagans",
       "name_scientific": "Branta canadensis",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 3.814,
       "conservation_status": "nicht gefährdet"
     },
@@ -2008,6 +2246,7 @@
       "name_de": "Europäischer Aal",
       "name_scientific": "Anguilla anguilla",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "vom Aussterben bedroht"
     },
     {
@@ -2015,6 +2254,7 @@
       "name_de": "Guanako",
       "name_scientific": "Lama guanicoe",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2022,6 +2262,7 @@
       "name_de": "Kernbeißer",
       "name_scientific": "Coccothraustes coccothraustes",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2029,6 +2270,7 @@
       "name_de": "Grünfink",
       "name_scientific": "Chloris chloris",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.00217,
       "conservation_status": "nicht gefährdet"
     },
@@ -2037,6 +2279,7 @@
       "name_de": "Wendehals",
       "name_scientific": "Jynx torquilla",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.01985,
       "conservation_status": "nicht gefährdet"
     },
@@ -2045,6 +2288,7 @@
       "name_de": "Mehlschwalbe",
       "name_scientific": "Delichon urbicum",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2052,6 +2296,7 @@
       "name_de": "Säbelschnäbler",
       "name_scientific": "Recurvirostra avosetta",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.0317,
       "conservation_status": "nicht gefährdet"
     },
@@ -2060,6 +2305,7 @@
       "name_de": "Singdrossel",
       "name_scientific": "Turdus philomelos",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.03900000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -2068,6 +2314,7 @@
       "name_de": "Silbermöwe",
       "name_scientific": "Larus argentatus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2078,6 +2325,7 @@
       "habitat": [
         "coastal margin"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 32.5,
       "length_cm": 144,
       "conservation_status": "stark gefährdet"
@@ -2087,6 +2335,7 @@
       "name_de": "Zwergtrappe",
       "name_scientific": "Tetrax tetrax",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.041,
       "conservation_status": "nicht gefährdet"
     },
@@ -2095,6 +2344,7 @@
       "name_de": "Wacholderdrossel",
       "name_scientific": "Turdus pilaris",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.0559,
       "conservation_status": "nicht gefährdet"
     },
@@ -2103,6 +2353,7 @@
       "name_de": "Blaukehlchen",
       "name_scientific": "Luscinia svecica",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2110,6 +2361,7 @@
       "name_de": "Gartenrotschwanz",
       "name_scientific": "Phoenicurus phoenicurus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2117,6 +2369,7 @@
       "name_de": "Ziegenmelker",
       "name_scientific": "Caprimulgus europaeus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2124,6 +2377,7 @@
       "name_de": "Flussregenpfeifer",
       "name_scientific": "Charadrius dubius",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.0077,
       "conservation_status": "nicht gefährdet"
     },
@@ -2132,6 +2386,7 @@
       "name_de": "Haubenlerche",
       "name_scientific": "Galerida cristata",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2139,6 +2394,7 @@
       "name_de": "Axolotl",
       "name_scientific": "Ambystoma mexicanum",
       "category": "Amphibie",
+      "diet": "Fleischfresser",
       "conservation_status": "vom Aussterben bedroht"
     },
     {
@@ -2146,6 +2402,7 @@
       "name_de": "Schleie",
       "name_scientific": "Tinca tinca",
       "category": "Fisch",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2153,6 +2410,7 @@
       "name_de": "Guppy",
       "name_scientific": "Poecilia reticulata",
       "category": "Fisch",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2160,6 +2418,7 @@
       "name_de": "Forelle",
       "name_scientific": "Salmo trutta",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2170,6 +2429,7 @@
       "habitat": [
         "Grasland"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2177,6 +2437,7 @@
       "name_de": "Kleiber",
       "name_scientific": "Sitta europaea",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.012625,
       "conservation_status": "nicht gefährdet"
     },
@@ -2185,6 +2446,7 @@
       "name_de": "Grünspecht",
       "name_scientific": "Picus viridis",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.10095,
       "conservation_status": "nicht gefährdet"
     },
@@ -2193,6 +2455,7 @@
       "name_de": "Östlicher Kaiseradler",
       "name_scientific": "Aquila heliaca",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 2.585,
       "conservation_status": "gefährdet"
     },
@@ -2201,6 +2464,7 @@
       "name_de": "Wespenbussard",
       "name_scientific": "Pernis apivorus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.049,
       "conservation_status": "nicht gefährdet"
     },
@@ -2209,6 +2473,7 @@
       "name_de": "Großtrappe",
       "name_scientific": "Otis tarda",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.14300000000000002,
       "conservation_status": "stark gefährdet"
     },
@@ -2217,6 +2482,7 @@
       "name_de": "Wasseramsel",
       "name_scientific": "Cinclus cinclus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2224,6 +2490,7 @@
       "name_de": "Prachttaucher",
       "name_scientific": "Gavia arctica",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2231,6 +2498,7 @@
       "name_de": "Tannenhäher",
       "name_scientific": "Nucifraga caryocatactes",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2238,6 +2506,7 @@
       "name_de": "Austernfischer",
       "name_scientific": "Haematopus ostralegus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.28235,
       "conservation_status": "nicht gefährdet"
     },
@@ -2246,6 +2515,7 @@
       "name_de": "Seidenschwanz",
       "name_scientific": "Bombycilla garrulus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2253,6 +2523,7 @@
       "name_de": "Papageitaucher",
       "name_scientific": "Fratercula arctica",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.376,
       "conservation_status": "gefährdet"
     },
@@ -2261,6 +2532,7 @@
       "name_de": "Gangesgavial",
       "name_scientific": "Gavialis gangeticus",
       "category": "Reptil",
+      "diet": "Fleischfresser",
       "conservation_status": "vom Aussterben bedroht"
     },
     {
@@ -2268,6 +2540,7 @@
       "name_de": "Brachse",
       "name_scientific": "Abramis brama",
       "category": "Fisch",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2279,6 +2552,7 @@
         "Savanne",
         "Wald"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -2286,6 +2560,7 @@
       "name_de": "Tüpfelhyäne",
       "name_scientific": "Crocuta crocuta",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2293,6 +2568,7 @@
       "name_de": "Europäischer Maulwurf",
       "name_scientific": "Talpa europaea",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2303,6 +2579,7 @@
       "habitat": [
         "Wald"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -2310,6 +2587,7 @@
       "name_de": "Schwanzmeise",
       "name_scientific": "Aegithalos caudatus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2317,6 +2595,7 @@
       "name_de": "Schwarzhalstaucher",
       "name_scientific": "Podiceps nigricollis",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2324,6 +2603,7 @@
       "name_de": "Streifengans",
       "name_scientific": "Anser indicus",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 2.23,
       "conservation_status": "nicht gefährdet"
     },
@@ -2332,6 +2612,7 @@
       "name_de": "Sturmmöwe",
       "name_scientific": "Larus canus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.3865,
       "conservation_status": "nicht gefährdet"
     },
@@ -2340,6 +2621,7 @@
       "name_de": "Saatgans",
       "name_scientific": "Anser fabalis",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 2.843,
       "conservation_status": "nicht gefährdet"
     },
@@ -2348,6 +2630,7 @@
       "name_de": "Grünschenkel",
       "name_scientific": "Tringa nebularia",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.10175000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -2356,6 +2639,7 @@
       "name_de": "Flussseeschwalbe",
       "name_scientific": "Sterna hirundo",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2363,6 +2647,7 @@
       "name_de": "Ringelnatter",
       "name_scientific": "Natrix natrix",
       "category": "Reptil",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2370,6 +2655,7 @@
       "name_de": "Flussbarsch",
       "name_scientific": "Perca fluviatilis",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2377,6 +2663,7 @@
       "name_de": "Atlantischer Lachs",
       "name_scientific": "Salmo salar",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2384,6 +2671,7 @@
       "name_de": "Kanadischer Luchs",
       "name_scientific": "Lynx canadensis",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2395,6 +2683,7 @@
         "Wald",
         "Savanne"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2402,6 +2691,7 @@
       "name_de": "Vikunja",
       "name_scientific": "Vicugna vicugna",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2409,6 +2699,7 @@
       "name_de": "Nutria",
       "name_scientific": "Myocastor coypus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 6.36,
       "conservation_status": "nicht gefährdet"
     },
@@ -2417,6 +2708,7 @@
       "name_de": "Zwergohreule",
       "name_scientific": "Otus scops",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2424,6 +2716,7 @@
       "name_de": "Gerfalke",
       "name_scientific": "Falco rusticolus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2431,6 +2724,7 @@
       "name_de": "Misteldrossel",
       "name_scientific": "Turdus viscivorus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2438,6 +2732,7 @@
       "name_de": "Blauracke",
       "name_scientific": "Coracias garrulus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2445,6 +2740,7 @@
       "name_de": "Rotfußfalke",
       "name_scientific": "Falco vespertinus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.15,
       "conservation_status": "gefährdet"
     },
@@ -2453,6 +2749,7 @@
       "name_de": "Triel",
       "name_scientific": "Burhinus oedicnemus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.042,
       "conservation_status": "nicht gefährdet"
     },
@@ -2461,6 +2758,7 @@
       "name_de": "Wasserralle",
       "name_scientific": "Rallus aquaticus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.1115,
       "conservation_status": "nicht gefährdet"
     },
@@ -2469,6 +2767,7 @@
       "name_de": "Rosenstar",
       "name_scientific": "Pastor roseus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.0669,
       "conservation_status": "nicht gefährdet"
     },
@@ -2477,6 +2776,7 @@
       "name_de": "Steinschmätzer (Art)",
       "name_scientific": "Oenanthe oenanthe",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2484,6 +2784,7 @@
       "name_de": "Eisente",
       "name_scientific": "Clangula hyemalis",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -2491,6 +2792,7 @@
       "name_de": "Sterntaucher",
       "name_scientific": "Gavia stellata",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 1.6030000000000002,
       "conservation_status": "nicht gefährdet"
     },
@@ -2499,6 +2801,7 @@
       "name_de": "Zwergschnepfe",
       "name_scientific": "Lymnocryptes minimus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.05020000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -2507,6 +2810,7 @@
       "name_de": "Hausrotschwanz",
       "name_scientific": "Phoenicurus ochruros",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2514,6 +2818,7 @@
       "name_de": "Uferschnepfe",
       "name_scientific": "Limosa limosa",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.264,
       "conservation_status": "nicht gefährdet"
     },
@@ -2522,6 +2827,7 @@
       "name_de": "Westliche Blindschleiche",
       "name_scientific": "Anguis fragilis",
       "category": "Reptil",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2529,6 +2835,7 @@
       "name_de": "Makrele",
       "name_scientific": "Scomber scombrus",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2539,6 +2846,7 @@
       "habitat": [
         "Wald"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht"
     },
     {
@@ -2546,6 +2854,7 @@
       "name_de": "Hirschziegenantilope",
       "name_scientific": "Antilope cervicapra",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2553,19 +2862,22 @@
       "name_de": "Fischkatze",
       "name_scientific": "Prionailurus viverrinus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
       "id": "Q192231",
       "name_de": "Afrikanische Goldkatze",
       "name_scientific": "Profelis aurata",
-      "category": "Säugetier"
+      "category": "Säugetier",
+      "diet": "Fleischfresser"
     },
     {
       "id": "Q213084",
       "name_de": "Springböcke",
       "name_scientific": "Antidorcas marsupialis",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 37,
       "conservation_status": "nicht gefährdet"
     },
@@ -2574,6 +2886,7 @@
       "name_de": "Blässgans",
       "name_scientific": "Anser albifrons",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2581,6 +2894,7 @@
       "name_de": "Haselhuhn",
       "name_scientific": "Tetrastes bonasia",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.194,
       "conservation_status": "nicht gefährdet"
     },
@@ -2589,6 +2903,7 @@
       "name_de": "Zwergadler",
       "name_scientific": "Hieraaetus pennatus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.709,
       "conservation_status": "nicht gefährdet"
     },
@@ -2597,6 +2912,7 @@
       "name_de": "Rötelfalke",
       "name_scientific": "Falco naumanni",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.148,
       "conservation_status": "nicht gefährdet"
     },
@@ -2605,6 +2921,7 @@
       "name_de": "Regenbrachvogel",
       "name_scientific": "Numenius phaeopus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2612,6 +2929,7 @@
       "name_de": "Waldwasserläufer",
       "name_scientific": "Tringa ochropus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.075,
       "conservation_status": "nicht gefährdet"
     },
@@ -2620,6 +2938,7 @@
       "name_de": "Wildziege",
       "name_scientific": "Capra aegagrus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2633,6 +2952,7 @@
       "continent": [
         "Asien"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -2640,6 +2960,7 @@
       "name_de": "Sakerfalke",
       "name_scientific": "Falco cherrug",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.875,
       "conservation_status": "stark gefährdet"
     },
@@ -2648,6 +2969,7 @@
       "name_de": "Blauhäher",
       "name_scientific": "Cyanocitta cristata",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2655,6 +2977,7 @@
       "name_de": "Krauskopfpelikan",
       "name_scientific": "Pelecanus crispus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2662,6 +2985,7 @@
       "name_de": "Mönchsgrasmücke",
       "name_scientific": "Sylvia atricapilla",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.010145000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -2670,6 +2994,7 @@
       "name_de": "Hoatzin",
       "name_scientific": "Opisthocomus hoazin",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2677,6 +3002,7 @@
       "name_de": "Mittelsäger",
       "name_scientific": "Mergus serrator",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.908,
       "conservation_status": "nicht gefährdet"
     },
@@ -2685,6 +3011,7 @@
       "name_de": "Tüpfelsumpfhuhn",
       "name_scientific": "Porzana porzana",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.045450000000000004,
       "conservation_status": "nicht gefährdet"
     },
@@ -2693,6 +3020,7 @@
       "name_de": "Zwergdommel",
       "name_scientific": "Ixobrychus minutus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.08,
       "conservation_status": "nicht gefährdet"
     },
@@ -2701,6 +3029,7 @@
       "name_de": "Hohltaube",
       "name_scientific": "Columba oenas",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.0167,
       "conservation_status": "nicht gefährdet"
     },
@@ -2709,6 +3038,7 @@
       "name_de": "Fichtenkreuzschnabel",
       "name_scientific": "Loxia curvirostra",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.0029500000000000004,
       "conservation_status": "nicht gefährdet"
     },
@@ -2717,6 +3047,7 @@
       "name_de": "Wintergoldhähnchen",
       "name_scientific": "Regulus regulus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.0007700000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -2725,6 +3056,7 @@
       "name_de": "Heringsmöwe",
       "name_scientific": "Larus fuscus",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.8175,
       "conservation_status": "nicht gefährdet"
     },
@@ -2733,6 +3065,7 @@
       "name_de": "Schellente",
       "name_scientific": "Bucephala clangula",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.9,
       "conservation_status": "nicht gefährdet"
     },
@@ -2741,6 +3074,7 @@
       "name_de": "Atlantischer Kabeljau",
       "name_scientific": "Gadus morhua",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "length_cm": 90,
       "conservation_status": "gefährdet"
     },
@@ -2749,6 +3083,7 @@
       "name_de": "Zitteraal",
       "name_scientific": "Electrophorus electricus",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2756,6 +3091,7 @@
       "name_de": "Quappe",
       "name_scientific": "Lota lota",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2763,6 +3099,7 @@
       "name_de": "Großer Tümmler",
       "name_scientific": "Tursiops truncatus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2773,19 +3110,22 @@
       "habitat": [
         "Grasland"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
       "id": "Q182304",
       "name_de": "Jaguarundi",
       "name_scientific": "Puma yagouaroundi",
-      "category": "Säugetier"
+      "category": "Säugetier",
+      "diet": "Fleischfresser"
     },
     {
       "id": "Q188657",
       "name_de": "Streifenhyäne",
       "name_scientific": "Hyaena hyaena",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "weight_kg": 20.35,
       "conservation_status": "nicht gefährdet"
     },
@@ -2798,6 +3138,7 @@
         "Savanne",
         "Wald"
       ],
+      "diet": "Pflanzenfresser",
       "weight_kg": 5.75,
       "conservation_status": "nicht gefährdet"
     },
@@ -2806,6 +3147,7 @@
       "name_de": "Europäischer Nerz",
       "name_scientific": "Mustela lutreola",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "vom Aussterben bedroht"
     },
     {
@@ -2813,6 +3155,7 @@
       "name_de": "Amerikanischer Nerz",
       "name_scientific": "Neogale vison",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2820,6 +3163,7 @@
       "name_de": "Hirtenmaina",
       "name_scientific": "Acridotheres tristis",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.0070999999999999995,
       "conservation_status": "nicht gefährdet"
     },
@@ -2828,6 +3172,7 @@
       "name_de": "Rothalstaucher",
       "name_scientific": "Podiceps grisegena",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.7854,
       "conservation_status": "nicht gefährdet"
     },
@@ -2836,6 +3181,7 @@
       "name_de": "Gänsesäger",
       "name_scientific": "Mergus merganser",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 1.4705,
       "conservation_status": "nicht gefährdet"
     },
@@ -2844,6 +3190,7 @@
       "name_de": "Moorente",
       "name_scientific": "Aythya nyroca",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.52,
       "conservation_status": "nicht gefährdet"
     },
@@ -2852,6 +3199,7 @@
       "name_de": "Ohrentaucher",
       "name_scientific": "Podiceps auritus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.23600000000000002,
       "conservation_status": "gefährdet"
     },
@@ -2860,6 +3208,7 @@
       "name_de": "Sanderling",
       "name_scientific": "Calidris alba",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2867,6 +3216,7 @@
       "name_de": "Heckenbraunelle",
       "name_scientific": "Prunella modularis",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2874,6 +3224,7 @@
       "name_de": "Pfuhlschnepfe",
       "name_scientific": "Limosa lapponica",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.3335,
       "conservation_status": "nicht gefährdet"
     },
@@ -2882,6 +3233,7 @@
       "name_de": "Küstenseeschwalbe",
       "name_scientific": "Sterna paradisaea",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.114,
       "conservation_status": "nicht gefährdet"
     },
@@ -2890,6 +3242,7 @@
       "name_de": "Truthuhn",
       "name_scientific": "Meleagris gallopavo",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2897,6 +3250,7 @@
       "name_de": "Lederschildkröte",
       "name_scientific": "Dermochelys coriacea",
       "category": "Reptil",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -2904,19 +3258,22 @@
       "name_de": "Grüne Meeresschildkröte",
       "name_scientific": "Chelonia mydas",
       "category": "Reptil",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
       "id": "Q187986",
       "name_de": "Regenbogenforelle",
       "name_scientific": "Oncorhynchus mykiss",
-      "category": "Fisch"
+      "category": "Fisch",
+      "diet": "Fleischfresser"
     },
     {
       "id": "Q137641",
       "name_de": "Brillenbär",
       "name_scientific": "Tremarctos ornatus",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -2927,6 +3284,7 @@
       "continent": [
         "Afrika"
       ],
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.06,
       "conservation_status": "stark gefährdet"
     },
@@ -2935,6 +3293,7 @@
       "name_de": "Elenantilope",
       "name_scientific": "Taurotragus oryx",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 27.75
     },
     {
@@ -2946,6 +3305,7 @@
         "Buschland",
         "Wald"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht"
     },
     {
@@ -2953,6 +3313,7 @@
       "name_de": "Gartengrasmücke",
       "name_scientific": "Sylvia borin",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2960,6 +3321,7 @@
       "name_de": "Königspinguin",
       "name_scientific": "Aptenodytes patagonicus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 11.5,
       "conservation_status": "nicht gefährdet"
     },
@@ -2968,6 +3330,7 @@
       "name_de": "Zilpzalp",
       "name_scientific": "Phylloscopus collybita",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -2975,6 +3338,7 @@
       "name_de": "Tannenmeise",
       "name_scientific": "Periparus ater",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "weight_kg": 0.0010400000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -2983,6 +3347,7 @@
       "name_de": "Schneegans",
       "name_scientific": "Anser caerulescens",
       "category": "Vogel",
+      "diet": "Pflanzenfresser",
       "weight_kg": 1.3784999999999998,
       "conservation_status": "nicht gefährdet"
     },
@@ -2991,6 +3356,7 @@
       "name_de": "Schelladler",
       "name_scientific": "Clanga clanga",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.11,
       "conservation_status": "gefährdet"
     },
@@ -2999,6 +3365,7 @@
       "name_de": "Bruchwasserläufer",
       "name_scientific": "Tringa glareola",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.062,
       "conservation_status": "nicht gefährdet"
     },
@@ -3007,6 +3374,7 @@
       "name_de": "Steinwälzer",
       "name_scientific": "Arenaria interpres",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3018,6 +3386,7 @@
         "Ozeanien",
         "Australien"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 0.634,
       "conservation_status": "nicht gefährdet"
     },
@@ -3026,6 +3395,7 @@
       "name_de": "Feuersalamander",
       "name_scientific": "Salamandra salamandra",
       "category": "Amphibie",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3033,6 +3403,7 @@
       "name_de": "Rotauge",
       "name_scientific": "Rutilus rutilus",
       "category": "Fisch",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3040,13 +3411,15 @@
       "name_de": "Großkopfmeeräsche",
       "name_scientific": "Mugil cephalus",
       "category": "Fisch",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
       "id": "Q26764",
       "name_de": "Großer Kohlweißling",
       "name_scientific": "Pieris brassicae",
-      "category": "Insekt"
+      "category": "Insekt",
+      "diet": "Pflanzenfresser"
     },
     {
       "id": "Q145016",
@@ -3057,6 +3430,7 @@
         "Wald",
         "Savanne"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3064,6 +3438,7 @@
       "name_de": "Alpensteinbock",
       "name_scientific": "Capra ibex",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3071,6 +3446,7 @@
       "name_de": "Asiatischer Esel",
       "name_scientific": "Equus hemionus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3078,6 +3454,7 @@
       "name_de": "Erdwolf",
       "name_scientific": "Proteles cristata",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 10,
       "conservation_status": "nicht gefährdet"
     },
@@ -3089,6 +3466,7 @@
       "continent": [
         "Afrika"
       ],
+      "diet": "Allesfresser",
       "weight_kg": 1.3075,
       "conservation_status": "stark gefährdet"
     },
@@ -3097,6 +3475,7 @@
       "name_de": "Waldelefant",
       "name_scientific": "Loxodonta cyclotis",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht"
     },
     {
@@ -3104,6 +3483,7 @@
       "name_de": "Seehund",
       "name_scientific": "Phoca vitulina",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3111,6 +3491,7 @@
       "name_de": "Gebirgsstelze",
       "name_scientific": "Motacilla cinerea",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.009654999999999999,
       "conservation_status": "nicht gefährdet"
     },
@@ -3119,6 +3500,7 @@
       "name_de": "Zitronenstelze",
       "name_scientific": "Motacilla citreola",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3126,6 +3508,7 @@
       "name_de": "Jungfernkranich",
       "name_scientific": "Anthropoides virgo",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3137,6 +3520,7 @@
         "Ozeanien",
         "Australien"
       ],
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.045840000000000006,
       "conservation_status": "nicht gefährdet"
     },
@@ -3145,6 +3529,7 @@
       "name_de": "Steppenweihe",
       "name_scientific": "Circus macrourus",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.322,
       "conservation_status": "nicht gefährdet"
     },
@@ -3153,6 +3538,7 @@
       "name_de": "Zwergseeschwalbe",
       "name_scientific": "Sternula albifrons",
       "category": "Vogel",
+      "diet": "Fleischfresser",
       "weight_kg": 0.0335,
       "conservation_status": "nicht gefährdet"
     },
@@ -3161,6 +3547,7 @@
       "name_de": "Schneeammer",
       "name_scientific": "Plectrophenax nivalis",
       "category": "Vogel",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3168,6 +3555,7 @@
       "name_de": "Erdkröte",
       "name_scientific": "Bufo bufo",
       "category": "Amphibie",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3175,6 +3563,7 @@
       "name_de": "Admiral",
       "name_scientific": "Vanessa atalanta",
       "category": "Insekt",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3182,6 +3571,7 @@
       "name_de": "Siebenschläfer",
       "name_scientific": "Glis glis",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3189,6 +3579,7 @@
       "name_de": "Finnwal",
       "name_scientific": "Balaenoptera physalus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3196,6 +3587,7 @@
       "name_de": "Schwarzfußkatze",
       "name_scientific": "Felis nigripes",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 0.074,
       "conservation_status": "gefährdet"
     },
@@ -3208,6 +3600,7 @@
         "Wald",
         "Buschland"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3215,6 +3608,7 @@
       "name_de": "Nilgauantilope",
       "name_scientific": "Boselaphus tragocamelus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3222,6 +3616,7 @@
       "name_de": "Mondfisch",
       "name_scientific": "Mola mola",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3229,13 +3624,15 @@
       "name_de": "Sardine",
       "name_scientific": "Sardina pilchardus",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
       "id": "Q179530",
       "name_de": "Schwalbenschwanz",
       "name_scientific": "Papilio machaon",
-      "category": "Insekt"
+      "category": "Insekt",
+      "diet": "Pflanzenfresser"
     },
     {
       "id": "Q187024",
@@ -3246,6 +3643,7 @@
         "Grasland",
         "Buschland"
       ],
+      "diet": "Allesfresser",
       "weight_kg": 0.0625,
       "conservation_status": "nicht gefährdet"
     },
@@ -3253,13 +3651,15 @@
       "id": "Q192233",
       "name_de": "Asiatische Goldkatze",
       "name_scientific": "Pardofelis temminckii",
-      "category": "Säugetier"
+      "category": "Säugetier",
+      "diet": "Fleischfresser"
     },
     {
       "id": "Q106133",
       "name_de": "Hausratte",
       "name_scientific": "Rattus rattus",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3270,6 +3670,7 @@
       "habitat": [
         "Buschland"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3280,6 +3681,7 @@
       "habitat": [
         "Buschland"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3287,6 +3689,7 @@
       "name_de": "Steppenzebra",
       "name_scientific": "Equus quagga",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3298,6 +3701,7 @@
         "Wald",
         "Savanne"
       ],
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3305,6 +3709,7 @@
       "name_de": "Atlantischer Hering",
       "name_scientific": "Clupea harengus",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3312,6 +3717,7 @@
       "name_de": "Grönlandwal",
       "name_scientific": "Balaena mysticetus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3319,6 +3725,7 @@
       "name_de": "Warzenschwein",
       "name_scientific": "Phacochoerus africanus",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3329,6 +3736,7 @@
       "continent": [
         "Afrika"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 4.8,
       "conservation_status": "gefährdet"
     },
@@ -3337,6 +3745,7 @@
       "name_de": "Schraubenziege",
       "name_scientific": "Capra falconeri",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3344,6 +3753,7 @@
       "name_de": "Mendesantilope",
       "name_scientific": "Addax nasomaculatus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 75,
       "conservation_status": "vom Aussterben bedroht"
     },
@@ -3355,6 +3765,7 @@
       "continent": [
         "Asien"
       ],
+      "diet": "Pflanzenfresser",
       "weight_kg": 0.455,
       "conservation_status": "stark gefährdet"
     },
@@ -3363,19 +3774,22 @@
       "name_de": "Berberaffe",
       "name_scientific": "Macaca sylvanus",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "stark gefährdet"
     },
     {
       "id": "Q13408062",
       "name_de": "Hausyak",
       "name_scientific": "Bos grunniens",
-      "category": "Säugetier"
+      "category": "Säugetier",
+      "diet": "Pflanzenfresser"
     },
     {
       "id": "Q178973",
       "name_de": "Frettchen",
       "name_scientific": "Mustela furo",
-      "category": "Säugetier"
+      "category": "Säugetier",
+      "diet": "Fleischfresser"
     },
     {
       "id": "Q183035",
@@ -3385,6 +3799,7 @@
       "habitat": [
         "Wald"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht"
     },
     {
@@ -3392,6 +3807,7 @@
       "name_de": "Mandrill",
       "name_scientific": "Mandrillus sphinx",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3403,6 +3819,7 @@
         "Wald",
         "Buschland"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3410,6 +3827,7 @@
       "name_de": "Axishirsch",
       "name_scientific": "Axis axis",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3421,6 +3839,7 @@
         "Ozeanien",
         "Australien"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3428,6 +3847,7 @@
       "name_de": "Graskarpfen",
       "name_scientific": "Ctenopharyngodon idella",
       "category": "Fisch",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3435,6 +3855,7 @@
       "name_de": "Europäischer Wolfsbarsch",
       "name_scientific": "Dicentrarchus labrax",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3445,6 +3866,7 @@
       "continent": [
         "Asien"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "vom Aussterben bedroht"
     },
     {
@@ -3452,6 +3874,7 @@
       "name_de": "Gangesdelfin",
       "name_scientific": "Platanista gangetica",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "stark gefährdet"
     },
     {
@@ -3463,6 +3886,7 @@
         "Savanne",
         "Buschland"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3470,6 +3894,7 @@
       "name_de": "Zwergflusspferd",
       "name_scientific": "Choeropsis liberiensis",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "stark gefährdet"
     },
     {
@@ -3481,6 +3906,7 @@
         "Grasland",
         "Wald"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "stark gefährdet"
     },
     {
@@ -3488,6 +3914,7 @@
       "name_de": "Siamesischer Kampffisch",
       "name_scientific": "Betta splendens",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3495,6 +3922,7 @@
       "name_de": "Seeleopard",
       "name_scientific": "Hydrurga leptonyx",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3502,6 +3930,7 @@
       "name_de": "Gabelbock",
       "name_scientific": "Antilocapra americana",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 3.5,
       "conservation_status": "nicht gefährdet"
     },
@@ -3510,6 +3939,7 @@
       "name_de": "Tigerkatze",
       "name_scientific": "Leopardus tigrinus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3517,6 +3947,7 @@
       "name_de": "Polarhase",
       "name_scientific": "Lepus arcticus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3524,13 +3955,15 @@
       "name_de": "Schellfisch",
       "name_scientific": "Melanogrammus aeglefinus",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
       "id": "Q30258",
       "name_de": "Hornisse",
       "name_scientific": "Vespa crabro",
-      "category": "Insekt"
+      "category": "Insekt",
+      "diet": "Allesfresser"
     },
     {
       "id": "Q184389",
@@ -3540,6 +3973,7 @@
       "habitat": [
         "Wiese"
       ],
+      "diet": "Allesfresser",
       "weight_kg": 11.6925,
       "conservation_status": "nicht gefährdet"
     },
@@ -3548,6 +3982,7 @@
       "name_de": "Mantelpavian",
       "name_scientific": "Papio hamadryas",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3555,6 +3990,7 @@
       "name_de": "Gemeiner Delfin",
       "name_scientific": "Delphinus delphis",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3570,6 +4006,7 @@
         "Süßwasser",
         "Sumpf"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3580,6 +4017,7 @@
       "habitat": [
         "Wald"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3587,6 +4025,7 @@
       "name_de": "Grevyzebra",
       "name_scientific": "Equus grevyi",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "weight_kg": 40,
       "conservation_status": "stark gefährdet"
     },
@@ -3595,6 +4034,7 @@
       "name_de": "Afrikanische Zibetkatze",
       "name_scientific": "Civettictis civetta",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3602,6 +4042,7 @@
       "name_de": "Kegelrobbe",
       "name_scientific": "Halichoerus grypus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3609,6 +4050,7 @@
       "name_de": "Europäische Sardelle",
       "name_scientific": "Engraulis encrasicolus",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3616,6 +4058,7 @@
       "name_de": "Monarchfalter",
       "name_scientific": "Danaus plexippus",
       "category": "Insekt",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3623,6 +4066,7 @@
       "name_de": "Grauwal",
       "name_scientific": "Eschrichtius robustus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3630,6 +4074,7 @@
       "name_de": "Löffelhund",
       "name_scientific": "Otocyon megalotis",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "weight_kg": 2.1350000000000002,
       "conservation_status": "nicht gefährdet"
     },
@@ -3638,6 +4083,7 @@
       "name_de": "Großer Ameisenbär",
       "name_scientific": "Myrmecophaga tridactyla",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 1.35,
       "conservation_status": "gefährdet"
     },
@@ -3652,6 +4098,7 @@
       "continent": [
         "Asien"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3659,6 +4106,7 @@
       "name_de": "Haselmaus",
       "name_scientific": "Muscardinus avellanarius",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3669,19 +4117,22 @@
       "habitat": [
         "Savanne"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet"
     },
     {
       "id": "Q158699",
       "name_de": "Tagpfauenauge",
       "name_scientific": "Aglais io",
-      "category": "Insekt"
+      "category": "Insekt",
+      "diet": "Pflanzenfresser"
     },
     {
       "id": "Q185097",
       "name_de": "Seiwal",
       "name_scientific": "Balaenoptera borealis",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "stark gefährdet"
     },
     {
@@ -3692,6 +4143,7 @@
       "continent": [
         "Asien"
       ],
+      "diet": "Allesfresser",
       "weight_kg": 14,
       "conservation_status": "nicht gefährdet"
     },
@@ -3703,6 +4155,7 @@
       "habitat": [
         "tropischer Regenwald"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 0.105,
       "conservation_status": "nicht gefährdet"
     },
@@ -3711,6 +4164,7 @@
       "name_de": "Mittelmeer-Mönchsrobbe",
       "name_scientific": "Monachus monachus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3718,6 +4172,7 @@
       "name_de": "Anubispavian",
       "name_scientific": "Papio anubis",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3725,6 +4180,7 @@
       "name_de": "Wasserbock",
       "name_scientific": "Kobus ellipsiprymnus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3732,6 +4188,7 @@
       "name_de": "Grasfrosch",
       "name_scientific": "Rana temporaria",
       "category": "Amphibie",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3739,6 +4196,7 @@
       "name_de": "Döbel",
       "name_scientific": "Squalius cephalus",
       "category": "Fisch",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3746,6 +4204,7 @@
       "name_de": "Nordopossum",
       "name_scientific": "Didelphis virginiana",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "weight_kg": 0.00016,
       "conservation_status": "nicht gefährdet"
     },
@@ -3754,6 +4213,7 @@
       "name_de": "Bartrobbe",
       "name_scientific": "Erignathus barbatus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3761,6 +4221,7 @@
       "name_de": "Minkwal",
       "name_scientific": "Balaenoptera acutorostrata",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3768,6 +4229,7 @@
       "name_de": "Spießbock",
       "name_scientific": "Oryx gazella",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3775,6 +4237,7 @@
       "name_de": "Giraffengazelle",
       "name_scientific": "Litocranius walleri",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3782,6 +4245,7 @@
       "name_de": "Chilenische Waldkatze",
       "name_scientific": "Leopardus guigna",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3789,6 +4253,7 @@
       "name_de": "Waldmaus",
       "name_scientific": "Apodemus sylvaticus",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3796,6 +4261,7 @@
       "name_de": "Siamang",
       "name_scientific": "Symphalangus syndactylus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "stark gefährdet"
     },
     {
@@ -3803,6 +4269,7 @@
       "name_de": "Weißwedelhirsch",
       "name_scientific": "Odocoileus virginianus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3810,6 +4277,7 @@
       "name_de": "Nordafrikanische Kuhantilope",
       "name_scientific": "Alcelaphus buselaphus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3817,6 +4285,7 @@
       "name_de": "Schneeziege",
       "name_scientific": "Oreamnos americanus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3824,6 +4293,7 @@
       "name_de": "Wickelbär",
       "name_scientific": "Potos flavus",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3831,6 +4301,7 @@
       "name_de": "Schabrackenhyäne",
       "name_scientific": "Parahyaena brunnea",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3838,6 +4309,7 @@
       "name_de": "Gewöhnlicher Schweinswal",
       "name_scientific": "Phocoena phocoena",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3845,6 +4317,7 @@
       "name_de": "Karausche",
       "name_scientific": "Carassius carassius",
       "category": "Fisch",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3852,6 +4325,7 @@
       "name_de": "Echter Bonito",
       "name_scientific": "Katsuwonus pelamis",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3859,6 +4333,7 @@
       "name_de": "Rotfeder",
       "name_scientific": "Scardinius erythrophthalmus",
       "category": "Fisch",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3869,6 +4344,7 @@
       "continent": [
         "Afrika"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 16.5,
       "length_cm": 97,
       "conservation_status": "stark gefährdet"
@@ -3878,6 +4354,7 @@
       "name_de": "Waldhund",
       "name_scientific": "Speothos venaticus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 5.5,
       "conservation_status": "nicht gefährdet"
     },
@@ -3889,19 +4366,22 @@
       "habitat": [
         "Süßwasser"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "stark gefährdet"
     },
     {
       "id": "Q213044",
       "name_de": "Borneo-Goldkatze",
       "name_scientific": "Pardofelis badia",
-      "category": "Säugetier"
+      "category": "Säugetier",
+      "diet": "Fleischfresser"
     },
     {
       "id": "Q243339",
       "name_de": "Europäisches Gleithörnchen",
       "name_scientific": "Pteromys volans",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3912,6 +4392,7 @@
       "continent": [
         "Afrika"
       ],
+      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht"
     },
     {
@@ -3922,6 +4403,7 @@
       "habitat": [
         "Grasland"
       ],
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -3929,6 +4411,7 @@
       "name_de": "Bongo",
       "name_scientific": "Tragelaphus eurycerus",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3936,6 +4419,7 @@
       "name_de": "Rostkatze",
       "name_scientific": "Prionailurus rubiginosus",
       "category": "Säugetier",
+      "diet": "Fleischfresser",
       "weight_kg": 1.5,
       "conservation_status": "nicht gefährdet"
     },
@@ -3944,6 +4428,7 @@
       "name_de": "Graufuchs",
       "name_scientific": "Urocyon cinereoargenteus",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "weight_kg": 0.08600000000000001,
       "conservation_status": "nicht gefährdet"
     },
@@ -3952,6 +4437,7 @@
       "name_de": "Westlicher Gorilla",
       "name_scientific": "Gorilla gorilla",
       "category": "Säugetier",
+      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht"
     },
     {
@@ -3963,6 +4449,7 @@
         "Buschland",
         "Wald"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 0.565,
       "conservation_status": "nicht gefährdet"
     },
@@ -3975,6 +4462,7 @@
         "Asien",
         "Ozeanien"
       ],
+      "diet": "Fleischfresser",
       "weight_kg": 67.9,
       "conservation_status": "stark gefährdet"
     },
@@ -3983,6 +4471,7 @@
       "name_de": "Anden-Makibär",
       "name_scientific": "Bassaricyon neblina",
       "category": "Säugetier",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3990,6 +4479,7 @@
       "name_de": "Kaulbarsch",
       "name_scientific": "Gymnocephalus cernua",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -3997,6 +4487,7 @@
       "name_de": "Gewöhnlicher Hornhecht",
       "name_scientific": "Belone belone",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -4004,6 +4495,7 @@
       "name_de": "Dreistachliger Stichling",
       "name_scientific": "Gasterosteus aculeatus",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -4011,6 +4503,7 @@
       "name_de": "Zander",
       "name_scientific": "Sander lucioperca",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -4018,19 +4511,22 @@
       "name_de": "Gelbflossen-Thun",
       "name_scientific": "Thunnus albacares",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
       "id": "Q337509",
       "name_de": "Gartenkreuzspinne",
       "name_scientific": "Araneus diadematus",
-      "category": "Spinnentier"
+      "category": "Spinnentier",
+      "diet": "Fleischfresser"
     },
     {
       "id": "Q15856",
       "name_de": "Grottenolm",
       "name_scientific": "Proteus anguinus",
       "category": "Amphibie",
+      "diet": "Fleischfresser",
       "conservation_status": "gefährdet"
     },
     {
@@ -4038,6 +4534,7 @@
       "name_de": "Ukelei",
       "name_scientific": "Alburnus alburnus",
       "category": "Fisch",
+      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -4045,6 +4542,7 @@
       "name_de": "Seeteufel",
       "name_scientific": "Lophius piscatorius",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -4052,6 +4550,7 @@
       "name_de": "Steinbutt",
       "name_scientific": "Scophthalmus maximus",
       "category": "Fisch",
+      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet"
     },
     {
@@ -4059,6 +4558,7 @@
       "name_de": "Roter Apollo",
       "name_scientific": "Parnassius apollo",
       "category": "Insekt",
+      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet"
     }
   ]
