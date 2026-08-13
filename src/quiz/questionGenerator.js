@@ -80,15 +80,6 @@ const FIELD_DEFINITIONS = {
       Array.isArray(animal.continent) && animal.continent.includes(value),
     format: (value) => value,
   },
-  color: {
-    kind: "array",
-    question: (name) => `Welche Farbe hat das Tier ${name}?`,
-    identifyQuestion: (value) => `Welches Tier hat die Farbe „${value}“?`,
-    getValues: (animal) => animal.color,
-    hasValue: (animal, value) =>
-      Array.isArray(animal.color) && animal.color.includes(value),
-    format: (value) => value,
-  },
   diet: {
     kind: "enum",
     question: (name) => `Was frisst das Tier ${name}?`,
@@ -196,6 +187,15 @@ function buildValueQuestion({
   rng,
 }) {
   const pool = new Map(); // Anzeigetext -> Rohwert (für Sortierung nach Nähe)
+  // Dedupe/Ausschluss muss auf Basis des *angezeigten* (formatierten) Texts
+  // erfolgen, nicht des Rohwerts: `formatNumber()` rundet auf 1 Nachkomma-
+  // stelle, wodurch unterschiedliche Rohwerte (z. B. 0.031 und 0.049) auf
+  // denselben Anzeigetext ("0 kg") fallen können. Ohne diesen Vergleich auf
+  // Anzeigetext-Ebene könnte eine Falschantwort optisch identisch mit der
+  // korrekten Antwort erscheinen, obwohl ihr Rohwert abweicht (Issue #5,
+  // QA-Bug 1: zwei Kacheln zeigen "0 kg", eine davon fälschlich als korrekt
+  // markiert).
+  const correctDisplay = def.format(correctValue);
 
   for (const other of otherAnimals) {
     const candidates =
@@ -216,6 +216,9 @@ function buildValueQuestion({
       if (def.kind === "array" && def.hasValue(animal, candidate)) continue;
 
       const display = def.format(candidate);
+      // Nach Rundung optisch nicht von der korrekten Antwort unterscheidbar
+      // -> als Falschantwort ungeeignet, überspringen statt Duplikat riskieren.
+      if (display === correctDisplay) continue;
       if (!pool.has(display)) {
         pool.set(display, candidate);
       }
@@ -360,11 +363,87 @@ export function buildQuestionForField(
   });
 }
 
+/** Sortiert `fields` nach bisheriger Nutzung in der laufenden Runde
+ * (aufsteigend, am wenigsten genutztes Feld zuerst), Gleichstände zufällig
+ * gebrochen. Kern des Fixes für Issue #11: statt einer einmal pro Runde
+ * fest gemischten Feld-Reihenfolge (die bei ungleicher Feld-Abdeckung fast
+ * immer auf dasselbe, am besten abgedeckte Feld hinausläuft) wird die
+ * Priorität pro Frage neu berechnet und bevorzugt unterrepräsentierte
+ * Felder, bevor auf ein bereits häufig genutztes Feld zurückgegriffen wird. */
+function orderFieldsByUsage(fields, fieldUsageCount, rng) {
+  return shuffle(fields, rng).sort(
+    (a, b) => fieldUsageCount[a] - fieldUsageCount[b],
+  );
+}
+
+/** Sucht für ein bestimmtes Feld das erste noch unbenutzte Tier aus
+ * `candidateAnimals`, für das sich eine gültige Frage bilden lässt, und
+ * liefert `{ question, animal }` oder `null`, wenn kein Tier/Feld-Kombination
+ * dafür (mehr) verfügbar ist. Wird pro Frage-Slot für das jeweils
+ * priorisierte Feld aufgerufen (siehe `orderFieldsByUsage`), sodass aktiv
+ * nach einem passenden Tier für das unterrepräsentierte Feld gesucht wird,
+ * statt nur beim zufällig gezogenen Tier passiv durchzuprobieren. */
+function tryBuildQuestionForField({
+  def,
+  field,
+  difficulty,
+  candidateAnimals,
+  usedAnimalIds,
+  rng,
+}) {
+  const wrongAnswerStrategy = getWrongAnswerStrategyForDifficulty(difficulty);
+
+  for (const animal of candidateAnimals) {
+    if (usedAnimalIds.has(animal.id)) continue;
+
+    const correctValue = getCorrectValue(def, animal, rng);
+    if (correctValue === null || correctValue === undefined) continue;
+
+    const otherAnimals = candidateAnimals.filter(
+      (other) => other.id !== animal.id,
+    );
+
+    const question =
+      buildValueQuestion({
+        def,
+        field,
+        animal,
+        correctValue,
+        otherAnimals,
+        wrongAnswerStrategy,
+        rng,
+      }) ||
+      buildIdentifyQuestion({
+        def,
+        field,
+        animal,
+        correctValue,
+        otherAnimals,
+        usedAnimalIds,
+        rng,
+      });
+
+    if (question) return { question, animal };
+  }
+
+  return null;
+}
+
 /**
  * Erzeugt eine Runde Multiple-Choice-Fragen aus einer gegebenen Tierliste.
  *
  * Reine Funktion, kein DOM-Zugriff, keine Abhängigkeit von data/animals.json
  * (siehe Datei-Kommentar oben) — die Tierliste kommt als Parameter.
+ *
+ * Feld-Auswahl (Issue #11): pro Frage wird das bislang am wenigsten in
+ * dieser Runde genutzte, für ein noch verfügbares Tier bebaubare Feld
+ * bevorzugt (siehe `orderFieldsByUsage`/`tryBuildQuestionForField`) — das
+ * sorgt für eine echte Durchmischung der Fragetypen, auch bei stark
+ * ungleicher Feld-Abdeckung in der echten Tierdatenbank (z. B. `category`
+ * zu 100 % vs. `habitat` zu ~5 % befüllt). Erst wenn kein unterrepräsen-
+ * tiertes Feld mehr für ein verbleibendes Tier verfügbar ist, greift die
+ * Runde wieder auf ein bereits häufiger genutztes Feld (i. d. R. `category`)
+ * zurück.
  *
  * @param {object[]} animals Tierliste, je Eintrag laut architecture.md-Schema
  * @param {object} options
@@ -393,54 +472,40 @@ export function generateQuestions(animals, options = {}) {
       animal && isNonEmptyString(animal.name_de) && isNonEmptyString(animal.id),
   );
   const candidateAnimals = shuffle(usableAnimals, rng);
-  const shuffledFields = shuffle(fields, rng);
 
   const questions = [];
   const usedAnimalIds = new Set();
+  const fieldUsageCount = Object.fromEntries(fields.map((field) => [field, 0]));
 
-  for (const animal of candidateAnimals) {
-    if (questions.length >= count) break;
-    if (usedAnimalIds.has(animal.id)) continue;
+  while (questions.length < count) {
+    const fieldOrder = orderFieldsByUsage(fields, fieldUsageCount, rng);
+    let builtThisSlot = false;
 
-    for (const field of shuffledFields) {
+    for (const field of fieldOrder) {
       const def = FIELD_DEFINITIONS[field];
       if (!def) continue;
 
-      const correctValue = getCorrectValue(def, animal, rng);
-      if (correctValue === null || correctValue === undefined) continue;
+      const result = tryBuildQuestionForField({
+        def,
+        field,
+        difficulty,
+        candidateAnimals,
+        usedAnimalIds,
+        rng,
+      });
 
-      const otherAnimals = candidateAnimals.filter(
-        (other) => other.id !== animal.id,
-      );
-      const wrongAnswerStrategy =
-        getWrongAnswerStrategyForDifficulty(difficulty);
-
-      const question =
-        buildValueQuestion({
-          def,
-          field,
-          animal,
-          correctValue,
-          otherAnimals,
-          wrongAnswerStrategy,
-          rng,
-        }) ||
-        buildIdentifyQuestion({
-          def,
-          field,
-          animal,
-          correctValue,
-          otherAnimals,
-          usedAnimalIds,
-          rng,
-        });
-
-      if (question) {
-        questions.push(question);
-        usedAnimalIds.add(animal.id);
+      if (result) {
+        questions.push(result.question);
+        usedAnimalIds.add(result.animal.id);
+        fieldUsageCount[field] += 1;
+        builtThisSlot = true;
         break;
       }
     }
+
+    // Kein Feld mehr lieferbar (alle passenden Tiere bereits verbraucht) ->
+    // Runde endet hier, ggf. mit weniger als `count` Fragen (wie zuvor).
+    if (!builtThisSlot) break;
   }
 
   return questions;

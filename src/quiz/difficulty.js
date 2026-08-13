@@ -1,8 +1,8 @@
 // Zuordnung Felder → Schwierigkeitsstufe (siehe architecture.md, Abschnitt
 // "Schwierigkeitsstufen — Zuordnung zu vorhandenen Feldern").
 //
-// Stufe 6–10 (einfach): Fragen ausschließlich aus category/habitat/continent/
-// color — Falschantworten aus deutlich unterschiedlichen Werten (klar
+// Stufe 6–10 (einfach): Fragen ausschließlich aus category/habitat/continent
+// — Falschantworten aus deutlich unterschiedlichen Werten (klar
 // unterscheidbar).
 // Stufe 10–12 (anspruchsvoll): zusätzlich weight_kg/length_cm/lifespan_years/
 // diet/conservation_status — Falschantworten möglichst nah am richtigen Wert
@@ -16,12 +16,7 @@ export const DIFFICULTY_LEVELS = Object.freeze({
 });
 
 // Reihenfolge ist bewusst wie in architecture.md aufgeführt.
-const EASY_FIELDS = Object.freeze([
-  "category",
-  "habitat",
-  "continent",
-  "color",
-]);
+const EASY_FIELDS = Object.freeze(["category", "habitat", "continent"]);
 const HARD_ONLY_FIELDS = Object.freeze([
   "weight_kg",
   "length_cm",

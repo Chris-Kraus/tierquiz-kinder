@@ -23,7 +23,7 @@ Aktueller Fokus dieses Dokuments: **ausschließlich der Spielmodus "Quizfragen" 
 2. **Anzahl Antwortoptionen:** 4 Antwortoptionen pro Frage (passt zum 2×2-Kachel-Layout aus `design.md`).
 3. **Fragenauswahl aus der Tierdatenbank:** Fragen werden aus dem Pool der ~500 Tiere generiert bzw. ausgewählt. Wie genau (zufällig, mit/ohne Wiederholung innerhalb einer Runde, Kategorien-Filter, wie falsche Antwortoptionen aus den übrigen Tieren plausibel gezogen werden) ist technisch in Abstimmung mit `software-architect` zu klären — bei zwei Schwierigkeitsstufen zusätzlich: welche Felder/Frageschablonen je Stufe genutzt werden (siehe `architecture.md`, Abschnitt Schwierigkeitsstufen).
 4. **Punktestand / Ergebnis-Tracking:** Es gibt einen Punktestand bzw. ein Ergebnis pro Quiz-Durchlauf (z. B. "X von Y richtig beantwortet"), angezeigt am Ende der Runde. Keine Speicherung über einzelne Sitzungen hinaus (kein Highscore/Verlauf) in dieser Phase — siehe "Explizit außerhalb des Scopes".
-5. **Schwierigkeitsgrade:** Es gibt **zwei umschaltbare Schwierigkeitsstufen**, gekoppelt an Altersgruppen: **6–10 Jahre** (einfacher — Fragen zu intuitiven/visuellen Fakten wie Kategorie, Lebensraum, Kontinent, Farbe) und **10–12 Jahre** (anspruchsvoller — zusätzlich Fragen zu spezifischeren/numerischen Fakten wie Gewicht, Länge, Lebenserwartung, Ernährung, ggf. Gefährdungsstatus, sowie näher beieinanderliegende, schwerer unterscheidbare Falschantworten). Die Stufe wird am Start-Bildschirm gewählt, nicht automatisch erkannt, und ist jederzeit wechselbar. Details zur Feld-Zuordnung siehe `architecture.md`.
+5. **Schwierigkeitsgrade:** Es gibt **zwei umschaltbare Schwierigkeitsstufen**, gekoppelt an Altersgruppen: **6–10 Jahre** (einfacher — Fragen zu intuitiven/visuellen Fakten wie Kategorie, Lebensraum, Kontinent; *nicht* Farbe, siehe "Datenbasis") und **10–12 Jahre** (anspruchsvoller — zusätzlich Fragen zu spezifischeren/numerischen Fakten wie Gewicht, Länge, Lebenserwartung, Ernährung, ggf. Gefährdungsstatus, sowie näher beieinanderliegende, schwerer unterscheidbare Falschantworten). Die Stufe wird am Start-Bildschirm gewählt, nicht automatisch erkannt, und ist jederzeit wechselbar. Details zur Feld-Zuordnung siehe `architecture.md`.
 6. **Feedback pro Frage:** Es wird erwartet, dass das Kind nach Beantwortung einer Frage erkennt, ob die Antwort richtig oder falsch war (konkrete Gestaltung ist UX-Thema, nicht Requirements-Thema). Kein akustisches Feedback (Sound-Effekte) in dieser Phase — rein visuelles Feedback, siehe "Explizit außerhalb des Scopes".
 7. **Rundenlänge:** 10 Fragen pro Quiz-Durchlauf als Standard (fest, aber technisch leicht anpassbar).
 
@@ -33,6 +33,7 @@ Aktueller Fokus dieses Dokuments: **ausschließlich der Spielmodus "Quizfragen" 
 - **Umfang:** Zielgröße ca. 500 Tiere.
 - **Bilder:** In dieser Phase explizit **ausgeschlossen** — keine Tierbilder werden bezogen, gespeichert oder angezeigt. Fragen und Antworten basieren ausschließlich auf Textdaten/Fakten aus Wikidata.
 - **Konkretes Datenschema** (welche Attribute pro Tier, Struktur, Format) ist Aufgabe von `software-architect` und wird dort spezifiziert, nicht in diesem Dokument.
+- **Korrektur aus realer Datenbeschaffung (Issue #2):** Das Feld **"Farbe" ist als Basisfeld gestrichen** — die reale Wikidata-Abdeckung liegt bei 0% über 1.480 hydrierte Tier-Datensätze, es gibt also faktisch keine strukturierten Farbdaten zum Abfragen. Mit dem Nutzer abgestimmt und entschieden. Auch die übrigen optionalen Felder (Lebensraum, Kontinent, Gewicht u. a.) sind unterschiedlich häufig befüllt (z. B. Lebensraum ~4,9%, Kontinent ~6,3%, Gewicht ~14,4%) — nur `id`, `name_de` und `category` sind pro Tier verpflichtend. Die tatsächlich stellbare Fragevielfalt variiert dadurch von Tier zu Tier; Details siehe `architecture.md`.
 
 ## Nicht-funktionale Anforderungen
 
@@ -68,3 +69,7 @@ Alle Punkte aus der ersten Runde offener Fragen wurden geklärt bzw. mit einem b
 | Tierauswahl (500) | Automatisch nach Popularität/Bekanntheit (Wikidata-Sitelinks), siehe `architecture.md` |
 | Sound-Effekte | Nein, rein visuelles Feedback zunächst |
 | Weiter-Mechanik nach Feedback | Manueller "Weiter"-Button (mehr Kontrolle fürs Kind), siehe `design.md` |
+
+## Korrektur (13.08.2026)
+
+Im Zuge der realen Datenbeschaffung für Issue #2 (Wikidata) wurde festgestellt, dass die reale Feldabdeckung deutlich von der ursprünglichen Annahme abweicht (kein Testartefakt, gemessen an 1.480 hydrierten Tier-Datensätzen). Daraufhin wurde mit dem Nutzer abgestimmt: **"Farbe" entfällt als Basisfeld** (0% Abdeckung), und die Pflichtfelder wurden auf `id`, `name_de`, `category` reduziert — die übrigen Felder bleiben optional mit variierender Abdeckung je Tier. Details siehe "Datenbasis (Tierdatenbank)" oben sowie `architecture.md`.

@@ -16,9 +16,9 @@ describe("DIFFICULTY_LEVELS", () => {
 });
 
 describe("getFieldsForDifficulty", () => {
-  it("liefert für Stufe 6-10 ausschließlich category/habitat/continent/color", () => {
+  it("liefert für Stufe 6-10 ausschließlich category/habitat/continent", () => {
     const fields = getFieldsForDifficulty(DIFFICULTY_LEVELS.EASY);
-    expect(fields).toEqual(["category", "habitat", "continent", "color"]);
+    expect(fields).toEqual(["category", "habitat", "continent"]);
   });
 
   it("liefert für Stufe 10-12 zusätzlich die anspruchsvolleren Felder", () => {
@@ -28,7 +28,6 @@ describe("getFieldsForDifficulty", () => {
         "category",
         "habitat",
         "continent",
-        "color",
         "weight_kg",
         "length_cm",
         "lifespan_years",
@@ -36,7 +35,7 @@ describe("getFieldsForDifficulty", () => {
         "conservation_status",
       ]),
     );
-    expect(fields).toHaveLength(9);
+    expect(fields).toHaveLength(8);
   });
 
   it("wirft bei unbekannter Schwierigkeitsstufe", () => {

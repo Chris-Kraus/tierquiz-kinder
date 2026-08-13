@@ -20,13 +20,21 @@
  * (siehe scripts/fetch-animals/README.md für Details)
  */
 
-import { writeFile, mkdir } from "node:fs/promises";
+import { writeFile, mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..", "..");
 const OUTPUT_PATH = path.join(REPO_ROOT, "data", "animals.json");
+// Zwischenspeicher der rohen, hydrierten Wikidata-Daten (vor der
+// Pflichtfeld-Validierung/dem Zuschnitt auf animals.json). Erlaubt, spätere
+// Schema-Anpassungen (welche Felder sind Pflicht, welche Felder werden
+// überhaupt aufgenommen) mit `--use-cache` neu anzuwenden, ohne Discovery
+// und Hydration erneut gegen Wikidata zu fahren (spart Zeit + API-Last).
+// Bewusst außerhalb von data/ (kein Teil des App-Outputs) und in .gitignore
+// aufgenommen (Build-Artefakt, kein Quellcode).
+const CACHE_PATH = path.join(__dirname, ".cache", "hydration-cache.json");
 
 const SPARQL_ENDPOINT = "https://query.wikidata.org/sparql";
 const API_ENDPOINT = "https://www.wikidata.org/w/api.php";
@@ -193,17 +201,17 @@ function chunk(array, size) {
 
 // --- Phase 1: Discovery ---------------------------------------------------
 
-async function discoverClassCandidates(classQid, categoryLabel) {
+async function discoverTaxonCandidates(taxonQid, categoryLabel, limit) {
   const query = `
     SELECT ?animal ?sitelinks WHERE {
       ?animal wdt:${TAXON_RANK_PROP} wd:${SPECIES_RANK_QID} .
-      ?animal wdt:${PARENT_TAXON_PROP}* wd:${classQid} .
+      ?animal wdt:${PARENT_TAXON_PROP}* wd:${taxonQid} .
       ?animal wikibase:sitelinks ?sitelinks .
       FILTER(?sitelinks > ${SITELINKS_MIN})
       FILTER NOT EXISTS { ?animal wdt:P31 wd:${FOSSIL_TAXON_QID} }
     }
     ORDER BY DESC(?sitelinks)
-    LIMIT ${PER_CLASS_CANDIDATE_LIMIT}
+    LIMIT ${limit}
   `;
   const bindings = await sparqlQuery(query);
   return bindings.map((b) => ({
@@ -213,13 +221,52 @@ async function discoverClassCandidates(classQid, categoryLabel) {
   }));
 }
 
+// Für "einfache" Klassen (eine einzige QID): eine Query über den ganzen
+// P171*-Teilbaum. Für "zusammengesetzte" Klassen (subTaxa: [...]): der
+// Teilbaum der Gesamtklasse ist beim Wikidata Query Service zu teuer
+// (beobachtet: strukturelle 502/504 bei Insecta/Mollusca, kein reines
+// Lastproblem, siehe README.md) — stattdessen mehrere kleinere Queries über
+// bekannte Unter-Taxa (Ordnungen/Klassen), einzeln retry-fähig, danach
+// gemergt/dedupliziert/auf das Klassen-Limit gekürzt.
+async function discoverClassCandidates(classQid, classConfig, fallbackLimit) {
+  if (typeof classConfig === "string") {
+    return discoverTaxonCandidates(classQid, classConfig, fallbackLimit);
+  }
+  const { label, subTaxa } = classConfig;
+  const perSubTaxonLimit = Math.ceil(fallbackLimit / subTaxa.length) + 20; // kleiner Puffer für Überlappung
+  const byId = new Map();
+  const failedSubTaxa = [];
+  for (const subQid of subTaxa) {
+    try {
+      const candidates = await discoverTaxonCandidates(subQid, label, perSubTaxonLimit);
+      for (const c of candidates) if (!byId.has(c.id)) byId.set(c.id, c);
+    } catch (err) {
+      failedSubTaxa.push(`${subQid} (${err.message})`);
+    }
+  }
+  if (failedSubTaxa.length > 0) {
+    console.log(`\n    (Sub-Taxa fehlgeschlagen und übersprungen: ${failedSubTaxa.join(", ")})`);
+  }
+  const merged = [...byId.values()].sort((a, b) => b.sitelinks - a.sitelinks);
+  return merged.slice(0, fallbackLimit);
+}
+
+function classLabel(classConfig) {
+  // classConfig ist bei "einfachen" Klassen bereits das Label selbst
+  // (String, z. B. "Säugetier"), bei zusammengesetzten Klassen ein Objekt
+  // mit .label. TAXON_CLASSES ist NICHT nach Label indiziert, sondern nach
+  // QID — hier also nicht erneut nachschlagen.
+  return typeof classConfig === "string" ? classConfig : classConfig.label;
+}
+
 async function discoverAllCandidates() {
   const byId = new Map();
   const failedClasses = [];
-  for (const [classQid, categoryLabel] of Object.entries(TAXON_CLASSES)) {
-    process.stdout.write(`Discovery: ${categoryLabel} (${classQid}) ... `);
+  for (const [classQid, classConfig] of Object.entries(TAXON_CLASSES)) {
+    const label = classLabel(classConfig);
+    process.stdout.write(`Discovery: ${label} (${classQid}) ... `);
     try {
-      const candidates = await discoverClassCandidates(classQid, categoryLabel);
+      const candidates = await discoverClassCandidates(classQid, classConfig, PER_CLASS_CANDIDATE_LIMIT);
       console.log(`${candidates.length} Kandidaten (sitelinks > ${SITELINKS_MIN})`);
       for (const c of candidates) {
         // Falls ein Taxon über mehrere Klassen erreichbar ist (seltene
@@ -232,7 +279,7 @@ async function discoverAllCandidates() {
       // besonders teuren Queries) — stattdessen überspringen und am Ende
       // sichtbar als Lücke melden.
       console.log(`FEHLGESCHLAGEN nach mehreren Retries: ${err.message}`);
-      failedClasses.push(categoryLabel);
+      failedClasses.push(label);
     }
   }
   if (failedClasses.length > 0) {
@@ -311,6 +358,65 @@ function pickLabel(entity) {
   return null;
 }
 
+// Heuristik: Ist `value` tatsächlich der lateinische Artname statt eines
+// echten deutschen/englischen Trivialnamens? Hintergrund (Issue #10): 37 von
+// 500 Tieren hatten fälschlich den wissenschaftlichen Namen in name_de. Root
+// Cause war KEIN fehlendes Label (das den bestehenden Fallback in pickLabel()
+// ausgelöst hätte), sondern ein tatsächlich VORHANDENES Wikidata-"de"-Label,
+// dessen Wert selbst der lateinische Binomial-Name ist (z. B. Q14683 „Haus-
+// sperling“: labels.de = "Passer domesticus", obwohl sitelinks.dewiki.title
+// korrekt "Haussperling" ist) – pickLabel() gab dieses Label unverändert
+// zurück, da es ja "vorhanden" war. Verifiziert an den echten Rohdaten im
+// Hydration-Cache für alle 37 betroffenen Tiere.
+function looksLikeScientificName(value, scientificName) {
+  if (!value) return false;
+  const v = value.trim();
+  if (scientificName && v.toLowerCase() === scientificName.trim().toLowerCase()) return true;
+  // Generisches Binomial-Muster (Gattung Art, z. B. "Passer domesticus"):
+  // großgeschriebenes erstes Wort, komplett kleingeschriebenes zweites Wort.
+  // Echte deutsche Trivialnamen bestehen aus großgeschriebenen Substantiven,
+  // auch mehrteilig (z. B. "Große Kerbameise") – ein rein kleingeschriebenes
+  // zweites Wort kommt dort praktisch nicht vor. Gegengeprüft: 0
+  // Falsch-Positive unter den 462 nicht betroffenen Tieren im bestehenden
+  // Datensatz (data/animals.json vor diesem Fix).
+  return /^[A-ZÄÖÜ][a-zäöüß]+ [a-zäöüß][a-zäöüß-]*$/.test(v);
+}
+
+// Anzeigename für ein Tier (name_de). Strengere Variante von pickLabel(), die
+// zusätzlich lateinische Artnamen als Label verwirft (siehe Issue #10) statt
+// sie unverändert zu übernehmen. Nur für Tiernamen verwendet – pickLabel()
+// bleibt für Habitat-/Kontinent-Item-Labels unverändert (dort ist der Bug
+// nicht relevant).
+function pickAnimalNameDe(entity, scientificName) {
+  const labels = entity.labels || {};
+  if (labels.de && !looksLikeScientificName(labels.de.value, scientificName)) {
+    return labels.de.value;
+  }
+  // Fallback: deutscher Wikipedia-Artikeltitel – meist ein verlässlicher
+  // echter deutscher Trivialname. Greift sowohl wenn das "de"-Label ganz
+  // fehlt, als auch (der Bugfall aus #10) wenn es selbst der lateinische
+  // Artname ist. ABER: bei einigen wenigen Arten ohne eigenständigen
+  // deutschen Trivialnamen ist auch der deutsche Wikipedia-Artikel selbst
+  // unter dem lateinischen Namen angelegt (beobachtet z. B. bei Q15978631
+  // "Homo sapiens" und Q130888 "Drosophila melanogaster" – der jeweilige
+  // Artikel zur Art selbst trägt den wissenschaftlichen Titel, während
+  // "Mensch"/"Fruchtfliege" andere, hier nicht referenzierte Wikidata-Items
+  // sind) – daher auch hier gegenprüfen statt blind zu übernehmen.
+  const dewikiTitle = entity.sitelinks && entity.sitelinks.dewiki && entity.sitelinks.dewiki.title;
+  if (dewikiTitle && !looksLikeScientificName(dewikiTitle, scientificName)) {
+    return dewikiTitle;
+  }
+  // Kein echtes deutsches Label und kein deutscher Wikipedia-Artikel
+  // vorhanden: bewusst KEIN englisches Fallback-Label als Anzeigename (siehe
+  // Issue #10 – ein englischer Name ist für ein deutsches Kinderquiz ebenso
+  // wenig kindgerecht wie Latein, und würde zudem meist ebenfalls nur den
+  // lateinischen Namen doppeln, siehe z. B. Q53462). `null` macht das Tier
+  // über die Pflichtfeld-Validierung (validateRequiredFields) ungültig; es
+  // wird durch den nächsten populären Kandidaten aus dem größeren Pool
+  // nachbesetzt (siehe main(): valid.slice(0, TARGET_TOTAL)).
+  return null;
+}
+
 function getStringClaim(claims, prop) {
   const statements = claims[prop];
   if (!statements || statements.length === 0) return null;
@@ -360,7 +466,8 @@ function getQuantityValue(claims, prop, unitMap) {
 
 function buildAnimal(candidate, entity, labelMap, endemicToContinents) {
   const claims = entity.claims || {};
-  const name_de = pickLabel(entity);
+  const name_scientific = getStringClaim(claims, PROPS.scientificName);
+  const name_de = pickAnimalNameDe(entity, name_scientific);
 
   const habitatQids = getItemQids(claims, PROPS.habitat);
   const habitat = habitatQids.map((q) => labelMap.get(q)).filter(Boolean);
@@ -386,20 +493,26 @@ function buildAnimal(candidate, entity, labelMap, endemicToContinents) {
     if (CONSERVATION_STATUS_MAP[q]) conservation_status = CONSERVATION_STATUS_MAP[q];
   }
 
-  const name_scientific = getStringClaim(claims, PROPS.scientificName);
+  // name_scientific wurde bereits oben (vor pickAnimalNameDe) extrahiert.
 
+  // `color` wurde nach dem ersten Testlauf komplett aus dem Schema entfernt
+  // (0 von 1.480 Kandidaten hatten eine strukturierte Wikidata-Farbangabe —
+  // kein Abdeckungsproblem, das "optional statt Pflicht" gelöst hätte,
+  // siehe architecture.md "Korrektur vom 13.08.2026" und README.md). Es wird
+  // hier bewusst kein `color`-Feld mehr erzeugt, auch nicht leer/optional.
   const animal = {
     id: candidate.id,
     name_de,
     ...(name_scientific ? { name_scientific } : {}),
     category: candidate.category,
-    habitat,
-    continent,
-    weight_kg,
+    // habitat/continent/weight_kg: seit der Schema-Korrektur vom 13.08.2026
+    // optional (ursprünglich Pflicht, siehe architecture.md) — nur
+    // aufnehmen, wenn tatsächlich Daten vorhanden sind, statt leerem
+    // Array/`null` (konsistent mit den übrigen optionalen Feldern).
+    ...(habitat.length > 0 ? { habitat } : {}),
+    ...(continent.length > 0 ? { continent } : {}),
+    ...(weight_kg != null ? { weight_kg } : {}),
     ...(length_cm != null ? { length_cm } : {}),
-    // color: keine belastbare strukturierte Wikidata-Property gefunden
-    // (siehe README.md "Bekannte Datenlücken") – bewusst nicht erfunden.
-    color: [],
     ...(conservation_status ? { conservation_status } : {}),
     _sitelinks: candidate.sitelinks,
     _isExtinct: isExtinct,
@@ -407,24 +520,69 @@ function buildAnimal(candidate, entity, labelMap, endemicToContinents) {
   return animal;
 }
 
+// Pflichtfelder seit der Schema-Korrektur vom 13.08.2026 (architecture.md):
+// nur noch id/name_de/category. habitat/continent/weight_kg/length_cm/
+// conservation_status/name_scientific sind optional und werden nur
+// aufgenommen, wenn Daten vorhanden sind (siehe buildAnimal oben). `color`
+// existiert als Feld nicht mehr.
 function validateRequiredFields(animal) {
   const missing = [];
   if (!animal.id || !/^Q[0-9]+$/.test(animal.id)) missing.push("id");
   if (!animal.name_de) missing.push("name_de");
   if (!CATEGORY_ENUM.includes(animal.category)) missing.push("category");
-  if (!Array.isArray(animal.habitat) || animal.habitat.length === 0) missing.push("habitat");
-  if (!Array.isArray(animal.continent) || animal.continent.length === 0) missing.push("continent");
-  if (typeof animal.weight_kg !== "number" || !(animal.weight_kg > 0)) missing.push("weight_kg");
-  if (!Array.isArray(animal.color) || animal.color.length === 0) missing.push("color");
   return missing;
 }
 
-// --- Hauptablauf -----------------------------------------------------
+// Rein informative Abdeckungs-Statistik für die (jetzt optionalen) Felder —
+// fließt nicht in die Validierung ein, aber in den Lauf-Report/die Doku.
+function computeOptionalFieldCoverage(animals) {
+  const fields = ["habitat", "continent", "weight_kg", "length_cm", "name_scientific", "conservation_status"];
+  const coverage = {};
+  for (const f of fields) {
+    coverage[f] = animals.filter((a) => {
+      const v = a[f];
+      return Array.isArray(v) ? v.length > 0 : v != null;
+    }).length;
+  }
+  return coverage;
+}
 
-async function main() {
-  console.log(`fetch-animals.js — Wikidata-Datenbeschaffung für die Tierquiz-Datenbank`);
-  console.log(`Zielgröße: ~${TARGET_TOTAL} Tiere, Popularitäts-Schwelle: sitelinks > ${SITELINKS_MIN}\n`);
+// --- Cache (Discovery + Hydration zwischenspeichern) -------------------
 
+async function saveCache({ pool, entities, endemicToContinents, labelMap }) {
+  const payload = {
+    savedAt: new Date().toISOString(),
+    pool,
+    entities: Object.fromEntries(entities),
+    endemicToContinents: Object.fromEntries(endemicToContinents),
+    labelMap: Object.fromEntries(labelMap),
+  };
+  await mkdir(path.dirname(CACHE_PATH), { recursive: true });
+  await writeFile(CACHE_PATH, JSON.stringify(payload), "utf-8");
+  console.log(`Cache geschrieben: ${CACHE_PATH} (${pool.length} Kandidaten).`);
+}
+
+async function loadCache() {
+  let raw;
+  try {
+    raw = await readFile(CACHE_PATH, "utf-8");
+  } catch {
+    return null;
+  }
+  const payload = JSON.parse(raw);
+  return {
+    pool: payload.pool,
+    entities: new Map(Object.entries(payload.entities)),
+    endemicToContinents: new Map(Object.entries(payload.endemicToContinents)),
+    labelMap: new Map(Object.entries(payload.labelMap)),
+    savedAt: payload.savedAt,
+  };
+}
+
+// Führt Discovery (Phase 1) + Hydration inkl. Kontinent-/Label-Auflösung
+// (Phase 2) aus. Ausgelagert aus main(), damit main() bei `--use-cache`
+// diesen kompletten (teuren) Block überspringen kann.
+async function fetchAndHydrate() {
   console.log("=== Phase 1: Discovery ===");
   const allCandidates = await discoverAllCandidates();
   console.log(`\nInsgesamt ${allCandidates.length} eindeutige Kandidaten gefunden.`);
@@ -465,6 +623,35 @@ async function main() {
   console.log(`Löse Labels für ${habitatQids.size} Habitat- und ${allContinentQids.size} Kontinent-Items auf ...`);
   const labelMap = await fetchLabels([...habitatQids, ...allContinentQids]);
 
+  return { pool, entities, endemicToContinents, labelMap };
+}
+
+// --- Hauptablauf -----------------------------------------------------
+
+async function main() {
+  console.log(`fetch-animals.js — Wikidata-Datenbeschaffung für die Tierquiz-Datenbank`);
+  console.log(`Zielgröße: ~${TARGET_TOTAL} Tiere, Popularitäts-Schwelle: sitelinks > ${SITELINKS_MIN}\n`);
+
+  const useCache = process.argv.includes("--use-cache");
+  let pool, entities, endemicToContinents, labelMap;
+
+  if (useCache) {
+    const cached = await loadCache();
+    if (cached) {
+      ({ pool, entities, endemicToContinents, labelMap } = cached);
+      console.log(
+        `--use-cache: Cache geladen (${CACHE_PATH}, gespeichert ${cached.savedAt}) — ${pool.length} Kandidaten, ${entities.size} hydrierte Entities. Phase 1+2 (Discovery/Hydration) werden übersprungen.\n`,
+      );
+    } else {
+      console.log(`--use-cache angegeben, aber kein Cache unter ${CACHE_PATH} gefunden — führe vollen Fetch aus.\n`);
+    }
+  }
+
+  if (!pool) {
+    ({ pool, entities, endemicToContinents, labelMap } = await fetchAndHydrate());
+    await saveCache({ pool, entities, endemicToContinents, labelMap });
+  }
+
   console.log("\n=== Phase 3: Zusammenbau & Validierung ===");
   const built = [];
   const missingFieldCounts = {};
@@ -491,12 +678,21 @@ async function main() {
 
   console.log(`\nHydrierte Kandidaten: ${built.length}`);
   console.log(`Davon wegen IUCN-Status "extinct" ausgeschlossen: ${extinctExcluded}`);
-  console.log(`Vollständig schema-valide (alle Pflichtfelder befüllt): ${valid.length}`);
-  console.log(`Fehlende Pflichtfelder (Häufigkeit über alle hydrierten Kandidaten):`);
-  for (const [field, count] of Object.entries(missingFieldCounts).sort((a, b) => b[1] - a[1])) {
-    console.log(`  - ${field}: bei ${count}/${built.length} Kandidaten leer`);
+  console.log(`Vollständig schema-valide (Pflichtfelder id/name_de/category befüllt): ${valid.length}`);
+  if (Object.keys(missingFieldCounts).length > 0) {
+    console.log(`Fehlende Pflichtfelder (Häufigkeit über alle hydrierten Kandidaten):`);
+    for (const [field, count] of Object.entries(missingFieldCounts).sort((a, b) => b[1] - a[1])) {
+      console.log(`  - ${field}: bei ${count}/${built.length} Kandidaten leer`);
+    }
   }
   console.log(`\n=> ${finalAnimals.length} Tiere gehen in data/animals.json (Ziel: ~${TARGET_TOTAL}).`);
+
+  const coverage = computeOptionalFieldCoverage(finalAnimals);
+  console.log(`\nAbdeckung optionaler Felder in den finalen ${finalAnimals.length} Tieren:`);
+  for (const [field, count] of Object.entries(coverage)) {
+    const pct = finalAnimals.length > 0 ? ((count / finalAnimals.length) * 100).toFixed(1) : "0.0";
+    console.log(`  - ${field}: ${count}/${finalAnimals.length} (${pct} %)`);
+  }
 
   const output = {
     schema_version: "1.0.0",

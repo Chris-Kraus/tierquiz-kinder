@@ -3,9 +3,10 @@
 // "Layout-Empfehlungen", "Visuelle Grundlinie", "Barrierefreiheit").
 //
 // Ablauf: Kind wählt zuerst eine Schwierigkeitsstufe (zwei große Kacheln), danach
-// wird der Start-Button aktiv. Der Frage-Bildschirm existiert technisch noch nicht
-// (folgt in Issue #6) – ein Klick auf Start zeigt deshalb bewusst nur einen
-// sichtbaren Platzhalter statt zu navigieren.
+// wird der Start-Button aktiv. Ein Klick auf Start erzeugt den Quiz-Zustand und
+// übergibt die eigentliche Navigation an den Aufrufer (siehe `onStart`-Callback,
+// verdrahtet in src/main.js) – dieser Bildschirm kennt den Frage-Bildschirm
+// (Issue #6) bewusst nicht direkt, um die Screens lose gekoppelt zu halten.
 
 import { DIFFICULTY_LEVELS } from "../quiz/difficulty.js";
 import { createQuizState } from "../quiz/state.js";
@@ -31,8 +32,12 @@ const DIFFICULTY_OPTIONS = [
 /**
  * Rendert den Start-Bildschirm in den übergebenen Container.
  * @param {HTMLElement} container
+ * @param {object} [callbacks]
+ * @param {(quizState: object) => void} [callbacks.onStart] wird aufgerufen,
+ *   sobald das Kind nach Stufenauswahl auf "Los geht's!" tippt; erhält den neu
+ *   erzeugten Quiz-Zustand (siehe createQuizState).
  */
-export function renderStartScreen(container) {
+export function renderStartScreen(container, { onStart } = {}) {
   let selectedDifficulty = null;
 
   container.innerHTML = `
@@ -63,8 +68,6 @@ export function renderStartScreen(container) {
       </div>
 
       <button type="button" class="start-button" disabled>Los geht's!</button>
-
-      <p class="start-screen__placeholder" role="status" hidden></p>
     </section>
   `;
 
@@ -72,7 +75,6 @@ export function renderStartScreen(container) {
     container.querySelectorAll(".difficulty-button"),
   );
   const startButton = container.querySelector(".start-button");
-  const placeholder = container.querySelector(".start-screen__placeholder");
 
   difficultyButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -95,9 +97,6 @@ export function renderStartScreen(container) {
 
     const quizState = createQuizState(selectedDifficulty);
 
-    // Platzhalter, solange der Frage-Bildschirm noch nicht existiert (Issue #6).
-    console.info("Quiz gestartet mit Zustand:", quizState);
-    placeholder.hidden = false;
-    placeholder.textContent = "Frage-Bildschirm folgt (siehe Issue #6).";
+    onStart?.(quizState);
   });
 }

@@ -1,0 +1,135 @@
+# DevOps: Tierquiz für Kinder
+
+Dieses Dokument ist ein lebendes Dokument der Rolle `devops-engineer`. Es wird bei neuen Erkenntnissen ergänzt, nicht überschrieben.
+
+## Scope dieses Arbeitsschritts
+
+Umsetzung von GitHub Issue #2: Wikidata-Datenbeschaffungs-Pipeline für die Tierquiz-Datenbank (`scripts/fetch-animals/` → `data/animals.json`), gemäß dem in `docs/workflow/architecture.md` festgelegten Schema. Kein Repo-/CI-/Deployment-Setup in diesem Schritt (das Repo existiert bereits, Frontend-Tech-Stack/CI/Deployment sind separate, spätere Arbeitsschritte).
+
+## Projekt-Setup (Repo/Remote)
+
+Bereits vorhanden (nicht Teil dieses Arbeitsschritts): lokales Repo unter `~/Projects/tierquiz-kinder`, privates GitHub-Repo `Chris-Kraus/tierquiz-kinder`, `gh` CLI authentifiziert. `gh` und `node` sind auf diesem Rechner unter `/opt/homebrew/bin/` installiert, aber in der Shell-Umgebung dieser Session standardmäßig **nicht** im `PATH` — beide wurden über den vollen Pfad aufgerufen. Falls das bei künftigen Sessions erneut auftritt: kein Blocker, einfach `/opt/homebrew/bin/gh`/`/opt/homebrew/bin/node` verwenden oder `PATH` in der Shell-Konfiguration ergänzen.
+
+## Wikidata-Datenbeschaffungs-Pipeline (`scripts/fetch-animals/`)
+
+**Sprache:** Node.js (eingebautes `fetch`, keine npm-Abhängigkeiten) — passt zum bereits im Repo vorhandenen Vite/Node-Stack.
+
+**Ausführung:** `node scripts/fetch-animals/fetch-animals.js` (Details, Ablauf und Property-ID-Verifikation siehe `scripts/fetch-animals/README.md`). Für Re-Runs nach reinen Schema-/Filter-Änderungen (ohne erneuten Wikidata-Fetch): `node scripts/fetch-animals/fetch-animals.js --use-cache` (nutzt `scripts/fetch-animals/.cache/hydration-cache.json`, wird bei jedem vollen Lauf automatisch geschrieben).
+
+**Ablauf (zweistufig, wie in architecture.md skizziert):**
+1. Discovery per SPARQL (`query.wikidata.org/sparql`) pro Tier-Klasse (Säugetier, Vogel, Reptil, Amphibie, Fisch, Insekt, Spinnentier, Weichtier), gefiltert nach `taxon rank = species`, Sitelink-Anzahl > 15 (Popularitäts-Proxy) und ohne fossile Taxa.
+2. Hydration per Wikidata-API (`wbgetentities`, Batches à 50) für Gewicht, Länge, wiss. Name, Gefährdungsstatus, Habitat, Kontinent-Proxy.
+3. Validierung jedes Datensatzes gegen die Pflichtfelder aus dem formalen JSON Schema (architecture.md Abschnitt 2; seit der Schema-Korrektur vom 13.08.2026 nur noch `id`/`name_de`/`category`); nur vollständig valide Datensätze landen in `data/animals.json`.
+
+### Robustheit der Pipeline (während der Umsetzung gefunden und behoben)
+
+- Der Wikidata Query Service liefert bei besonders teuren Queries (großer `P171*`-Teilbaum) strukturelle 502/504-Fehler, kein reines Lastproblem. Betroffen: Insekten (Insecta) und Weichtiere (Mollusca) als eine einzige Volltraversierung. Lösung: für diese beiden Klassen wird stattdessen über mehrere kleinere, bekannte Unter-Taxa (z. B. Käfer, Schmetterlinge, Hautflügler, Libellen, Zweiflügler, Schnabelkerfe, Heuschrecken bei Insekten; Schnecken, Muscheln, Kopffüßer bei Weichtieren) einzeln abgefragt und die Ergebnisse gemergt — jede Teil-Query bleibt für WDQS unkritisch.
+- Generelle Retry-Logik mit exponentiellem Backoff (bis zu 6 Versuche) für transiente 429/500/502/503/504-Fehler; eine einzelne dauerhaft fehlschlagende Klasse/Sub-Taxon bricht den Gesamtlauf nicht ab, sondern wird übersprungen und im Log sichtbar gemeldet.
+- Property-/Item-IDs aus der Architektur-Skizze wurden vor Umsetzung gegen echte Wikidata-Testabfragen verifiziert; mehrere waren falsch oder fehlten (z. B. IUCN-Status "endangered" = `Q96377276`, nicht das naheliegend vermutete `Q11394`; "fossil taxon"-Filter `Q23038290` war in der Skizze gar nicht vorgesehen). Details siehe `scripts/fetch-animals/README.md`.
+
+### Testlauf 1 (13.08.2026) — BLOCKER gefunden, seither behoben
+
+Vollständiger Testlauf gegen den echten Wikidata Query Service/API durchgeführt (kein Sandbox-/Netzwerk-Problem — die Verbindung zu `query.wikidata.org` und `www.wikidata.org` funktioniert einwandfrei aus dieser Umgebung).
+
+**Discovery:** 1.485 eindeutige, populäre Tier-Kandidaten über alle 8 Klassen gefunden (jeweils bis zu 220 pro Klasse, sitelinks > 15), korrekt nach Kategorie gelabelt und nach Popularität sortiert.
+
+**Hydration:** 1.480 Kandidaten erfolgreich mit Detail-Claims angereichert (5 ohne Entity-Daten verloren), davon 5 wegen IUCN-Status "extinct" ausgeschlossen.
+
+**Validierung gegen die Pflichtfelder — Kernbefund:**
+
+| Pflichtfeld | Abdeckung |
+|---|---|
+| `color` | 0 / 1.480 (0 %) |
+| `habitat` | 72 / 1.480 (4,9 %) |
+| `continent` | 93 / 1.480 (6,3 %) |
+| `weight_kg` | 213 / 1.480 (14,4 %) |
+
+**→ 0 von 1.480 Kandidaten erfüllen alle Pflichtfelder gleichzeitig.** `data/animals.json` wurde geschrieben, enthält nach diesem Lauf aber ein leeres `animals`-Array (Top-Level-Struktur mit `schema_version`, `license: "CC0-1.0"`, `source`, `source_url`, `retrieved_at` ist korrekt befüllt).
+
+Dies wurde gezielt gegengeprüft, um einen Skript-Fehler auszuschließen: die Extraktionslogik funktioniert nachweislich korrekt (z. B. Löwe/Q140 bekommt `weight_kg = 126` korrekt aus den realen, mehrfachen Gewichts-Statements berechnet — Median über Statements mit unterschiedlichen Qualifiern wie Geschlecht/Alter). Für dasselbe Tier sind `habitat` und `continent` aber mit **0 Statements** in Wikidata hinterlegt — das ist keine Frage der Property-ID, sondern schlicht nicht vorhandene Daten, auch bei den bekanntesten Tieren (Löwe, Elefant u. Ä.).
+
+**Einordnung:** Das ist kein Netzwerk-/Sandbox-Blocker (der in der Aufgabenstellung als Beispiel genannte Fall), sondern ein **Daten-Verfügbarkeits-Blocker**: die Schema-Annahme aus `architecture.md` (Pflichtfelder `habitat`/`continent`/`color` zuverlässig per Wikidata-SPARQL/API befüllbar) hält der Realität der Wikidata-Datenlage nicht stand — auch nicht für die bekanntesten, meistverlinkten Tiere. Die Architektur-Skizze hatte dieses Risiko für `habitat`/`diet` bereits benannt, aber deutlich unterschätzt (angenommen: lückenhaft, real: nahezu nicht vorhanden), und für `continent`/`color` gar nicht als Risiko vermerkt.
+
+Es wurden **bewusst keine Platzhalter-, Rate- oder KI-erfundenen Werte** erzeugt, um die Pflichtfelder künstlich aufzufüllen — das hätte die tatsächliche Datenqualität verschleiert.
+
+**Empfehlung, die dem Nutzer vorgelegt wurde:**
+1. `habitat`, `continent`, `weight_kg` im Schema von Pflicht- zu optionalen Feldern herabstufen (analog zur bereits für `diet` getroffenen Entscheidung in architecture.md), `color` komplett entfernen (0 % Abdeckung, "optional" hätte das nicht behoben), oder
+2. eine zusätzliche, kuratierte Datenquelle für diese Felder ergänzen, oder
+3. Zielgröße realistisch nach unten korrigieren.
+
+**Entscheidung des Nutzers (13.08.2026):** Option 1 — Pflichtfelder lockern, `color` entfernen. Umgesetzt in `architecture.md` (Feldtabelle, formales JSON Schema, Beispieldatensätze) und in `fetch-animals.js` (`validateRequiredFields`, `buildAnimal`, siehe `scripts/fetch-animals/README.md`).
+
+### Testlauf 2 (13.08.2026) — mit gelockerten Pflichtfeldern, ERFOLGREICH
+
+Rebuild via `--use-cache` auf Basis der bereits hydrierten Rohdaten aus Testlauf 1 (kein erneuter Wikidata-Fetch nötig — genau der Anwendungsfall, für den der Cache-Mechanismus ergänzt wurde).
+
+**Ergebnis:**
+- Hydrierte Kandidaten: 1.480 (5 wegen IUCN-Status "extinct" ausgeschlossen).
+- Vollständig schema-valide (Pflichtfelder `id`/`name_de`/`category`): **1.480 von 1.480**.
+- **→ 500 von 500 Ziel-Tieren in `data/animals.json` geschrieben, Validierung erfolgreich.**
+
+**Abdeckung der optionalen Felder in den finalen 500 Tieren:**
+
+| Feld | Abdeckung |
+|---|---|
+| `name_scientific` | 500 / 500 (100,0 %) |
+| `conservation_status` | 470 / 500 (94,0 %) |
+| `weight_kg` | 210 / 500 (42,0 %) |
+| `habitat` | 67 / 500 (13,4 %) |
+| `continent` | 28 / 500 (5,6 %) |
+| `length_cm` | 11 / 500 (2,2 %) |
+| `diet` | 0 / 500 (nicht hydriert, siehe README.md "Nicht befüllte Felder") |
+| `lifespan_years` | 0 / 500 (nicht hydriert, siehe README.md "Nicht befüllte Felder") |
+
+Diese Felder sind jetzt bewusst optional — die Fragegenerierung (`questionGenerator.js`/`difficulty.js`, Issue #5) überspringt bereits fehlende Felder automatisch (gegengeprüft, siehe unten), sodass diese Lückenhaftigkeit kein Blocker mehr ist.
+
+**Bekannte, dem Nutzer im Issue-Kommentar gemeldete Kategorien-Schieflage** (bereits in Issue #2 als mögliches Risiko der reinen Sitelinks-Popularitäts-Sortierung vorab benannt, bewusst nicht eigenmächtig durch ein anderes Auswahlkriterium behoben):
+
+| category | Anzahl | Anteil |
+|---|---|---|
+| Säugetier | 218 | 43,6 % |
+| Vogel | 219 | 43,8 % |
+| Fisch | 36 | 7,2 % |
+| Insekt | 11 | 2,2 % |
+| Reptil | 10 | 2,0 % |
+| Amphibie | 5 | 1,0 % |
+| Spinnentier | 1 | 0,2 % |
+| Weichtier | 0 | 0 % |
+
+Säugetiere und Vögel dominieren mit zusammen 87,4 % der 500 Tiere, da sie in den zugrundeliegenden Wikidata-Sitelink-Zahlen strukturell höher liegen als z. B. Fische/Insekten/Weichtiere — reine Popularitäts-Sortierung ohne Kategorien-Balancierung, wie in `requirements.md`/`architecture.md` festgelegt. Für den Quizfragen-Fragetyp "Zu welcher Tiergruppe gehört ...?" bleibt das nutzbar (7 von 8 Kategorien mit ≥ 1 Tier vertreten), aber Falschantworten-Vielfalt für seltenere Kategorien (Weichtier: 0 Tiere, Spinnentier: 1 Tier) ist entsprechend eingeschränkt.
+
+**Gegenprüfung Fragegenerierung (`src/quiz/questionGenerator.js`, `src/quiz/difficulty.js`, Issue #5):** `getCorrectValue`/`buildValueQuestion` behandeln fehlende/`undefined` Felder bereits sauber (liefern `null` statt zu crashen), daher keine Codeanpassung nötig. Eine Ausnahme: `difficulty.js` (`EASY_FIELDS`) und `questionGenerator.js` (`FIELD_DEFINITIONS.color`) referenzieren weiterhin das jetzt aus dem Schema entfernte Feld `color` — das führt zu keinem Fehler (Fragen zu `color` werden für alle echten Tiere einfach nie erzeugt, da `animal.color` nie existiert), ist aber toter Code. Empfehlung für `web-developer`: in einem eigenen, kleinen Follow-up (nicht Teil von Issue #2) den `color`-Eintrag aus `EASY_FIELDS` und `FIELD_DEFINITIONS` entfernen. Die Test-Fixtures unter `src/quiz/__fixtures__/` enthalten weiterhin synthetische `color`-Werte — unverändert gelassen, da Issue #5/`web-developer`-Zuständigkeit.
+
+**Status:** Issue #2 **geschlossen** (`status:done`), `data/animals.json` enthält 500 valide Tiere. Committen/Pushen bleibt bei PM (nicht durch diese Rolle vorgenommen).
+
+## Issue #10: Lateinische Namen in `name_de` (13.08.2026)
+
+Von `qa-engineer` bei der nachträglichen Prüfung (#9) gemeldet: 37 von 500 Tieren (7,4 %) hatten in `data/animals.json` einen lateinischen (wissenschaftlichen) statt deutschen Namen in `name_de` — für ein Kinderquiz nicht kindgerecht (z. B. "Apodemus sylvaticus" statt "Waldmaus").
+
+**Ursache (verifiziert am Hydration-Cache, nicht nur vermutet):** Kein fehlendes Wikidata-Label, das den bestehenden Fallback in `pickLabel()` ausgelöst hätte, sondern ein tatsächlich **vorhandenes** `de`-Label, dessen Wert selbst der lateinische Binomial-Name ist. Beispiel Q14683 (Haussperling): `labels.de.value = "Passer domesticus"`, obwohl `sitelinks.dewiki.title` korrekt `"Haussperling"` ist. `pickLabel()` prüfte nur "ist ein `de`-Label vorhanden", nicht "ist es tatsächlich ein deutscher Trivialname" — gab das Latein-Label also unverändert zurück, ohne je den (an sich schon vorhandenen) `dewiki`-Fallback zu erreichen. Zusätzlich fanden sich bei der Verifikation 2 weitere Fälle (Q15978631 "Homo sapiens", Q130888 "Drosophila melanogaster"), bei denen sogar der deutsche Wikipedia-Artikeltitel selbst der lateinische Name ist (kein eigener deutscher Trivialname für die Art-Seite vorhanden) — vom ursprünglichen Issue nicht erfasst, da dort nur an `name_de == name_scientific` geprüft wurde; hier zusätzlich über eine generische Binomial-Regex gefunden.
+
+**Fix (`scripts/fetch-animals/fetch-animals.js`):** Neue Funktion `looksLikeScientificName(value, scientificName)` erkennt lateinische Artnamen (a) per Exakt-Vergleich mit dem gehydrierten `name_scientific` (P225) und (b) generisch per Binomial-Muster (großgeschriebenes erstes Wort, komplett kleingeschriebenes zweites Wort — im Deutschen praktisch nie der Fall, da deutsche Substantive/mehrteilige Trivialnamen durchgehend großgeschrieben werden; gegengeprüft: 0 Falsch-Positive unter den ursprünglich 462 unbetroffenen Tieren). Neue Funktion `pickAnimalNameDe(entity, scientificName)` (nur für `name_de` verwendet, `pickLabel()` bleibt für Habitat-/Kontinent-Labels unverändert) mit Prioritätsreihenfolge:
+1. Wikidata-`de`-Label, falls vorhanden **und nicht** lateinisch-verdächtig.
+2. Deutscher Wikipedia-Artikeltitel (`sitelinks.dewiki.title`), falls vorhanden **und nicht** lateinisch-verdächtig.
+3. Sonst `null` → Tier fällt bei der Pflichtfeld-Validierung durch `name_de` und wird ausgeschlossen.
+
+Bewusst **kein** englisches Fallback-Label mehr für `name_de` (anders als im ursprünglichen `pickLabel()`, das für allgemeine Habitat/Kontinent-Labels weiterhin de→en→dewiki nutzt): laut Empfehlung im Issue wäre ein englischer Anzeigename für ein deutsches Kinderquiz ebenso wenig kindgerecht wie Latein, und deckt sich oft ohnehin nur mit dem lateinischen Namen (z. B. Q53462: sowohl `de`- als auch `en`-Label = "Macropus rufus"). Gegenprüft: von den 500 vorherigen Tieren hätten ohnehin nur 0 zusätzlich ein reines Englisch-Fallback benötigt (499 hatten ein `de`-Label, 1 ging direkt über `dewiki`) — der Entfernung des Englisch-Fallbacks kostet also keine der vorher korrekten Einträge.
+
+**Ausschluss statt fehlerhafter Anzeige, mit Nachbesetzung:** Da der Kandidaten-Pool aus der Discovery-Phase (1.480 hydrierte Kandidaten) deutlich größer als die Zielgröße 500 ist, rücken ausgeschlossene Tiere automatisch durch den nächstpopulären Kandidaten mit echtem deutschen Namen nach (`valid.slice(0, TARGET_TOTAL)` in `main()`, unverändert).
+
+**Neuerzeugung:** `node scripts/fetch-animals/fetch-animals.js --use-cache` — kein erneuter Wikidata-Fetch nötig, reiner Rebuild aus dem bestehenden `hydration-cache.json`.
+
+**Ergebnis:**
+- Vollständig schema-valide Kandidaten: 1.268 von 1.480 (vorher 1.480 von 1.480 — 212 statt vorher 0 scheitern jetzt an `name_de`, weil kein echtes deutsches Label/Artikel vorhanden ist; erwartetes, gewolltes Verhalten des Fixes).
+- **→ weiterhin 500 von 500 Ziel-Tieren in `data/animals.json`**, davon 33 der ursprünglich 37 Latein-Fälle in-place korrigiert (jetzt z. B. Q14683 "Haussperling", Q15083 "Nord-Giraffe", Q25334 "Rotkehlchen", Q42627 "Bengalkatze"), 4 endgültig ausgeschlossen (kein verwertbares deutsches Label/Artikel: Q139487, Q53462, Q15978631, Q130888) und durch 4 andere populäre Kandidaten mit echtem deutschen Namen nachbesetzt.
+- **Verifikation (eigene Prüfung, nicht nur Annahme):** 0 von 500 `name_de`-Werten matchen exakt `name_scientific`; 0 von 500 matchen die generische Latein-Binomial-Regex; alle 500 `name_de`-Werte sind eindeutig (keine Duplikate). Stichprobenhafte Positiv-Fälle wie "Puma", "Lama", "Dugong" (Gattungsname ist zugleich der korrekte deutsche Trivialname) bewusst nicht fälschlich ausgeschlossen.
+- Kategorien-Verteilung nach Nachbesetzung nahezu unverändert: Säugetier 215 (43,0 %), Vogel 219 (43,8 %), Fisch 39 (7,8 %), Insekt 11 (2,2 %), Reptil 10 (2,0 %), Amphibie 5 (1,0 %), Spinnentier 1 (0,2 %), Weichtier weiterhin 0.
+- Abdeckung der optionalen Felder in den finalen 500 praktisch unverändert (`name_scientific` 100 %, `conservation_status` 94,6 %, `weight_kg` 42,0 %, `habitat` 13,4 %, `continent` 5,4 %, `length_cm` 2,2 %).
+
+**Status:** Issue #10 **geschlossen** (`status:done`). Committen/Pushen bleibt bei PM (nicht durch diese Rolle vorgenommen).
+
+## Offene Infrastruktur-Fragen
+
+- Follow-up-Empfehlung an `web-developer`: totes `color`-Feld aus `src/quiz/difficulty.js` (`EASY_FIELDS`) und `src/quiz/questionGenerator.js` (`FIELD_DEFINITIONS.color`) entfernen (siehe oben) — keine funktionale Dringlichkeit, nur Code-Hygiene.
+- Kategorien-Schieflage (Säugetiere/Vögel dominieren) ist bekannt und im Issue-Kommentar vermerkt; keine Änderung am Auswahlkriterium ohne erneute Rückmeldung des Nutzers.
+- CI/CD (Lint-Workflow, Deployment) noch nicht Teil dieses Arbeitsschritts; folgt in einem eigenen Schritt sobald relevant.

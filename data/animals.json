@@ -1,0 +1,4065 @@
+{
+  "schema_version": "1.0.0",
+  "license": "CC0-1.0",
+  "source": "Wikidata",
+  "source_url": "https://www.wikidata.org/",
+  "retrieved_at": "2026-08-13",
+  "animals": [
+    {
+      "id": "Q140",
+      "name_de": "Löwe",
+      "name_scientific": "Panthera leo",
+      "category": "Säugetier",
+      "weight_kg": 126,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q19939",
+      "name_de": "Tiger",
+      "name_scientific": "Panthera tigris",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "weight_kg": 120,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q18498",
+      "name_de": "Wolf",
+      "name_scientific": "Canis lupus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q34706",
+      "name_de": "Leopard",
+      "name_scientific": "Panthera pardus",
+      "category": "Säugetier",
+      "habitat": [
+        "Buschland",
+        "Wald"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q58697",
+      "name_de": "Wildschwein",
+      "name_scientific": "Sus scrofa",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q33609",
+      "name_de": "Eisbär",
+      "name_scientific": "Ursus maritimus",
+      "category": "Säugetier",
+      "weight_kg": 225.3,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q8332",
+      "name_de": "Rotfuchs",
+      "name_scientific": "Vulpes vulpes",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald",
+        "Grasland",
+        "Buschland",
+        "Wüste",
+        "Feuchtgebiet",
+        "städtisches Gebiet"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q23907",
+      "name_de": "Gepard",
+      "name_scientific": "Acinonyx jubatus",
+      "category": "Säugetier",
+      "weight_kg": 35,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q17592",
+      "name_de": "Afrikanischer Strauß",
+      "name_scientific": "Struthio camelus",
+      "category": "Vogel",
+      "weight_kg": 100,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q34505",
+      "name_de": "Flusspferd",
+      "name_scientific": "Hippopotamus amphibius",
+      "category": "Säugetier",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q33602",
+      "name_de": "Großer Panda",
+      "name_scientific": "Ailuropoda melanoleuca",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "continent": [
+        "Asien"
+      ],
+      "weight_kg": 58.802,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q14683",
+      "name_de": "Haussperling",
+      "name_scientific": "Passer domesticus",
+      "category": "Vogel",
+      "habitat": [
+        "Wald",
+        "Buschland",
+        "Feuchtgebiet",
+        "Grasland"
+      ],
+      "weight_kg": 0.0305,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q15083",
+      "name_de": "Nord-Giraffe",
+      "name_scientific": "Giraffa camelopardalis",
+      "category": "Säugetier",
+      "weight_kg": 54.5,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q36341",
+      "name_de": "Braunbär",
+      "name_scientific": "Ursus arctos",
+      "category": "Säugetier",
+      "habitat": [
+        "Buschland",
+        "Wald",
+        "Borealer Nadelwald"
+      ],
+      "weight_kg": 500,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25357",
+      "name_de": "Kolkrabe",
+      "name_scientific": "Corvus corax",
+      "category": "Vogel",
+      "weight_kg": 0.9205,
+      "length_cm": 68,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25307",
+      "name_de": "Elster",
+      "name_scientific": "Pica pica",
+      "category": "Vogel",
+      "weight_kg": 0.191,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25348",
+      "name_de": "Stockente",
+      "name_scientific": "Anas platyrhynchos",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25247",
+      "name_de": "Wiedehopf",
+      "name_scientific": "Upupa epops",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q30197",
+      "name_de": "Schneeleopard",
+      "name_scientific": "Panthera uncia",
+      "category": "Säugetier",
+      "habitat": [
+        "Berg",
+        "Wald"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q42710",
+      "name_de": "Wasserbüffel",
+      "name_scientific": "Bubalus bubalis",
+      "category": "Säugetier"
+    },
+    {
+      "id": "Q35694",
+      "name_de": "Jaguar",
+      "name_scientific": "Panthera onca",
+      "category": "Säugetier",
+      "weight_kg": 0.8,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q35517",
+      "name_de": "Elch",
+      "name_scientific": "Alces alces",
+      "category": "Säugetier",
+      "habitat": [
+        "Buschland"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q36101",
+      "name_de": "Koala",
+      "name_scientific": "Phascolarctos cinereus",
+      "category": "Säugetier",
+      "continent": [
+        "Ozeanien",
+        "Australien"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q25234",
+      "name_de": "Amsel",
+      "name_scientific": "Turdus merula",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q35255",
+      "name_de": "Puma",
+      "name_scientific": "Puma concolor",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q27066",
+      "name_de": "Europäischer Dachs",
+      "name_scientific": "Meles meles",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q28358",
+      "name_de": "Wachtel",
+      "name_scientific": "Coturnix coturnix",
+      "category": "Vogel",
+      "weight_kg": 0.008199999999999999,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25311",
+      "name_de": "Mauswiesel",
+      "name_scientific": "Mustela nivalis",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "weight_kg": 0.0014,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q29995",
+      "name_de": "Eurasischer Fischotter",
+      "name_scientific": "Lutra lutra",
+      "category": "Säugetier",
+      "habitat": [
+        "Süßwasser",
+        "Küste",
+        "Fluss",
+        "Mündung",
+        "Gezeitenbereich",
+        "Auwald",
+        "Feuchtgebiet"
+      ],
+      "weight_kg": 0.11,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q39624",
+      "name_de": "Ren",
+      "name_scientific": "Rangifer tarandus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q25334",
+      "name_de": "Rotkehlchen",
+      "name_scientific": "Erithacus rubecula",
+      "category": "Vogel",
+      "weight_kg": 0.0024,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q83310",
+      "name_de": "Hausmaus",
+      "name_scientific": "Mus musculus",
+      "category": "Säugetier",
+      "habitat": [
+        "Grasland"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q40994",
+      "name_de": "Walross",
+      "name_scientific": "Odobenus rosmarus",
+      "category": "Säugetier",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q15343",
+      "name_de": "Schnabeltier",
+      "name_scientific": "Ornithorhynchus anatinus",
+      "category": "Säugetier",
+      "continent": [
+        "Ozeanien",
+        "Australien"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q42326",
+      "name_de": "Felsentaube",
+      "name_scientific": "Columba livia",
+      "category": "Vogel",
+      "weight_kg": 0.28049999999999997,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q18845",
+      "name_de": "Kuckuck",
+      "name_scientific": "Cuculus canorus",
+      "category": "Vogel",
+      "weight_kg": 0.106,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25388",
+      "name_de": "Pirol",
+      "name_scientific": "Oriolus oriolus",
+      "category": "Vogel",
+      "weight_kg": 0.0073,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q43375",
+      "name_de": "Eurasischer Luchs",
+      "name_scientific": "Lynx lynx",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald",
+        "Buschland"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26843",
+      "name_de": "Schwertwal",
+      "name_scientific": "Orcinus orca",
+      "category": "Säugetier",
+      "habitat": [
+        "Weltmeere"
+      ]
+    },
+    {
+      "id": "Q25273",
+      "name_de": "Graureiher",
+      "name_scientific": "Ardea cinerea",
+      "category": "Vogel",
+      "weight_kg": 0.061,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25354",
+      "name_de": "Eichelhäher",
+      "name_scientific": "Garrulus glandarius",
+      "category": "Vogel",
+      "weight_kg": 0.0085,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q41960",
+      "name_de": "Westlicher Kleiner Panda",
+      "name_scientific": "Ailurus fulgens",
+      "category": "Säugetier",
+      "habitat": [
+        "Buschland",
+        "Wald"
+      ],
+      "weight_kg": 2.535,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q25485",
+      "name_de": "Kohlmeise",
+      "name_scientific": "Parus major",
+      "category": "Vogel",
+      "weight_kg": 0.01009,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25469",
+      "name_de": "Star",
+      "name_scientific": "Sturnus vulgaris",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q121439",
+      "name_de": "Waschbär",
+      "name_scientific": "Procyon lotor",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald",
+        "urban habitat"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q42196",
+      "name_de": "Blauwal",
+      "name_scientific": "Balaenoptera musculus",
+      "category": "Säugetier",
+      "length_cm": 2710,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q25399",
+      "name_de": "Bachstelze",
+      "name_scientific": "Motacilla alba",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25429",
+      "name_de": "Rauchschwalbe",
+      "name_scientific": "Hirundo rustica",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q41181",
+      "name_de": "Steinadler",
+      "name_scientific": "Aquila chrysaetos",
+      "category": "Vogel",
+      "weight_kg": 4.383,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q79794",
+      "name_de": "Rothirsch",
+      "name_scientific": "Cervus elaphus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q4388",
+      "name_de": "Eurasisches Eichhörnchen",
+      "name_scientific": "Sciurus vulgaris",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25345",
+      "name_de": "Hermelin",
+      "name_scientific": "Mustela erminea",
+      "category": "Säugetier",
+      "habitat": [
+        "Buschland",
+        "Wald"
+      ],
+      "continent": [
+        "Nordamerika"
+      ],
+      "weight_kg": 0.219,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q30847",
+      "name_de": "Karakal",
+      "name_scientific": "Caracal caracal",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25345384",
+      "name_de": "Dohle",
+      "name_scientific": "Coloeus monedula",
+      "category": "Vogel"
+    },
+    {
+      "id": "Q123141",
+      "name_de": "Goldfisch",
+      "name_scientific": "Carassius auratus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q79803",
+      "name_de": "Hausmeerschweinchen",
+      "name_scientific": "Cavia porcellus",
+      "category": "Säugetier",
+      "habitat": [
+        "Peru"
+      ]
+    },
+    {
+      "id": "Q44299",
+      "name_de": "Kojote",
+      "name_scientific": "Canis latrans",
+      "category": "Säugetier",
+      "weight_kg": 0.2625,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25352",
+      "name_de": "Weißstorch",
+      "name_scientific": "Ciconia ciconia",
+      "category": "Vogel",
+      "weight_kg": 0.11,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25440",
+      "name_de": "Kormoran",
+      "name_scientific": "Phalacrocorax carbo",
+      "category": "Vogel",
+      "weight_kg": 2.2,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q30535",
+      "name_de": "Wanderfalke",
+      "name_scientific": "Falco peregrinus",
+      "category": "Vogel",
+      "continent": [
+        "Asien",
+        "Ozeanien"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q160042",
+      "name_de": "Kaffernbüffel",
+      "name_scientific": "Syncerus caffer",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q122069",
+      "name_de": "Reh",
+      "name_scientific": "Capreolus capreolus",
+      "category": "Säugetier",
+      "weight_kg": 1.35,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q130933",
+      "name_de": "Uhu",
+      "name_scientific": "Bubo bubo",
+      "category": "Vogel",
+      "weight_kg": 2.38,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25332",
+      "name_de": "Fischadler",
+      "name_scientific": "Pandion haliaetus",
+      "category": "Vogel",
+      "weight_kg": 1.4,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q134747",
+      "name_de": "Seidenspinner",
+      "name_scientific": "Bombyx mori",
+      "category": "Insekt"
+    },
+    {
+      "id": "Q14334",
+      "name_de": "Vielfraß",
+      "name_scientific": "Gulo gulo",
+      "category": "Säugetier",
+      "weight_kg": 10.6,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q46212",
+      "name_de": "Erdferkel",
+      "name_scientific": "Orycteropus afer",
+      "category": "Säugetier",
+      "weight_kg": 1.9,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26490",
+      "name_de": "Turmfalke",
+      "name_scientific": "Falco tinnunculus",
+      "category": "Vogel",
+      "weight_kg": 0.167,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q30034",
+      "name_de": "Westliche Honigbiene",
+      "name_scientific": "Apis mellifera",
+      "category": "Insekt"
+    },
+    {
+      "id": "Q131538",
+      "name_de": "Capybara",
+      "name_scientific": "Hydrochoerus hydrochaeris",
+      "category": "Säugetier",
+      "weight_kg": 25.2,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q82738",
+      "name_de": "Polarfuchs",
+      "name_scientific": "Vulpes lagopus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q42569",
+      "name_de": "Lama",
+      "name_scientific": "Lama glama",
+      "category": "Säugetier"
+    },
+    {
+      "id": "Q25882",
+      "name_de": "Graugans",
+      "name_scientific": "Anser anser",
+      "category": "Vogel",
+      "weight_kg": 3.237,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25380",
+      "name_de": "Sperber",
+      "name_scientific": "Accipiter nisus",
+      "category": "Vogel",
+      "weight_kg": 0.13,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q4764",
+      "name_de": "Kranich",
+      "name_scientific": "Grus grus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25317",
+      "name_de": "Schleiereule",
+      "name_scientific": "Tyto alba",
+      "category": "Vogel",
+      "weight_kg": 0.58,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25418",
+      "name_de": "Stieglitz",
+      "name_scientific": "Carduelis carduelis",
+      "category": "Vogel",
+      "weight_kg": 0.0015300000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q43576",
+      "name_de": "Wildkatze",
+      "name_scientific": "Felis silvestris",
+      "category": "Säugetier",
+      "habitat": [
+        "Savanne",
+        "Wald"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q137474876",
+      "name_de": "Habicht",
+      "name_scientific": "Astur gentilis",
+      "category": "Vogel"
+    },
+    {
+      "id": "Q25376",
+      "name_de": "Blässhuhn",
+      "name_scientific": "Fulica atra",
+      "category": "Vogel",
+      "weight_kg": 0.715,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25386",
+      "name_de": "Saatkrähe",
+      "name_scientific": "Corvus frugilegus",
+      "category": "Vogel",
+      "weight_kg": 0.4535,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25392",
+      "name_de": "Kiebitz",
+      "name_scientific": "Vanellus vanellus",
+      "category": "Vogel",
+      "weight_kg": 0.025500000000000002,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25450",
+      "name_de": "Spießente",
+      "name_scientific": "Anas acuta",
+      "category": "Vogel",
+      "weight_kg": 0.9455,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q80362",
+      "name_de": "Schwarzmilan",
+      "name_scientific": "Milvus migrans",
+      "category": "Vogel",
+      "weight_kg": 0.44200000000000006,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25968",
+      "name_de": "Feldsperling",
+      "name_scientific": "Passer montanus",
+      "category": "Vogel",
+      "habitat": [
+        "Wald",
+        "Buschland"
+      ],
+      "weight_kg": 0.026000000000000002,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q4504",
+      "name_de": "Komodowaran",
+      "name_scientific": "Varanus komodoensis",
+      "category": "Reptil",
+      "continent": [
+        "Asien",
+        "Ozeanien"
+      ],
+      "weight_kg": 70,
+      "length_cm": 150,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q81110",
+      "name_de": "Karpfen",
+      "name_scientific": "Cyprinus carpio",
+      "category": "Fisch",
+      "length_cm": 53,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q128098",
+      "name_de": "Goldschakal",
+      "name_scientific": "Canis aureus",
+      "category": "Säugetier",
+      "habitat": [
+        "Savanne",
+        "Wald"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q71516",
+      "name_de": "Dromedar",
+      "name_scientific": "Camelus dromedarius",
+      "category": "Säugetier",
+      "weight_kg": 450
+    },
+    {
+      "id": "Q42699",
+      "name_de": "Serval",
+      "name_scientific": "Leptailurus serval",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q79915",
+      "name_de": "Eisvogel",
+      "name_scientific": "Alcedo atthis",
+      "category": "Vogel",
+      "weight_kg": 0.0043,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25393",
+      "name_de": "Nachtigall",
+      "name_scientific": "Luscinia megarhynchos",
+      "category": "Vogel",
+      "weight_kg": 0.00265,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25851",
+      "name_de": "Wildkaninchen",
+      "name_scientific": "Oryctolagus cuniculus",
+      "category": "Säugetier",
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q61865",
+      "name_de": "Blauer Pfau",
+      "name_scientific": "Pavo cristatus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25382",
+      "name_de": "Gimpel",
+      "name_scientific": "Pyrrhula pyrrhula",
+      "category": "Vogel",
+      "weight_kg": 0.016705,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25405",
+      "name_de": "Nebelkrähe",
+      "name_scientific": "Corvus cornix",
+      "category": "Vogel"
+    },
+    {
+      "id": "Q25421",
+      "name_de": "Zwergtaucher",
+      "name_scientific": "Tachybaptus ruficollis",
+      "category": "Vogel",
+      "weight_kg": 0.0137,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q122783",
+      "name_de": "Amerikanischer Schwarzbär",
+      "name_scientific": "Ursus americanus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q4126704",
+      "name_de": "Gemeiner Schimpanse",
+      "name_scientific": "Pan troglodytes",
+      "category": "Säugetier",
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q19537",
+      "name_de": "Bonobo",
+      "name_scientific": "Pan paniscus",
+      "category": "Säugetier",
+      "weight_kg": 38,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q18847",
+      "name_de": "Teichralle",
+      "name_scientific": "Gallinula chloropus",
+      "category": "Vogel",
+      "weight_kg": 0.34800000000000003,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25385",
+      "name_de": "Mäusebussard",
+      "name_scientific": "Buteo buteo",
+      "category": "Vogel",
+      "weight_kg": 0.8575,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25398",
+      "name_de": "Schwarzstorch",
+      "name_scientific": "Ciconia nigra",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q81564",
+      "name_de": "Alpaka",
+      "name_scientific": "Vicugna pacos",
+      "category": "Säugetier"
+    },
+    {
+      "id": "Q82037",
+      "name_de": "Okapi",
+      "name_scientific": "Okapia johnstoni",
+      "category": "Säugetier",
+      "weight_kg": 136,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q25402",
+      "name_de": "Höckerschwan",
+      "name_scientific": "Cygnus olor",
+      "category": "Vogel",
+      "weight_kg": 10.735,
+      "length_cm": 147.5,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25404",
+      "name_de": "Blaumeise",
+      "name_scientific": "Cyanistes caeruleus",
+      "category": "Vogel",
+      "weight_kg": 0.006470000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q132922",
+      "name_de": "Trampeltier",
+      "name_scientific": "Camelus bactrianus",
+      "category": "Säugetier"
+    },
+    {
+      "id": "Q81214",
+      "name_de": "Pottwal",
+      "name_scientific": "Physeter macrocephalus",
+      "category": "Säugetier",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q129059",
+      "name_de": "Auerhuhn",
+      "name_scientific": "Tetrao urogallus",
+      "category": "Vogel",
+      "weight_kg": 1.97,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25383",
+      "name_de": "Buchfink",
+      "name_scientific": "Fringilla coelebs",
+      "category": "Vogel",
+      "weight_kg": 0.012079999999999999,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25422",
+      "name_de": "Haubentaucher",
+      "name_scientific": "Podiceps cristatus",
+      "category": "Vogel",
+      "habitat": [
+        "Feuchtgebiet"
+      ],
+      "weight_kg": 0.8300000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25432",
+      "name_de": "Fasan",
+      "name_scientific": "Phasianus colchicus",
+      "category": "Vogel",
+      "habitat": [
+        "Kasachstan",
+        "Korea",
+        "Vietnam",
+        "Myanmar",
+        "Laos",
+        "Volksrepublik China",
+        "Mongolei",
+        "Afghanistan",
+        "Kirgisistan",
+        "Tadschikistan",
+        "Georgien",
+        "Aserbaidschan",
+        "Iran",
+        "Turkmenistan",
+        "Usbekistan",
+        "Russland",
+        "Republik China"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25438",
+      "name_de": "Seeadler",
+      "name_scientific": "Haliaeetus albicilla",
+      "category": "Vogel",
+      "weight_kg": 4.014,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26046",
+      "name_de": "Baummarder",
+      "name_scientific": "Martes martes",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q129958",
+      "name_de": "Steinkauz",
+      "name_scientific": "Athene noctua",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q93208",
+      "name_de": "Großer Emu",
+      "name_scientific": "Dromaius novaehollandiae",
+      "category": "Vogel",
+      "continent": [
+        "Ozeanien",
+        "Australien"
+      ],
+      "weight_kg": 32.7,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q126167",
+      "name_de": "Bartgeier",
+      "name_scientific": "Gypaetus barbatus",
+      "category": "Vogel",
+      "weight_kg": 4.913,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25700",
+      "name_de": "Krickente",
+      "name_scientific": "Anas crecca",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q166111",
+      "name_de": "Stubenfliege",
+      "name_scientific": "Musca domestica",
+      "category": "Insekt"
+    },
+    {
+      "id": "Q132576",
+      "name_de": "Impala",
+      "name_scientific": "Aepyceros melampus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q133006",
+      "name_de": "Asiatischer Elefant",
+      "name_scientific": "Elephas maximus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "weight_kg": 95,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q81091",
+      "name_de": "Wisent",
+      "name_scientific": "Bison bonasus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q82728",
+      "name_de": "Amerikanischer Bison",
+      "name_scientific": "Bison bison",
+      "category": "Säugetier",
+      "weight_kg": 645.029318,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25961",
+      "name_de": "Feldlerche",
+      "name_scientific": "Alauda arvensis",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q165278",
+      "name_de": "Hecht",
+      "name_scientific": "Esox lucius",
+      "category": "Fisch",
+      "length_cm": 47.5,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q130730",
+      "name_de": "Silberreiher",
+      "name_scientific": "Ardea alba",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q127216",
+      "name_de": "Weißkopfseeadler",
+      "name_scientific": "Haliaeetus leucocephalus",
+      "category": "Vogel",
+      "weight_kg": 4.13,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26106",
+      "name_de": "Rebhuhn",
+      "name_scientific": "Perdix perdix",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q33504",
+      "name_de": "Schmutzgeier",
+      "name_scientific": "Neophron percnopterus",
+      "category": "Vogel",
+      "weight_kg": 1.0355,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q134015",
+      "name_de": "Erdmännchen",
+      "name_scientific": "Suricata suricatta",
+      "category": "Säugetier",
+      "weight_kg": 0.37775,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q134964",
+      "name_de": "Beutelteufel",
+      "name_scientific": "Sarcophilus harrisii",
+      "category": "Säugetier",
+      "continent": [
+        "Ozeanien",
+        "Australien"
+      ],
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q170723",
+      "name_de": "Rostgans",
+      "name_scientific": "Tadorna ferruginea",
+      "category": "Vogel",
+      "weight_kg": 1.1,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q106447604",
+      "name_de": "Kuhreiher",
+      "name_scientific": "Ardea ibis",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26026",
+      "name_de": "Ringeltaube",
+      "name_scientific": "Columba palumbus",
+      "category": "Vogel",
+      "weight_kg": 0.0189,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q173128",
+      "name_de": "Honigdachs",
+      "name_scientific": "Mellivora capensis",
+      "category": "Säugetier",
+      "weight_kg": 12,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q33261",
+      "name_de": "Ozelot",
+      "name_scientific": "Leopardus pardalis",
+      "category": "Säugetier",
+      "weight_kg": 13.5,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q42623",
+      "name_de": "Rohrkatze",
+      "name_scientific": "Felis chaus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q126216",
+      "name_de": "Nachtreiher",
+      "name_scientific": "Nycticorax nycticorax",
+      "category": "Vogel",
+      "weight_kg": 0.636,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q170177",
+      "name_de": "Schnee-Eule",
+      "name_scientific": "Bubo scandiacus",
+      "category": "Vogel",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q25709",
+      "name_de": "Rohrdommel",
+      "name_scientific": "Botaurus stellaris",
+      "category": "Vogel",
+      "weight_kg": 2.017,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25984",
+      "name_de": "Schafstelze",
+      "name_scientific": "Motacilla flava",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25377",
+      "name_de": "Mauersegler",
+      "name_scientific": "Apus apus",
+      "category": "Vogel",
+      "weight_kg": 0.0035,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q166794",
+      "name_de": "Manul",
+      "name_scientific": "Otocolobus manul",
+      "category": "Säugetier",
+      "habitat": [
+        "Buschland",
+        "Grasland",
+        "Berg",
+        "Steppe"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q173651",
+      "name_de": "Afrikanischer Wildhund",
+      "name_scientific": "Lycaon pictus",
+      "category": "Säugetier",
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q124410",
+      "name_de": "Kragenbär",
+      "name_scientific": "Ursus thibetanus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q36557",
+      "name_de": "Afrikanischer Buschelefant",
+      "name_scientific": "Loxodonta africana",
+      "category": "Säugetier",
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q131709",
+      "name_de": "Seidenreiher",
+      "name_scientific": "Egretta garzetta",
+      "category": "Vogel",
+      "weight_kg": 0.28,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q177856",
+      "name_de": "Gänsegeier",
+      "name_scientific": "Gyps fulvus",
+      "category": "Vogel",
+      "weight_kg": 4.29,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q28106966",
+      "name_de": "Schnatterente",
+      "name_scientific": "Mareca strepera",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25612",
+      "name_de": "Singschwan",
+      "name_scientific": "Cygnus cygnus",
+      "category": "Vogel",
+      "weight_kg": 8.75,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q54696",
+      "name_de": "Türkentaube",
+      "name_scientific": "Streptopelia decaocto",
+      "category": "Vogel",
+      "weight_kg": 0.1011,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q160488",
+      "name_de": "Purpurreiher",
+      "name_scientific": "Ardea purpurea",
+      "category": "Vogel",
+      "weight_kg": 0.051000000000000004,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q170718",
+      "name_de": "Bienenfresser",
+      "name_scientific": "Merops apiaster",
+      "category": "Vogel",
+      "weight_kg": 0.006500000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q199427",
+      "name_de": "Rosapelikan",
+      "name_scientific": "Pelecanus onocrotalus",
+      "category": "Vogel",
+      "weight_kg": 7.59,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26114",
+      "name_de": "Waldschnepfe",
+      "name_scientific": "Scolopax rusticola",
+      "category": "Vogel",
+      "weight_kg": 0.0245,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26198",
+      "name_de": "Aaskrähe",
+      "name_scientific": "Corvus corone",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q192056",
+      "name_de": "Kreuzotter",
+      "name_scientific": "Vipera berus",
+      "category": "Reptil",
+      "habitat": [
+        "Land"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26838",
+      "name_de": "Feldhase",
+      "name_scientific": "Lepus europaeus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q121221",
+      "name_de": "Wellensittich",
+      "name_scientific": "Melopsittacus undulatus",
+      "category": "Vogel",
+      "continent": [
+        "Ozeanien",
+        "Australien"
+      ],
+      "weight_kg": 0.00215,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q28106837",
+      "name_de": "Pfeifente",
+      "name_scientific": "Mareca penelope",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25876",
+      "name_de": "Baumfalke",
+      "name_scientific": "Falco subbuteo",
+      "category": "Vogel",
+      "weight_kg": 0.1815,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26017",
+      "name_de": "Wachtelkönig",
+      "name_scientific": "Crex crex",
+      "category": "Vogel",
+      "weight_kg": 0.0132,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q940337",
+      "name_de": "Bettwanze",
+      "name_scientific": "Cimex lectularius",
+      "category": "Insekt"
+    },
+    {
+      "id": "Q132585",
+      "name_de": "Rothund",
+      "name_scientific": "Cuon alpinus",
+      "category": "Säugetier",
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q159426",
+      "name_de": "Narwal",
+      "name_scientific": "Monodon monoceros",
+      "category": "Säugetier",
+      "weight_kg": 80,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q168514",
+      "name_de": "Turteltaube",
+      "name_scientific": "Streptopelia turtur",
+      "category": "Vogel",
+      "weight_kg": 0.0721,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q168748",
+      "name_de": "Sekretär",
+      "name_scientific": "Sagittarius serpentarius",
+      "category": "Vogel",
+      "weight_kg": 2.0909999999999997,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q28106731",
+      "name_de": "Löffelente",
+      "name_scientific": "Spatula clypeata",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q28106902",
+      "name_de": "Knäkente",
+      "name_scientific": "Spatula querquedula",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25909",
+      "name_de": "Uferschwalbe",
+      "name_scientific": "Riparia riparia",
+      "category": "Vogel",
+      "habitat": [
+        "Fluss",
+        "Schotterbank",
+        "Steinbruch"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q131564",
+      "name_de": "Fennek",
+      "name_scientific": "Vulpes zerda",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q132905",
+      "name_de": "Buckelwal",
+      "name_scientific": "Megaptera novaeangliae",
+      "category": "Säugetier",
+      "weight_kg": 23250,
+      "length_cm": 1025,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q159918",
+      "name_de": "Breitmaulnashorn",
+      "name_scientific": "Ceratotherium simum",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26423",
+      "name_de": "Zobel",
+      "name_scientific": "Martes zibellina",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "weight_kg": 0.0275,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q179863",
+      "name_de": "Rosaflamingo",
+      "name_scientific": "Phoenicopterus roseus",
+      "category": "Vogel",
+      "length_cm": 132.5,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25692",
+      "name_de": "Bekassine",
+      "name_scientific": "Gallinago gallinago",
+      "category": "Vogel",
+      "weight_kg": 0.1195,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25740",
+      "name_de": "Zaunkönig",
+      "name_scientific": "Troglodytes troglodytes",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q18859",
+      "name_de": "Rotschenkel",
+      "name_scientific": "Tringa totanus",
+      "category": "Vogel",
+      "weight_kg": 0.07565,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25384",
+      "name_de": "Waldohreule",
+      "name_scientific": "Asio otus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q131907",
+      "name_de": "Rotluchs",
+      "name_scientific": "Lynx rufus",
+      "category": "Säugetier",
+      "weight_kg": 0.31,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q159857",
+      "name_de": "Damhirsch",
+      "name_scientific": "Dama dama",
+      "category": "Säugetier",
+      "weight_kg": 5,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q95036",
+      "name_de": "Spitzmaulnashorn",
+      "name_scientific": "Diceros bicornis",
+      "category": "Säugetier",
+      "weight_kg": 36,
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q26283",
+      "name_de": "Bisamratte",
+      "name_scientific": "Ondatra zibethicus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q168677",
+      "name_de": "Mönchsgeier",
+      "name_scientific": "Aegypius monachus",
+      "category": "Vogel",
+      "weight_kg": 0.243,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q178811",
+      "name_de": "Brauner Sichler",
+      "name_scientific": "Plegadis falcinellus",
+      "category": "Vogel",
+      "weight_kg": 0.633,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q179959",
+      "name_de": "Kakapo",
+      "name_scientific": "Strigops habroptila",
+      "category": "Vogel",
+      "continent": [
+        "Ozeanien",
+        "Australien"
+      ],
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q25761",
+      "name_de": "Brandgans",
+      "name_scientific": "Tadorna tadorna",
+      "category": "Vogel",
+      "weight_kg": 1.043,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26209",
+      "name_de": "Buntspecht",
+      "name_scientific": "Dendrocopos major",
+      "category": "Vogel",
+      "weight_kg": 0.047349999999999996,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q132072",
+      "name_de": "Weißwal",
+      "name_scientific": "Delphinapterus leucas",
+      "category": "Säugetier",
+      "habitat": [
+        "Arktischer Ozean"
+      ],
+      "weight_kg": 60,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q184004",
+      "name_de": "Moschusochse",
+      "name_scientific": "Ovibos moschatus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26582",
+      "name_de": "Europäischer Iltis",
+      "name_scientific": "Mustela putorius",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q131918",
+      "name_de": "Merlin",
+      "name_scientific": "Falco columbarius",
+      "category": "Vogel",
+      "weight_kg": 0.187,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q156250",
+      "name_de": "Rotmilan",
+      "name_scientific": "Milvus milvus",
+      "category": "Vogel",
+      "weight_kg": 1.012,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q170598",
+      "name_de": "Andenkondor",
+      "name_scientific": "Vultur gryphus",
+      "category": "Vogel",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q178821",
+      "name_de": "Stelzenläufer",
+      "name_scientific": "Himantopus himantopus",
+      "category": "Vogel",
+      "weight_kg": 0.09090000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q27075852",
+      "name_de": "Bluthänfling",
+      "name_scientific": "Linaria cannabina",
+      "category": "Vogel",
+      "weight_kg": 0.010329999999999999,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25572",
+      "name_de": "Kornweihe",
+      "name_scientific": "Circus cyaneus",
+      "category": "Vogel",
+      "weight_kg": 0.4365,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25634",
+      "name_de": "Lachmöwe",
+      "name_scientific": "Chroicocephalus ridibundus",
+      "category": "Vogel",
+      "weight_kg": 0.28049999999999997,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26205",
+      "name_de": "Goldammer",
+      "name_scientific": "Emberiza citrinella",
+      "category": "Vogel",
+      "weight_kg": 0.00294,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26444",
+      "name_de": "Reiherente",
+      "name_scientific": "Aythya fuligula",
+      "category": "Vogel",
+      "weight_kg": 0.056,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q18850",
+      "name_de": "Flussuferläufer",
+      "name_scientific": "Actitis hypoleucos",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q131340",
+      "name_de": "Gämse",
+      "name_scientific": "Rupicapra rupicapra",
+      "category": "Säugetier",
+      "habitat": [
+        "Berg"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q6145",
+      "name_de": "Braunbrustigel",
+      "name_scientific": "Erinaceus europaeus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q36135",
+      "name_de": "Nebelparder",
+      "name_scientific": "Neofelis nebulosa",
+      "category": "Säugetier",
+      "habitat": [
+        "Dschungel"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q42627",
+      "name_de": "Bengalkatze",
+      "name_scientific": "Prionailurus bengalensis",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q131044",
+      "name_de": "Trauerschwan",
+      "name_scientific": "Cygnus atratus",
+      "category": "Vogel",
+      "continent": [
+        "Ozeanien",
+        "Australien"
+      ],
+      "weight_kg": 5.1,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q143284",
+      "name_de": "Schwarzspecht",
+      "name_scientific": "Dryocopus martius",
+      "category": "Vogel",
+      "weight_kg": 0.011800000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q171360",
+      "name_de": "Löffler",
+      "name_scientific": "Platalea leucorodia",
+      "category": "Vogel",
+      "weight_kg": 0.076,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q27075864",
+      "name_de": "Erlenzeisig",
+      "name_scientific": "Spinus spinus",
+      "category": "Vogel",
+      "weight_kg": 0.0075450000000000005,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26742",
+      "name_de": "Tafelente",
+      "name_scientific": "Aythya ferina",
+      "category": "Vogel",
+      "weight_kg": 0.066,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q168745",
+      "name_de": "Nilkrokodil",
+      "name_scientific": "Crocodylus niloticus",
+      "category": "Reptil",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q182599",
+      "name_de": "Leistenkrokodil",
+      "name_scientific": "Crocodylus porosus",
+      "category": "Reptil",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q159323",
+      "name_de": "Europäischer Wels",
+      "name_scientific": "Silurus glanis",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q164327",
+      "name_de": "Schwertfisch",
+      "name_scientific": "Xiphias gladius",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q133189",
+      "name_de": "Marderhund",
+      "name_scientific": "Nyctereutes procyonoides",
+      "category": "Säugetier",
+      "habitat": [
+        "Buschland"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q175329",
+      "name_de": "Sandkatze",
+      "name_scientific": "Felis margarita",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q181191",
+      "name_de": "Europäischer Biber",
+      "name_scientific": "Castor fiber",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q27366",
+      "name_de": "Steinmarder",
+      "name_scientific": "Martes foina",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q155878",
+      "name_de": "Birkhuhn",
+      "name_scientific": "Lyrurus tetrix",
+      "category": "Vogel",
+      "weight_kg": 0.925,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q161829",
+      "name_de": "Kaiserpinguin",
+      "name_scientific": "Aptenodytes forsteri",
+      "category": "Vogel",
+      "weight_kg": 0.425,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q170251",
+      "name_de": "Schlangenadler",
+      "name_scientific": "Circaetus gallicus",
+      "category": "Vogel",
+      "weight_kg": 0.136,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q200339",
+      "name_de": "Mandarinente",
+      "name_scientific": "Aix galericulata",
+      "category": "Vogel",
+      "weight_kg": 0.041,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q179359",
+      "name_de": "Steppenadler",
+      "name_scientific": "Aquila nipalensis",
+      "category": "Vogel",
+      "weight_kg": 2.459,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q184774",
+      "name_de": "Bankivahuhn",
+      "name_scientific": "Gallus gallus",
+      "category": "Vogel",
+      "weight_kg": 0.6719999999999999,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q28122714",
+      "name_de": "Kampfläufer",
+      "name_scientific": "Calidris pugnax",
+      "category": "Vogel",
+      "weight_kg": 0.10200000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25756",
+      "name_de": "Waldkauz",
+      "name_scientific": "Strix aluco",
+      "category": "Vogel",
+      "weight_kg": 0.475,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26431",
+      "name_de": "Rohrweihe",
+      "name_scientific": "Circus aeruginosus",
+      "category": "Vogel",
+      "weight_kg": 0.04,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q18700",
+      "name_de": "Schuhschnabel",
+      "name_scientific": "Balaeniceps rex",
+      "category": "Vogel",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q18854",
+      "name_de": "Großer Brachvogel",
+      "name_scientific": "Numenius arquata",
+      "category": "Vogel",
+      "weight_kg": 0.742,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q48186",
+      "name_de": "Königskobra",
+      "name_scientific": "Ophiophagus hannah",
+      "category": "Reptil",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q129544",
+      "name_de": "Dugong",
+      "name_scientific": "Dugong dugon",
+      "category": "Säugetier",
+      "habitat": [
+        "Meer"
+      ],
+      "weight_kg": 200,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q129727",
+      "name_de": "Pardelluchs",
+      "name_scientific": "Lynx pardinus",
+      "category": "Säugetier",
+      "continent": [
+        "Europa",
+        "Afrika",
+        "Amerika"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q144923",
+      "name_de": "Malaienbär",
+      "name_scientific": "Helarctos malayanus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "continent": [
+        "Asien",
+        "Ozeanien"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q180404",
+      "name_de": "Wapiti",
+      "name_scientific": "Cervus canadensis",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q184224",
+      "name_de": "Wanderratte",
+      "name_scientific": "Rattus norvegicus",
+      "category": "Säugetier",
+      "habitat": [
+        "Landfläche",
+        "Buschland"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25769",
+      "name_de": "Sumpfohreule",
+      "name_scientific": "Asio flammeus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26733",
+      "name_de": "Kanadagans",
+      "name_scientific": "Branta canadensis",
+      "category": "Vogel",
+      "weight_kg": 3.814,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26387",
+      "name_de": "Europäischer Aal",
+      "name_scientific": "Anguilla anguilla",
+      "category": "Fisch",
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q172886",
+      "name_de": "Guanako",
+      "name_scientific": "Lama guanicoe",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q174088",
+      "name_de": "Kernbeißer",
+      "name_scientific": "Coccothraustes coccothraustes",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q27075785",
+      "name_de": "Grünfink",
+      "name_scientific": "Chloris chloris",
+      "category": "Vogel",
+      "weight_kg": 0.00217,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25678",
+      "name_de": "Wendehals",
+      "name_scientific": "Jynx torquilla",
+      "category": "Vogel",
+      "weight_kg": 0.01985,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26055",
+      "name_de": "Mehlschwalbe",
+      "name_scientific": "Delichon urbicum",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26147",
+      "name_de": "Säbelschnäbler",
+      "name_scientific": "Recurvirostra avosetta",
+      "category": "Vogel",
+      "weight_kg": 0.0317,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26349",
+      "name_de": "Singdrossel",
+      "name_scientific": "Turdus philomelos",
+      "category": "Vogel",
+      "weight_kg": 0.03900000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q28236",
+      "name_de": "Silbermöwe",
+      "name_scientific": "Larus argentatus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q41407",
+      "name_de": "Seeotter",
+      "name_scientific": "Enhydra lutris",
+      "category": "Säugetier",
+      "habitat": [
+        "coastal margin"
+      ],
+      "weight_kg": 32.5,
+      "length_cm": 144,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q188601",
+      "name_de": "Zwergtrappe",
+      "name_scientific": "Tetrax tetrax",
+      "category": "Vogel",
+      "weight_kg": 0.041,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25777",
+      "name_de": "Wacholderdrossel",
+      "name_scientific": "Turdus pilaris",
+      "category": "Vogel",
+      "weight_kg": 0.0559,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26578",
+      "name_de": "Blaukehlchen",
+      "name_scientific": "Luscinia svecica",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26620",
+      "name_de": "Gartenrotschwanz",
+      "name_scientific": "Phoenicurus phoenicurus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26717",
+      "name_de": "Ziegenmelker",
+      "name_scientific": "Caprimulgus europaeus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q18851",
+      "name_de": "Flussregenpfeifer",
+      "name_scientific": "Charadrius dubius",
+      "category": "Vogel",
+      "weight_kg": 0.0077,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26982",
+      "name_de": "Haubenlerche",
+      "name_scientific": "Galerida cristata",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q22718",
+      "name_de": "Axolotl",
+      "name_scientific": "Ambystoma mexicanum",
+      "category": "Amphibie",
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q76280",
+      "name_de": "Schleie",
+      "name_scientific": "Tinca tinca",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q178202",
+      "name_de": "Guppy",
+      "name_scientific": "Poecilia reticulata",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q2857311",
+      "name_de": "Forelle",
+      "name_scientific": "Salmo trutta",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q126683",
+      "name_de": "Saiga",
+      "name_scientific": "Saiga tatarica",
+      "category": "Säugetier",
+      "habitat": [
+        "Grasland"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q156767",
+      "name_de": "Kleiber",
+      "name_scientific": "Sitta europaea",
+      "category": "Vogel",
+      "weight_kg": 0.012625,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q166171",
+      "name_de": "Grünspecht",
+      "name_scientific": "Picus viridis",
+      "category": "Vogel",
+      "weight_kg": 0.10095,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q168976",
+      "name_de": "Östlicher Kaiseradler",
+      "name_scientific": "Aquila heliaca",
+      "category": "Vogel",
+      "weight_kg": 2.585,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q170466",
+      "name_de": "Wespenbussard",
+      "name_scientific": "Pernis apivorus",
+      "category": "Vogel",
+      "weight_kg": 0.049,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q171655",
+      "name_de": "Großtrappe",
+      "name_scientific": "Otis tarda",
+      "category": "Vogel",
+      "weight_kg": 0.14300000000000002,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q201831",
+      "name_de": "Wasseramsel",
+      "name_scientific": "Cinclus cinclus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q184432",
+      "name_de": "Prachttaucher",
+      "name_scientific": "Gavia arctica",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q184820",
+      "name_de": "Tannenhäher",
+      "name_scientific": "Nucifraga caryocatactes",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q25928",
+      "name_de": "Austernfischer",
+      "name_scientific": "Haematopus ostralegus",
+      "category": "Vogel",
+      "weight_kg": 0.28235,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26135",
+      "name_de": "Seidenschwanz",
+      "name_scientific": "Bombycilla garrulus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26685",
+      "name_de": "Papageitaucher",
+      "name_scientific": "Fratercula arctica",
+      "category": "Vogel",
+      "weight_kg": 0.376,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q17134",
+      "name_de": "Gangesgavial",
+      "name_scientific": "Gavialis gangeticus",
+      "category": "Reptil",
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q144534",
+      "name_de": "Brachse",
+      "name_scientific": "Abramis brama",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q174296",
+      "name_de": "Gaur",
+      "name_scientific": "Bos gaurus",
+      "category": "Säugetier",
+      "habitat": [
+        "Savanne",
+        "Wald"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q178089",
+      "name_de": "Tüpfelhyäne",
+      "name_scientific": "Crocuta crocuta",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q209067",
+      "name_de": "Europäischer Maulwurf",
+      "name_scientific": "Talpa europaea",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q47910",
+      "name_de": "Panzernashorn",
+      "name_scientific": "Rhinoceros unicornis",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q170831",
+      "name_de": "Schwanzmeise",
+      "name_scientific": "Aegithalos caudatus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q185183",
+      "name_de": "Schwarzhalstaucher",
+      "name_scientific": "Podiceps nigricollis",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q191125",
+      "name_de": "Streifengans",
+      "name_scientific": "Anser indicus",
+      "category": "Vogel",
+      "weight_kg": 2.23,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26427",
+      "name_de": "Sturmmöwe",
+      "name_scientific": "Larus canus",
+      "category": "Vogel",
+      "weight_kg": 0.3865,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26452",
+      "name_de": "Saatgans",
+      "name_scientific": "Anser fabalis",
+      "category": "Vogel",
+      "weight_kg": 2.843,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q18840",
+      "name_de": "Grünschenkel",
+      "name_scientific": "Tringa nebularia",
+      "category": "Vogel",
+      "weight_kg": 0.10175000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q18875",
+      "name_de": "Flussseeschwalbe",
+      "name_scientific": "Sterna hirundo",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q170713",
+      "name_de": "Ringelnatter",
+      "name_scientific": "Natrix natrix",
+      "category": "Reptil",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q166812",
+      "name_de": "Flussbarsch",
+      "name_scientific": "Perca fluviatilis",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q188879",
+      "name_de": "Atlantischer Lachs",
+      "name_scientific": "Salmo salar",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q146457",
+      "name_de": "Kanadischer Luchs",
+      "name_scientific": "Lynx canadensis",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q156606",
+      "name_de": "Rhesusaffe",
+      "name_scientific": "Macaca mulatta",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald",
+        "Savanne"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q167797",
+      "name_de": "Vikunja",
+      "name_scientific": "Vicugna vicugna",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q187704",
+      "name_de": "Nutria",
+      "name_scientific": "Myocastor coypus",
+      "category": "Säugetier",
+      "weight_kg": 6.36,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q171563",
+      "name_de": "Zwergohreule",
+      "name_scientific": "Otus scops",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q177688",
+      "name_de": "Gerfalke",
+      "name_scientific": "Falco rusticolus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q178942",
+      "name_de": "Misteldrossel",
+      "name_scientific": "Turdus viscivorus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q179367",
+      "name_de": "Blauracke",
+      "name_scientific": "Coracias garrulus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q179625",
+      "name_de": "Rotfußfalke",
+      "name_scientific": "Falco vespertinus",
+      "category": "Vogel",
+      "weight_kg": 0.15,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q184834",
+      "name_de": "Triel",
+      "name_scientific": "Burhinus oedicnemus",
+      "category": "Vogel",
+      "weight_kg": 0.042,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q185099",
+      "name_de": "Wasserralle",
+      "name_scientific": "Rallus aquaticus",
+      "category": "Vogel",
+      "weight_kg": 0.1115,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q20823352",
+      "name_de": "Rosenstar",
+      "name_scientific": "Pastor roseus",
+      "category": "Vogel",
+      "weight_kg": 0.0669,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26420",
+      "name_de": "Steinschmätzer (Art)",
+      "name_scientific": "Oenanthe oenanthe",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26597",
+      "name_de": "Eisente",
+      "name_scientific": "Clangula hyemalis",
+      "category": "Vogel",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q26691",
+      "name_de": "Sterntaucher",
+      "name_scientific": "Gavia stellata",
+      "category": "Vogel",
+      "weight_kg": 1.6030000000000002,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26711",
+      "name_de": "Zwergschnepfe",
+      "name_scientific": "Lymnocryptes minimus",
+      "category": "Vogel",
+      "weight_kg": 0.05020000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26755",
+      "name_de": "Hausrotschwanz",
+      "name_scientific": "Phoenicurus ochruros",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q18841",
+      "name_de": "Uferschnepfe",
+      "name_scientific": "Limosa limosa",
+      "category": "Vogel",
+      "weight_kg": 0.264,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q183660",
+      "name_de": "Westliche Blindschleiche",
+      "name_scientific": "Anguis fragilis",
+      "category": "Reptil",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q30153",
+      "name_de": "Makrele",
+      "name_scientific": "Scomber scombrus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q170311",
+      "name_de": "Java-Nashorn",
+      "name_scientific": "Rhinoceros sondaicus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q183339",
+      "name_de": "Hirschziegenantilope",
+      "name_scientific": "Antilope cervicapra",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q190674",
+      "name_de": "Fischkatze",
+      "name_scientific": "Prionailurus viverrinus",
+      "category": "Säugetier",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q192231",
+      "name_de": "Afrikanische Goldkatze",
+      "name_scientific": "Profelis aurata",
+      "category": "Säugetier"
+    },
+    {
+      "id": "Q213084",
+      "name_de": "Springböcke",
+      "name_scientific": "Antidorcas marsupialis",
+      "category": "Säugetier",
+      "weight_kg": 37,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q172093",
+      "name_de": "Blässgans",
+      "name_scientific": "Anser albifrons",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q182761",
+      "name_de": "Haselhuhn",
+      "name_scientific": "Tetrastes bonasia",
+      "category": "Vogel",
+      "weight_kg": 0.194,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q182971",
+      "name_de": "Zwergadler",
+      "name_scientific": "Hieraaetus pennatus",
+      "category": "Vogel",
+      "weight_kg": 0.709,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q229408",
+      "name_de": "Rötelfalke",
+      "name_scientific": "Falco naumanni",
+      "category": "Vogel",
+      "weight_kg": 0.148,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q18858",
+      "name_de": "Regenbrachvogel",
+      "name_scientific": "Numenius phaeopus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q28450",
+      "name_de": "Waldwasserläufer",
+      "name_scientific": "Tringa ochropus",
+      "category": "Vogel",
+      "weight_kg": 0.075,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q178228",
+      "name_de": "Wildziege",
+      "name_scientific": "Capra aegagrus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26547",
+      "name_de": "Yak",
+      "name_scientific": "Bos mutus",
+      "category": "Säugetier",
+      "habitat": [
+        "Grasland"
+      ],
+      "continent": [
+        "Asien"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q165974",
+      "name_de": "Sakerfalke",
+      "name_scientific": "Falco cherrug",
+      "category": "Vogel",
+      "weight_kg": 0.875,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q199758",
+      "name_de": "Blauhäher",
+      "name_scientific": "Cyanocitta cristata",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q184751",
+      "name_de": "Krauskopfpelikan",
+      "name_scientific": "Pelecanus crispus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q188446",
+      "name_de": "Mönchsgrasmücke",
+      "name_scientific": "Sylvia atricapilla",
+      "category": "Vogel",
+      "weight_kg": 0.010145000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q188660",
+      "name_de": "Hoatzin",
+      "name_scientific": "Opisthocomus hoazin",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q189609",
+      "name_de": "Mittelsäger",
+      "name_scientific": "Mergus serrator",
+      "category": "Vogel",
+      "weight_kg": 0.908,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q194024",
+      "name_de": "Tüpfelsumpfhuhn",
+      "name_scientific": "Porzana porzana",
+      "category": "Vogel",
+      "weight_kg": 0.045450000000000004,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26129",
+      "name_de": "Zwergdommel",
+      "name_scientific": "Ixobrychus minutus",
+      "category": "Vogel",
+      "weight_kg": 0.08,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26140",
+      "name_de": "Hohltaube",
+      "name_scientific": "Columba oenas",
+      "category": "Vogel",
+      "weight_kg": 0.0167,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26552",
+      "name_de": "Fichtenkreuzschnabel",
+      "name_scientific": "Loxia curvirostra",
+      "category": "Vogel",
+      "weight_kg": 0.0029500000000000004,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26657",
+      "name_de": "Wintergoldhähnchen",
+      "name_scientific": "Regulus regulus",
+      "category": "Vogel",
+      "weight_kg": 0.0007700000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q27160",
+      "name_de": "Heringsmöwe",
+      "name_scientific": "Larus fuscus",
+      "category": "Vogel",
+      "weight_kg": 0.8175,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q29865",
+      "name_de": "Schellente",
+      "name_scientific": "Bucephala clangula",
+      "category": "Vogel",
+      "weight_kg": 0.9,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q199788",
+      "name_de": "Atlantischer Kabeljau",
+      "name_scientific": "Gadus morhua",
+      "category": "Fisch",
+      "length_cm": 90,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q201235",
+      "name_de": "Zitteraal",
+      "name_scientific": "Electrophorus electricus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q144700",
+      "name_de": "Quappe",
+      "name_scientific": "Lota lota",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q174199",
+      "name_de": "Großer Tümmler",
+      "name_scientific": "Tursiops truncatus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q180035",
+      "name_de": "Schneehase",
+      "name_scientific": "Lepus timidus",
+      "category": "Säugetier",
+      "habitat": [
+        "Grasland"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q182304",
+      "name_de": "Jaguarundi",
+      "name_scientific": "Puma yagouaroundi",
+      "category": "Säugetier"
+    },
+    {
+      "id": "Q188657",
+      "name_de": "Streifenhyäne",
+      "name_scientific": "Hyaena hyaena",
+      "category": "Säugetier",
+      "weight_kg": 20.35,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q190516",
+      "name_de": "Sikahirsch",
+      "name_scientific": "Cervus nippon",
+      "category": "Säugetier",
+      "habitat": [
+        "Savanne",
+        "Wald"
+      ],
+      "weight_kg": 5.75,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26559",
+      "name_de": "Europäischer Nerz",
+      "name_scientific": "Mustela lutreola",
+      "category": "Säugetier",
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q27179",
+      "name_de": "Amerikanischer Nerz",
+      "name_scientific": "Neogale vison",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q116667",
+      "name_de": "Hirtenmaina",
+      "name_scientific": "Acridotheres tristis",
+      "category": "Vogel",
+      "weight_kg": 0.0070999999999999995,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q179919",
+      "name_de": "Rothalstaucher",
+      "name_scientific": "Podiceps grisegena",
+      "category": "Vogel",
+      "weight_kg": 0.7854,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q180991",
+      "name_de": "Gänsesäger",
+      "name_scientific": "Mergus merganser",
+      "category": "Vogel",
+      "weight_kg": 1.4705,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q191723",
+      "name_de": "Moorente",
+      "name_scientific": "Aythya nyroca",
+      "category": "Vogel",
+      "weight_kg": 0.52,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q192058",
+      "name_de": "Ohrentaucher",
+      "name_scientific": "Podiceps auritus",
+      "category": "Vogel",
+      "weight_kg": 0.23600000000000002,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q58958",
+      "name_de": "Sanderling",
+      "name_scientific": "Calidris alba",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26698",
+      "name_de": "Heckenbraunelle",
+      "name_scientific": "Prunella modularis",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q18864",
+      "name_de": "Pfuhlschnepfe",
+      "name_scientific": "Limosa lapponica",
+      "category": "Vogel",
+      "weight_kg": 0.3335,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26800",
+      "name_de": "Küstenseeschwalbe",
+      "name_scientific": "Sterna paradisaea",
+      "category": "Vogel",
+      "weight_kg": 0.114,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26844",
+      "name_de": "Truthuhn",
+      "name_scientific": "Meleagris gallopavo",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q120043",
+      "name_de": "Lederschildkröte",
+      "name_scientific": "Dermochelys coriacea",
+      "category": "Reptil",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q199458",
+      "name_de": "Grüne Meeresschildkröte",
+      "name_scientific": "Chelonia mydas",
+      "category": "Reptil",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q187986",
+      "name_de": "Regenbogenforelle",
+      "name_scientific": "Oncorhynchus mykiss",
+      "category": "Fisch"
+    },
+    {
+      "id": "Q137641",
+      "name_de": "Brillenbär",
+      "name_scientific": "Tremarctos ornatus",
+      "category": "Säugetier",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q185385",
+      "name_de": "Katta",
+      "name_scientific": "Lemur catta",
+      "category": "Säugetier",
+      "continent": [
+        "Afrika"
+      ],
+      "weight_kg": 0.06,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q216815",
+      "name_de": "Elenantilope",
+      "name_scientific": "Taurotragus oryx",
+      "category": "Säugetier",
+      "weight_kg": 27.75
+    },
+    {
+      "id": "Q29220",
+      "name_de": "Sumatra-Nashorn",
+      "name_scientific": "Dicerorhinus sumatrensis",
+      "category": "Säugetier",
+      "habitat": [
+        "Buschland",
+        "Wald"
+      ],
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q202478",
+      "name_de": "Gartengrasmücke",
+      "name_scientific": "Sylvia borin",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q182209",
+      "name_de": "Königspinguin",
+      "name_scientific": "Aptenodytes patagonicus",
+      "category": "Vogel",
+      "weight_kg": 11.5,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q185784",
+      "name_de": "Zilpzalp",
+      "name_scientific": "Phylloscopus collybita",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q191096",
+      "name_de": "Tannenmeise",
+      "name_scientific": "Periparus ater",
+      "category": "Vogel",
+      "weight_kg": 0.0010400000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q27074540",
+      "name_de": "Schneegans",
+      "name_scientific": "Anser caerulescens",
+      "category": "Vogel",
+      "weight_kg": 1.3784999999999998,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q21090684",
+      "name_de": "Schelladler",
+      "name_scientific": "Clanga clanga",
+      "category": "Vogel",
+      "weight_kg": 0.11,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q18837",
+      "name_de": "Bruchwasserläufer",
+      "name_scientific": "Tringa glareola",
+      "category": "Vogel",
+      "weight_kg": 0.062,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26892",
+      "name_de": "Steinwälzer",
+      "name_scientific": "Arenaria interpres",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q27129",
+      "name_de": "Raubseeschwalbe",
+      "name_scientific": "Hydroprogne caspia",
+      "category": "Vogel",
+      "continent": [
+        "Ozeanien",
+        "Australien"
+      ],
+      "weight_kg": 0.634,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26395",
+      "name_de": "Feuersalamander",
+      "name_scientific": "Salamandra salamandra",
+      "category": "Amphibie",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q182976",
+      "name_de": "Rotauge",
+      "name_scientific": "Rutilus rutilus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q234014",
+      "name_de": "Großkopfmeeräsche",
+      "name_scientific": "Mugil cephalus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26764",
+      "name_de": "Großer Kohlweißling",
+      "name_scientific": "Pieris brassicae",
+      "category": "Insekt"
+    },
+    {
+      "id": "Q145016",
+      "name_de": "Lippenbär",
+      "name_scientific": "Melursus ursinus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald",
+        "Savanne"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q168327",
+      "name_de": "Alpensteinbock",
+      "name_scientific": "Capra ibex",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q180960",
+      "name_de": "Asiatischer Esel",
+      "name_scientific": "Equus hemionus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q185295",
+      "name_de": "Erdwolf",
+      "name_scientific": "Proteles cristata",
+      "category": "Säugetier",
+      "weight_kg": 10,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q186778",
+      "name_de": "Fingertier",
+      "name_scientific": "Daubentonia madagascariensis",
+      "category": "Säugetier",
+      "continent": [
+        "Afrika"
+      ],
+      "weight_kg": 1.3075,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q189514",
+      "name_de": "Waldelefant",
+      "name_scientific": "Loxodonta cyclotis",
+      "category": "Säugetier",
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q26913",
+      "name_de": "Seehund",
+      "name_scientific": "Phoca vitulina",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q201316",
+      "name_de": "Gebirgsstelze",
+      "name_scientific": "Motacilla cinerea",
+      "category": "Vogel",
+      "weight_kg": 0.009654999999999999,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q206540",
+      "name_de": "Zitronenstelze",
+      "name_scientific": "Motacilla citreola",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q191683",
+      "name_de": "Jungfernkranich",
+      "name_scientific": "Anthropoides virgo",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q514809",
+      "name_de": "Nymphensittich",
+      "name_scientific": "Nymphicus hollandicus",
+      "category": "Vogel",
+      "continent": [
+        "Ozeanien",
+        "Australien"
+      ],
+      "weight_kg": 0.045840000000000006,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q230837",
+      "name_de": "Steppenweihe",
+      "name_scientific": "Circus macrourus",
+      "category": "Vogel",
+      "weight_kg": 0.322,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q12267692",
+      "name_de": "Zwergseeschwalbe",
+      "name_scientific": "Sternula albifrons",
+      "category": "Vogel",
+      "weight_kg": 0.0335,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26416",
+      "name_de": "Schneeammer",
+      "name_scientific": "Plectrophenax nivalis",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q146375",
+      "name_de": "Erdkröte",
+      "name_scientific": "Bufo bufo",
+      "category": "Amphibie",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q156454",
+      "name_de": "Admiral",
+      "name_scientific": "Vanessa atalanta",
+      "category": "Insekt",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q147128",
+      "name_de": "Siebenschläfer",
+      "name_scientific": "Glis glis",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q179020",
+      "name_de": "Finnwal",
+      "name_scientific": "Balaenoptera physalus",
+      "category": "Säugetier",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q204814",
+      "name_de": "Schwarzfußkatze",
+      "name_scientific": "Felis nigripes",
+      "category": "Säugetier",
+      "weight_kg": 0.074,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q186267",
+      "name_de": "Argali",
+      "name_scientific": "Ovis ammon",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald",
+        "Buschland"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q200444",
+      "name_de": "Nilgauantilope",
+      "name_scientific": "Boselaphus tragocamelus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q192285",
+      "name_de": "Mondfisch",
+      "name_scientific": "Mola mola",
+      "category": "Fisch",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q208600",
+      "name_de": "Sardine",
+      "name_scientific": "Sardina pilchardus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q179530",
+      "name_de": "Schwalbenschwanz",
+      "name_scientific": "Papilio machaon",
+      "category": "Insekt"
+    },
+    {
+      "id": "Q187024",
+      "name_de": "Steppenfuchs",
+      "name_scientific": "Vulpes corsac",
+      "category": "Säugetier",
+      "habitat": [
+        "Grasland",
+        "Buschland"
+      ],
+      "weight_kg": 0.0625,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q192233",
+      "name_de": "Asiatische Goldkatze",
+      "name_scientific": "Pardofelis temminckii",
+      "category": "Säugetier"
+    },
+    {
+      "id": "Q106133",
+      "name_de": "Hausratte",
+      "name_scientific": "Rattus rattus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q213141",
+      "name_de": "Binturong",
+      "name_scientific": "Arctictis binturong",
+      "category": "Säugetier",
+      "habitat": [
+        "Buschland"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q214835",
+      "name_de": "Bengalfuchs",
+      "name_scientific": "Vulpes bengalensis",
+      "category": "Säugetier",
+      "habitat": [
+        "Buschland"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q245305",
+      "name_de": "Steppenzebra",
+      "name_scientific": "Equus quagga",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q18764",
+      "name_de": "Fleckenmusang",
+      "name_scientific": "Paradoxurus hermaphroditus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald",
+        "Savanne"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q2396858",
+      "name_de": "Atlantischer Hering",
+      "name_scientific": "Clupea harengus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q174652",
+      "name_de": "Grönlandwal",
+      "name_scientific": "Balaena mysticetus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q183255",
+      "name_de": "Warzenschwein",
+      "name_scientific": "Phacochoerus africanus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q183330",
+      "name_de": "Fossa",
+      "name_scientific": "Cryptoprocta ferox",
+      "category": "Säugetier",
+      "continent": [
+        "Afrika"
+      ],
+      "weight_kg": 4.8,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q187927",
+      "name_de": "Schraubenziege",
+      "name_scientific": "Capra falconeri",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q190154",
+      "name_de": "Mendesantilope",
+      "name_scientific": "Addax nasomaculatus",
+      "category": "Säugetier",
+      "weight_kg": 75,
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q192029",
+      "name_de": "Nasenaffe",
+      "name_scientific": "Nasalis larvatus",
+      "category": "Säugetier",
+      "continent": [
+        "Asien"
+      ],
+      "weight_kg": 0.455,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q199962",
+      "name_de": "Berberaffe",
+      "name_scientific": "Macaca sylvanus",
+      "category": "Säugetier",
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q13408062",
+      "name_de": "Hausyak",
+      "name_scientific": "Bos grunniens",
+      "category": "Säugetier"
+    },
+    {
+      "id": "Q178973",
+      "name_de": "Frettchen",
+      "name_scientific": "Mustela furo",
+      "category": "Säugetier"
+    },
+    {
+      "id": "Q183035",
+      "name_de": "Banteng",
+      "name_scientific": "Bos javanicus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q189868",
+      "name_de": "Mandrill",
+      "name_scientific": "Mandrillus sphinx",
+      "category": "Säugetier",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q80191",
+      "name_de": "Marmorkatze",
+      "name_scientific": "Pardofelis marmorata",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald",
+        "Buschland"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q232054",
+      "name_de": "Axishirsch",
+      "name_scientific": "Axis axis",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q726151",
+      "name_de": "Quokka",
+      "name_scientific": "Setonix brachyurus",
+      "category": "Säugetier",
+      "continent": [
+        "Ozeanien",
+        "Australien"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q76098",
+      "name_de": "Graskarpfen",
+      "name_scientific": "Ctenopharyngodon idella",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q217129",
+      "name_de": "Europäischer Wolfsbarsch",
+      "name_scientific": "Dicentrarchus labrax",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q188130",
+      "name_de": "Chinesischer Flussdelfin",
+      "name_scientific": "Lipotes vexillifer",
+      "category": "Säugetier",
+      "continent": [
+        "Asien"
+      ],
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q210872",
+      "name_de": "Gangesdelfin",
+      "name_scientific": "Platanista gangetica",
+      "category": "Säugetier",
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q229337",
+      "name_de": "Sambar",
+      "name_scientific": "Rusa unicolor",
+      "category": "Säugetier",
+      "habitat": [
+        "Savanne",
+        "Buschland"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q22110899",
+      "name_de": "Zwergflusspferd",
+      "name_scientific": "Choeropsis liberiensis",
+      "category": "Säugetier",
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q27742",
+      "name_de": "Wildpferd",
+      "name_scientific": "Equus ferus",
+      "category": "Säugetier",
+      "habitat": [
+        "Grasland",
+        "Wald"
+      ],
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q549",
+      "name_de": "Siamesischer Kampffisch",
+      "name_scientific": "Betta splendens",
+      "category": "Fisch",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q186663",
+      "name_de": "Seeleopard",
+      "name_scientific": "Hydrurga leptonyx",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q187943",
+      "name_de": "Gabelbock",
+      "name_scientific": "Antilocapra americana",
+      "category": "Säugetier",
+      "weight_kg": 3.5,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q205948",
+      "name_de": "Tigerkatze",
+      "name_scientific": "Leopardus tigrinus",
+      "category": "Säugetier",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q231625",
+      "name_de": "Polarhase",
+      "name_scientific": "Lepus arcticus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q202406",
+      "name_de": "Schellfisch",
+      "name_scientific": "Melanogrammus aeglefinus",
+      "category": "Fisch",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q30258",
+      "name_de": "Hornisse",
+      "name_scientific": "Vespa crabro",
+      "category": "Insekt"
+    },
+    {
+      "id": "Q184389",
+      "name_de": "Mähnenwolf",
+      "name_scientific": "Chrysocyon brachyurus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wiese"
+      ],
+      "weight_kg": 11.6925,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q189484",
+      "name_de": "Mantelpavian",
+      "name_scientific": "Papio hamadryas",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q207114",
+      "name_de": "Gemeiner Delfin",
+      "name_scientific": "Delphinus delphis",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q81056",
+      "name_de": "Kanadischer Biber",
+      "name_scientific": "Castor canadensis",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald",
+        "Feuchtgebiet",
+        "See",
+        "Teich",
+        "Süßwasser",
+        "Sumpf"
+      ],
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q193469",
+      "name_de": "Takin",
+      "name_scientific": "Budorcas taxicolor",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q219565",
+      "name_de": "Grevyzebra",
+      "name_scientific": "Equus grevyi",
+      "category": "Säugetier",
+      "weight_kg": 40,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q241256",
+      "name_de": "Afrikanische Zibetkatze",
+      "name_scientific": "Civettictis civetta",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q27370",
+      "name_de": "Kegelrobbe",
+      "name_scientific": "Halichoerus grypus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q188387",
+      "name_de": "Europäische Sardelle",
+      "name_scientific": "Engraulis encrasicolus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q212398",
+      "name_de": "Monarchfalter",
+      "name_scientific": "Danaus plexippus",
+      "category": "Insekt",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q179154",
+      "name_de": "Grauwal",
+      "name_scientific": "Eschrichtius robustus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q200400",
+      "name_de": "Löffelhund",
+      "name_scientific": "Otocyon megalotis",
+      "category": "Säugetier",
+      "weight_kg": 2.1350000000000002,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q203033",
+      "name_de": "Großer Ameisenbär",
+      "name_scientific": "Myrmecophaga tridactyla",
+      "category": "Säugetier",
+      "weight_kg": 1.35,
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q204322",
+      "name_de": "Graukatze",
+      "name_scientific": "Felis bieti",
+      "category": "Säugetier",
+      "habitat": [
+        "Buschland"
+      ],
+      "continent": [
+        "Asien"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q207148",
+      "name_de": "Haselmaus",
+      "name_scientific": "Muscardinus avellanarius",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q243213",
+      "name_de": "Bergzebra",
+      "name_scientific": "Equus zebra",
+      "category": "Säugetier",
+      "habitat": [
+        "Savanne"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q158699",
+      "name_de": "Tagpfauenauge",
+      "name_scientific": "Aglais io",
+      "category": "Insekt"
+    },
+    {
+      "id": "Q185097",
+      "name_de": "Seiwal",
+      "name_scientific": "Balaenoptera borealis",
+      "category": "Säugetier",
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q191781",
+      "name_de": "Japanmakak",
+      "name_scientific": "Macaca fuscata",
+      "category": "Säugetier",
+      "continent": [
+        "Asien"
+      ],
+      "weight_kg": 14,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q192421",
+      "name_de": "Langschwanzkatze",
+      "name_scientific": "Leopardus wiedii",
+      "category": "Säugetier",
+      "habitat": [
+        "tropischer Regenwald"
+      ],
+      "weight_kg": 0.105,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q208549",
+      "name_de": "Mittelmeer-Mönchsrobbe",
+      "name_scientific": "Monachus monachus",
+      "category": "Säugetier",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q208561",
+      "name_de": "Anubispavian",
+      "name_scientific": "Papio anubis",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q623434",
+      "name_de": "Wasserbock",
+      "name_scientific": "Kobus ellipsiprymnus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q27465",
+      "name_de": "Grasfrosch",
+      "name_scientific": "Rana temporaria",
+      "category": "Amphibie",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q26821893",
+      "name_de": "Döbel",
+      "name_scientific": "Squalius cephalus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q147267",
+      "name_de": "Nordopossum",
+      "name_scientific": "Didelphis virginiana",
+      "category": "Säugetier",
+      "weight_kg": 0.00016,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q149405",
+      "name_de": "Bartrobbe",
+      "name_scientific": "Erignathus barbatus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q201808",
+      "name_de": "Minkwal",
+      "name_scientific": "Balaenoptera acutorostrata",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q207043",
+      "name_de": "Spießbock",
+      "name_scientific": "Oryx gazella",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q208112",
+      "name_de": "Giraffengazelle",
+      "name_scientific": "Litocranius walleri",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q211042",
+      "name_de": "Chilenische Waldkatze",
+      "name_scientific": "Leopardus guigna",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q212185",
+      "name_de": "Waldmaus",
+      "name_scientific": "Apodemus sylvaticus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q213889",
+      "name_de": "Siamang",
+      "name_scientific": "Symphalangus syndactylus",
+      "category": "Säugetier",
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q215887",
+      "name_de": "Weißwedelhirsch",
+      "name_scientific": "Odocoileus virginianus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q622880",
+      "name_de": "Nordafrikanische Kuhantilope",
+      "name_scientific": "Alcelaphus buselaphus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q242602",
+      "name_de": "Schneeziege",
+      "name_scientific": "Oreamnos americanus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q254630",
+      "name_de": "Wickelbär",
+      "name_scientific": "Potos flavus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q28157482",
+      "name_de": "Schabrackenhyäne",
+      "name_scientific": "Parahyaena brunnea",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q27027",
+      "name_de": "Gewöhnlicher Schweinswal",
+      "name_scientific": "Phocoena phocoena",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q194031",
+      "name_de": "Karausche",
+      "name_scientific": "Carassius carassius",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q633957",
+      "name_de": "Echter Bonito",
+      "name_scientific": "Katsuwonus pelamis",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q200594",
+      "name_de": "Rotfeder",
+      "name_scientific": "Scardinius erythrophthalmus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q188957",
+      "name_de": "Äthiopischer Wolf",
+      "name_scientific": "Canis simensis",
+      "category": "Säugetier",
+      "continent": [
+        "Afrika"
+      ],
+      "weight_kg": 16.5,
+      "length_cm": 97,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q191737",
+      "name_de": "Waldhund",
+      "name_scientific": "Speothos venaticus",
+      "category": "Säugetier",
+      "weight_kg": 5.5,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q205329",
+      "name_de": "Amazonasdelfin",
+      "name_scientific": "Inia geoffrensis",
+      "category": "Säugetier",
+      "habitat": [
+        "Süßwasser"
+      ],
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q213044",
+      "name_de": "Borneo-Goldkatze",
+      "name_scientific": "Pardofelis badia",
+      "category": "Säugetier"
+    },
+    {
+      "id": "Q243339",
+      "name_de": "Europäisches Gleithörnchen",
+      "name_scientific": "Pteromys volans",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q208140",
+      "name_de": "Afrikanischer Esel",
+      "name_scientific": "Equus africanus",
+      "category": "Säugetier",
+      "continent": [
+        "Afrika"
+      ],
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q70529",
+      "name_de": "Tigeriltis",
+      "name_scientific": "Vormela peregusna",
+      "category": "Säugetier",
+      "habitat": [
+        "Grasland"
+      ],
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q193400",
+      "name_de": "Bongo",
+      "name_scientific": "Tragelaphus eurycerus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q309274",
+      "name_de": "Rostkatze",
+      "name_scientific": "Prionailurus rubiginosus",
+      "category": "Säugetier",
+      "weight_kg": 1.5,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q215250",
+      "name_de": "Graufuchs",
+      "name_scientific": "Urocyon cinereoargenteus",
+      "category": "Säugetier",
+      "weight_kg": 0.08600000000000001,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q737838",
+      "name_de": "Westlicher Gorilla",
+      "name_scientific": "Gorilla gorilla",
+      "category": "Säugetier",
+      "conservation_status": "vom Aussterben bedroht"
+    },
+    {
+      "id": "Q271459",
+      "name_de": "Feuerwiesel",
+      "name_scientific": "Mustela sibirica",
+      "category": "Säugetier",
+      "habitat": [
+        "Buschland",
+        "Wald"
+      ],
+      "weight_kg": 0.565,
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q273331",
+      "name_de": "Irawadidelfin",
+      "name_scientific": "Orcaella brevirostris",
+      "category": "Säugetier",
+      "continent": [
+        "Asien",
+        "Ozeanien"
+      ],
+      "weight_kg": 67.9,
+      "conservation_status": "stark gefährdet"
+    },
+    {
+      "id": "Q14592562",
+      "name_de": "Anden-Makibär",
+      "name_scientific": "Bassaricyon neblina",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q187981",
+      "name_de": "Kaulbarsch",
+      "name_scientific": "Gymnocephalus cernua",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q643373",
+      "name_de": "Gewöhnlicher Hornhecht",
+      "name_scientific": "Belone belone",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q203572",
+      "name_de": "Dreistachliger Stichling",
+      "name_scientific": "Gasterosteus aculeatus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q146641",
+      "name_de": "Zander",
+      "name_scientific": "Sander lucioperca",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q269781",
+      "name_de": "Gelbflossen-Thun",
+      "name_scientific": "Thunnus albacares",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q337509",
+      "name_de": "Gartenkreuzspinne",
+      "name_scientific": "Araneus diadematus",
+      "category": "Spinnentier"
+    },
+    {
+      "id": "Q15856",
+      "name_de": "Grottenolm",
+      "name_scientific": "Proteus anguinus",
+      "category": "Amphibie",
+      "conservation_status": "gefährdet"
+    },
+    {
+      "id": "Q200473",
+      "name_de": "Ukelei",
+      "name_scientific": "Alburnus alburnus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q205015",
+      "name_de": "Seeteufel",
+      "name_scientific": "Lophius piscatorius",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q217329",
+      "name_de": "Steinbutt",
+      "name_scientific": "Scophthalmus maximus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet"
+    },
+    {
+      "id": "Q41633",
+      "name_de": "Roter Apollo",
+      "name_scientific": "Parnassius apollo",
+      "category": "Insekt",
+      "conservation_status": "nicht gefährdet"
+    }
+  ]
+}

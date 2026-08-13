@@ -20,6 +20,22 @@ Detail-Hydration per API ist danach deutlich schneller).
 Schreibt `data/animals.json` (überschreibt eine vorhandene Datei). Bei erneutem
 Bedarf (aktualisierte Wikidata-Daten) das Skript einfach erneut ausführen.
 
+**Cache für schnelle Re-Runs bei reinen Schema-/Filter-Änderungen:**
+
+```bash
+node scripts/fetch-animals/fetch-animals.js --use-cache
+```
+
+Jeder volle Lauf (Discovery + Hydration) schreibt die rohen, hydrierten
+Wikidata-Daten nach `scripts/fetch-animals/.cache/hydration-cache.json`
+(git-ignoriert, reines Build-Artefakt). Mit `--use-cache` überspringt das
+Skript Phase 1+2 komplett und wendet nur Phase 3 (Zusammenbau + Validierung +
+Schreiben von `data/animals.json`) auf die zwischengespeicherten Rohdaten an —
+nützlich, wenn sich nur ändert, welche Felder Pflicht sind oder wie sie
+verarbeitet werden, ohne erneut gegen Wikidata zu fetchen (spart Zeit und
+API-Last). Ohne Cache-Datei fällt `--use-cache` automatisch auf einen vollen
+Fetch zurück.
+
 ## Ablauf
 
 1. **Discovery** (SPARQL, `query.wikidata.org/sparql`): pro Tier-Klasse
@@ -38,11 +54,14 @@ Bedarf (aktualisierte Wikidata-Daten) das Skript einfach erneut ausführen.
    wissenschaftlicher Name, Habitat, Gefährdungsstatus, "endemic to" als
    Kontinent-Proxy).
 4. **Validierung**: jeder Datensatz wird gegen die Pflichtfelder aus dem
-   formalen JSON Schema (architecture.md Abschnitt 2) geprüft. Nur
-   vollständig valide Datensätze landen in der finalen `animals.json`
-   (bis zu 500, nach Sitelinks sortiert). Das Skript validiert die
-   geschriebene Datei am Ende noch einmal selbst und meldet Fehler über den
-   Exit-Code.
+   formalen JSON Schema (architecture.md Abschnitt 2) geprüft — seit der
+   Schema-Korrektur vom 13.08.2026 nur noch `id`, `name_de`, `category`
+   (siehe "Bekannte Datenlücken & Schema-Korrektur" unten für den Grund).
+   Nur vollständig valide Datensätze landen in der finalen `animals.json`
+   (bis zu 500, nach Sitelinks sortiert). `habitat`/`continent`/`weight_kg`/
+   `length_cm`/`conservation_status`/`name_scientific` werden aufgenommen,
+   wenn vorhanden, sonst weggelassen. Das Skript validiert die geschriebene
+   Datei am Ende noch einmal selbst und meldet Fehler über den Exit-Code.
 
 ## Verifizierte / korrigierte Property- und Item-IDs
 
@@ -70,49 +89,57 @@ folgende IDs gegen echte Wikidata-Testabfragen geprüft und teils korrigiert:
 | Habitat | `wdt:P2974` (habitat) | in der Skizze nicht mit Property-ID benannt, nur als Risikofeld erwähnt — ergänzt |
 | Kontinent | `wdt:P183` (endemic to) → Zielort → `wdt:P30` (continent) | **kein Bestandteil der Architektur-Skizze.** Es gibt keine direkte, gut gepflegte "Kontinent"-Property auf Artebene (siehe "Bekannte Datenlücken" unten) — dies ist der am ehesten belastbare Ersatz, real getestet |
 
-## Bekannte Datenlücken (wichtig für Datenqualität)
+## Bekannte Datenlücken & Schema-Korrektur (13.08.2026)
 
 Die Architektur-Skizze warnte bereits vor lückenhafter Wikidata-Abdeckung für
-`habitat`/`diet`. Beim tatsächlichen Testen gegen den echten Wikidata Query
-Service zeigte sich, dass das Problem **deutlich weiterreichender** ist, als
-die Skizze angenommen hat — auch bei Pflichtfeldern:
+`habitat`/`diet`. Ein erster vollständiger Testlauf des Skripts gegen den
+echten Wikidata Query Service (1.480 hydrierte Kandidaten über alle 8
+Tier-Klassen, sitelinks > 15) zeigte: das Problem ist **deutlich
+weitreichender** als die Skizze angenommen hatte — auch bei den damaligen
+Pflichtfeldern. Gemessene Ist-Abdeckung über den vollen Kandidaten-Pool:
 
-- **`continent`** (Pflichtfeld): Es gibt **keine** direkte, verlässlich
-  gepflegte "Kontinent"-Property auf Artebene in Wikidata. Selbst absolute
-  Vorzeige-Einträge wie Löwe (Q140), Tiger, Elefant, Pferd oder Delfin haben
-  **keine** strukturierten Geo-Verbreitungsdaten als direkte Statements.
-  Der in diesem Skript genutzte Umweg über `P183` ("endemic to") + `P30`
-  greift nur bei tatsächlich endemischen Arten (bei stichprobenartigem Test:
-  ca. 12–13 % der populären Säugetier-Kandidaten hatten überhaupt einen
-  `P183`-Wert) — bei weitverbreiteten, gerade den bekanntesten Tieren (Löwe,
-  Elefant, Wolf, Fuchs, Delfin ...) ist "endemic to" semantisch gar nicht
-  anwendbar und bleibt leer.
-- **`color`** (Pflichtfeld): Es existiert **keine** brauchbare strukturierte
-  Wikidata-Property für die Farbe eines Tieres (getestete generische
-  `color`-Property `P462` wird für Tierarten praktisch nicht verwendet,
-  Stichprobe: ca. 0,2 % Abdeckung unter populären Säugetieren). Farbangaben
-  stehen bei Wikipedia/Wikidata i. d. R. nur als Fließtext im Artikel, nicht
-  als strukturiertes Statement. Es wurde **bewusst keine Farbe erfunden oder
-  aus Bildern/Fließtext geraten** — das Feld bleibt leer, wo keine
-  strukturierten Daten vorliegen.
-- **`habitat`** (Pflichtfeld): wie von der Architektur-Skizze erwartet lückenhaft
-  (Stichprobe: ca. 8–9 % Abdeckung unter populären Säugetieren via `P2974`).
+| Feld | Abdeckung im echten Lauf | Befund |
+|---|---|---|
+| `color` | **0 / 1.480 (0 %)** | Keine belastbare strukturierte Wikidata-Property für Tierfarbe gefunden. Die generische `color`-Property (`P462`) wird für Tierarten praktisch nie verwendet. Farbangaben stehen bei Wikipedia/Wikidata nur als Fließtext im Artikel, nicht als Statement. |
+| `habitat` | 72 / 1.480 (**4,9 %**) | `P2974` (habitat) ist selbst bei sehr bekannten Arten selten gepflegt. |
+| `continent` | 93 / 1.480 (**6,3 %**) | Es gibt **keine** direkte "Kontinent"-Property auf Artebene. Der Umweg über `P183` ("endemic to") → `P30` (continent) greift nur bei tatsächlich endemischen Arten — bei weitverbreiteten, gerade den bekanntesten Tieren (Löwe, Elefant, Wolf, Delfin ...) ist "endemic to" semantisch gar nicht anwendbar und bleibt leer. Stichprobe direkt verifiziert: Löwe (Q140), "Kaninchen" (Q9394) und Elefant (Q7378) haben **0** Habitat- und **0** "endemic to"-Statements. |
+| `weight_kg` | 213 / 1.480 (**14,4 %**) | Deutlich besser abgedeckt bei Säugetieren (z. B. Löwe: korrekt aus mehreren Gewichts-Statements ermittelt, Median 126 kg), aber über den gemischten Pool aus allen 8 Klassen gemittelt bricht die Abdeckung stark ein — Vögel, Reptilien, Amphibien, Fische, Insekten und Weichtiere haben `P2067` (mass) nur selten gepflegt. |
 
-**Konsequenz:** Da `habitat`, `continent` und `color` laut dem in
-`architecture.md` festgelegten formalen JSON Schema **Pflichtfelder** sind,
-werden Tiere, für die diese Wikidata-Daten fehlen, aus der finalen
-`animals.json` ausgeschlossen (nicht mit Platzhaltern aufgefüllt). Die
-tatsächliche Anzahl der resultierenden Tiere liegt dadurch **deutlich unter
-den angestrebten ~500** — siehe Lauf-Ergebnis in
-`docs/workflow/devops.md` und im Kommentar zu Issue #2 für die konkrete Zahl.
+**Ursprüngliches Ergebnis:** Bei strikter Durchsetzung aller damaligen
+Pflichtfelder erfüllten **0 von 1.480** hydrierten, nach Popularität
+ausgewählten Kandidaten alle Pflichtfelder gleichzeitig — nicht weil das
+Skript fehlschlug (Discovery und Hydration liefen technisch fehlerfrei
+durch, inkl. korrekter Einheiten-Konvertierung und Popularitäts-Sortierung),
+sondern weil die Schnittmenge "Tier hat gleichzeitig Gewicht **und** Habitat
+**und** Kontinent **und** Farbe in Wikidata" praktisch leer war. Gezielt
+gegengeprüft, um einen Skript-Bug auszuschließen: die Extraktionslogik
+funktioniert nachweislich korrekt (Löwe bekommt z. B. korrekt
+`weight_kg = 126` aus den realen Gewichts-Statements berechnet) —
+`habitat`/`continent` sind für dieselben Tiere schlicht mit 0 Statements in
+Wikidata hinterlegt.
 
-Das ist kein Bug im Skript, sondern eine reale Grenze der Datenquelle
-gegenüber der Schema-Annahme aus der Architektur-Skizze. Mögliche nächste
-Schritte (Entscheidung liegt bei `software-architect`, nicht bei diesem
-Skript): `habitat`/`continent`/`color` im Schema optional statt Pflicht
-setzen, eine zusätzliche Datenquelle für diese Felder ergänzen (z. B.
-kuratierte Zusatzdaten), oder die Zielgröße von ~500 auf die real erreichbare
-Menge anpassen.
+**Entscheidung des Nutzers (13.08.2026, siehe Issue #2):** Schema angepasst
+statt zusätzliche Datenquelle oder Zielgröße reduziert:
+1. Pflichtfelder auf `id`, `name_de`, `category` reduziert. `habitat`,
+   `continent`, `weight_kg`, `length_cm`, `diet`, `lifespan_years`,
+   `conservation_status` sind optional (werden aufgenommen, wenn Wikidata-
+   Daten vorhanden sind, sonst weggelassen) — siehe `architecture.md`,
+   "Korrektur vom 13.08.2026".
+2. `color` komplett aus dem Schema entfernt (nicht nur optional gesetzt),
+   da 0 % Abdeckung durch "optional" nicht behoben würde.
+
+Es wurden zu keinem Zeitpunkt Platzhalter-/Fake-Werte erzeugt, um
+Pflichtfelder künstlich aufzufüllen — echte Datenlücken werden als fehlende
+optionale Felder abgebildet, nicht verschleiert.
+
+**Ergebnis nach der Schema-Korrektur** (Rebuild via `--use-cache`, kein
+erneuter Wikidata-Fetch nötig): 500 von 500 Ziel-Tieren erfolgreich in
+`data/animals.json` geschrieben, alle mit `id`/`name_de`/`category`. Reale
+Abdeckung der optionalen Felder in den finalen 500: `name_scientific` 100 %,
+`conservation_status` 94 %, `weight_kg` 42 %, `habitat` 13,4 %, `continent`
+5,6 %, `length_cm` 2,2 %. Details und die durch die reine
+Sitelinks-Sortierung bedingte Kategorien-Schieflage (Säugetiere/Vögel
+zusammen 87,4 % der 500) siehe `docs/workflow/devops.md`.
 
 ## Nicht befüllte Felder (bewusste Entscheidung, kein Bug)
 

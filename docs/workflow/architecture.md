@@ -106,17 +106,18 @@ Die Trennung ist bewusst: Die App selbst hat zur Laufzeit keine Netzwerkabhängi
 | `name_de` | string | ja | Anzeigename, Basis jeder Frage. |
 | `name_scientific` | string | nein | Wissenschaftlicher Name (z. B. "Panthera leo") — eigener kleiner Fragetyp möglich ("Wie heißt der Löwe auf Latein?"), aber nicht bei jedem Tier gleich einprägsam für Kinder, daher optional. |
 | `category` | string, Enum (Säugetier, Vogel, Reptil, Amphibie, Fisch, Insekt, Spinnentier, ...) | ja | Klassischer, gut verständlicher Kinderquiz-Fragetyp ("Zu welcher Tiergruppe gehört ...?") und nützlich, um plausible Falsch-Antworten aus derselben/anderen Kategorie zu ziehen. |
-| `habitat` | array\<string\> | ja | Vom Nutzer vorgegeben. Array statt Einzelwert, da Tiere oft mehrere Lebensräume haben (z. B. Frosch: Süßwasser + Land). |
-| `continent` | array\<string\> | ja | Ergänzt `habitat` um eine zweite, unabhängige geografische Achse ("Wo lebt ...?" als Kontinent vs. Lebensraumtyp wie Wald/Wüste/Ozean). Beide Felder decken unterschiedliche, für Kinder gut verständliche Fragetypen ab. |
-| `diet` | string, Enum (Fleischfresser, Pflanzenfresser, Allesfresser) | nein* | Guter, einfacher Fragetyp ("Was frisst ...?"). Optional, weil auf Wikidata nicht für jede Art gleich sauber strukturiert erfasst (siehe Risiko unten). |
-| `weight_kg` | number | ja | Vom Nutzer vorgegeben. Einzelwert (typisches/durchschnittliches Gewicht), bewusst **keine** Min/Max-Spanne — für ein Kinderquiz reicht ein ungefährer, vergleichbarer Wert; eine Spanne wäre zusätzliche Komplexität ohne klaren Mehrwert für Multiple-Choice-Fragen. |
+| `habitat` | array\<string\> | nein* | Array statt Einzelwert, da Tiere oft mehrere Lebensräume haben (z. B. Frosch: Süßwasser + Land). Ursprünglich als Pflichtfeld geplant, siehe Korrektur vom 13.08.2026 unten. |
+| `continent` | array\<string\> | nein* | Ergänzt `habitat` um eine zweite, unabhängige geografische Achse ("Wo lebt ...?" als Kontinent vs. Lebensraumtyp wie Wald/Wüste/Ozean). Ursprünglich als Pflichtfeld geplant, siehe Korrektur vom 13.08.2026 unten. |
+| `diet` | string, Enum (Fleischfresser, Pflanzenfresser, Allesfresser) | nein | Guter, einfacher Fragetyp ("Was frisst ...?"). Optional, weil auf Wikidata nicht für jede Art gleich sauber strukturiert erfasst (siehe Risiko unten). |
+| `weight_kg` | number | nein* | Einzelwert (typisches/durchschnittliches Gewicht, Median über vorhandene Wikidata-Statements), bewusst **keine** Min/Max-Spanne — für ein Kinderquiz reicht ein ungefährer, vergleichbarer Wert. Ursprünglich als Pflichtfeld geplant, siehe Korrektur vom 13.08.2026 unten. |
 | `length_cm` | number | nein | Analog zu Gewicht: guter Vergleichs-Fragetyp ("Welches Tier ist größer?"). Optional, da auf Wikidata seltener sauber erfasst als Gewicht. |
-| `color` | array\<string\> | ja | Vom Nutzer vorgegeben. Array, da viele Tiere mehrfarbig sind. |
 | `lifespan_years` | number | nein | Ungefähre Lebenserwartung — eigener, bei Kindern beliebter Fragetyp ("Wie alt wird ein ...?"). Optional, Datenlage auf Wikidata schwankt. |
 | `conservation_status` | string, Enum (z. B. nicht gefährdet / gefährdet / stark gefährdet / vom Aussterben bedroht) | nein | Bildungswert (Artenschutz-Bewusstsein), aus IUCN-Daten auf Wikidata strukturiert verfügbar (Property P141). Kein zentraler Quiz-Fragetyp, aber sinnvoll als Zusatzinfo/gelegentliche Frage. Bewusst optional, kein Pflichtfeld, um die Datenbeschaffung nicht an lückenhafte IUCN-Abdeckung zu koppeln. |
 | `fun_fact` | string | nein | Kurzer, kindgerechter Fakt — hoher Engagement-Wert (z. B. als Zusatzinfo nach Beantwortung). **Wichtig:** Wikidata hat kein strukturiertes "Fun Fact"-Feld, das müsste separat kuratiert werden (siehe Offene Fragen). |
 
-*\* `diet` ist inhaltlich ein starker Kandidat für "Pflicht", wird aber wegen unsicherer Wikidata-Abdeckung (siehe Risiko-Absatz unten) als optional geführt, bis die tatsächliche Datenlage geprüft ist.*
+*\* `habitat`, `continent` und `weight_kg` waren in der ursprünglichen Version dieses Dokuments als Pflichtfelder vorgesehen. Ein realer, vollständiger Testlauf der Datenbeschaffungs-Pipeline (Issue #2, 13.08.2026, siehe `devops.md`) gegen 1.480 populäre Tier-Kandidaten zeigte: `habitat` ist nur bei 4,9 %, `continent` nur bei 6,3 % und `weight_kg` nur bei 14,4 % der Kandidaten auf Wikidata strukturiert vorhanden — bei strikter Pflicht wären dadurch praktisch 0 Tiere ins Quiz gekommen. Alle drei wurden daher nachträglich zu optionalen Feldern herabgestuft (siehe "Korrektur vom 13.08.2026" unten). `color` wurde komplett aus dem Schema entfernt (0 % Abdeckung, siehe unten) statt nur optional gesetzt, da hier auch als optionales Feld praktisch nie ein Wert vorläge.*
+
+**Korrektur vom 13.08.2026 — `color` aus dem Schema entfernt:** Das ursprünglich geplante Pflichtfeld `color` (Tierfarbe) wurde beim realen Testlauf der Wikidata-Pipeline (Issue #2) auf **0 von 1.480** populären Tier-Kandidaten gefunden — es existiert keine strukturierte Wikidata-Property, die für Tierarten in relevantem Umfang gepflegt wird (die generische `color`-Property P462 wird für Tierarten praktisch nicht verwendet; Farbangaben stehen bei Wikipedia/Wikidata nur als Fließtext im Artikel). Da dies kein Abdeckungsproblem ist, das ein optionales Feld lösen würde (0 % bliebe 0 %, egal ob Pflicht oder optional), und bewusst keine zusätzliche, nicht-Wikidata-Datenquelle für dieses eine Feld ergänzt werden soll, wurde `color` als Feld/Konzept **vollständig aus dem Schema entfernt** — nicht nur optional gesetzt. Details/Zahlen: `docs/workflow/devops.md`.
 
 **Bewusst weggelassen (kein Overengineering):**
 - **Volle taxonomische Klassifikation** (Familie, Ordnung, Gattung als eigene Baumstruktur) — für ein Kinderquiz reicht `category` (grobe Klasse) + optional `name_scientific`. Ein voller Taxonomie-Baum wäre Komplexität ohne erkennbaren Quiz-Nutzen in Phase 1.
@@ -127,6 +128,7 @@ Die Trennung ist bewusst: Die App selbst hat zur Laufzeit keine Netzwerkabhängi
 - **Geschlechtsspezifische Werte** (z. B. Gewicht getrennt nach Männchen/Weibchen) — unnötige Präzision für ein Kinderquiz, ein einzelner Näherungswert reicht.
 - **Bild-URL/Bildlizenzfelder** — laut Scope explizit ausgeschlossen in dieser Phase. Wenn Bilder für spätere bildbasierte Spielmodi ergänzt werden, braucht das ein eigenes Lizenzmodell **pro Bild** (Wikimedia-Commons-Bilder sind i. d. R. CC-BY-SA/CC-BY mit Attributionspflicht, anders als der CC0-Textdatensatz hier) — bewusst nicht in dieses Schema vorgezogen, da sonst ungenutzte Komplexität entstünde.
 - **Geräusch-Referenzen** (für den späteren "Tiergeräusche erkennen"-Modus) — nur als Randnotiz für später, nicht Teil dieses Schemas.
+- **`color` (Tierfarbe)** — ursprünglich als Pflichtfeld geplant, nach dem realen Pipeline-Testlauf (13.08.2026, Issue #2) komplett aus dem Schema entfernt: 0 von 1.480 populären Tier-Kandidaten hatten eine strukturierte Wikidata-Farbangabe (siehe Korrektur oben und `docs/workflow/devops.md`). Anders als bei den anderen weggelassenen Punkten oben ist das kein Design-Entscheid gegen Overengineering, sondern eine nachträgliche Korrektur einer sich als nicht datenseitig tragfähig erwiesenen Planung.
 
 ### 2. Formales JSON Schema
 
@@ -152,7 +154,7 @@ Zur Validierung durch `web-developer`/`devops-engineer` bei der Umsetzung:
   "$defs": {
     "animal": {
       "type": "object",
-      "required": ["id", "name_de", "category", "habitat", "continent", "weight_kg", "color"],
+      "required": ["id", "name_de", "category"],
       "properties": {
         "id": { "type": "string", "pattern": "^Q[0-9]+$" },
         "name_de": { "type": "string", "minLength": 1 },
@@ -177,11 +179,6 @@ Zur Validierung durch `web-developer`/`devops-engineer` bei der Umsetzung:
         },
         "weight_kg": { "type": "number", "exclusiveMinimum": 0 },
         "length_cm": { "type": "number", "exclusiveMinimum": 0 },
-        "color": {
-          "type": "array",
-          "items": { "type": "string" },
-          "minItems": 1
-        },
         "lifespan_years": { "type": "number", "exclusiveMinimum": 0 },
         "conservation_status": {
           "type": "string",
@@ -193,6 +190,8 @@ Zur Validierung durch `web-developer`/`devops-engineer` bei der Umsetzung:
   }
 }
 ```
+
+**Änderung 13.08.2026:** Pflichtfelder auf `id`, `name_de`, `category` reduziert; `habitat`, `continent`, `weight_kg` von Pflicht- zu optionalen Feldern herabgestuft; `color` als Property vollständig entfernt (nicht mehr in `properties`). Begründung siehe Abschnitt 1 oben ("Korrektur vom 13.08.2026").
 
 **Beispieldatensatz (Löwe):**
 
@@ -207,10 +206,43 @@ Zur Validierung durch `web-developer`/`devops-engineer` bei der Umsetzung:
   "diet": "Fleischfresser",
   "weight_kg": 190,
   "length_cm": 250,
-  "color": ["Goldbraun"],
   "lifespan_years": 14,
   "conservation_status": "gefährdet",
   "fun_fact": "Löwen sind die einzigen Katzen, die in Gruppen (Rudeln) leben."
+}
+```
+
+**Echtes Beispiel aus dem tatsächlichen Wikidata-Import** (13.08.2026, siehe
+`devops.md`) — zeigt den in der Praxis typischen Fall: Pflichtfelder plus
+einige, aber nicht alle optionalen Felder befüllt (`fun_fact`, `diet` und
+`length_cm` bleiben unbefüllt, siehe "Nicht befüllte Felder" in
+`scripts/fetch-animals/README.md`):
+
+```json
+{
+  "id": "Q33602",
+  "name_de": "Großer Panda",
+  "name_scientific": "Ailuropoda melanoleuca",
+  "category": "Säugetier",
+  "habitat": ["Wald"],
+  "continent": ["Asien"],
+  "weight_kg": 58.802,
+  "conservation_status": "gefährdet"
+}
+```
+
+Ein anderes reales Tier aus demselben Import zeigt den ebenfalls häufigen
+Fall, dass nur die drei Pflichtfelder plus wissenschaftlicher Name/
+Gefährdungsstatus vorliegen, aber `habitat`/`continent`/`weight_kg` fehlen
+(Wolf, Q18498):
+
+```json
+{
+  "id": "Q18498",
+  "name_de": "Wolf",
+  "name_scientific": "Canis lupus",
+  "category": "Säugetier",
+  "conservation_status": "nicht gefährdet"
 }
 ```
 
@@ -251,10 +283,10 @@ Dies ist eine **grobe technische Skizze als Grundlage** für die spätere Umsetz
 
 Der Nutzer hat zwei umschaltbare Schwierigkeitsstufen festgelegt (6–10 Jahre / 10–12 Jahre, siehe `requirements.md`). Das erfordert **keine neuen Datenfelder** — die Stufen werden ausschließlich in der Fragegenerierungs-Logik (Aufgabe von `web-developer`, nicht dieses Schema) über die Wahl der genutzten Felder abgebildet:
 
-- **Stufe 6–10 (einfach):** Fragen primär aus `category`, `habitat`, `continent`, `color` — intuitive, visuell/kategorial erschließbare Fakten. Falschantworten aus deutlich unterschiedlichen Werten ziehen (z. B. andere Kontinente/Kategorien), damit sie klar unterscheidbar sind.
+- **Stufe 6–10 (einfach):** Fragen primär aus `category`, `habitat`, `continent` — intuitive, visuell/kategorial erschließbare Fakten. Falschantworten aus deutlich unterschiedlichen Werten ziehen (z. B. andere Kontinente/Kategorien), damit sie klar unterscheidbar sind.
 - **Stufe 10–12 (anspruchsvoll):** Zusätzlich Fragen aus `weight_kg`, `length_cm`, `lifespan_years`, `diet`, optional `conservation_status`. Falschantworten näher am richtigen Wert ziehen (z. B. ähnliche Gewichtsklassen), damit sie schwerer zu erraten sind.
 
-Da `diet`, `length_cm`, `lifespan_years` und `conservation_status` optionale Felder sind (siehe Datenlücken-Risiko oben), muss die Fragegenerierung für Stufe 10–12 pro Tier prüfen, welche optionalen Felder tatsächlich befüllt sind, und nur daraus Fragen bilden.
+Da `habitat`, `continent`, `diet`, `length_cm`, `lifespan_years` und `conservation_status` optionale Felder sind (siehe Datenlücken-Risiko oben), muss die Fragegenerierung pro Tier prüfen, welche optionalen Felder tatsächlich befüllt sind, und nur daraus Fragen bilden. `color` taucht hier bewusst nicht mehr auf (siehe "Korrektur vom 13.08.2026" oben — Feld vollständig aus dem Schema entfernt; QA hat diese Inkonsistenz am 13.08.2026 in Issue #9 gefunden und hier nachgezogen).
 
 ## Offene technische Fragen — Entscheidungen (13.08.2026)
 
@@ -268,3 +300,4 @@ Da `diet`, `length_cm`, `lifespan_years` und `conservation_status` optionale Fel
 - 2026-08-13: Erste Version — Datenschema für die Tierdatenbank (Phase 1: Quizfragen-Modus), Lizenz-/Quellenmodell, Skizze zur Wikidata-Datenbeschaffung.
 - 2026-08-13: Schwierigkeitsstufen-Mapping ergänzt, offene technische Fragen anhand der Klärungsrunde mit dem Nutzer aufgelöst.
 - 2026-08-13: Frontend-Tech-Stack entschieden (Issue #1): Vite + Vanilla JavaScript ohne UI-Framework, plain CSS, `data/animals.json` per statischem ES-Modul-Import eingebunden. Projektstruktur um Frontend-Ordner (`src/`, `tests/`) ergänzt.
+- 2026-08-13: Schema-Korrektur nach realem Pipeline-Testlauf (Issue #2): Pflichtfelder auf `id`/`name_de`/`category` reduziert (`habitat`, `continent`, `weight_kg` von Pflicht zu optional herabgestuft), `color` komplett aus dem Schema entfernt — reale Wikidata-Abdeckung dieser Felder bei populären Tier-Kandidaten lag bei 0–14 %, siehe `docs/workflow/devops.md` für die gemessenen Zahlen.
