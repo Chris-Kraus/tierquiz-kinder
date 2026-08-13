@@ -1,0 +1,201 @@
+/* Basis-Styles / Reset sowie Farb-/Abstands-Tokens gemäß docs/workflow/design.md
+   ("Visuelle Grundlinie", "Barrierefreiheit"). Alle Farbpaarungen unten sind gegen
+   WCAG-AA geprüft (≥ 4,5:1 Fließtext, ≥ 3:1 große Schrift/UI-Elemente). */
+
+:root {
+  color-scheme: light;
+  font-family:
+    "Comic Sans MS",
+    "Comic Neue",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+
+  /* Freundliche, kindgerechte Farbwelt: Grün/Blau/Gelb als Basis, Rot bewusst
+     nicht verwendet (siehe design.md, "Visuelle Grundlinie"). */
+  --color-bg: #eef8f4;
+  --color-surface: #ffffff;
+  --color-text: #1f2933;
+
+  --color-primary: #1f7a4c;
+  --color-primary-dark: #145c38;
+
+  --color-secondary: #2f80c4;
+  --color-secondary-dark: #1f5c92;
+
+  --color-accent: #f5b833;
+  --color-accent-text: #4a2e00;
+
+  --color-focus: #1d4ed8;
+
+  --color-disabled-bg: #d7dee2;
+  --color-disabled-text: #4a535d;
+
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+
+  --radius-lg: 1.25rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+button {
+  font-family: inherit;
+}
+
+/* #app ist das einzige Flex-Kind von body; ohne explizite Breite würde es sich
+   am Inhalt orientieren (shrink-to-fit) statt den verfügbaren Platz zu nutzen,
+   wodurch .start-screen schmaler würde als sein eigentliches max-width erlaubt. */
+#app {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Sichtbarer Fokusring für Tastaturbedienung (siehe design.md,
+   "Barrierefreiheit"). */
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* Bewegungsreduktion respektieren (siehe design.md, "Barrierefreiheit"). */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Start-Bildschirm (siehe design.md, "Nutzerfluss" Punkt 1). */
+
+.start-screen {
+  width: 100%;
+  max-width: 32rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-md);
+}
+
+.start-screen__mascot {
+  margin: 0;
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
+.start-screen__title {
+  margin: 0;
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  color: var(--color-primary-dark);
+}
+
+.start-screen__intro {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.difficulty-picker {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+/* Große Touch-Zielflächen, deutlich über dem 44×44-px-Minimum (siehe design.md,
+   "Layout-Empfehlungen"/"Barrierefreiheit"). Echtes <button>-Element, per
+   Tastatur bedienbar. */
+.difficulty-button {
+  flex: 1 1 12rem;
+  min-height: 6.5rem;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  border: 3px solid var(--color-secondary);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-secondary-dark);
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.difficulty-button:active {
+  transform: scale(0.97);
+}
+
+.difficulty-button__check {
+  font-size: 1.1rem;
+  color: inherit;
+  opacity: 0;
+}
+
+.difficulty-button__hint {
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+/* "Ausgewählt" wird nicht nur über Farbe kommuniziert, sondern zusätzlich über
+   Häkchen-Symbol und aria-pressed (siehe design.md, "Barrierefreiheit",
+   "Keine ausschließlich farbbasierte Codierung"). */
+.difficulty-button--selected {
+  background: var(--color-primary);
+  border-color: var(--color-primary-dark);
+  color: #fff;
+}
+
+.difficulty-button--selected .difficulty-button__check {
+  opacity: 1;
+}
+
+.start-button {
+  min-width: 14rem;
+  min-height: 4rem;
+  padding: var(--space-md) var(--space-lg);
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.start-button:disabled {
+  background: var(--color-disabled-bg);
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+}
+
+.start-button:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+.start-screen__placeholder {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-secondary-dark);
+}
