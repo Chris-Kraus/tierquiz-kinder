@@ -171,6 +171,63 @@ button {
   opacity: 1;
 }
 
+/* Fragenanzahl-Auswahl (Issue #13): bewusst deutlich kleiner/dezenter als
+   .difficulty-picker (Chip-Reihe statt große Kacheln), damit sie klar
+   sekundär zur Schwierigkeitsstufen-Auswahl bleibt (design.md-Abstimmung mit
+   ux-design, siehe Issue-Kommentar). */
+.round-length-picker {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.round-length-picker__label {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-secondary-dark);
+}
+
+.round-length-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Kleiner als .difficulty-button, aber weiterhin deutlich über dem
+   44×44-px-Touch-Zielgrößen-Minimum (design.md, "Layout-Empfehlungen"). Echtes
+   <button>-Element, per Tastatur bedienbar. */
+.round-length-chip {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0.4rem 0.9rem;
+  border: 2px solid var(--color-secondary);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-secondary-dark);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.round-length-chip:active {
+  transform: scale(0.97);
+}
+
+/* "Ausgewählt" wird wie beim Schwierigkeitsstufen-Picker nicht nur über Farbe
+   kommuniziert, sondern zusätzlich über aria-pressed (design.md,
+   "Barrierefreiheit", "Keine ausschließlich farbbasierte Codierung"). Bewusst
+   dieselbe bereits gegen WCAG-AA geprüfte Primär-Grün/Weiß-Kombination wie
+   .difficulty-button--selected statt eines neuen, ungeprüften Farbpaars. */
+.round-length-chip--selected {
+  background: var(--color-primary);
+  border-color: var(--color-primary-dark);
+  color: #fff;
+}
+
 .start-button {
   min-width: 14rem;
   min-height: 4rem;

@@ -9,18 +9,28 @@
 // Historie dazu — `questions` wird bewusst leer erzeugt und erst von
 // src/screens/question.js befüllt (dort lebt der `generateQuestions()`-Aufruf,
 // siehe questionGenerator.js), damit state.js weiterhin unabhängig von
-// data/animals.json bleibt.
+// data/animals.json bleibt. Seit Issue #13 hält der Zustand zusätzlich die am
+// Start-Bildschirm gewählte Fragenanzahl (`roundLength`) — src/screens/
+// question.js nutzt sie statt der festen DEFAULT_ROUND_LENGTH beim Erzeugen
+// der Fragenliste.
 
 import { DIFFICULTY_LEVELS } from "./difficulty.js";
+import { DEFAULT_ROUND_LENGTH } from "./questionGenerator.js";
 
 /**
  * Erzeugt den initialen Quiz-Zustand nach Auswahl einer Schwierigkeitsstufe
- * am Start-Bildschirm. `questions` ist zu diesem Zeitpunkt normalerweise noch
- * leer und wird von src/screens/question.js beim ersten Rendern befüllt.
+ * (und optional Fragenanzahl) am Start-Bildschirm. `questions` ist zu diesem
+ * Zeitpunkt normalerweise noch leer und wird von src/screens/question.js beim
+ * ersten Rendern befüllt.
  * @param {string} difficulty einer der Werte aus DIFFICULTY_LEVELS
  * @param {object[]} [questions] optional vorab generierte Fragenliste (v. a. für Tests)
+ * @param {number} [roundLength] gewünschte Rundenlänge (Anzahl Fragen), Standard DEFAULT_ROUND_LENGTH
  */
-export function createQuizState(difficulty, questions = []) {
+export function createQuizState(
+  difficulty,
+  questions = [],
+  roundLength = DEFAULT_ROUND_LENGTH,
+) {
   if (!Object.values(DIFFICULTY_LEVELS).includes(difficulty)) {
     throw new Error(
       `createQuizState: unbekannte Schwierigkeitsstufe "${difficulty}"`,
@@ -29,6 +39,7 @@ export function createQuizState(difficulty, questions = []) {
 
   return {
     difficulty,
+    roundLength,
     questions,
     currentIndex: 0,
     score: 0,

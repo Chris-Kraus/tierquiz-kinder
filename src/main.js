@@ -25,15 +25,20 @@ function showResultScreen(quizState) {
   // "Nochmal spielen" spart der Zielgruppe die erneute Stufenwahl und startet
   // direkt eine neue Runde mit derselben, zuletzt gewählten Schwierigkeitsstufe
   // – ohne den Start-Bildschirm erneut zu zeigen. "Zurück zum Start" führt
-  // weiterhin zum Start-Bildschirm mit freier Schwierigkeitswahl.
+  // weiterhin zum Start-Bildschirm mit freier Schwierigkeitswahl. Seit Issue
+  // #13 (PM-Entscheidung 13.08.2026) gilt dasselbe für die Fragenanzahl: sie
+  // wird bei "Nochmal spielen" beibehalten, analog zur Schwierigkeitsstufe.
   renderResultScreen(app, quizState, {
     onPlayAgain: () => {
       // Immer ein komplett neuer quizState (createQuizState) statt den
       // abgeschlossenen quizState wiederzuverwenden bzw. zu mutieren – Score/
       // Antworten/Fragen der vorherigen Runde dürfen nicht hängen bleiben.
-      // Nur die Schwierigkeitsstufe wird übernommen, die Fragenliste wird von
-      // question.js beim Rendern neu generiert (siehe dort).
-      showQuestionScreen(createQuizState(quizState.difficulty));
+      // Nur Schwierigkeitsstufe und Fragenanzahl werden übernommen, die
+      // Fragenliste wird von question.js beim Rendern neu generiert (siehe
+      // dort).
+      showQuestionScreen(
+        createQuizState(quizState.difficulty, [], quizState.roundLength),
+      );
     },
     onBackToStart: showStartScreen,
   });

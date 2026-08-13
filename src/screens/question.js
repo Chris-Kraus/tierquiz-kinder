@@ -35,9 +35,13 @@ const OPTION_COUNT = 4;
  */
 export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   if (!Array.isArray(quizState.questions) || quizState.questions.length === 0) {
+    // Seit Issue #13: Rundenlänge kommt aus der am Start-Bildschirm
+    // gewählten `quizState.roundLength` statt der festen
+    // DEFAULT_ROUND_LENGTH — Fallback nur für Zustände, die (z. B. in
+    // Tests) ohne roundLength erzeugt wurden.
     quizState.questions = generateQuestions(animalsData.animals, {
       difficulty: quizState.difficulty,
-      count: DEFAULT_ROUND_LENGTH,
+      count: quizState.roundLength ?? DEFAULT_ROUND_LENGTH,
     });
   }
 
