@@ -4,7 +4,7 @@ Laufender Fortschritts-Tracker, gepflegt von `pm-workflow`. Einzel-Story-Status 
 
 ## Aktuelle Phase
 
-**Erste Etappe "Quizfragen-Modus lokal spielbar" ist fertig und vollständig QA-abgenommen (#8 geschlossen).** Spielbar via `npm install && npm run dev` (oder `npm run build && npm run preview` für den Produktions-Build).
+**Etappe 2 "Backlog-Erweiterung" ist fertig und vollständig QA-abgenommen (#12–#21, außer #17 bewusst zurückgestellt).** Spielbar via `npm install && npm run dev` (oder `npm run build && npm run preview` für den Produktions-Build).
 
 ## Prozess-Korrektur (13.08.2026)
 
@@ -26,13 +26,23 @@ QA war für #1/#3/#4/#5 zunächst nur Selbsttest der umsetzenden Rolle, keine un
 | 11 | web-developer | Fragevielfalt (Feld-Dominanz-Bug) | done (im Rahmen von #8 gefunden, gefixt+verifiziert) |
 | 8 | qa-engineer | Gesamt-Abnahme End-to-End inkl. Barrierefreiheit | **done — Etappe abgeschlossen** |
 
-## Aktuelle Phase (Fortsetzung)
+## Story-Übersicht — Etappe 2 abgeschlossen
 
-Etappe 2 (Backlog-Erweiterung) in Scoping: 8 von 9 Backlog-Stories aus der Zoologe/Anreicherungsrunde stehen jetzt auf `status:ready` (#12, #13, #15, #18, #19, #20, #21) bzw. bewusst weiter `status:draft` mit dokumentiertem Grund (#14 wartet auf eine echte Nutzer-Scope-Entscheidung, #17 ist absichtlich geparkt bis Veröffentlichung konkret ansteht). Noch keine Implementierung gestartet — Reihenfolge/Priorisierung unter den ready-Stories ist der nächste PM-Schritt.
+| # | Rolle | Story | Status |
+|---|---|---|---|
+| 13 | web-developer | Fragenanzahl am Start wählbar (5/10/15/20) | done (QA-geprüft, Playwright, Tastatur) |
+| 18 | zoologe + web-developer | diet-Daten für alle 500 Tiere kuratiert | done (QA: 40/40 Testrunden, Fragetyp aktiv) |
+| 14 | web-developer | Lokale Verlaufsliste (letzte 5 Runden) | done (QA-geprüft, Fehlertoleranz/Cap verifiziert) |
+| 19 | zoologe + web-developer | lifespan_years-Daten für alle 500 Tiere kuratiert | done (QA: 200/200 Testrunden) |
+| 12 | web-developer | Infosatz zum Tier im Feedback | done (QA fand Bug bei Lebenserwartung < 1 Jahr, gefixt+verifiziert, 2 Zyklen) |
+| 15 | web-developer | Wikipedia-Link im Feedback | done (QA: 0 Datenverluste bei diet/lifespan_years nach Pipeline-Regenerierung) |
+| 20 | web-developer | Vergleichsfragen: schwerstes Tier von 4 | done (QA: 80+60 simulierte Runden, keine Domination, keine Leaks) |
+| 21 | zoologe + web-developer | Verwechslungspaare-Fragetyp (30 Paare) | done (QA: 500+500 simulierte Runden, Datenintegrität verifiziert) |
+| 17 | business-analyst | Bild-Lizenzlösung | bewusst zurückgestellt, kein aktueller Blocker |
 
 ## Nächster Schritt
 
-Reihenfolge der `status:ready`-Stories (#12, #13, #15, #18, #19, #20, #21) mit dem Nutzer priorisieren und Umsetzung starten (`web-developer` iterativ, `qa-engineer` zwingend pro Story). Offen: Nutzer-Entscheidung zu #14 (lokale Verlaufsliste als Scope-Erweiterung ja/nein).
+Etappe 2 ist fertig. Offen: Issue #17 (Bild-Lizenzlösung) aktivieren, sobald eine Veröffentlichung konkret geplant wird. Weitere Folgeschritte (z. B. weitere Spielmodi) noch nicht gescoped.
 
 ## Bekannte, akzeptierte Einschränkungen (kein Blocker)
 
@@ -53,3 +63,4 @@ Reihenfolge der `status:ready`-Stories (#12, #13, #15, #18, #19, #20, #21) mit d
 - 2026-08-13: #8 (Gesamt-Abnahme) findet blockierenden Vielfalts-Bug (Feld-Auswahl dominiert von am besten abgedecktem Feld, bis zu 91,7% derselbe Fragetyp) — neues Issue #11, gefixt (Priorisierung unterrepräsentierter Felder pro Frage-Slot), unabhängig verifiziert (0/40 Runden dominiert), geschlossen.
 - 2026-08-13: #8 final gegen frischen Produktions-Build erneut verifiziert und geschlossen. **Etappe 1 vollständig abgeschlossen.**
 - 2026-08-13: Zoologe/Architektur-Anreicherungsrunde ergibt 5 neue Backlog-Stories (#17–#21), zusammen mit zuvor angelegten #12–#15 9 Stories im Backlog. `pm-workflow` koordiniert `software-architect`/`ux-design` für offene Klärungspunkte je Story; 7 Stories auf `status:ready` gehoben (#12, #13, #15, #18, #19, #20, #21), #14 bleibt draft (Nutzer-Scope-Entscheidung offen), #17 bleibt bewusst draft (erst bei Veröffentlichungsabsicht relevant).
+- 2026-08-14: Nutzer bestätigt #14 als rein lokale Verlaufsliste (kein Mehrbenutzer) — auf `status:ready` gehoben, `requirements.md` entsprechend präzisiert. Alle 8 ready-Stories nacheinander umgesetzt und QA-geprüft: #13, #18, #14, #19, #12 (inkl. Bugfix Lebenserwartung < 1 Jahr, 2 QA-Zyklen), #15 (inkl. Architektur-Fix für Datenerhalt bei Pipeline-Regenerierung), #20, #21 (inkl. 30 kuratierten Verwechslungspaaren). Jede Story einzeln committed und gepusht. **Etappe 2 vollständig abgeschlossen**, nur #17 bleibt bewusst offen.
