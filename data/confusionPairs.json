@@ -1,0 +1,182 @@
+[
+  {
+    "animals": ["Q81564", "Q42569"],
+    "distinctions": [
+      { "text": "Dieses Tier hat deutlich längere, nach innen gebogene Ohren.", "correct": "Q42569" }
+    ]
+  },
+  {
+    "animals": ["Q146375", "Q27465"],
+    "distinctions": [
+      { "text": "Dieses Tier hat eine trockene, warzige Haut.", "correct": "Q146375" }
+    ]
+  },
+  {
+    "animals": ["Q26838", "Q25851"],
+    "distinctions": [
+      { "text": "Dieses Tier hat deutlich längere Ohren mit schwarzen Spitzen und lebt oberirdisch statt in einem Bau.", "correct": "Q26838" }
+    ]
+  },
+  {
+    "animals": ["Q25357", "Q26198"],
+    "distinctions": [
+      { "text": "Dieses Tier ist deutlich größer und hat im Flug einen keilförmigen Schwanz.", "correct": "Q25357" }
+    ]
+  },
+  {
+    "animals": ["Q26582", "Q178973"],
+    "distinctions": [
+      { "text": "Dieses Tier ist die gezähmte (domestizierte) Form und lebt oft als Haustier beim Menschen.", "correct": "Q178973" }
+    ]
+  },
+  {
+    "animals": ["Q207114", "Q27027"],
+    "distinctions": [
+      { "text": "Dieses Tier hat eine lange, spitze Schnauze (einen sogenannten Schnabel).", "correct": "Q207114" }
+    ]
+  },
+  {
+    "animals": ["Q81091", "Q82728"],
+    "distinctions": [
+      { "text": "Dieses Tier hat einen besonders hohen Buckel direkt über den Schultern und ein zottiges Fell am Kopf.", "correct": "Q82728" }
+    ]
+  },
+  {
+    "animals": ["Q43375", "Q131907"],
+    "distinctions": [
+      { "text": "Dieses Tier ist deutlich größer und hat auffällig lange schwarze Haarpinsel an den Ohrspitzen.", "correct": "Q43375" }
+    ]
+  },
+  {
+    "animals": ["Q71516", "Q132922"],
+    "distinctions": [
+      { "text": "Dieses Tier hat nur einen einzigen Höcker auf dem Rücken.", "correct": "Q71516" }
+    ]
+  },
+  {
+    "animals": ["Q137474876", "Q25380"],
+    "distinctions": [
+      { "text": "Dieses Tier ist deutlich größer, fast so groß wie ein Bussard.", "correct": "Q137474876" }
+    ]
+  },
+  {
+    "animals": ["Q25311", "Q25345"],
+    "distinctions": [
+      { "text": "Dieses Tier hat eine auffällige schwarze Spitze am Schwanz.", "correct": "Q25345" }
+    ]
+  },
+  {
+    "animals": ["Q27366", "Q26046"],
+    "distinctions": [
+      { "text": "Dieses Tier hat einen weißen Kehlfleck, der oft bis zu den Vorderbeinen reicht.", "correct": "Q27366" }
+    ]
+  },
+  {
+    "animals": ["Q25384", "Q25769"],
+    "distinctions": [
+      { "text": "Dieses Tier hat lange, gut sichtbare Federohren auf dem Kopf.", "correct": "Q25384" }
+    ]
+  },
+  {
+    "animals": ["Q79794", "Q159857"],
+    "distinctions": [
+      { "text": "Dieses Tier hat schaufelförmig verbreiterte Geweihenden.", "correct": "Q159857" }
+    ]
+  },
+  {
+    "animals": ["Q122069", "Q79794"],
+    "distinctions": [
+      { "text": "Dieses Tier ist deutlich größer und hat einen gut sichtbaren, kurzen Schwanz.", "correct": "Q79794" }
+    ]
+  },
+  {
+    "animals": ["Q26733", "Q25882"],
+    "distinctions": [
+      { "text": "Dieses Tier hat einen schwarzen Kopf und Hals mit einem weißen Fleck an der Kehle.", "correct": "Q26733" }
+    ]
+  },
+  {
+    "animals": ["Q25348", "Q28106966"],
+    "distinctions": [
+      { "text": "Das Männchen dieses Vogels hat einen auffällig glänzend grünen Kopf.", "correct": "Q25348" }
+    ]
+  },
+  {
+    "animals": ["Q25634", "Q26427"],
+    "distinctions": [
+      { "text": "Dieses Tier hat im Sommer eine dunkelbraune Kopfhaube.", "correct": "Q25634" }
+    ]
+  },
+  {
+    "animals": ["Q12267692", "Q18875"],
+    "distinctions": [
+      { "text": "Dieses Tier ist deutlich kleiner und hat einen gelben statt roten Schnabel.", "correct": "Q12267692" }
+    ]
+  },
+  {
+    "animals": ["Q26490", "Q25876"],
+    "distinctions": [
+      { "text": "Dieses Tier kann im Flug auf der Stelle in der Luft „rütteln“, ohne sich vorwärtszubewegen.", "correct": "Q26490" }
+    ]
+  },
+  {
+    "animals": ["Q156250", "Q80362"],
+    "distinctions": [
+      { "text": "Dieses Tier hat einen tief gegabelten, rostroten Schwanz.", "correct": "Q156250" }
+    ]
+  },
+  {
+    "animals": ["Q194031", "Q81110"],
+    "distinctions": [
+      { "text": "Dieses Tier hat vier Barteln (kleine Tasthaare) am Maul.", "correct": "Q81110" }
+    ]
+  },
+  {
+    "animals": ["Q165278", "Q146641"],
+    "distinctions": [
+      { "text": "Dieses Tier hat eine breite, entenschnabelartige Schnauze.", "correct": "Q165278" }
+    ]
+  },
+  {
+    "animals": ["Q2857311", "Q187986"],
+    "distinctions": [
+      { "text": "Dieses Tier hat ein schillerndes rosa-violettes Längsband an der Körperseite.", "correct": "Q187986" }
+    ]
+  },
+  {
+    "animals": ["Q183660", "Q170713"],
+    "distinctions": [
+      { "text": "Dieses Tier kann mit den Augen blinzeln, weil es bewegliche Augenlider hat.", "correct": "Q183660" }
+    ]
+  },
+  {
+    "animals": ["Q121439", "Q133189"],
+    "distinctions": [
+      { "text": "Dieses Tier hat einen buschigen Schwanz mit deutlichen dunklen Ringen.", "correct": "Q121439" }
+    ]
+  },
+  {
+    "animals": ["Q26913", "Q27370"],
+    "distinctions": [
+      { "text": "Dieses Tier hat eine lange, gerade Schnauze, die an einen Pferdekopf erinnert.", "correct": "Q27370" }
+    ]
+  },
+  {
+    "animals": ["Q129059", "Q155878"],
+    "distinctions": [
+      { "text": "Das Männchen dieses Vogels hat einen großen, fächerförmig aufgestellten Schwanz.", "correct": "Q129059" }
+    ]
+  },
+  {
+    "animals": ["Q26106", "Q28358"],
+    "distinctions": [
+      { "text": "Dieses Tier hat einen auffälligen rostroten Fleck im Gesicht.", "correct": "Q26106" }
+    ]
+  },
+  {
+    "animals": ["Q25273", "Q130730"],
+    "distinctions": [
+      { "text": "Dieses Tier hat ein komplett weißes Gefieder.", "correct": "Q130730" }
+    ]
+  }
+]

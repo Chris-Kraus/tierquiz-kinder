@@ -16,18 +16,24 @@ describe("DIFFICULTY_LEVELS", () => {
 });
 
 describe("getFieldsForDifficulty", () => {
-  it("liefert für Stufe 6-10 ausschließlich category/habitat/continent", () => {
+  it("liefert für Stufe 6-10 category/habitat/continent plus das Verwechslungspaare-Pseudofeld (Issue #21, steht laut Akzeptanzkriterien in beiden Stufen zur Verfügung)", () => {
     const fields = getFieldsForDifficulty(DIFFICULTY_LEVELS.EASY);
-    expect(fields).toEqual(["category", "habitat", "continent"]);
+    expect(fields).toEqual([
+      "category",
+      "habitat",
+      "continent",
+      "confusion_pair",
+    ]);
   });
 
-  it("liefert für Stufe 10-12 zusätzlich die anspruchsvolleren Felder inkl. Vergleichsfrage-Pseudofeld (Issue #20)", () => {
+  it("liefert für Stufe 10-12 zusätzlich die anspruchsvolleren Felder inkl. Vergleichsfrage-Pseudofeld (Issue #20) und Verwechslungspaare-Pseudofeld (Issue #21)", () => {
     const fields = getFieldsForDifficulty(DIFFICULTY_LEVELS.HARD);
     expect(fields).toEqual(
       expect.arrayContaining([
         "category",
         "habitat",
         "continent",
+        "confusion_pair",
         "weight_kg",
         "length_cm",
         "lifespan_years",
@@ -36,7 +42,7 @@ describe("getFieldsForDifficulty", () => {
         "heaviest_animal",
       ]),
     );
-    expect(fields).toHaveLength(9);
+    expect(fields).toHaveLength(10);
   });
 
   it("wirft bei unbekannter Schwierigkeitsstufe", () => {

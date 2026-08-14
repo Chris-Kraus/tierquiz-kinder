@@ -1,7 +1,9 @@
-// Frage-Bildschirm: Fortschrittsanzeige, Fragetext, 4 Antwortkacheln im
-// 2×2-Raster, Sofort-Feedback richtig/falsch, manueller "Weiter"-Button
-// (siehe design.md, "Nutzerfluss" Punkte 2–5, "Interaktions- und
-// Zustandsverhalten", "Layout-Empfehlungen", "Barrierefreiheit"; Issue #6).
+// Frage-Bildschirm: Fortschrittsanzeige, Fragetext, Antwortkacheln im
+// 2×2-Raster (4 Optionen) bzw. 1×2-Raster (2 Optionen, Verwechslungspaare-
+// Fragetyp aus Issue #21), Sofort-Feedback richtig/falsch, manueller
+// "Weiter"-Button (siehe design.md, "Nutzerfluss" Punkte 2–5, "Interaktions-
+// und Zustandsverhalten", "Layout-Empfehlungen", "Verwechslungspaare-
+// Fragetyp", "Barrierefreiheit"; Issue #6, #21).
 //
 // Erzeugt die Fragenliste selbst (per generateQuestions aus der echten
 // data/animals.json), sobald quizState noch keine Fragen enthält — die
@@ -12,6 +14,11 @@
 // Issue #7) — dieser Bildschirm kennt result.js bewusst nicht direkt.
 
 import animalsData from "../../data/animals.json";
+// Issue #21: kuratierte Verwechslungspaare (Verwechslungspaare-Fragetyp), vgl.
+// data/animals.json oben — auch hier bekommt questionGenerator.js die Liste
+// nur als Parameter, kein eigener Import dort (siehe Datei-Kommentar in
+// questionGenerator.js).
+import confusionPairsData from "../../data/confusionPairs.json";
 import {
   generateQuestions,
   DEFAULT_ROUND_LENGTH,
@@ -26,8 +33,6 @@ import {
 // PM-Entscheidung im Issue). Reine Template-Logik aus Wikidata-Feldern, kein
 // Wikipedia-Artikeltext (siehe infoSentence.js für die volle Herleitung).
 import { buildInfoSentence } from "../quiz/infoSentence.js";
-
-const OPTION_COUNT = 4;
 
 /**
  * Rendert den Frage-Bildschirm in den übergebenen Container und steuert den
@@ -47,6 +52,7 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     quizState.questions = generateQuestions(animalsData.animals, {
       difficulty: quizState.difficulty,
       count: quizState.roundLength ?? DEFAULT_ROUND_LENGTH,
+      confusionPairs: confusionPairsData,
     });
   }
 
@@ -69,17 +75,7 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
         class="answer-grid"
         role="group"
         aria-label="Antwortmöglichkeiten"
-      >
-        ${Array.from(
-          { length: OPTION_COUNT },
-          (_, i) => `
-          <button type="button" class="answer-tile" data-option-index="${i}" aria-pressed="false">
-            <span class="answer-tile__icon" aria-hidden="true"></span>
-            <span class="answer-tile__text"></span>
-          </button>
-        `,
-        ).join("")}
-      </div>
+      ></div>
 
       <p
         class="question-screen__feedback"
@@ -112,7 +108,15 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
 
   const progressEl = container.querySelector(".question-screen__progress");
   const headingEl = container.querySelector(".question-screen__text");
-  const tileButtons = Array.from(container.querySelectorAll(".answer-tile"));
+  const answerGridEl = container.querySelector(".answer-grid");
+  // Anders als bei den übrigen Elementen unten (einmalig referenziert, Inhalt
+  // wird pro Frage nur befüllt) müssen die Antwortkacheln pro Frage komplett
+  // neu aufgebaut werden: die Optionsanzahl variiert (4 bei den bestehenden
+  // Fragetypen, 2 beim Verwechslungspaare-Fragetyp aus Issue #21), siehe
+  // `renderAnswerTiles` unten. `tileButtons` wird deshalb bewusst mit `let`
+  // pro Frage neu zugewiesen statt einmalig mit `const` aus dem initialen
+  // Markup gelesen.
+  let tileButtons = [];
   const feedbackEl = container.querySelector(".question-screen__feedback");
   const infoSentenceEl = container.querySelector(
     ".question-screen__info-sentence",
@@ -134,17 +138,37 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   );
   const nextButton = container.querySelector(".next-button");
 
-  function resetTilesForQuestion(question) {
+  // Baut die Antwortkacheln für `question` komplett neu auf (statt nur
+  // bestehende Kacheln zurückzusetzen), da die Optionsanzahl pro Frage
+  // variiert (design.md, "Verwechslungspaare-Fragetyp"). Gleiche Kachel-
+  // Optik/-Größe wie bisher (siehe global.css, `.answer-tile`) — bei genau 2
+  // Optionen bekommt das Raster zusätzlich die Modifier-Klasse
+  // `answer-grid--pair` für das schmalere, mittige 1×2-Layout statt des
+  // vollbreiten 2×2-Rasters.
+  function renderAnswerTiles(question) {
+    answerGridEl.classList.toggle(
+      "answer-grid--pair",
+      question.options.length === 2,
+    );
+    // Kachel-Markup bewusst ohne den Options-Text darin (Platzhalter-Span
+    // bleibt leer) — der Text wird direkt im Anschluss per `textContent`
+    // gesetzt statt hier in die Template-Strings interpoliert, damit
+    // Optionstexte (Tiernamen/kuratierte Merkmalssätze) nie als HTML
+    // interpretiert werden.
+    answerGridEl.innerHTML = question.options
+      .map(
+        (_, i) => `
+          <button type="button" class="answer-tile" data-option-index="${i}" aria-pressed="false">
+            <span class="answer-tile__icon" aria-hidden="true"></span>
+            <span class="answer-tile__text"></span>
+          </button>
+        `,
+      )
+      .join("");
+    tileButtons = Array.from(answerGridEl.querySelectorAll(".answer-tile"));
     tileButtons.forEach((button, i) => {
-      const option = question.options[i];
-      button.querySelector(".answer-tile__text").textContent = option.text;
-      button.querySelector(".answer-tile__icon").textContent = "";
-      button.disabled = false;
-      button.setAttribute("aria-pressed", "false");
-      button.classList.remove(
-        "answer-tile--correct",
-        "answer-tile--selected-wrong",
-      );
+      button.querySelector(".answer-tile__text").textContent =
+        question.options[i].text;
     });
   }
 
@@ -170,7 +194,7 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     wikipediaLinkTextEl.textContent = "";
     nextButton.hidden = true;
 
-    resetTilesForQuestion(question);
+    renderAnswerTiles(question);
 
     // onclick statt addEventListener: pro Frage wird hier bewusst der
     // Handler der vorherigen Frage überschrieben (kein Listener-Stacking
@@ -181,8 +205,9 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   }
 
   function handleAnswer(selectedButton, question) {
-    // Nach Auswahl: alle vier Kacheln kurz deaktiviert (design.md,
-    // "Interaktions- und Zustandsverhalten").
+    // Nach Auswahl: alle Kacheln (4 oder, beim Verwechslungspaare-Fragetyp
+    // aus Issue #21, 2) kurz deaktiviert (design.md, "Interaktions- und
+    // Zustandsverhalten").
     tileButtons.forEach((button) => {
       button.disabled = true;
     });

@@ -155,6 +155,15 @@ const COMPARISON_FIELD_DEFINITIONS = {
 // eindeutig richtige Antwort möglich, siehe buildComparisonQuestion unten).
 const COMPARISON_MAX_ATTEMPTS = 20;
 
+// Pseudofeld-Name für den Verwechslungspaare-Fragetyp (Issue #21), analog zu
+// COMPARISON_FIELD_DEFINITIONS/"heaviest_animal": kein echtes
+// Tierdatenbank-Feld, sondern ein eigener Fragepfad, der über dieselbe
+// fieldOrder/fieldUsageCount-Priorisierung aus Issue #11 mitläuft (siehe
+// generateQuestions unten). Bewusst kein Eintrag in FIELD_DEFINITIONS/
+// COMPARISON_FIELD_DEFINITIONS, da die Datenquelle (data/confusionPairs.json)
+// und die Fragestruktur (2 statt 4 Optionen) grundverschieden sind.
+const CONFUSION_PAIR_FIELD = "confusion_pair";
+
 function shuffle(array, rng) {
   const result = array.slice();
   for (let i = result.length - 1; i > 0; i -= 1) {
@@ -425,6 +434,120 @@ export function buildComparisonQuestionForField(field, animals, rng = Math.rando
   return result ? result.question : null;
 }
 
+/** Sucht unter `confusionPairs` alle Paare, die (noch) für diese Runde
+ * nutzbar sind: beide Tier-IDs müssen im übergebenen `animals`-Bestand
+ * vorhanden sein (Datei-Kommentar: `questionGenerator.js` kennt
+ * `data/confusionPairs.json` nicht direkt, bekommt die Liste als Parameter,
+ * siehe `generateQuestions`) und dürfen noch nicht in `usedAnimalIds`
+ * stecken (kein Tier zweimal Zieltier pro Runde, dieselbe Regel wie bei den
+ * übrigen Fragetypen — verhindert nebenbei auch, dass dasselbe Paar zweimal
+ * in derselben Runde gezogen wird). Mindestens eine `distinction` muss
+ * vorhanden sein (siehe architecture.md, "Verwechslungspaare — Datenstruktur
+ * & Mindestumfang"). */
+function findEligibleConfusionPairs(confusionPairs, animalById, usedAnimalIds) {
+  return confusionPairs.filter((pair) => {
+    if (!pair || !Array.isArray(pair.animals) || pair.animals.length !== 2) {
+      return false;
+    }
+    const [idA, idB] = pair.animals;
+    if (usedAnimalIds.has(idA) || usedAnimalIds.has(idB)) return false;
+    if (!animalById.has(idA) || !animalById.has(idB)) return false;
+    return Array.isArray(pair.distinctions) && pair.distinctions.length > 0;
+  });
+}
+
+/** Baut eine Verwechslungspaare-Frage (Issue #21): zieht ein zufälliges,
+ * noch nutzbares Paar aus `confusionPairs` sowie eine zufällige Distinction
+ * daraus. Der Fragetext ist `distinction.text`, die beiden Optionen sind die
+ * Tiernamen des Paares selbst (nur 2 statt 4, siehe design.md,
+ * "Verwechslungspaare-Fragetyp") — `distinction.correct` referenziert die
+ * Tier-ID der richtigen Antwort. Liefert `null`, wenn kein nutzbares Paar
+ * (mehr) verfügbar ist (z. B. `confusionPairs` leer, oder beide Tiere jedes
+ * verbliebenen Paares bereits in dieser Runde verbraucht). Anders als bei den
+ * übrigen Fragetypen gibt es hier zwei "Zieltiere" statt einem — der
+ * Rückgabewert trägt deshalb `animals` (Array, beide Tiere) statt `animal`
+ * (Singular), siehe generateQuestions für die Buchführung in
+ * `usedAnimalIds`. */
+function buildConfusionPairQuestion({ confusionPairs, animals, usedAnimalIds, rng }) {
+  if (!Array.isArray(confusionPairs) || confusionPairs.length === 0) {
+    return null;
+  }
+
+  const animalById = new Map(animals.map((animal) => [animal.id, animal]));
+  const eligiblePairs = findEligibleConfusionPairs(
+    confusionPairs,
+    animalById,
+    usedAnimalIds,
+  );
+  if (eligiblePairs.length === 0) return null;
+
+  const pair = pickRandom(eligiblePairs, rng);
+  const distinction = pickRandom(pair.distinctions, rng);
+  const [idA, idB] = pair.animals;
+  const animalA = animalById.get(idA);
+  const animalB = animalById.get(idB);
+
+  const options = shuffle(
+    [
+      { text: animalA.name_de, correct: distinction.correct === idA },
+      { text: animalB.name_de, correct: distinction.correct === idB },
+    ],
+    rng,
+  );
+
+  // Falls `distinction.correct` (kuratierte Daten) keiner der beiden
+  // Paar-IDs entspricht, wären beide Optionen "falsch" -> keine gültige
+  // Frage. Laut architecture.md ist die Liste statisch kuratiert und kein
+  // Laufzeit-Check vorgesehen, trotzdem defensiv statt eine kaputte Frage
+  // auszuliefern (Pflicht laut architecture.md: fehlerhafte/fehlende Daten
+  // überspringen statt crashen).
+  if (!options.some((option) => option.correct)) return null;
+
+  return {
+    question: {
+      id: `${idA}-${idB}-confusion-pair`,
+      animalId: distinction.correct,
+      animalName: animalById.get(distinction.correct)?.name_de,
+      field: CONFUSION_PAIR_FIELD,
+      questionType: "confusionPair",
+      text: distinction.text,
+      options,
+    },
+    animals: [animalA, animalB],
+  };
+}
+
+/** Baut eine Verwechslungspaare-Frage direkt aus einer Paar-/Tierliste, oder
+ * `null`, wenn keine gültige Frage gebildet werden kann. Pendant zu
+ * `buildComparisonQuestionForField` für diesen Fragetyp — eigene Funktion für
+ * gezielte Tests, ohne den ganzen `generateQuestions`-Ablauf durchlaufen zu
+ * müssen.
+ * @param {object[]} confusionPairs Paare laut Schema aus data/confusionPairs.json
+ * @param {object[]} animals vollständige Tierliste (Quelle für Namen/Lookup)
+ * @param {() => number} [rng] Zufallsquelle, Standard Math.random (für Tests austauschbar)
+ */
+export function buildConfusionPairQuestionForPairs(
+  confusionPairs,
+  animals,
+  rng = Math.random,
+) {
+  if (!Array.isArray(confusionPairs) || !Array.isArray(animals)) return null;
+
+  const usableAnimals = animals.filter(
+    (animal) =>
+      animal && isNonEmptyString(animal.name_de) && isNonEmptyString(animal.id),
+  );
+
+  const result = buildConfusionPairQuestion({
+    confusionPairs,
+    animals: usableAnimals,
+    usedAnimalIds: new Set(),
+    rng,
+  });
+
+  return result ? result.question : null;
+}
+
 /**
  * Baut eine einzelne Frage für ein bestimmtes Tier/Feld, oder `null`, wenn
  * dafür (z. B. wegen fehlender Daten) keine gültige 4-Optionen-Frage gebildet
@@ -559,14 +682,23 @@ function tryBuildQuestionForField({
  * zurück. Das Vergleichsfrage-Pseudofeld `heaviest_animal` (Issue #20) nimmt
  * an genau derselben Priorisierung teil (siehe `buildComparisonQuestion`),
  * verdrängt die übrigen Fragetypen also nicht und wird umgekehrt nicht von
- * ihnen verdrängt.
+ * ihnen verdrängt. Das Verwechslungspaare-Pseudofeld `confusion_pair`
+ * (Issue #21) reiht sich genauso ein (siehe `buildConfusionPairQuestion`),
+ * mit dem Unterschied, dass hier bei einem Treffer BEIDE Tiere des Paares als
+ * "verbraucht" markiert werden (siehe unten) statt nur eines.
  *
  * @param {object[]} animals Tierliste, je Eintrag laut architecture.md-Schema
  * @param {object} options
  * @param {string} options.difficulty einer der Werte aus DIFFICULTY_LEVELS
  * @param {number} [options.count] Anzahl Fragen (Standard DEFAULT_ROUND_LENGTH)
+ * @param {object[]} [options.confusionPairs] kuratierte Verwechslungspaare
+ *   laut Schema aus data/confusionPairs.json (Issue #21) — analog zur
+ *   Tierliste bewusst als Parameter statt fest importiert (siehe
+ *   Datei-Kommentar oben); ohne Angabe (Standard `[]`) liefert der neue
+ *   Fragetyp einfach keine Fragen, statt zu crashen.
  * @param {() => number} [options.rng] Zufallsquelle, Standard Math.random (für Tests austauschbar)
- * @returns {object[]} Array von Fragen, je mit `text`, `options` (4 Stück,
+ * @returns {object[]} Array von Fragen, je mit `text`, `options` (4 Stück bei
+ *   den bestehenden Fragetypen, 2 Stück beim Verwechslungspaare-Fragetyp,
  *   gemischt, genau eine mit `correct: true`), sowie `animalId`/`field` zur
  *   späteren Auswertung.
  */
@@ -574,6 +706,7 @@ export function generateQuestions(animals, options = {}) {
   const {
     difficulty,
     count = DEFAULT_ROUND_LENGTH,
+    confusionPairs = [],
     rng = Math.random,
   } = options;
 
@@ -598,14 +731,16 @@ export function generateQuestions(animals, options = {}) {
     let builtThisSlot = false;
 
     for (const field of fieldOrder) {
-      // Vergleichsfrage-Pseudofelder (Issue #20) laufen über einen eigenen
-      // Builder statt FIELD_DEFINITIONS/tryBuildQuestionForField — nehmen
-      // aber an derselben fieldOrder/fieldUsageCount-Priorisierung teil, so
-      // dass sie sich in die Feld-Durchmischung aus Issue #11 einreihen statt
-      // sie zu umgehen.
+      // Vergleichsfrage- (Issue #20) und Verwechslungspaare-Pseudofelder
+      // (Issue #21) laufen über eigene Builder statt FIELD_DEFINITIONS/
+      // tryBuildQuestionForField — nehmen aber an derselben fieldOrder/
+      // fieldUsageCount-Priorisierung teil, so dass sie sich in die
+      // Feld-Durchmischung aus Issue #11 einreihen statt sie zu umgehen.
       const comparisonDef = COMPARISON_FIELD_DEFINITIONS[field];
-      const def = comparisonDef ? null : FIELD_DEFINITIONS[field];
-      if (!comparisonDef && !def) continue;
+      const isConfusionPairField = field === CONFUSION_PAIR_FIELD;
+      const def =
+        comparisonDef || isConfusionPairField ? null : FIELD_DEFINITIONS[field];
+      if (!comparisonDef && !isConfusionPairField && !def) continue;
 
       const result = comparisonDef
         ? buildComparisonQuestion({
@@ -615,18 +750,32 @@ export function generateQuestions(animals, options = {}) {
             usedAnimalIds,
             rng,
           })
-        : tryBuildQuestionForField({
-            def,
-            field,
-            difficulty,
-            candidateAnimals,
-            usedAnimalIds,
-            rng,
-          });
+        : isConfusionPairField
+          ? buildConfusionPairQuestion({
+              confusionPairs,
+              animals: candidateAnimals,
+              usedAnimalIds,
+              rng,
+            })
+          : tryBuildQuestionForField({
+              def,
+              field,
+              difficulty,
+              candidateAnimals,
+              usedAnimalIds,
+              rng,
+            });
 
       if (result) {
         questions.push(result.question);
-        usedAnimalIds.add(result.animal.id);
+        // Verwechslungspaare-Builder liefert `animals` (beide Tiere des
+        // Paares, Plural) statt `animal` (Singular wie bei allen übrigen
+        // Fragetypen) — beide werden als "verbraucht" markiert, siehe
+        // JSDoc oben.
+        const resultAnimalIds = result.animals
+          ? result.animals.map((animal) => animal.id)
+          : [result.animal.id];
+        resultAnimalIds.forEach((id) => usedAnimalIds.add(id));
         fieldUsageCount[field] += 1;
         builtThisSlot = true;
         break;

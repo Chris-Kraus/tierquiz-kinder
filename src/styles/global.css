@@ -297,6 +297,17 @@ button {
   }
 }
 
+/* Verwechslungspaare-Fragetyp (Issue #21, design.md "Verwechslungspaare-
+   Fragetyp"): nur 2 statt 4 Optionen -> 1×2- statt 2×2-Raster. Gleiche
+   Kachel-Optik/-Größe wie oben (kein eigenes Kachel-Styling nötig), nur
+   schmaler und mittig statt über die volle Breite auseinandergezogen. Die
+   Mobil-Regel oben (@media max-width: 30rem, eine Spalte) gilt unverändert
+   auch hier mit. */
+.answer-grid--pair {
+  max-width: 26rem;
+  margin-inline: auto;
+}
+
 /* Große Touch-Zielflächen (siehe design.md, "Layout-Empfehlungen"),
    echtes <button>-Element, per Tastatur bedienbar (design.md,
    "Barrierefreiheit"). Kein Hover-abhängiges UI: Hover ist rein additiv. */

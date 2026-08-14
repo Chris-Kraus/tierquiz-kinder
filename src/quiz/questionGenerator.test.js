@@ -9,6 +9,7 @@ import {
   generateQuestions,
   buildQuestionForField,
   buildComparisonQuestionForField,
+  buildConfusionPairQuestionForPairs,
   DEFAULT_ROUND_LENGTH,
 } from "./questionGenerator.js";
 import { DIFFICULTY_LEVELS, getFieldsForDifficulty } from "./difficulty.js";
@@ -75,7 +76,7 @@ describe("generateQuestions — Grundform", () => {
 });
 
 describe("generateQuestions — Schwierigkeitsstufen nutzen unterschiedliche Felder", () => {
-  it("Stufe 6-10 nutzt ausschließlich category/habitat/continent", () => {
+  it("Stufe 6-10 nutzt ausschließlich die für diese Stufe erlaubten Felder (category/habitat/continent/confusion_pair)", () => {
     const easyFields = new Set(getFieldsForDifficulty(EASY));
     // Über mehrere Läufe prüfen, da die Feld-/Tierauswahl zufällig ist.
     for (let i = 0; i < 10; i += 1) {
@@ -454,5 +455,176 @@ describe("generateQuestions — 'heaviest_animal' ist nur in Stufe 10-12 verfüg
       worstShare = Math.max(worstShare, share);
     }
     expect(worstShare).toBeLessThanOrEqual(0.6);
+  });
+});
+
+// Test-Fixture für den Verwechslungspaare-Fragetyp (Issue #21): frei
+// erfundene Paare/Merkmale nach dem Schema aus data/confusionPairs.json,
+// bewusst NICHT die echten kuratierten Paare (analog zu sampleAnimals.js
+// oben, unabhängig von der echten Datei entwickelt/getestet). Frosch/
+// Salamander und Löwe/Tiger sind hier rein technische Test-Paare, keine
+// fachlich kuratierte Aussage.
+const sampleConfusionPairs = [
+  {
+    animals: ["Q3116", "Q3130"], // Frosch, Salamander
+    distinctions: [
+      { text: "Dieses Tier hat vier Beine gleicher Länge.", correct: "Q3130" },
+      { text: "Dieses Tier springt statt zu laufen.", correct: "Q3116" },
+    ],
+  },
+  {
+    animals: ["Q140", "Q19939"], // Löwe, Tiger
+    distinctions: [{ text: "Dieses Tier hat ein gestreiftes Fell.", correct: "Q19939" }],
+  },
+];
+
+describe("buildConfusionPairQuestionForPairs — Verwechslungspaare-Fragetyp (Issue #21)", () => {
+  it("erzeugt eine gültige 2-Optionen-Frage aus einem Paar mit genau einer Distinction", () => {
+    const singlePair = [sampleConfusionPairs[1]]; // Löwe/Tiger, 1 Distinction
+    const question = buildConfusionPairQuestionForPairs(
+      singlePair,
+      sampleAnimals,
+    );
+
+    expect(question).not.toBeNull();
+    expect(question.questionType).toBe("confusionPair");
+    expect(question.field).toBe("confusion_pair");
+    expect(question.text).toBe("Dieses Tier hat ein gestreiftes Fell.");
+    expect(question.options).toHaveLength(2);
+
+    const correctOptions = question.options.filter((o) => o.correct);
+    expect(correctOptions).toHaveLength(1);
+    expect(correctOptions[0].text).toBe("Tiger");
+
+    const optionNames = question.options.map((o) => o.text).sort();
+    expect(optionNames).toEqual(["Löwe", "Tiger"].sort());
+    expect(question.animalId).toBe("Q19939");
+    expect(question.animalName).toBe("Tiger");
+  });
+
+  it("liefert null für eine leere Paarliste", () => {
+    expect(
+      buildConfusionPairQuestionForPairs([], sampleAnimals),
+    ).toBeNull();
+  });
+
+  it("überspringt ein Paar, dessen Tiere nicht (mehr) im Tierbestand vorhanden sind, statt zu crashen", () => {
+    const pairWithMissingAnimal = [
+      { animals: ["Q140", "DOES-NOT-EXIST"], distinctions: [{ text: "x", correct: "Q140" }] },
+    ];
+    expect(() =>
+      buildConfusionPairQuestionForPairs(pairWithMissingAnimal, sampleAnimals),
+    ).not.toThrow();
+    expect(
+      buildConfusionPairQuestionForPairs(pairWithMissingAnimal, sampleAnimals),
+    ).toBeNull();
+  });
+
+  it("überspringt ein Paar ohne Distinctions statt zu crashen", () => {
+    const pairWithoutDistinctions = [
+      { animals: ["Q140", "Q19939"], distinctions: [] },
+    ];
+    expect(
+      buildConfusionPairQuestionForPairs(pairWithoutDistinctions, sampleAnimals),
+    ).toBeNull();
+  });
+
+  it("zieht über viele Läufe hinweg auch die zweite Distinction eines Paares (echte Zufallsauswahl)", () => {
+    const singlePair = [sampleConfusionPairs[0]]; // Frosch/Salamander, 2 Distinctions
+    const seenTexts = new Set();
+    for (let i = 0; i < 50; i += 1) {
+      const question = buildConfusionPairQuestionForPairs(
+        singlePair,
+        sampleAnimals,
+      );
+      seenTexts.add(question.text);
+    }
+    expect(seenTexts.size).toBe(2);
+  });
+});
+
+describe("generateQuestions — Verwechslungspaare-Fragetyp ist in beiden Schwierigkeitsstufen verfügbar (Issue #21)", () => {
+  it("ohne übergebene confusionPairs entsteht (wie bisher) nie eine 'confusion_pair'-Frage", () => {
+    for (const difficulty of [EASY, HARD]) {
+      const questions = generateQuestions(sampleAnimals, { difficulty });
+      questions.forEach((q) => expect(q.field).not.toBe("confusion_pair"));
+    }
+  });
+
+  it("Stufe 6-10: mit confusionPairs können 'confusion_pair'-Fragen gezogen werden", () => {
+    let sawConfusionPairQuestion = false;
+    for (let i = 0; i < 30; i += 1) {
+      const questions = generateQuestions(sampleAnimals, {
+        difficulty: EASY,
+        count: 10,
+        confusionPairs: sampleConfusionPairs,
+      });
+      if (questions.some((q) => q.field === "confusion_pair")) {
+        sawConfusionPairQuestion = true;
+        break;
+      }
+    }
+    expect(sawConfusionPairQuestion).toBe(true);
+  });
+
+  it("Stufe 10-12: mit confusionPairs können 'confusion_pair'-Fragen gezogen werden", () => {
+    let sawConfusionPairQuestion = false;
+    for (let i = 0; i < 30; i += 1) {
+      const questions = generateQuestions(sampleAnimals, {
+        difficulty: HARD,
+        count: 10,
+        confusionPairs: sampleConfusionPairs,
+      });
+      if (questions.some((q) => q.field === "confusion_pair")) {
+        sawConfusionPairQuestion = true;
+        break;
+      }
+    }
+    expect(sawConfusionPairQuestion).toBe(true);
+  });
+
+  it("'confusion_pair'-Fragen haben genau 2 Optionen, genau eine korrekt, Text = kuratierte Distinction", () => {
+    for (let i = 0; i < 30; i += 1) {
+      const questions = generateQuestions(sampleAnimals, {
+        difficulty: EASY,
+        count: 10,
+        confusionPairs: sampleConfusionPairs,
+      });
+      questions
+        .filter((q) => q.field === "confusion_pair")
+        .forEach((question) => {
+          expect(question.questionType).toBe("confusionPair");
+          expect(question.options).toHaveLength(2);
+          expect(question.options.filter((o) => o.correct)).toHaveLength(1);
+
+          const allTexts = sampleConfusionPairs.flatMap((p) =>
+            p.distinctions.map((d) => d.text),
+          );
+          expect(allTexts).toContain(question.text);
+        });
+    }
+  });
+
+  it("markiert bei einer 'confusion_pair'-Frage beide Tiere des Paares als in dieser Runde verbraucht (keine weitere Frage zu einem der beiden)", () => {
+    // Nur ein einziges Paar verfügbar (Löwe/Tiger) -> falls gezogen, dürfen
+    // weder Löwe noch Tiger in dieser Runde nochmal als animalId auftauchen.
+    const singlePair = [sampleConfusionPairs[1]];
+    for (let i = 0; i < 30; i += 1) {
+      const questions = generateQuestions(sampleAnimals, {
+        difficulty: HARD,
+        count: 10,
+        confusionPairs: singlePair,
+      });
+      const confusionQuestions = questions.filter(
+        (q) => q.field === "confusion_pair",
+      );
+      if (confusionQuestions.length === 0) continue;
+
+      const otherAnimalIds = questions
+        .filter((q) => q.field !== "confusion_pair")
+        .map((q) => q.animalId);
+      expect(otherAnimalIds).not.toContain("Q140"); // Löwe
+      expect(otherAnimalIds).not.toContain("Q19939"); // Tiger
+    }
   });
 });

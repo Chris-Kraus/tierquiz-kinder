@@ -30,7 +30,21 @@ export const DIFFICULTY_LABELS = Object.freeze({
 });
 
 // Reihenfolge ist bewusst wie in architecture.md aufgeführt.
-const EASY_FIELDS = Object.freeze(["category", "habitat", "continent"]);
+//
+// "confusion_pair" (Issue #21, Verwechslungspaare-Fragetyp) steht laut
+// Akzeptanzkriterien für BEIDE Schwierigkeitsstufen zur Verfügung, deshalb
+// hier in EASY_FIELDS statt in HARD_ONLY_FIELDS: EASY_FIELDS fließt unten in
+// HARD_FIELDS mit ein, ein einziger Eintrag deckt also automatisch beide
+// Stufen ab. Wie `heaviest_animal` ist auch dies kein echtes
+// Tierdatenbank-Feld, sondern ein Pseudofeld mit eigenem Fragepfad (siehe
+// questionGenerator.js, buildConfusionPairQuestion) — hier wird nur seine
+// Verfügbarkeit je Stufe festgelegt.
+const EASY_FIELDS = Object.freeze([
+  "category",
+  "habitat",
+  "continent",
+  "confusion_pair",
+]);
 const HARD_ONLY_FIELDS = Object.freeze([
   "weight_kg",
   "length_cm",
