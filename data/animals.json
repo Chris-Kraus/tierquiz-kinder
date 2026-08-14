@@ -12,7 +12,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 126,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 14
     },
     {
       "id": "Q19939",
@@ -24,7 +25,8 @@
       ],
       "diet": "Fleischfresser",
       "weight_kg": 120,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q18498",
@@ -32,7 +34,8 @@
       "name_scientific": "Canis lupus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q34706",
@@ -44,7 +47,8 @@
         "Wald"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q58697",
@@ -52,7 +56,8 @@
       "name_scientific": "Sus scrofa",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q33609",
@@ -61,7 +66,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 225.3,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q8332",
@@ -77,7 +83,8 @@
         "städtisches Gebiet"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q23907",
@@ -86,7 +93,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 35,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q17592",
@@ -95,7 +103,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 100,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 40
     },
     {
       "id": "Q34505",
@@ -103,7 +112,8 @@
       "name_scientific": "Hippopotamus amphibius",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 45
     },
     {
       "id": "Q33602",
@@ -118,7 +128,8 @@
       ],
       "diet": "Pflanzenfresser",
       "weight_kg": 58.802,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q14683",
@@ -133,7 +144,8 @@
       ],
       "diet": "Allesfresser",
       "weight_kg": 0.0305,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q15083",
@@ -142,7 +154,8 @@
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
       "weight_kg": 54.5,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q36341",
@@ -156,7 +169,8 @@
       ],
       "diet": "Allesfresser",
       "weight_kg": 500,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q25357",
@@ -166,7 +180,8 @@
       "diet": "Allesfresser",
       "weight_kg": 0.9205,
       "length_cm": 68,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q25307",
@@ -175,7 +190,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.191,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q25348",
@@ -183,7 +199,8 @@
       "name_scientific": "Anas platyrhynchos",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q25247",
@@ -191,7 +208,8 @@
       "name_scientific": "Upupa epops",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q30197",
@@ -203,14 +221,16 @@
         "Wald"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q42710",
       "name_de": "Wasserbüffel",
       "name_scientific": "Bubalus bubalis",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser"
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 20
     },
     {
       "id": "Q35694",
@@ -219,7 +239,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 0.8,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q35517",
@@ -230,7 +251,8 @@
         "Buschland"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q36101",
@@ -242,7 +264,8 @@
         "Australien"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q25234",
@@ -250,7 +273,8 @@
       "name_scientific": "Turdus merula",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q35255",
@@ -258,7 +282,8 @@
       "name_scientific": "Puma concolor",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q27066",
@@ -266,7 +291,8 @@
       "name_scientific": "Meles meles",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q28358",
@@ -275,7 +301,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.008199999999999999,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q25311",
@@ -287,7 +314,8 @@
       ],
       "diet": "Fleischfresser",
       "weight_kg": 0.0014,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 2
     },
     {
       "id": "Q29995",
@@ -305,7 +333,8 @@
       ],
       "diet": "Fleischfresser",
       "weight_kg": 0.11,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q39624",
@@ -316,7 +345,8 @@
         "Wald"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q25334",
@@ -325,7 +355,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.0024,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q83310",
@@ -336,7 +367,8 @@
         "Grasland"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 1.5
     },
     {
       "id": "Q40994",
@@ -344,7 +376,8 @@
       "name_scientific": "Odobenus rosmarus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q15343",
@@ -356,7 +389,8 @@
         "Australien"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q42326",
@@ -365,7 +399,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.28049999999999997,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q18845",
@@ -374,7 +409,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.106,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q25388",
@@ -383,7 +419,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.0073,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q43375",
@@ -395,7 +432,8 @@
         "Buschland"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q26843",
@@ -405,7 +443,8 @@
       "habitat": [
         "Weltmeere"
       ],
-      "diet": "Fleischfresser"
+      "diet": "Fleischfresser",
+      "lifespan_years": 40
     },
     {
       "id": "Q25273",
@@ -414,7 +453,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.061,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q25354",
@@ -423,7 +463,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.0085,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q41960",
@@ -436,7 +477,8 @@
       ],
       "diet": "Pflanzenfresser",
       "weight_kg": 2.535,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q25485",
@@ -445,7 +487,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.01009,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q25469",
@@ -453,7 +496,8 @@
       "name_scientific": "Sturnus vulgaris",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q121439",
@@ -465,7 +509,8 @@
         "urban habitat"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q42196",
@@ -474,7 +519,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "length_cm": 2710,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 80
     },
     {
       "id": "Q25399",
@@ -482,7 +528,8 @@
       "name_scientific": "Motacilla alba",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q25429",
@@ -490,7 +537,8 @@
       "name_scientific": "Hirundo rustica",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q41181",
@@ -499,7 +547,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 4.383,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q79794",
@@ -507,7 +556,8 @@
       "name_scientific": "Cervus elaphus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q4388",
@@ -515,7 +565,8 @@
       "name_scientific": "Sciurus vulgaris",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q25345",
@@ -531,7 +582,8 @@
       ],
       "diet": "Fleischfresser",
       "weight_kg": 0.219,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 2
     },
     {
       "id": "Q30847",
@@ -539,14 +591,16 @@
       "name_scientific": "Caracal caracal",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q25345384",
       "name_de": "Dohle",
       "name_scientific": "Coloeus monedula",
       "category": "Vogel",
-      "diet": "Allesfresser"
+      "diet": "Allesfresser",
+      "lifespan_years": 5
     },
     {
       "id": "Q123141",
@@ -554,7 +608,8 @@
       "name_scientific": "Carassius auratus",
       "category": "Fisch",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q79803",
@@ -564,7 +619,8 @@
       "habitat": [
         "Peru"
       ],
-      "diet": "Pflanzenfresser"
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 6
     },
     {
       "id": "Q44299",
@@ -573,7 +629,8 @@
       "category": "Säugetier",
       "diet": "Allesfresser",
       "weight_kg": 0.2625,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q25352",
@@ -582,7 +639,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.11,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q25440",
@@ -591,7 +649,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 2.2,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q30535",
@@ -603,7 +662,8 @@
         "Ozeanien"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q160042",
@@ -611,7 +671,8 @@
       "name_scientific": "Syncerus caffer",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 18
     },
     {
       "id": "Q122069",
@@ -620,7 +681,8 @@
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
       "weight_kg": 1.35,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q130933",
@@ -629,7 +691,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 2.38,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q25332",
@@ -638,14 +701,16 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 1.4,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 18
     },
     {
       "id": "Q134747",
       "name_de": "Seidenspinner",
       "name_scientific": "Bombyx mori",
       "category": "Insekt",
-      "diet": "Pflanzenfresser"
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 0.1
     },
     {
       "id": "Q14334",
@@ -654,7 +719,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 10.6,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q46212",
@@ -663,7 +729,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 1.9,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q26490",
@@ -672,14 +739,16 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.167,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q30034",
       "name_de": "Westliche Honigbiene",
       "name_scientific": "Apis mellifera",
       "category": "Insekt",
-      "diet": "Pflanzenfresser"
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 0.1
     },
     {
       "id": "Q131538",
@@ -688,7 +757,8 @@
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
       "weight_kg": 25.2,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q82738",
@@ -696,14 +766,16 @@
       "name_scientific": "Vulpes lagopus",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q42569",
       "name_de": "Lama",
       "name_scientific": "Lama glama",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser"
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 20
     },
     {
       "id": "Q25882",
@@ -712,7 +784,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 3.237,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q25380",
@@ -721,7 +794,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.13,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q4764",
@@ -729,7 +803,8 @@
       "name_scientific": "Grus grus",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q25317",
@@ -738,7 +813,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.58,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q25418",
@@ -747,7 +823,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.0015300000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q43576",
@@ -759,14 +836,16 @@
         "Wald"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q137474876",
       "name_de": "Habicht",
       "name_scientific": "Astur gentilis",
       "category": "Vogel",
-      "diet": "Fleischfresser"
+      "diet": "Fleischfresser",
+      "lifespan_years": 10
     },
     {
       "id": "Q25376",
@@ -775,7 +854,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.715,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q25386",
@@ -784,7 +864,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.4535,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q25392",
@@ -793,7 +874,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.025500000000000002,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q25450",
@@ -802,7 +884,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.9455,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q80362",
@@ -811,7 +894,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.44200000000000006,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q25968",
@@ -824,7 +908,8 @@
       ],
       "diet": "Allesfresser",
       "weight_kg": 0.026000000000000002,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q4504",
@@ -838,7 +923,8 @@
       "diet": "Fleischfresser",
       "weight_kg": 70,
       "length_cm": 150,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 30
     },
     {
       "id": "Q81110",
@@ -847,7 +933,8 @@
       "category": "Fisch",
       "diet": "Allesfresser",
       "length_cm": 53,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q128098",
@@ -859,7 +946,8 @@
         "Wald"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q71516",
@@ -867,7 +955,8 @@
       "name_scientific": "Camelus dromedarius",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "weight_kg": 450
+      "weight_kg": 450,
+      "lifespan_years": 40
     },
     {
       "id": "Q42699",
@@ -875,7 +964,8 @@
       "name_scientific": "Leptailurus serval",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q79915",
@@ -884,7 +974,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.0043,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q25393",
@@ -893,7 +984,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.00265,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q25851",
@@ -901,7 +993,8 @@
       "name_scientific": "Oryctolagus cuniculus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 2
     },
     {
       "id": "Q61865",
@@ -909,7 +1002,8 @@
       "name_scientific": "Pavo cristatus",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q25382",
@@ -918,14 +1012,16 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.016705,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q25405",
       "name_de": "Nebelkrähe",
       "name_scientific": "Corvus cornix",
       "category": "Vogel",
-      "diet": "Allesfresser"
+      "diet": "Allesfresser",
+      "lifespan_years": 8
     },
     {
       "id": "Q25421",
@@ -934,7 +1030,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.0137,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q122783",
@@ -942,7 +1039,8 @@
       "name_scientific": "Ursus americanus",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q4126704",
@@ -950,7 +1048,8 @@
       "name_scientific": "Pan troglodytes",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 40
     },
     {
       "id": "Q19537",
@@ -959,7 +1058,8 @@
       "category": "Säugetier",
       "diet": "Allesfresser",
       "weight_kg": 38,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 40
     },
     {
       "id": "Q18847",
@@ -968,7 +1068,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.34800000000000003,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q25385",
@@ -977,7 +1078,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.8575,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q25398",
@@ -985,14 +1087,16 @@
       "name_scientific": "Ciconia nigra",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 18
     },
     {
       "id": "Q81564",
       "name_de": "Alpaka",
       "name_scientific": "Vicugna pacos",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser"
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 18
     },
     {
       "id": "Q82037",
@@ -1001,7 +1105,8 @@
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
       "weight_kg": 136,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q25402",
@@ -1011,7 +1116,8 @@
       "diet": "Pflanzenfresser",
       "weight_kg": 10.735,
       "length_cm": 147.5,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q25404",
@@ -1020,14 +1126,16 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.006470000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q132922",
       "name_de": "Trampeltier",
       "name_scientific": "Camelus bactrianus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser"
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 40
     },
     {
       "id": "Q81214",
@@ -1035,7 +1143,8 @@
       "name_scientific": "Physeter macrocephalus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 60
     },
     {
       "id": "Q129059",
@@ -1044,7 +1153,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 1.97,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q25383",
@@ -1053,7 +1163,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.012079999999999999,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q25422",
@@ -1065,7 +1176,8 @@
       ],
       "diet": "Fleischfresser",
       "weight_kg": 0.8300000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q25432",
@@ -1092,7 +1204,8 @@
         "Republik China"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q25438",
@@ -1101,7 +1214,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 4.014,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q26046",
@@ -1109,7 +1223,8 @@
       "name_scientific": "Martes martes",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q129958",
@@ -1117,7 +1232,8 @@
       "name_scientific": "Athene noctua",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q93208",
@@ -1130,7 +1246,8 @@
       ],
       "diet": "Allesfresser",
       "weight_kg": 32.7,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q126167",
@@ -1139,7 +1256,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 4.913,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q25700",
@@ -1147,14 +1265,16 @@
       "name_scientific": "Anas crecca",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q166111",
       "name_de": "Stubenfliege",
       "name_scientific": "Musca domestica",
       "category": "Insekt",
-      "diet": "Allesfresser"
+      "diet": "Allesfresser",
+      "lifespan_years": 0.1
     },
     {
       "id": "Q132576",
@@ -1162,7 +1282,8 @@
       "name_scientific": "Aepyceros melampus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 13
     },
     {
       "id": "Q133006",
@@ -1174,7 +1295,8 @@
       ],
       "diet": "Pflanzenfresser",
       "weight_kg": 95,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 60
     },
     {
       "id": "Q81091",
@@ -1182,7 +1304,8 @@
       "name_scientific": "Bison bonasus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q82728",
@@ -1191,7 +1314,8 @@
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
       "weight_kg": 645.029318,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q25961",
@@ -1199,7 +1323,8 @@
       "name_scientific": "Alauda arvensis",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q165278",
@@ -1208,7 +1333,8 @@
       "category": "Fisch",
       "diet": "Fleischfresser",
       "length_cm": 47.5,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q130730",
@@ -1216,7 +1342,8 @@
       "name_scientific": "Ardea alba",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q127216",
@@ -1225,7 +1352,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 4.13,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q26106",
@@ -1233,7 +1361,8 @@
       "name_scientific": "Perdix perdix",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q33504",
@@ -1242,7 +1371,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 1.0355,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q134015",
@@ -1251,7 +1381,8 @@
       "category": "Säugetier",
       "diet": "Allesfresser",
       "weight_kg": 0.37775,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q134964",
@@ -1263,7 +1394,8 @@
         "Australien"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q170723",
@@ -1272,7 +1404,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 1.1,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q106447604",
@@ -1280,7 +1413,8 @@
       "name_scientific": "Ardea ibis",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q26026",
@@ -1289,7 +1423,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.0189,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q173128",
@@ -1298,7 +1433,8 @@
       "category": "Säugetier",
       "diet": "Allesfresser",
       "weight_kg": 12,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q33261",
@@ -1307,7 +1443,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 13.5,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q42623",
@@ -1318,7 +1455,8 @@
         "Wald"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q126216",
@@ -1327,7 +1465,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.636,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q170177",
@@ -1335,7 +1474,8 @@
       "name_scientific": "Bubo scandiacus",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q25709",
@@ -1344,7 +1484,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 2.017,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q25984",
@@ -1352,7 +1493,8 @@
       "name_scientific": "Motacilla flava",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q25377",
@@ -1361,7 +1503,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.0035,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q166794",
@@ -1375,7 +1518,8 @@
         "Steppe"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q173651",
@@ -1383,7 +1527,8 @@
       "name_scientific": "Lycaon pictus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 11
     },
     {
       "id": "Q124410",
@@ -1394,7 +1539,8 @@
         "Wald"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q36557",
@@ -1402,7 +1548,8 @@
       "name_scientific": "Loxodonta africana",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 60
     },
     {
       "id": "Q131709",
@@ -1411,7 +1558,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.28,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q177856",
@@ -1420,7 +1568,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 4.29,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q28106966",
@@ -1428,7 +1577,8 @@
       "name_scientific": "Mareca strepera",
       "category": "Vogel",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q25612",
@@ -1437,7 +1587,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 8.75,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q54696",
@@ -1446,7 +1597,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.1011,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q160488",
@@ -1455,7 +1607,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.051000000000000004,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q170718",
@@ -1464,7 +1617,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.006500000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q199427",
@@ -1473,7 +1627,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 7.59,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q26114",
@@ -1482,7 +1637,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.0245,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q26198",
@@ -1490,7 +1646,8 @@
       "name_scientific": "Corvus corone",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q192056",
@@ -1501,7 +1658,8 @@
         "Land"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q26838",
@@ -1509,7 +1667,8 @@
       "name_scientific": "Lepus europaeus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q121221",
@@ -1522,7 +1681,8 @@
       ],
       "diet": "Pflanzenfresser",
       "weight_kg": 0.00215,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q28106837",
@@ -1530,7 +1690,8 @@
       "name_scientific": "Mareca penelope",
       "category": "Vogel",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q25876",
@@ -1539,7 +1700,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.1815,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 7
     },
     {
       "id": "Q26017",
@@ -1548,14 +1710,16 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.0132,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q940337",
       "name_de": "Bettwanze",
       "name_scientific": "Cimex lectularius",
       "category": "Insekt",
-      "diet": "Fleischfresser"
+      "diet": "Fleischfresser",
+      "lifespan_years": 0.5
     },
     {
       "id": "Q132585",
@@ -1563,7 +1727,8 @@
       "name_scientific": "Cuon alpinus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q159426",
@@ -1572,7 +1737,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 80,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 40
     },
     {
       "id": "Q168514",
@@ -1581,7 +1747,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.0721,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q168748",
@@ -1590,7 +1757,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 2.0909999999999997,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q28106731",
@@ -1598,7 +1766,8 @@
       "name_scientific": "Spatula clypeata",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q28106902",
@@ -1606,7 +1775,8 @@
       "name_scientific": "Spatula querquedula",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q25909",
@@ -1619,7 +1789,8 @@
         "Steinbruch"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q131564",
@@ -1627,7 +1798,8 @@
       "name_scientific": "Vulpes zerda",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q132905",
@@ -1637,7 +1809,8 @@
       "diet": "Fleischfresser",
       "weight_kg": 23250,
       "length_cm": 1025,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 45
     },
     {
       "id": "Q159918",
@@ -1645,7 +1818,8 @@
       "name_scientific": "Ceratotherium simum",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 40
     },
     {
       "id": "Q26423",
@@ -1657,7 +1831,8 @@
       ],
       "diet": "Allesfresser",
       "weight_kg": 0.0275,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q179863",
@@ -1666,7 +1841,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "length_cm": 132.5,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q25692",
@@ -1675,7 +1851,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.1195,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q25740",
@@ -1683,7 +1860,8 @@
       "name_scientific": "Troglodytes troglodytes",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 2
     },
     {
       "id": "Q18859",
@@ -1692,7 +1870,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.07565,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q25384",
@@ -1700,7 +1879,8 @@
       "name_scientific": "Asio otus",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q131907",
@@ -1709,7 +1889,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 0.31,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q159857",
@@ -1718,7 +1899,8 @@
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
       "weight_kg": 5,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q95036",
@@ -1727,7 +1909,8 @@
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
       "weight_kg": 36,
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 37
     },
     {
       "id": "Q26283",
@@ -1735,7 +1918,8 @@
       "name_scientific": "Ondatra zibethicus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q168677",
@@ -1744,7 +1928,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.243,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q178811",
@@ -1753,7 +1938,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.633,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q179959",
@@ -1765,7 +1951,8 @@
         "Australien"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 60
     },
     {
       "id": "Q25761",
@@ -1774,7 +1961,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 1.043,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q26209",
@@ -1783,7 +1971,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.047349999999999996,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q132072",
@@ -1795,7 +1984,8 @@
       ],
       "diet": "Fleischfresser",
       "weight_kg": 60,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 40
     },
     {
       "id": "Q184004",
@@ -1803,7 +1993,8 @@
       "name_scientific": "Ovibos moschatus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q26582",
@@ -1811,7 +2002,8 @@
       "name_scientific": "Mustela putorius",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q131918",
@@ -1820,7 +2012,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.187,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q156250",
@@ -1829,7 +2022,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 1.012,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q170598",
@@ -1837,7 +2031,8 @@
       "name_scientific": "Vultur gryphus",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 50
     },
     {
       "id": "Q178821",
@@ -1846,7 +2041,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.09090000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q27075852",
@@ -1855,7 +2051,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.010329999999999999,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q25572",
@@ -1864,7 +2061,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.4365,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q25634",
@@ -1873,7 +2071,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.28049999999999997,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q26205",
@@ -1882,7 +2081,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.00294,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q26444",
@@ -1891,7 +2091,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.056,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q18850",
@@ -1899,7 +2100,8 @@
       "name_scientific": "Actitis hypoleucos",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q131340",
@@ -1910,7 +2112,8 @@
         "Berg"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q6145",
@@ -1918,7 +2121,8 @@
       "name_scientific": "Erinaceus europaeus",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q36135",
@@ -1929,7 +2133,8 @@
         "Dschungel"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 11
     },
     {
       "id": "Q42627",
@@ -1937,7 +2142,8 @@
       "name_scientific": "Prionailurus bengalensis",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q131044",
@@ -1950,7 +2156,8 @@
       ],
       "diet": "Pflanzenfresser",
       "weight_kg": 5.1,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q143284",
@@ -1959,7 +2166,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.011800000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q171360",
@@ -1968,7 +2176,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.076,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q27075864",
@@ -1977,7 +2186,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.0075450000000000005,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q26742",
@@ -1986,7 +2196,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.066,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q168745",
@@ -1994,7 +2205,8 @@
       "name_scientific": "Crocodylus niloticus",
       "category": "Reptil",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 50
     },
     {
       "id": "Q182599",
@@ -2002,7 +2214,8 @@
       "name_scientific": "Crocodylus porosus",
       "category": "Reptil",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 70
     },
     {
       "id": "Q159323",
@@ -2010,7 +2223,8 @@
       "name_scientific": "Silurus glanis",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 40
     },
     {
       "id": "Q164327",
@@ -2018,7 +2232,8 @@
       "name_scientific": "Xiphias gladius",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 9
     },
     {
       "id": "Q133189",
@@ -2029,7 +2244,8 @@
         "Buschland"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q175329",
@@ -2037,7 +2253,8 @@
       "name_scientific": "Felis margarita",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 13
     },
     {
       "id": "Q181191",
@@ -2048,7 +2265,8 @@
         "Wald"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q27366",
@@ -2056,7 +2274,8 @@
       "name_scientific": "Martes foina",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q155878",
@@ -2065,7 +2284,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.925,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q161829",
@@ -2074,7 +2294,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.425,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q170251",
@@ -2083,7 +2304,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.136,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q200339",
@@ -2092,7 +2314,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.041,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q179359",
@@ -2101,7 +2324,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 2.459,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 16
     },
     {
       "id": "Q184774",
@@ -2110,7 +2334,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.6719999999999999,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q28122714",
@@ -2119,7 +2344,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.10200000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q25756",
@@ -2128,7 +2354,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.475,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q26431",
@@ -2137,7 +2364,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.04,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q18700",
@@ -2145,7 +2373,8 @@
       "name_scientific": "Balaeniceps rex",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 35
     },
     {
       "id": "Q18854",
@@ -2154,7 +2383,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.742,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q48186",
@@ -2162,7 +2392,8 @@
       "name_scientific": "Ophiophagus hannah",
       "category": "Reptil",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q129544",
@@ -2174,7 +2405,8 @@
       ],
       "diet": "Pflanzenfresser",
       "weight_kg": 200,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 70
     },
     {
       "id": "Q129727",
@@ -2187,7 +2419,8 @@
         "Amerika"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 13
     },
     {
       "id": "Q144923",
@@ -2202,7 +2435,8 @@
         "Ozeanien"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q180404",
@@ -2210,7 +2444,8 @@
       "name_scientific": "Cervus canadensis",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q184224",
@@ -2222,7 +2457,8 @@
         "Buschland"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 1.5
     },
     {
       "id": "Q25769",
@@ -2230,7 +2466,8 @@
       "name_scientific": "Asio flammeus",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q26733",
@@ -2239,7 +2476,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 3.814,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q26387",
@@ -2247,7 +2485,8 @@
       "name_scientific": "Anguilla anguilla",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 20
     },
     {
       "id": "Q172886",
@@ -2255,7 +2494,8 @@
       "name_scientific": "Lama guanicoe",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 18
     },
     {
       "id": "Q174088",
@@ -2263,7 +2503,8 @@
       "name_scientific": "Coccothraustes coccothraustes",
       "category": "Vogel",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q27075785",
@@ -2272,7 +2513,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.00217,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q25678",
@@ -2281,7 +2523,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.01985,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q26055",
@@ -2289,7 +2532,8 @@
       "name_scientific": "Delichon urbicum",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q26147",
@@ -2298,7 +2542,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.0317,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q26349",
@@ -2307,7 +2552,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.03900000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q28236",
@@ -2315,7 +2561,8 @@
       "name_scientific": "Larus argentatus",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q41407",
@@ -2328,7 +2575,8 @@
       "diet": "Fleischfresser",
       "weight_kg": 32.5,
       "length_cm": 144,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q188601",
@@ -2337,7 +2585,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.041,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q25777",
@@ -2346,7 +2595,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.0559,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q26578",
@@ -2354,7 +2604,8 @@
       "name_scientific": "Luscinia svecica",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q26620",
@@ -2362,7 +2613,8 @@
       "name_scientific": "Phoenicurus phoenicurus",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q26717",
@@ -2370,7 +2622,8 @@
       "name_scientific": "Caprimulgus europaeus",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q18851",
@@ -2379,7 +2632,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.0077,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q26982",
@@ -2387,7 +2641,8 @@
       "name_scientific": "Galerida cristata",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q22718",
@@ -2395,7 +2650,8 @@
       "name_scientific": "Ambystoma mexicanum",
       "category": "Amphibie",
       "diet": "Fleischfresser",
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 12
     },
     {
       "id": "Q76280",
@@ -2403,7 +2659,8 @@
       "name_scientific": "Tinca tinca",
       "category": "Fisch",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q178202",
@@ -2411,7 +2668,8 @@
       "name_scientific": "Poecilia reticulata",
       "category": "Fisch",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 2
     },
     {
       "id": "Q2857311",
@@ -2419,7 +2677,8 @@
       "name_scientific": "Salmo trutta",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q126683",
@@ -2430,7 +2689,8 @@
         "Grasland"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q156767",
@@ -2439,7 +2699,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.012625,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q166171",
@@ -2448,7 +2709,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.10095,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q168976",
@@ -2457,7 +2719,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 2.585,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q170466",
@@ -2466,7 +2729,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.049,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q171655",
@@ -2475,7 +2739,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.14300000000000002,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q201831",
@@ -2483,7 +2748,8 @@
       "name_scientific": "Cinclus cinclus",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q184432",
@@ -2491,7 +2757,8 @@
       "name_scientific": "Gavia arctica",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q184820",
@@ -2499,7 +2766,8 @@
       "name_scientific": "Nucifraga caryocatactes",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q25928",
@@ -2508,7 +2776,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.28235,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q26135",
@@ -2516,7 +2785,8 @@
       "name_scientific": "Bombycilla garrulus",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q26685",
@@ -2525,7 +2795,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.376,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q17134",
@@ -2533,7 +2804,8 @@
       "name_scientific": "Gavialis gangeticus",
       "category": "Reptil",
       "diet": "Fleischfresser",
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 45
     },
     {
       "id": "Q144534",
@@ -2541,7 +2813,8 @@
       "name_scientific": "Abramis brama",
       "category": "Fisch",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q174296",
@@ -2553,7 +2826,8 @@
         "Wald"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q178089",
@@ -2561,7 +2835,8 @@
       "name_scientific": "Crocuta crocuta",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q209067",
@@ -2569,7 +2844,8 @@
       "name_scientific": "Talpa europaea",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q47910",
@@ -2580,7 +2856,8 @@
         "Wald"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 40
     },
     {
       "id": "Q170831",
@@ -2588,7 +2865,8 @@
       "name_scientific": "Aegithalos caudatus",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q185183",
@@ -2596,7 +2874,8 @@
       "name_scientific": "Podiceps nigricollis",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q191125",
@@ -2605,7 +2884,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 2.23,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q26427",
@@ -2614,7 +2894,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.3865,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q26452",
@@ -2623,7 +2904,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 2.843,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q18840",
@@ -2632,7 +2914,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.10175000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q18875",
@@ -2640,7 +2923,8 @@
       "name_scientific": "Sterna hirundo",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q170713",
@@ -2648,7 +2932,8 @@
       "name_scientific": "Natrix natrix",
       "category": "Reptil",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q166812",
@@ -2656,7 +2941,8 @@
       "name_scientific": "Perca fluviatilis",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q188879",
@@ -2664,7 +2950,8 @@
       "name_scientific": "Salmo salar",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q146457",
@@ -2672,7 +2959,8 @@
       "name_scientific": "Lynx canadensis",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 13
     },
     {
       "id": "Q156606",
@@ -2684,7 +2972,8 @@
         "Savanne"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q167797",
@@ -2692,7 +2981,8 @@
       "name_scientific": "Vicugna vicugna",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 18
     },
     {
       "id": "Q187704",
@@ -2701,7 +2991,8 @@
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
       "weight_kg": 6.36,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q171563",
@@ -2709,7 +3000,8 @@
       "name_scientific": "Otus scops",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q177688",
@@ -2717,7 +3009,8 @@
       "name_scientific": "Falco rusticolus",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 14
     },
     {
       "id": "Q178942",
@@ -2725,7 +3018,8 @@
       "name_scientific": "Turdus viscivorus",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q179367",
@@ -2733,7 +3027,8 @@
       "name_scientific": "Coracias garrulus",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 9
     },
     {
       "id": "Q179625",
@@ -2742,7 +3037,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.15,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q184834",
@@ -2751,7 +3047,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.042,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 16
     },
     {
       "id": "Q185099",
@@ -2760,7 +3057,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.1115,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q20823352",
@@ -2769,7 +3067,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.0669,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q26420",
@@ -2777,7 +3076,8 @@
       "name_scientific": "Oenanthe oenanthe",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q26597",
@@ -2785,7 +3085,8 @@
       "name_scientific": "Clangula hyemalis",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q26691",
@@ -2794,7 +3095,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 1.6030000000000002,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q26711",
@@ -2803,7 +3105,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.05020000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q26755",
@@ -2811,7 +3114,8 @@
       "name_scientific": "Phoenicurus ochruros",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q18841",
@@ -2820,7 +3124,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.264,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 16
     },
     {
       "id": "Q183660",
@@ -2828,7 +3133,8 @@
       "name_scientific": "Anguis fragilis",
       "category": "Reptil",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q30153",
@@ -2836,7 +3142,8 @@
       "name_scientific": "Scomber scombrus",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 17
     },
     {
       "id": "Q170311",
@@ -2847,7 +3154,8 @@
         "Wald"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 35
     },
     {
       "id": "Q183339",
@@ -2855,7 +3163,8 @@
       "name_scientific": "Antilope cervicapra",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q190674",
@@ -2863,14 +3172,16 @@
       "name_scientific": "Prionailurus viverrinus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q192231",
       "name_de": "Afrikanische Goldkatze",
       "name_scientific": "Profelis aurata",
       "category": "Säugetier",
-      "diet": "Fleischfresser"
+      "diet": "Fleischfresser",
+      "lifespan_years": 12
     },
     {
       "id": "Q213084",
@@ -2879,7 +3190,8 @@
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
       "weight_kg": 37,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q172093",
@@ -2887,7 +3199,8 @@
       "name_scientific": "Anser albifrons",
       "category": "Vogel",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q182761",
@@ -2896,7 +3209,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.194,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q182971",
@@ -2905,7 +3219,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.709,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q229408",
@@ -2914,7 +3229,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.148,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q18858",
@@ -2922,7 +3238,8 @@
       "name_scientific": "Numenius phaeopus",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q28450",
@@ -2931,7 +3248,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.075,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q178228",
@@ -2939,7 +3257,8 @@
       "name_scientific": "Capra aegagrus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q26547",
@@ -2953,7 +3272,8 @@
         "Asien"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q165974",
@@ -2962,7 +3282,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.875,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q199758",
@@ -2970,7 +3291,8 @@
       "name_scientific": "Cyanocitta cristata",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 7
     },
     {
       "id": "Q184751",
@@ -2978,7 +3300,8 @@
       "name_scientific": "Pelecanus crispus",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q188446",
@@ -2987,7 +3310,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.010145000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q188660",
@@ -2995,7 +3319,8 @@
       "name_scientific": "Opisthocomus hoazin",
       "category": "Vogel",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q189609",
@@ -3004,7 +3329,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.908,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 9
     },
     {
       "id": "Q194024",
@@ -3013,7 +3339,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.045450000000000004,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q26129",
@@ -3022,7 +3349,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.08,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q26140",
@@ -3031,7 +3359,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.0167,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q26552",
@@ -3040,7 +3369,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 0.0029500000000000004,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q26657",
@@ -3049,7 +3379,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.0007700000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 2
     },
     {
       "id": "Q27160",
@@ -3058,7 +3389,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.8175,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 18
     },
     {
       "id": "Q29865",
@@ -3067,7 +3399,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.9,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q199788",
@@ -3076,7 +3409,8 @@
       "category": "Fisch",
       "diet": "Fleischfresser",
       "length_cm": 90,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q201235",
@@ -3084,7 +3418,8 @@
       "name_scientific": "Electrophorus electricus",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q144700",
@@ -3092,7 +3427,8 @@
       "name_scientific": "Lota lota",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q174199",
@@ -3100,7 +3436,8 @@
       "name_scientific": "Tursiops truncatus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 40
     },
     {
       "id": "Q180035",
@@ -3111,14 +3448,16 @@
         "Grasland"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q182304",
       "name_de": "Jaguarundi",
       "name_scientific": "Puma yagouaroundi",
       "category": "Säugetier",
-      "diet": "Fleischfresser"
+      "diet": "Fleischfresser",
+      "lifespan_years": 10
     },
     {
       "id": "Q188657",
@@ -3127,7 +3466,8 @@
       "category": "Säugetier",
       "diet": "Allesfresser",
       "weight_kg": 20.35,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q190516",
@@ -3140,7 +3480,8 @@
       ],
       "diet": "Pflanzenfresser",
       "weight_kg": 5.75,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q26559",
@@ -3148,7 +3489,8 @@
       "name_scientific": "Mustela lutreola",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 4
     },
     {
       "id": "Q27179",
@@ -3156,7 +3498,8 @@
       "name_scientific": "Neogale vison",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q116667",
@@ -3165,7 +3508,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.0070999999999999995,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q179919",
@@ -3174,7 +3518,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.7854,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q180991",
@@ -3183,7 +3528,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 1.4705,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q191723",
@@ -3192,7 +3538,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.52,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q192058",
@@ -3201,7 +3548,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.23600000000000002,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q58958",
@@ -3209,7 +3557,8 @@
       "name_scientific": "Calidris alba",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q26698",
@@ -3217,7 +3566,8 @@
       "name_scientific": "Prunella modularis",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 2
     },
     {
       "id": "Q18864",
@@ -3226,7 +3576,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.3335,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q26800",
@@ -3235,7 +3586,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.114,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q26844",
@@ -3243,7 +3595,8 @@
       "name_scientific": "Meleagris gallopavo",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q120043",
@@ -3251,7 +3604,8 @@
       "name_scientific": "Dermochelys coriacea",
       "category": "Reptil",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 45
     },
     {
       "id": "Q199458",
@@ -3259,14 +3613,16 @@
       "name_scientific": "Chelonia mydas",
       "category": "Reptil",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 70
     },
     {
       "id": "Q187986",
       "name_de": "Regenbogenforelle",
       "name_scientific": "Oncorhynchus mykiss",
       "category": "Fisch",
-      "diet": "Fleischfresser"
+      "diet": "Fleischfresser",
+      "lifespan_years": 6
     },
     {
       "id": "Q137641",
@@ -3274,7 +3630,8 @@
       "name_scientific": "Tremarctos ornatus",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q185385",
@@ -3286,7 +3643,8 @@
       ],
       "diet": "Pflanzenfresser",
       "weight_kg": 0.06,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 18
     },
     {
       "id": "Q216815",
@@ -3294,7 +3652,8 @@
       "name_scientific": "Taurotragus oryx",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "weight_kg": 27.75
+      "weight_kg": 27.75,
+      "lifespan_years": 18
     },
     {
       "id": "Q29220",
@@ -3306,7 +3665,8 @@
         "Wald"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 35
     },
     {
       "id": "Q202478",
@@ -3314,7 +3674,8 @@
       "name_scientific": "Sylvia borin",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q182209",
@@ -3323,7 +3684,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 11.5,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 18
     },
     {
       "id": "Q185784",
@@ -3331,7 +3693,8 @@
       "name_scientific": "Phylloscopus collybita",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 2
     },
     {
       "id": "Q191096",
@@ -3340,7 +3703,8 @@
       "category": "Vogel",
       "diet": "Allesfresser",
       "weight_kg": 0.0010400000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q27074540",
@@ -3349,7 +3713,8 @@
       "category": "Vogel",
       "diet": "Pflanzenfresser",
       "weight_kg": 1.3784999999999998,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q21090684",
@@ -3358,7 +3723,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.11,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q18837",
@@ -3367,7 +3733,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.062,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q26892",
@@ -3375,7 +3742,8 @@
       "name_scientific": "Arenaria interpres",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q27129",
@@ -3388,7 +3756,8 @@
       ],
       "diet": "Fleischfresser",
       "weight_kg": 0.634,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q26395",
@@ -3396,7 +3765,8 @@
       "name_scientific": "Salamandra salamandra",
       "category": "Amphibie",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q182976",
@@ -3404,7 +3774,8 @@
       "name_scientific": "Rutilus rutilus",
       "category": "Fisch",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q234014",
@@ -3412,14 +3783,16 @@
       "name_scientific": "Mugil cephalus",
       "category": "Fisch",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 13
     },
     {
       "id": "Q26764",
       "name_de": "Großer Kohlweißling",
       "name_scientific": "Pieris brassicae",
       "category": "Insekt",
-      "diet": "Pflanzenfresser"
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 0.1
     },
     {
       "id": "Q145016",
@@ -3431,7 +3804,8 @@
         "Savanne"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q168327",
@@ -3439,7 +3813,8 @@
       "name_scientific": "Capra ibex",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 16
     },
     {
       "id": "Q180960",
@@ -3447,7 +3822,8 @@
       "name_scientific": "Equus hemionus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q185295",
@@ -3456,7 +3832,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 10,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q186778",
@@ -3468,7 +3845,8 @@
       ],
       "diet": "Allesfresser",
       "weight_kg": 1.3075,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q189514",
@@ -3476,7 +3854,8 @@
       "name_scientific": "Loxodonta cyclotis",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 60
     },
     {
       "id": "Q26913",
@@ -3484,7 +3863,8 @@
       "name_scientific": "Phoca vitulina",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q201316",
@@ -3493,7 +3873,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.009654999999999999,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q206540",
@@ -3501,7 +3882,8 @@
       "name_scientific": "Motacilla citreola",
       "category": "Vogel",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q191683",
@@ -3509,7 +3891,8 @@
       "name_scientific": "Anthropoides virgo",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q514809",
@@ -3522,7 +3905,8 @@
       ],
       "diet": "Pflanzenfresser",
       "weight_kg": 0.045840000000000006,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 18
     },
     {
       "id": "Q230837",
@@ -3531,7 +3915,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.322,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 7
     },
     {
       "id": "Q12267692",
@@ -3540,7 +3925,8 @@
       "category": "Vogel",
       "diet": "Fleischfresser",
       "weight_kg": 0.0335,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q26416",
@@ -3548,7 +3934,8 @@
       "name_scientific": "Plectrophenax nivalis",
       "category": "Vogel",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q146375",
@@ -3556,7 +3943,8 @@
       "name_scientific": "Bufo bufo",
       "category": "Amphibie",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q156454",
@@ -3564,7 +3952,8 @@
       "name_scientific": "Vanessa atalanta",
       "category": "Insekt",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 0.5
     },
     {
       "id": "Q147128",
@@ -3572,7 +3961,8 @@
       "name_scientific": "Glis glis",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 7
     },
     {
       "id": "Q179020",
@@ -3580,7 +3970,8 @@
       "name_scientific": "Balaenoptera physalus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 80
     },
     {
       "id": "Q204814",
@@ -3589,7 +3980,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 0.074,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q186267",
@@ -3601,7 +3993,8 @@
         "Buschland"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q200444",
@@ -3609,7 +4002,8 @@
       "name_scientific": "Boselaphus tragocamelus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q192285",
@@ -3617,7 +4011,8 @@
       "name_scientific": "Mola mola",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q208600",
@@ -3625,14 +4020,16 @@
       "name_scientific": "Sardina pilchardus",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q179530",
       "name_de": "Schwalbenschwanz",
       "name_scientific": "Papilio machaon",
       "category": "Insekt",
-      "diet": "Pflanzenfresser"
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 0.1
     },
     {
       "id": "Q187024",
@@ -3645,14 +4042,16 @@
       ],
       "diet": "Allesfresser",
       "weight_kg": 0.0625,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q192233",
       "name_de": "Asiatische Goldkatze",
       "name_scientific": "Pardofelis temminckii",
       "category": "Säugetier",
-      "diet": "Fleischfresser"
+      "diet": "Fleischfresser",
+      "lifespan_years": 15
     },
     {
       "id": "Q106133",
@@ -3660,7 +4059,8 @@
       "name_scientific": "Rattus rattus",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 1.5
     },
     {
       "id": "Q213141",
@@ -3671,7 +4071,8 @@
         "Buschland"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 18
     },
     {
       "id": "Q214835",
@@ -3682,7 +4083,8 @@
         "Buschland"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q245305",
@@ -3690,7 +4092,8 @@
       "name_scientific": "Equus quagga",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 22
     },
     {
       "id": "Q18764",
@@ -3702,7 +4105,8 @@
         "Savanne"
       ],
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q2396858",
@@ -3710,7 +4114,8 @@
       "name_scientific": "Clupea harengus",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q174652",
@@ -3718,7 +4123,8 @@
       "name_scientific": "Balaena mysticetus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 200
     },
     {
       "id": "Q183255",
@@ -3726,7 +4132,8 @@
       "name_scientific": "Phacochoerus africanus",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q183330",
@@ -3738,7 +4145,8 @@
       ],
       "diet": "Fleischfresser",
       "weight_kg": 4.8,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 17
     },
     {
       "id": "Q187927",
@@ -3746,7 +4154,8 @@
       "name_scientific": "Capra falconeri",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 13
     },
     {
       "id": "Q190154",
@@ -3755,7 +4164,8 @@
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
       "weight_kg": 75,
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 20
     },
     {
       "id": "Q192029",
@@ -3767,7 +4177,8 @@
       ],
       "diet": "Pflanzenfresser",
       "weight_kg": 0.455,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 18
     },
     {
       "id": "Q199962",
@@ -3775,21 +4186,24 @@
       "name_scientific": "Macaca sylvanus",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 22
     },
     {
       "id": "Q13408062",
       "name_de": "Hausyak",
       "name_scientific": "Bos grunniens",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser"
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 20
     },
     {
       "id": "Q178973",
       "name_de": "Frettchen",
       "name_scientific": "Mustela furo",
       "category": "Säugetier",
-      "diet": "Fleischfresser"
+      "diet": "Fleischfresser",
+      "lifespan_years": 8
     },
     {
       "id": "Q183035",
@@ -3800,7 +4214,8 @@
         "Wald"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 20
     },
     {
       "id": "Q189868",
@@ -3808,7 +4223,8 @@
       "name_scientific": "Mandrillus sphinx",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q80191",
@@ -3820,7 +4236,8 @@
         "Buschland"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q232054",
@@ -3828,7 +4245,8 @@
       "name_scientific": "Axis axis",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q726151",
@@ -3840,7 +4258,8 @@
         "Australien"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q76098",
@@ -3848,7 +4267,8 @@
       "name_scientific": "Ctenopharyngodon idella",
       "category": "Fisch",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q217129",
@@ -3856,7 +4276,8 @@
       "name_scientific": "Dicentrarchus labrax",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q188130",
@@ -3867,7 +4288,8 @@
         "Asien"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 20
     },
     {
       "id": "Q210872",
@@ -3875,7 +4297,8 @@
       "name_scientific": "Platanista gangetica",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 28
     },
     {
       "id": "Q229337",
@@ -3887,7 +4310,8 @@
         "Buschland"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q22110899",
@@ -3895,7 +4319,8 @@
       "name_scientific": "Choeropsis liberiensis",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 35
     },
     {
       "id": "Q27742",
@@ -3907,7 +4332,8 @@
         "Wald"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q549",
@@ -3915,7 +4341,8 @@
       "name_scientific": "Betta splendens",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q186663",
@@ -3923,7 +4350,8 @@
       "name_scientific": "Hydrurga leptonyx",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 26
     },
     {
       "id": "Q187943",
@@ -3932,7 +4360,8 @@
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
       "weight_kg": 3.5,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 11
     },
     {
       "id": "Q205948",
@@ -3940,7 +4369,8 @@
       "name_scientific": "Leopardus tigrinus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q231625",
@@ -3948,7 +4378,8 @@
       "name_scientific": "Lepus arcticus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q202406",
@@ -3956,14 +4387,16 @@
       "name_scientific": "Melanogrammus aeglefinus",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q30258",
       "name_de": "Hornisse",
       "name_scientific": "Vespa crabro",
       "category": "Insekt",
-      "diet": "Allesfresser"
+      "diet": "Allesfresser",
+      "lifespan_years": 1
     },
     {
       "id": "Q184389",
@@ -3975,7 +4408,8 @@
       ],
       "diet": "Allesfresser",
       "weight_kg": 11.6925,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 13
     },
     {
       "id": "Q189484",
@@ -3983,7 +4417,8 @@
       "name_scientific": "Papio hamadryas",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q207114",
@@ -3991,7 +4426,8 @@
       "name_scientific": "Delphinus delphis",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q81056",
@@ -4007,7 +4443,8 @@
         "Sumpf"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q193469",
@@ -4018,7 +4455,8 @@
         "Wald"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q219565",
@@ -4027,7 +4465,8 @@
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
       "weight_kg": 40,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 22
     },
     {
       "id": "Q241256",
@@ -4035,7 +4474,8 @@
       "name_scientific": "Civettictis civetta",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 17
     },
     {
       "id": "Q27370",
@@ -4043,7 +4483,8 @@
       "name_scientific": "Halichoerus grypus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 30
     },
     {
       "id": "Q188387",
@@ -4051,7 +4492,8 @@
       "name_scientific": "Engraulis encrasicolus",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q212398",
@@ -4059,7 +4501,8 @@
       "name_scientific": "Danaus plexippus",
       "category": "Insekt",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 0.5
     },
     {
       "id": "Q179154",
@@ -4067,7 +4510,8 @@
       "name_scientific": "Eschrichtius robustus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 55
     },
     {
       "id": "Q200400",
@@ -4076,7 +4520,8 @@
       "category": "Säugetier",
       "diet": "Allesfresser",
       "weight_kg": 2.1350000000000002,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q203033",
@@ -4085,7 +4530,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 1.35,
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 16
     },
     {
       "id": "Q204322",
@@ -4099,7 +4545,8 @@
         "Asien"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 11
     },
     {
       "id": "Q207148",
@@ -4107,7 +4554,8 @@
       "name_scientific": "Muscardinus avellanarius",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 4
     },
     {
       "id": "Q243213",
@@ -4118,14 +4566,16 @@
         "Savanne"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 22
     },
     {
       "id": "Q158699",
       "name_de": "Tagpfauenauge",
       "name_scientific": "Aglais io",
       "category": "Insekt",
-      "diet": "Pflanzenfresser"
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 1
     },
     {
       "id": "Q185097",
@@ -4133,7 +4583,8 @@
       "name_scientific": "Balaenoptera borealis",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 55
     },
     {
       "id": "Q191781",
@@ -4145,7 +4596,8 @@
       ],
       "diet": "Allesfresser",
       "weight_kg": 14,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 28
     },
     {
       "id": "Q192421",
@@ -4157,7 +4609,8 @@
       ],
       "diet": "Fleischfresser",
       "weight_kg": 0.105,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q208549",
@@ -4165,7 +4618,8 @@
       "name_scientific": "Monachus monachus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q208561",
@@ -4173,7 +4627,8 @@
       "name_scientific": "Papio anubis",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 25
     },
     {
       "id": "Q623434",
@@ -4181,7 +4636,8 @@
       "name_scientific": "Kobus ellipsiprymnus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 17
     },
     {
       "id": "Q27465",
@@ -4189,7 +4645,8 @@
       "name_scientific": "Rana temporaria",
       "category": "Amphibie",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 7
     },
     {
       "id": "Q26821893",
@@ -4197,7 +4654,8 @@
       "name_scientific": "Squalius cephalus",
       "category": "Fisch",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q147267",
@@ -4206,7 +4664,8 @@
       "category": "Säugetier",
       "diet": "Allesfresser",
       "weight_kg": 0.00016,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 2
     },
     {
       "id": "Q149405",
@@ -4214,7 +4673,8 @@
       "name_scientific": "Erignathus barbatus",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 28
     },
     {
       "id": "Q201808",
@@ -4222,7 +4682,8 @@
       "name_scientific": "Balaenoptera acutorostrata",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 40
     },
     {
       "id": "Q207043",
@@ -4230,7 +4691,8 @@
       "name_scientific": "Oryx gazella",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 18
     },
     {
       "id": "Q208112",
@@ -4238,7 +4700,8 @@
       "name_scientific": "Litocranius walleri",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q211042",
@@ -4246,7 +4709,8 @@
       "name_scientific": "Leopardus guigna",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 11
     },
     {
       "id": "Q212185",
@@ -4254,7 +4718,8 @@
       "name_scientific": "Apodemus sylvaticus",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 1
     },
     {
       "id": "Q213889",
@@ -4262,7 +4727,8 @@
       "name_scientific": "Symphalangus syndactylus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 30
     },
     {
       "id": "Q215887",
@@ -4270,7 +4736,8 @@
       "name_scientific": "Odocoileus virginianus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 8
     },
     {
       "id": "Q622880",
@@ -4278,7 +4745,8 @@
       "name_scientific": "Alcelaphus buselaphus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q242602",
@@ -4286,7 +4754,8 @@
       "name_scientific": "Oreamnos americanus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 14
     },
     {
       "id": "Q254630",
@@ -4294,7 +4763,8 @@
       "name_scientific": "Potos flavus",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 23
     },
     {
       "id": "Q28157482",
@@ -4302,7 +4772,8 @@
       "name_scientific": "Parahyaena brunnea",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 14
     },
     {
       "id": "Q27027",
@@ -4310,7 +4781,8 @@
       "name_scientific": "Phocoena phocoena",
       "category": "Säugetier",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q194031",
@@ -4318,7 +4790,8 @@
       "name_scientific": "Carassius carassius",
       "category": "Fisch",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q633957",
@@ -4326,7 +4799,8 @@
       "name_scientific": "Katsuwonus pelamis",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q200594",
@@ -4334,7 +4808,8 @@
       "name_scientific": "Scardinius erythrophthalmus",
       "category": "Fisch",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q188957",
@@ -4347,7 +4822,8 @@
       "diet": "Fleischfresser",
       "weight_kg": 16.5,
       "length_cm": 97,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 9
     },
     {
       "id": "Q191737",
@@ -4356,7 +4832,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 5.5,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 10
     },
     {
       "id": "Q205329",
@@ -4367,14 +4844,16 @@
         "Süßwasser"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q213044",
       "name_de": "Borneo-Goldkatze",
       "name_scientific": "Pardofelis badia",
       "category": "Säugetier",
-      "diet": "Fleischfresser"
+      "diet": "Fleischfresser",
+      "lifespan_years": 11
     },
     {
       "id": "Q243339",
@@ -4382,7 +4861,8 @@
       "name_scientific": "Pteromys volans",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q208140",
@@ -4393,7 +4873,8 @@
         "Afrika"
       ],
       "diet": "Pflanzenfresser",
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 25
     },
     {
       "id": "Q70529",
@@ -4404,7 +4885,8 @@
         "Grasland"
       ],
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q193400",
@@ -4412,7 +4894,8 @@
       "name_scientific": "Tragelaphus eurycerus",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 19
     },
     {
       "id": "Q309274",
@@ -4421,7 +4904,8 @@
       "category": "Säugetier",
       "diet": "Fleischfresser",
       "weight_kg": 1.5,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q215250",
@@ -4430,7 +4914,8 @@
       "category": "Säugetier",
       "diet": "Allesfresser",
       "weight_kg": 0.08600000000000001,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 7
     },
     {
       "id": "Q737838",
@@ -4438,7 +4923,8 @@
       "name_scientific": "Gorilla gorilla",
       "category": "Säugetier",
       "diet": "Pflanzenfresser",
-      "conservation_status": "vom Aussterben bedroht"
+      "conservation_status": "vom Aussterben bedroht",
+      "lifespan_years": 35
     },
     {
       "id": "Q271459",
@@ -4451,7 +4937,8 @@
       ],
       "diet": "Fleischfresser",
       "weight_kg": 0.565,
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 3
     },
     {
       "id": "Q273331",
@@ -4464,7 +4951,8 @@
       ],
       "diet": "Fleischfresser",
       "weight_kg": 67.9,
-      "conservation_status": "stark gefährdet"
+      "conservation_status": "stark gefährdet",
+      "lifespan_years": 28
     },
     {
       "id": "Q14592562",
@@ -4472,7 +4960,8 @@
       "name_scientific": "Bassaricyon neblina",
       "category": "Säugetier",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 15
     },
     {
       "id": "Q187981",
@@ -4480,7 +4969,8 @@
       "name_scientific": "Gymnocephalus cernua",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q643373",
@@ -4488,7 +4978,8 @@
       "name_scientific": "Belone belone",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 6
     },
     {
       "id": "Q203572",
@@ -4496,7 +4987,8 @@
       "name_scientific": "Gasterosteus aculeatus",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 2
     },
     {
       "id": "Q146641",
@@ -4504,7 +4996,8 @@
       "name_scientific": "Sander lucioperca",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 12
     },
     {
       "id": "Q269781",
@@ -4512,14 +5005,16 @@
       "name_scientific": "Thunnus albacares",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 7
     },
     {
       "id": "Q337509",
       "name_de": "Gartenkreuzspinne",
       "name_scientific": "Araneus diadematus",
       "category": "Spinnentier",
-      "diet": "Fleischfresser"
+      "diet": "Fleischfresser",
+      "lifespan_years": 1
     },
     {
       "id": "Q15856",
@@ -4527,7 +5022,8 @@
       "name_scientific": "Proteus anguinus",
       "category": "Amphibie",
       "diet": "Fleischfresser",
-      "conservation_status": "gefährdet"
+      "conservation_status": "gefährdet",
+      "lifespan_years": 70
     },
     {
       "id": "Q200473",
@@ -4535,7 +5031,8 @@
       "name_scientific": "Alburnus alburnus",
       "category": "Fisch",
       "diet": "Allesfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 5
     },
     {
       "id": "Q205015",
@@ -4543,7 +5040,8 @@
       "name_scientific": "Lophius piscatorius",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q217329",
@@ -4551,7 +5049,8 @@
       "name_scientific": "Scophthalmus maximus",
       "category": "Fisch",
       "diet": "Fleischfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 20
     },
     {
       "id": "Q41633",
@@ -4559,7 +5058,8 @@
       "name_scientific": "Parnassius apollo",
       "category": "Insekt",
       "diet": "Pflanzenfresser",
-      "conservation_status": "nicht gefährdet"
+      "conservation_status": "nicht gefährdet",
+      "lifespan_years": 0.1
     }
   ]
 }
