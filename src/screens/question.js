@@ -33,6 +33,17 @@ import {
 // PM-Entscheidung im Issue). Reine Template-Logik aus Wikidata-Feldern, kein
 // Wikipedia-Artikeltext (siehe infoSentence.js für die volle Herleitung).
 import { buildInfoSentence } from "../quiz/infoSentence.js";
+// Issue #16 (Option D′): Bild-Rateshilfe. Reine URL-Konstruktion/Antwort-
+// Parsing-Logik lebt in imageHint.js (testbar ohne DOM/fetch-Mock, siehe
+// dortiger Datei-Kommentar) — der eigentliche fetch()-Aufruf und die
+// DOM-/Zustandssteuerung (Button-Ladezustand, Reset pro Frage) passieren
+// hier, analog zum bestehenden Wikipedia-Link-Baustein oben.
+import {
+  buildCommonsImageInfoUrl,
+  extractImageInfo,
+  buildAttribution,
+  REQUEST_TIMEOUT_MS,
+} from "../quiz/imageHint.js";
 
 /**
  * Rendert den Frage-Bildschirm in den übergebenen Container und steuert den
@@ -70,6 +81,38 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     <section class="question-screen" aria-labelledby="question-heading">
       <p class="question-screen__progress"></p>
       <h2 id="question-heading" class="question-screen__text"></h2>
+
+      <!-- Issue #16 (Option D′): Bild-Rateshilfe. Kleiner, sekundärer Button
+           oberhalb der Antwortkacheln (design.md, "Bild-Rateshilfe (Issue
+           #16)"), nur sichtbar, wenn image_filename für das aktuelle Tier
+           vorhanden ist (siehe showQuestion/resetImageHint unten). Reserviert
+           bewusst keinen festen Platz, wenn kein Bild ermittelbar ist — kein
+           Leerraum-Rätsel fürs Kind. -->
+      <button
+        type="button"
+        class="image-hint-button"
+        hidden
+        aria-busy="false"
+      >
+        <span class="image-hint-button__icon" aria-hidden="true">🔍</span>
+        <span class="image-hint-button__spinner" aria-hidden="true"></span>
+        <span class="image-hint-button__label">Bild zeigen</span>
+      </button>
+
+      <div class="image-hint" hidden>
+        <img class="image-hint__image" alt="" />
+        <p class="image-hint__attribution">
+          <span class="image-hint__attribution-text"></span>
+          <a
+            class="image-hint__attribution-link"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+            >(Lizenz)</a
+          >
+        </p>
+      </div>
 
       <div
         class="answer-grid"
@@ -138,6 +181,118 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   );
   const nextButton = container.querySelector(".next-button");
 
+  // Issue #16: Bild-Rateshilfe-Elemente.
+  const imageHintButtonEl = container.querySelector(".image-hint-button");
+  const imageHintButtonLabelEl = container.querySelector(
+    ".image-hint-button__label",
+  );
+  const imageHintEl = container.querySelector(".image-hint");
+  const imageHintImageEl = container.querySelector(".image-hint__image");
+  const imageHintAttributionTextEl = container.querySelector(
+    ".image-hint__attribution-text",
+  );
+  const imageHintAttributionLinkEl = container.querySelector(
+    ".image-hint__attribution-link",
+  );
+
+  // Bewacht gegen veraltete Antworten: wird bei jedem Reset (neue Frage)
+  // erhöht und bei jedem Klick-Request eingefroren, damit eine spät
+  // eintreffende Antwort einer bereits verlassenen Frage die DOM-Elemente der
+  // inzwischen aktiven Frage nicht mehr verändert (siehe handleImageHintClick
+  // unten). `imageHintAbortController` bricht den zugehörigen fetch()-Aufruf
+  // zusätzlich aktiv ab, statt nur die Antwort zu ignorieren.
+  let imageHintRequestId = 0;
+  let imageHintAbortController = null;
+
+  // Setzt den Bild-Rateshilfe-Bereich für eine neue Frage vollständig zurück
+  // (design.md, "Bild-Rateshilfe (Issue #16)", Abschnitt "Reset") — Button
+  // nur sichtbar, wenn `animal.image_filename` vorhanden ist.
+  function resetImageHint(animal) {
+    imageHintRequestId += 1;
+    if (imageHintAbortController) {
+      imageHintAbortController.abort();
+      imageHintAbortController = null;
+    }
+
+    imageHintButtonEl.hidden = !animal?.image_filename;
+    imageHintButtonEl.disabled = false;
+    imageHintButtonEl.setAttribute("aria-busy", "false");
+    imageHintButtonLabelEl.textContent = "Bild zeigen";
+
+    imageHintEl.hidden = true;
+    imageHintImageEl.src = "";
+    imageHintImageEl.alt = "";
+    imageHintAttributionTextEl.textContent = "";
+    imageHintAttributionLinkEl.hidden = true;
+    imageHintAttributionLinkEl.href = "#";
+  }
+
+  // Löst den einen erlaubten Laufzeit-Commons-API-Call aus (architecture.md,
+  // Abschnitt G: "ein Aufruf gegen die Wikimedia-Commons-API"). Bei jedem
+  // Fehlschlag (Netzwerkfehler, Timeout, nicht auflösbare Datei) blendet sich
+  // Button UND Bildbereich still aus — kein Fehlertext, kein kaputter
+  // Platzhalter (design.md, Zustandstabelle "kein Bild/Fehler").
+  function handleImageHintClick() {
+    const question = quizState.questions[quizState.currentIndex];
+    const animal = animalById.get(question?.animalId);
+    if (!animal?.image_filename) return;
+
+    const requestId = ++imageHintRequestId;
+    const controller = new AbortController();
+    imageHintAbortController = controller;
+    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+    imageHintButtonEl.disabled = true;
+    imageHintButtonEl.setAttribute("aria-busy", "true");
+    imageHintButtonLabelEl.textContent = "Bild wird geladen …";
+
+    fetch(buildCommonsImageInfoUrl(animal.image_filename), {
+      signal: controller.signal,
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
+      .then((json) => {
+        // Zwischenzeitlich wurde bereits zur nächsten Frage gewechselt (oder
+        // erneut geklickt) -> diese Antwort gehört nicht mehr zum aktuell
+        // sichtbaren Zustand, nicht mehr anwenden.
+        if (requestId !== imageHintRequestId) return;
+
+        const info = extractImageInfo(json);
+        if (!info) {
+          imageHintButtonEl.hidden = true;
+          return;
+        }
+
+        const attribution = buildAttribution(info);
+        imageHintImageEl.src = info.thumbUrl;
+        imageHintImageEl.alt = animal.name_de;
+        imageHintAttributionTextEl.textContent = attribution.text;
+        if (attribution.licenseUrl) {
+          imageHintAttributionLinkEl.href = attribution.licenseUrl;
+          imageHintAttributionLinkEl.hidden = false;
+        }
+        imageHintEl.hidden = false;
+        // Der Button hat seinen Zweck erfüllt (Bild ist jetzt aufgedeckt) —
+        // ausblenden statt eines wirkungslosen zweiten Klicks.
+        imageHintButtonEl.hidden = true;
+      })
+      .catch(() => {
+        if (requestId !== imageHintRequestId) return;
+        imageHintButtonEl.hidden = true;
+        imageHintEl.hidden = true;
+      })
+      .finally(() => {
+        clearTimeout(timeoutId);
+        if (requestId === imageHintRequestId) {
+          imageHintAbortController = null;
+        }
+      });
+  }
+
+  imageHintButtonEl.addEventListener("click", handleImageHintClick);
+
   // Baut die Antwortkacheln für `question` komplett neu auf (statt nur
   // bestehende Kacheln zurückzusetzen), da die Optionsanzahl pro Frage
   // variiert (design.md, "Verwechslungspaare-Fragetyp"). Gleiche Kachel-
@@ -193,6 +348,10 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     wikipediaLinkAnchorEl.href = "#";
     wikipediaLinkTextEl.textContent = "";
     nextButton.hidden = true;
+
+    // Issue #16: Bild-Rateshilfe bei jeder neuen Frage vollständig
+    // zurücksetzen (design.md, Abschnitt "Reset").
+    resetImageHint(animalById.get(question.animalId));
 
     renderAnswerTiles(question);
 

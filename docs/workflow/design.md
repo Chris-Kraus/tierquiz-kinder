@@ -4,7 +4,7 @@ Dieses Dokument ist ein lebendes Dokument der Rolle `ux-design`. Es wird bei neu
 
 ## Scope dieses Dokuments
 
-Aktueller Fokus ausschließlich: **Spielmodus "Quizfragen" (Multiple-Choice-Trivia)** mit Tierdaten aus Wikidata (Gewicht, Lebensraum, Farbe, ggf. weitere Felder — final durch `software-architect`). Bilder pro Tier sind in dieser Phase explizit ausgeschlossen. Weitere Spielmodi (Tiergeräusche, Fehlerbild, Schattenrätsel) werden hier bewusst nicht mitgestaltet, sollten aber layoutseitig nicht blockiert werden (z. B. Startbildschirm sollte spätere Modus-Auswahl ohne Redesign zulassen können).
+Aktueller Fokus ausschließlich: **Spielmodus "Quizfragen" (Multiple-Choice-Trivia)** mit Tierdaten aus Wikidata (Gewicht, Lebensraum, Farbe, ggf. weitere Felder — final durch `software-architect`). Bild-**Dateien** sind weiterhin nicht Teil der Kern-Tierdatenbank (kein Bundling). **Ausnahme (Issue #16, 14.08.2026):** Die optionale Bild-Rateshilfe zeigt live von Wikimedia Commons nachgeladene Bilder an, siehe eigener Abschnitt "Bild-Rateshilfe" weiter unten. Weitere Spielmodi (Tiergeräusche, Fehlerbild, Schattenrätsel) werden hier bewusst nicht mitgestaltet, sollten aber layoutseitig nicht blockiert werden (z. B. Startbildschirm sollte spätere Modus-Auswahl ohne Redesign zulassen können).
 
 ## Zielgruppe (bestätigt)
 
@@ -92,6 +92,10 @@ Details je Schritt:
 | Antwortkacheln (nach Auswahl) | alle vier temporär deaktiviert bis "Weiter" |
 | Ladezustand (z. B. Fragen werden geladen) | einfache, kindgerechte Ladeanimation statt technischer Spinner/Fehlermeldungen; falls Laden hängt, freundlicher Hinweistext statt technischer Fehlermeldung |
 | Fehlerzustand (z. B. Daten nicht verfügbar) | kindgerechte, nicht beängstigende Formulierung (kein technisches Fehler-Jargon), mit einfachem Weg zurück zum Start |
+| "Bild zeigen"-Button (Normal, Issue #16) | dezenter, sekundärer Button/Icon auf dem Frage-Bildschirm, deutlich kleiner/unauffälliger als die 4 Antwortkacheln, damit er nicht mit der Kernaufgabe konkurriert; nur sichtbar, wenn für das aktuelle Tier ein Bild ermittelbar ist |
+| "Bild zeigen"-Button (Ladezustand) | kleiner, dezenter Indikator **im Button selbst** (z. B. Icon wird kurz durch einen einfachen Punkte-/Kreis-Loader ersetzt), Button währenddessen deaktiviert gegen Doppelklick — kein Vollbild-Spinner, keine Verzögerung der übrigen Frage-Interaktion |
+| "Bild zeigen"-Button (kein Bild/Fehler) | Button bzw. Bildbereich blendet sich vollständig aus (kein Klick nötig, um das zu bemerken) — kein Fehlertext, kein kaputtes Bild-Icon, wirkt für das Kind nicht wie ein Defekt |
+| Aufgedecktes Bild + Attributionszeile | Bild erscheint innerhalb eines festen, moderat großen Rahmens (kein Layout-Sprung, kein Scrollen), Attributionszeile direkt darunter dezent/klein, siehe Abschnitt "Bild-Rateshilfe" unten |
 
 ## Visuelle Grundlinie
 
@@ -136,6 +140,30 @@ Neuer Fragetyp: zwei häufig verwechselte Tiere (z. B. Alpaka/Lama) werden gegen
 - **Frageformulierung:** Merkmalssatz steht wie gewohnt im Frage-Bereich oben, darunter die beiden Tiernamen als große Antwortkacheln — strukturell identisch zum bestehenden Frage-Bildschirm, nur mit reduzierter Optionsanzahl.
 - **Feedback danach:** unverändert bestehender Richtig/Falsch-Mechanismus (siehe "4. Feedback richtig/falsch"), inkl. ggf. vorhandenem Fun Fact/Wikipedia-Link aus den anderen Anreicherungs-Stories — dieser Fragetyp ist rein bei der Antwortoptionen-Anzahl ein Sonderfall, sonst identisch zum bestehenden Ablauf.
 - **Barrierefreiheit:** gleiche Anforderungen wie bestehende Antwortkacheln (Tastaturbedienbarkeit, Tab-Reihenfolge, Kontrast) — durch nur 2 statt 4 Optionen sogar einfacher zu bedienen.
+
+## Bild-Rateshilfe (Issue #16, 14.08.2026, `ux-design` + `software-architect`)
+
+Finale UX-Leitplanken für die optionale Bild-Rateshilfe (Option D′, siehe `docs/workflow/architecture.md`, Abschnitt "Bild-Rateshilfe (Issue #16): Finale technische Leitplanken"). Bild wird live von Wikimedia Commons als Thumbnail nachgeladen, sobald das Kind aktiv danach fragt — kein automatisch sichtbares Bild.
+
+**Platzierung:** Ein kleiner, sekundärer Button (z. B. "🔍 Bild zeigen") auf dem Frage-Bildschirm, oberhalb der vier Antwortkacheln oder seitlich neben dem Fragetext platziert — deutlich zurückhaltender gestaltet als die Antwortkacheln selbst (kleinere Fläche, gedeckteres Farbschema), damit die eigentliche Aufgabe (Frage beantworten) klar im Vordergrund bleibt und das Bild nicht wie ein notwendiger Schritt wirkt. Der Button reserviert seinen Platz im Layout unabhängig davon, ob ein Bild letztlich verfügbar ist, **außer** wenn `image_filename` für das Tier fehlt — dann wird der Button gar nicht gerendert (kein Leerraum-Rätsel für das Kind, siehe Zustandstabelle oben).
+
+**Verdeckt-/Aufdecken-Interaktion:**
+- Vor dem Klick: kein Bild sichtbar, nur der Button. Kein Hover-Aufdecken (Touch-first, siehe bestehende Layout-Empfehlungen), Aufdecken ausschließlich per explizitem Klick/Tap.
+- Beim Klick: Button geht kurz in einen Ladezustand (siehe Zustandstabelle) — dezent, im Button selbst, kein Vollbild-Ladeindikator. Laut Performance-Messung (`architecture.md`, Abschnitt F) dauert der reale Abruf meist deutlich unter 1,5 s, ein aufwendiger Ladebildschirm wäre unangemessen für diese kurze Wartezeit.
+- Nach Erfolg: Bild erscheint innerhalb eines festen, moderat großen Rahmens (Richtwert: nicht größer als eine der vier Antwortkacheln zusammen, damit "Kein Scrollen bei der Kernaufgabe" weiterhin gilt), abgerundete Ecken passend zur bestehenden Kachel-Optik. Direkt darunter die Attributionszeile (siehe unten).
+- Nach Fehlschlag (kein Netz, Timeout, keine verwertbare Commons-Antwort): Button/Bildbereich blendet sich weich aus, kein Fehlertext, kein rotes Warnsymbol — für das Kind soll es einfach so wirken, als gäbe es hier kein Bild.
+
+**Attributionszeile — kindgerecht statt juristischer Disclaimer:**
+- Kleine, dezente Textzeile direkt unter dem Bild, deutlich kleiner/leiser als der übrige UI-Text (z. B. Fußnoten-Schriftgröße, gedeckte/graue Farbe), damit sie nicht mit dem Quiz-Inhalt konkurriert, aber bei Bedarf lesbar bleibt.
+- **Formulierung bewusst einfach halten**, kein Juristen-Ton: z. B. "Foto: {Artist} · Wikimedia Commons" statt "Lizenzhinweis: © {Artist}, veröffentlicht unter {LicenseShortName} ({LicenseUrl})". Lizenzname/-Link können als kleiner, unaufdringlicher Link angehängt werden (z. B. "(Lizenz)"), statt die volle Lizenzbezeichnung auszuschreiben — die Kinder selbst müssen das nicht lesen/verstehen, es reicht, dass es vorhanden und für Erwachsene auffindbar ist.
+- Fehlt eines der Metadatenfelder (z. B. kein `Artist` in `extmetadata`), wird nur mit dem vorhandenen Rest angezeigt (z. B. nur "Wikimedia Commons"), keine "unbekannt"-Platzhalter, keine leere/kaputt wirkende Zeile.
+- Gleiche Kontrast-/Lesbarkeits-Mindestanforderung wie übriger Text (siehe "Visuelle Grundlinie"), auch wenn die Schrift kleiner ist als der Haupttext.
+
+**Reset:** Aufgedeckter Zustand (Bild + Attribution) wird bei jeder neuen Frage vollständig zurückgesetzt — nächste Frage startet wieder im verdeckten Ausgangszustand mit neuem, ggf. nicht sichtbarem Button.
+
+**Barrierefreiheit:** Button als echtes `<button>`-Element, fokussierbar und per Tastatur (Enter/Space) auslösbar, konsistent mit bestehenden Anforderungen an Antwortkacheln. Bild braucht einen aussagekräftigen `alt`-Text (z. B. der Tiername). Ladezustand sollte für Screenreader nicht komplett stumm bleiben (z. B. `aria-busy`/`aria-live`-Hinweis reicht, kein aufwendiges Sonderkonzept nötig).
+
+**Kein Einfluss auf Kernablauf:** Der Button ändert nichts an Antwortauswahl, Feedback-Mechanik oder Punktestand — rein optionale Zusatzinfo während der aktiven Frage, wie in den Akzeptanzkriterien von Issue #16 festgehalten.
 
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
 

@@ -115,6 +115,7 @@ Die Trennung ist bewusst: Die App selbst hat zur Laufzeit keine Netzwerkabhängi
 | `conservation_status` | string, Enum (z. B. nicht gefährdet / gefährdet / stark gefährdet / vom Aussterben bedroht) | nein | Bildungswert (Artenschutz-Bewusstsein), aus IUCN-Daten auf Wikidata strukturiert verfügbar (Property P141). Kein zentraler Quiz-Fragetyp, aber sinnvoll als Zusatzinfo/gelegentliche Frage. Bewusst optional, kein Pflichtfeld, um die Datenbeschaffung nicht an lückenhafte IUCN-Abdeckung zu koppeln. |
 | `fun_fact` | string | nein | Kurzer, kindgerechter Fakt — hoher Engagement-Wert (z. B. als Zusatzinfo nach Beantwortung). **Wichtig:** Wikidata hat kein strukturiertes "Fun Fact"-Feld, das müsste separat kuratiert werden (siehe Offene Fragen). |
 | `wikipedia_url_de` | string (URL) | nein | Verweis auf den deutschen Wikipedia-Artikel des Tieres, für einen Weiterlese-Link im Feedback-Bereich (Issue #15) sowie als Zusatz-Referenzpunkt für eine mögliche spätere Bildlizenz-Klärung (Issue #16). Aus `entity.sitelinks.dewiki.title` zusammengesetzt (`https://de.wikipedia.org/wiki/<URL-kodierter Titel, Leerzeichen als Unterstrich>`), bereits Teil des bestehenden Hydration-Caches — kein neuer Netzwerk-Call nötig. Optional, da nicht jedes Tier einen deutschen Wikipedia-Artikel hat (Auswahl filtert nur nach Gesamt-Sitelinks über alle Sprachen, nicht spezifisch nach `dewiki`). Bewusst nur ein Link, **kein** Wikipedia-Artikeltext (lizenzrechtlicher Unterschied zu Issue #12, siehe dortige Begründung). |
+| `image_filename` | string | nein | **Neu, Issue #16 (Option D′), 14.08.2026.** Reiner Commons-Dateiname ohne `File:`-Präfix (z. B. `"Panthera leo cub.jpg"`), aus Wikidata-Property **P18** extrahiert — analog zur bereits genutzten `getStringClaim()`-Extraktion wie bei `name_scientific`, da die vollen `claims` pro Tier bereits während der Hydration geladen werden (kein neuer Netzwerk-Call zur Build-Zeit). Dient ausschließlich dazu, den sonst nötigen Wikidata-Laufzeit-Roundtrip einzusparen (siehe "Bild-Rateshilfe (Issue #16)" unten) — enthält **keine** Bild-URL, keine Lizenz-/Attributionsdaten und kein Bild-Byte; das eigentliche Bild wird nie gespeichert. Optional, da P18 selbst optional ist (real gemessen: 100 % Abdeckung bei den ausgewählten 500 Tieren, siehe Messung in Issue #16, aber ohne Garantie bei künftigen Auswahl-Änderungen). |
 
 *\* `habitat`, `continent` und `weight_kg` waren in der ursprünglichen Version dieses Dokuments als Pflichtfelder vorgesehen. Ein realer, vollständiger Testlauf der Datenbeschaffungs-Pipeline (Issue #2, 13.08.2026, siehe `devops.md`) gegen 1.480 populäre Tier-Kandidaten zeigte: `habitat` ist nur bei 4,9 %, `continent` nur bei 6,3 % und `weight_kg` nur bei 14,4 % der Kandidaten auf Wikidata strukturiert vorhanden — bei strikter Pflicht wären dadurch praktisch 0 Tiere ins Quiz gekommen. Alle drei wurden daher nachträglich zu optionalen Feldern herabgestuft (siehe "Korrektur vom 13.08.2026" unten). `color` wurde komplett aus dem Schema entfernt (0 % Abdeckung, siehe unten) statt nur optional gesetzt, da hier auch als optionales Feld praktisch nie ein Wert vorläge.*
 
@@ -127,7 +128,7 @@ Die Trennung ist bewusst: Die App selbst hat zur Laufzeit keine Netzwerkabhängi
 - **Fressfeinde/Beute-Beziehungen** — inhaltlich reizvoll ("Wer frisst wen?"), aber strukturell ein Graph statt einer flachen Tabelle — deutlich mehr Komplexität. Als Idee für einen möglichen späteren Spielmodus vermerkt, nicht Teil von Phase 1.
 - **Mehrsprachige Namen** — aktueller Scope ist Deutsch (siehe offene Frage in `requirements.md`); `name_scientific` dient bereits als sprachneutraler Anker, falls Mehrsprachigkeit später kommt.
 - **Geschlechtsspezifische Werte** (z. B. Gewicht getrennt nach Männchen/Weibchen) — unnötige Präzision für ein Kinderquiz, ein einzelner Näherungswert reicht.
-- **Bild-URL/Bildlizenzfelder** — laut Scope explizit ausgeschlossen in dieser Phase. Wenn Bilder für spätere bildbasierte Spielmodi ergänzt werden, braucht das ein eigenes Lizenzmodell **pro Bild** (Wikimedia-Commons-Bilder sind i. d. R. CC-BY-SA/CC-BY mit Attributionspflicht, anders als der CC0-Textdatensatz hier) — bewusst nicht in dieses Schema vorgezogen, da sonst ungenutzte Komplexität entstünde. **Update 13.08.2026 (Issue #16):** Die reale Abdeckung wurde gemessen (100 % P18-Bildabdeckung, aber nur 10,2 % CC0/Public Domain, 89,8 % attributionspflichtig). Der Nutzer hat für die Bild-Rateshilfe **Option B** entschieden (alle P18-Bilder werden lokal gebündelt) — bewusst **ohne** Attributions-Datenfelder/-UI, da die App vorerst privat/unveröffentlicht bleibt. Das Lizenzmodell pro Bild bleibt daher weiterhin bewusst vertagt, jetzt aber konkret an eine mögliche Veröffentlichung gekoppelt (siehe Issue #17, `requirements.md`) statt an ein hypothetisches "später".
+- **Bild-URL/Bildlizenzfelder** — laut Scope explizit ausgeschlossen in dieser Phase. Wenn Bilder für spätere bildbasierte Spielmodi ergänzt werden, braucht das ein eigenes Lizenzmodell **pro Bild** (Wikimedia-Commons-Bilder sind i. d. R. CC-BY-SA/CC-BY mit Attributionspflicht, anders als der CC0-Textdatensatz hier) — bewusst nicht in dieses Schema vorgezogen, da sonst ungenutzte Komplexität entstünde. **Update 13.08.2026 (Issue #16):** Die reale Abdeckung wurde gemessen (100 % P18-Bildabdeckung, aber nur 10,2 % CC0/Public Domain, 89,8 % attributionspflichtig). **Finale Entscheidung 14.08.2026 (überholt die vorherige Zwischenentscheidung "Option B"):** Die Bild-Rateshilfe wird per **Option D′** umgesetzt — kein lokales Bundling, keine Bildlizenzfelder im Schema nötig. Einzige Schema-Erweiterung ist der reine Text-Dateiname `image_filename` (siehe Abschnitt "Bild-Rateshilfe (Issue #16)" unten), Lizenz/Autor/Quelle werden zur Laufzeit live von der Commons-API abgerufen und angezeigt, nie im Datensatz gespeichert. Issue #17 (Attributionslösung vor Veröffentlichung) ist damit gegenstandslos und wurde geschlossen.
 - **Geräusch-Referenzen** (für den späteren "Tiergeräusche erkennen"-Modus) — nur als Randnotiz für später, nicht Teil dieses Schemas.
 - **`color` (Tierfarbe)** — ursprünglich als Pflichtfeld geplant, nach dem realen Pipeline-Testlauf (13.08.2026, Issue #2) komplett aus dem Schema entfernt: 0 von 1.480 populären Tier-Kandidaten hatten eine strukturierte Wikidata-Farbangabe (siehe Korrektur oben und `docs/workflow/devops.md`). Anders als bei den anderen weggelassenen Punkten oben ist das kein Design-Entscheid gegen Overengineering, sondern eine nachträgliche Korrektur einer sich als nicht datenseitig tragfähig erwiesenen Planung.
 
@@ -186,12 +187,15 @@ Zur Validierung durch `web-developer`/`devops-engineer` bei der Umsetzung:
           "enum": ["nicht gefährdet", "gefährdet", "stark gefährdet", "vom Aussterben bedroht"]
         },
         "fun_fact": { "type": "string" },
-        "wikipedia_url_de": { "type": "string", "format": "uri" }
+        "wikipedia_url_de": { "type": "string", "format": "uri" },
+        "image_filename": { "type": "string", "minLength": 1 }
       }
     }
   }
 }
 ```
+
+**Änderung 14.08.2026 (Issue #16, Option D′):** Optionales Feld `image_filename` ergänzt (Commons-Dateiname ohne `File:`-Präfix, aus Wikidata-Property P18 abgeleitet, reiner Text). Siehe Feldtabelle oben und Abschnitt "Bild-Rateshilfe (Issue #16): Finale technische Leitplanken" unten.
 
 **Änderung 14.08.2026 (Issue #15):** Optionales Feld `wikipedia_url_de` ergänzt (Link zum deutschen Wikipedia-Artikel, aus `sitelinks.dewiki.title` abgeleitet). Siehe Feldtabelle oben und Abschnitt "Pipeline-Regenerierung vs. manuell kuratierte Felder" unten.
 
@@ -260,7 +264,7 @@ Gefährdungsstatus vorliegen, aber `habitat`/`continent`/`weight_kg` fehlen
 
 **Wichtiger Hinweis für später:** Sobald in einer späteren Phase Bilder (Wikimedia Commons) hinzukommen, gilt das **nicht** mehr 1:1 — Commons-Bilder haben oft CC-BY/CC-BY-SA-Lizenzen mit Attributionspflicht **pro Bild**. Das braucht dann ein eigenes Lizenzfeld pro Bild-Datensatz. Bewusst nicht in dieses Schema vorgezogen (kein Overengineering für aktuellen Scope), aber als Präzedenzfall hier dokumentiert, damit es beim späteren Schema-Erweitern nicht vergessen wird.
 
-**Update 13.08.2026 (Issue #16):** "Später" ist jetzt konkretisiert — Bilder kommen per Option B (lokales Bundling aller P18-Bilder) tatsächlich hinzu, aber **ohne** das hier skizzierte Lizenzfeld pro Bild-Datensatz, da die App privat/unveröffentlicht bleibt und dieses Datenmodell dafür aktuell nicht gebraucht wird. Das Lizenzfeld-Modell aus diesem Absatz bleibt als Vorlage stehen, wird aber erst bei tatsächlicher Umsetzung von Issue #17 (vor einer möglichen Veröffentlichung) verbindlich.
+**Update 14.08.2026 (Issue #16, finale Entscheidung Option D′):** "Später" ist jetzt konkretisiert, aber anders als in der ursprünglichen Skizze angenommen: Es kommt **kein** Lizenzfeld pro Bild-Datensatz ins Schema, weil Bilder überhaupt nicht lokal gebündelt werden. Lizenz/Autor/Quelle werden bei der Bild-Rateshilfe **zur Laufzeit live** von der Commons-API abgerufen und direkt angezeigt, nie persistiert — das löst die Attributionsfrage strukturell, ohne ein Datenmodell dafür zu brauchen. Die vorherige Zwischenentscheidung "Option B" (Bundling ohne Attribution, siehe Issue #17) ist damit überholt; Issue #17 wurde geschlossen. Details: siehe Abschnitt "Bild-Rateshilfe (Issue #16): Finale technische Leitplanken" unten.
 
 ### 4. Skizze: Datenbeschaffung aus Wikidata
 
@@ -356,6 +360,150 @@ Vier vom `zoologe` vorgeschlagene Anreicherungs-Ideen wurden gegen `src/quiz/que
 
 **Verantwortung Umsetzung:** `web-developer` (Teil von Issue #15).
 
+## Bild-Rateshilfe (Issue #16): Erweiterte Evaluation — Repo-Größe & Einbindungsoptionen (14.08.2026, `business-analyst` + `software-architect` + `devops-engineer`)
+
+**Anlass:** Der Nutzer möchte die bereits in `requirements.md` ("Entscheidungen aus Klärungsrunde", Zeile "Veröffentlichung") dokumentierte Entscheidung für **Option B** (volles lokales Bundling aller ~500 Bilder, keine Attribution, private Nutzung) noch einmal breiter evaluieren lassen, bevor sie endgültig steht — insbesondere wegen des befürchteten Repo-Größen-Zuwachses. **Diese Auswertung ist reine Entscheidungsgrundlage, keine neue Entscheidung.** Die bestehende Eintragung in `requirements.md` bleibt bis zu einer expliziten Nutzer-/PM-Entscheidung unverändert.
+
+### A) Recherche: tatsächliche Git-/GitHub-Größenlimits
+
+Quellen: [GitHub Docs — Repository limits](https://docs.github.com/en/repositories/creating-and-managing-repositories/repository-limits), [GitHub Docs — About storage and bandwidth usage (Git LFS)](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-storage-and-bandwidth-usage).
+
+| Grenze | Wert | Konsequenz |
+|---|---|---|
+| Einzeldatei — empfohlenes Maximum | 1 MB (Soft-Empfehlung) | Kein technisches Problem, nur Performance-Hinweis (Diff/Checkout-Geschwindigkeit) |
+| Einzeldatei — Warnschwelle | 50 MB | Git/GitHub warnt beim Push, Push funktioniert aber weiterhin |
+| Einzeldatei — Hard-Limit | 100 MB | Push wird **blockiert**, außer die Datei wird via **Git LFS** getrackt |
+| Repo-Gesamtgröße — Performance-Empfehlung | < 1 GB | Von GitHub Support empfohlen, kein Hard-Limit |
+| Repo-Gesamtgröße — Soft-Warnschwelle | ~5 GB | Kann eine automatische Warn-E-Mail von GitHub auslösen, kein Zwangs-Stopp |
+| Git LFS (GitHub Free-Plan, gilt auch für private Repos) | 10 GiB Speicher + 10 GiB Bandbreite/Monat kostenlos | Danach entweder Metered Billing (bei hinterlegter Zahlungsmethode) oder Sperre für neue LFS-Pushes (ohne Zahlungsmethode); bestehende Dateien bleiben als Pointer abrufbar |
+
+**Einordnung für dieses Projekt:** Aktuelle Repo-Größe (`.git`) liegt bei **1,1 MB**, `data/` bei 176 KB — es gibt aktuell praktisch keinen Speicherdruck. Bei 500 Commons-Originalbildern (typische Downloadgrößen realer Fotos: grob geschätzt 0,5–6 MB pro Bild, vereinzelt auch mehr bei sehr hochauflösenden Profi-Aufnahmen) ist ein Repo-Wachstum in der Größenordnung **mehrere hundert MB bis ca. 1–2 GB** plausibel — **ungemessen, sollte vor einer endgültigen Entscheidung real gegen die 500 tatsächlichen Commons-Dateien gemessen werden** (analog zur bereits praktizierten Mess-Methodik aus Issue #16/#2, z. B. per `measure-image-coverage.js`-Erweiterung um `imageinfo`-Dateigrößen). Damit bliebe man voraussichtlich **unter** dem GitHub-Hard-Limit (100 MB/Datei) und wahrscheinlich unter der 5-GB-Soft-Warnschwelle, aber potenziell **oberhalb** der 1-GB-Performance-Empfehlung — kein Blocker, aber ein spürbarer Clone-/Checkout-/CI-Geschwindigkeitsnachteil gegenüber dem aktuellen schlanken Repo. **Git LFS lohnt sich für diesen Umfang voraussichtlich nicht:** Es löst kein Lizenzproblem, verursacht zusätzlichen Tooling-Aufwand (LFS-Setup, `.gitattributes`, LFS-fähiger Checkout auch für den Nutzer selbst) und wäre bei geschätzt 1–2 GB innerhalb des kostenlosen 10-GiB-Kontingents ohnehin nicht zwingend nötig — die eigentliche Frage ist Repo-Schlankheit/Performance, nicht ein hartes Limit.
+
+### B) Frage 1: Live-/On-Demand-Einbindung (Hotlinking) vs. NFR 1
+
+**Technisch möglich:** Ja. Bilder könnten zur Laufzeit direkt von Wikimedia Commons geladen werden (`<img src="https://upload.wikimedia.org/...">` bzw. ein Commons-API-Aufruf `action=query&prop=imageinfo` zur Laufzeit statt zur Build-Zeit). Die Commons-API unterstützt CORS für öffentliche GET-Anfragen, ein Browser-seitiger Live-Abruf ist also ohne eigenen Proxy-Server umsetzbar.
+
+**Vor-/Nachteile gegenüber vollem lokalem Bundling:**
+
+| | Hotlinking (live) | Lokales Bundling |
+|---|---|---|
+| Repo-Größe | Keine Auswirkung (0 Byte im Repo) | Groß (s. o.) |
+| Offline-Tauglichkeit | **Nein** — Bildfunktion fällt ohne Internet komplett aus | Ja, vollständig |
+| Abhängigkeit von Drittanbieter-Verfügbarkeit | Ja (Wikimedia-Server müssen erreichbar/verfügbar sein) | Nein, nach einmaligem Bundling autark |
+| Attributionsdaten | Müssen zur Laufzeit dynamisch abgerufen werden (`imageinfo`), kein Vorab-Datenmodell nötig | Müssten vorab ins Schema (falls Attribution gewünscht) |
+| Redistribution des Bild-Bytes durch die App selbst | **Nein** — die App verlinkt/lädt nur, verbreitet die Datei nicht selbst weiter | Ja — die Datei wird tatsächlich kopiert und mit der App ausgeliefert |
+| Aufwand | Mittel (neuer Laufzeit-API-Call, Fehlerbehandlung bei Offline/Timeout) | Groß (neue Pipeline-Phase, Schema-Erweiterung, Repo-Größenmanagement) |
+
+**Verletzt reines Hotlinking NFR 1?** Ja, unmittelbar — NFR 1 verlangt explizit, dass die **Kernfunktion** (Quiz spielen) ohne Internetzwang läuft, und lokal vorab bezogene Daten. Ein Bild-Hint, der zur Laufzeit live nachgeladen wird, widerspricht dem Wortlaut, **sofern die Bild-Rateshilfe als Teil der Kernfunktion zählt**.
+
+**Möglicher Kompromiss (vom Nutzer selbst vorgeschlagen) — Bild-Hint als explizit optionale, online-abhängige Zusatzfunktion:** Das ist architektonisch sauber lösbar und entspricht strukturell bereits einem im Projekt vorhandenen Präzedenzfall: Issue #14 hat mit der lokalen Verlaufsliste ebenfalls eine gezielte, bewusste Ausnahme von einem bestehenden Scope-Ausschluss geschaffen, ohne die übrige Anforderung aufzuweichen. Konkret hieße das:
+- **Kernfunktion (Quiz: Fragen, Antworten, Punktestand)** bleibt zu 100 % offline lauffähig — unverändert, keine Abstriche an NFR 1.
+- Der "Bild zeigen"-Button wird als **optionale Zusatzfunktion** behandelt, die eine Internetverbindung voraussetzt. Bei fehlender Verbindung/fehlgeschlagenem Abruf blendet sich der Button/Bildbereich vollständig aus — das deckt sich sogar **bereits wortgleich** mit einem bestehenden Akzeptanzkriterium in Issue #16 ("Ist für ein Tier kein Bild verfügbar … wird der Button vollständig ausgeblendet statt eines Fehlers"), das lediglich um den Fall "kein Netz" erweitert werden müsste.
+- Das würde eine **kleine, gezielte Ergänzung in `requirements.md`** erfordern (NFR 1 um einen expliziten Ausnahmesatz ergänzen, analog zur Issue-#14-Ergänzung bei "Explizit außerhalb des Scopes"), keine Neuformulierung der gesamten NFR.
+- Dieser Kompromiss löst die Offline-Frage sauber, **löst aber die Lizenz-/Attributionsfrage nicht** — auch bei Live-Anzeige müssen Autor/Lizenz/Quelle laut Akzeptanzkriterien sichtbar sein, nur eben aus einem Laufzeit-API-Call statt aus vorab gespeicherten Metadaten.
+- **Einordnung:** Dieser Kompromiss ist im Kern eine Variante von Option A (Hotlinking) bzw. der bereits in Issue #16 skizzierten Option D (progressive/optionale Netzwerknutzung) — der entscheidende Unterschied ist, dass die Netzabhängigkeit hier von Anfang an **bewusst und dokumentiert als Feature-Eigenschaft** geführt wird statt als nachträgliche Fehlerbehandlung eines eigentlich als offline-fähig verstandenen Features.
+
+### C) Frage 3: Speicherarme Alternativen zwischen "alles bündeln" und "alles hotlinken"
+
+1. **Komprimierte/verkleinerte Thumbnails lokal bündeln (neu bewertet):** Statt Originaldateien werden zur Fetch-/Build-Zeit verkleinerte, komprimierte Versionen erzeugt (z. B. max. 400–600 px Breite, JPEG-Qualität ~75–80). Typische Dateigröße pro Thumbnail: grob geschätzt 15–60 KB (ungemessen, aber deutlich unter Originalgrößen) → geschätzte Gesamtgröße für 500 Bilder: **ca. 15–50 MB**, weit unter jedem GitHub-Limit und ohne spürbaren Performance-Nachteil gegenüber dem heutigen Repo. **Wichtig:** Das ändert **nichts** an der Lizenzlage — Thumbnails unterliegen laut bereits erfolgter Prüfung (Issue #16, Option F) derselben Lizenz wie das Original. Diese Option löst ausschließlich das **Repo-Größen-Problem**, nicht das Attributionsthema. Aufwand: klein — ergänzt die ohnehin für Option B nötige neue Commons-API-Pipelinephase (siehe Issue #16-Diskussion) nur um einen zusätzlichen Resize-/Kompressions-Schritt (z. B. via `sharp` oder vergleichbarer Bibliothek).
+2. **Browser-seitiges Caching bei Erstabruf (Cache API/IndexedDB), kein Repo-Bundling:** Bilder werden nicht im Repo versioniert, sondern beim ersten Online-Spielen vom Client per Hotlinking geladen und dort lokal zwischengespeichert (Service-Worker-Cache oder IndexedDB). Repo-Auswirkung: **0 Byte**. Nach dem ersten Online-Durchlauf pro Gerät/Browserprofil sind die bereits abgerufenen Bilder auch offline verfügbar — allerdings nur die, die tatsächlich schon einmal angezeigt wurden (kein garantiertes 100-%-Offline-Set), und nicht geräteübergreifend. Faktisch eine Variante von Hotlinking mit Offline-Komfortgewinn für Wiederholungsspiele auf demselben Gerät — braucht denselben NFR-1-Kompromiss wie unter B) beschrieben, da der allererste Abruf pro Bild zwingend online erfolgen muss.
+3. **Nur die gemessenen 10,2 % CC0/PD-Bilder lokal bündeln (Option G aus Issue #16):** Sehr kleines Datenvolumen (51 Bilder; als Thumbnails geschätzt **< 5 MB**, selbst als Originale vermutlich deutlich unter 150 MB), kein Attributionsrisiko, vollständig offline-tauglich — aber Bildabdeckung auf ca. 1 von 10 Tieren reduziert, was den Nutzen der Rateshilfe als Feature stark einschränkt.
+4. **Gestaffeltes/Chunk-basiertes Bundling:** Keine eigenständige Alternative auf derselben Ebene wie 1–3, sondern eine **ergänzende Technik**, die mit jeder der Bundling-Optionen kombinierbar ist (z. B. zunächst nur die häufigsten Kategorien/Tiere bündeln, Rest per Lazy-Load/späterem Update nachziehen, oder kategorienweise per Cache-API laden). Reduziert initiale Bundle-/Clone-Größe, verschiebt das Gesamtvolumen aber nur zeitlich, löst weder Lizenz- noch grundsätzliche Repo-Wachstumsfrage bei voller Endabdeckung.
+
+### D) Gesamt-Vergleichstabelle
+
+| Option | Repo-Größen-Auswirkung | Offline-tauglich | Aufwand | Lizenz-/Attributionsrisiko | Bildabdeckung |
+|---|---|---|---|---|---|
+| **B. Volles lokales Bundling (Originale)** — bisherige Entscheidung | Groß (geschätzt mehrere 100 MB – ~1–2 GB, ungemessen) | Ja, 100 % | Groß (neue Pipelinephase + Schema) | Hoch (89,8 % attributionspflichtig, bewusst ohne Attribution für private Nutzung akzeptiert) | Hoch (100 % P18-Abdeckung) |
+| **B′. Lokales Bundling mit komprimierten Thumbnails** (neu) | Klein (geschätzt 15–50 MB) | Ja, 100 % | Mittel (wie B + ein Resize-Schritt) | Identisch zu B (Lizenz unverändert) | Hoch (100 %) |
+| **A. Reines Hotlinking zur Laufzeit** | Keine (0 Byte) | Nein | Mittel | Muss dynamisch pro Bild angezeigt werden | Hoch, ungemessen |
+| **Browser-Caching nach Erstabruf** (neu) | Keine (0 Byte) | Teilweise (nur bereits online gesehene Bilder, pro Gerät) | Mittel–groß (Cache-Logik) | Wie A | Wie A, abhängig vom Spielverlauf |
+| **D′. Bild-Hint als explizit optionale Online-Zusatzfunktion** (Kompromiss aus Frage 1) | Wie A oder Browser-Caching, je nach gewählter Variante | Kernfunktion Quiz: ja / Bildfunktion: nein | Mittel + kleine `requirements.md`-Ergänzung (NFR-1-Ausnahme) | Wie A | Wie A |
+| **G. Nur CC0/PD-Bilder lokal bündeln** | Sehr klein (< 5–150 MB) | Ja, 100 % | Mittel-groß | Keins | Niedrig (10,2 %) |
+
+*(Gestaffeltes/Chunk-Bundling ist als kombinierbare Zusatztechnik zu jeder Bundling-Zeile zu verstehen, keine eigene Tabellenzeile.)*
+
+### E) Empfehlung (`business-analyst` + `software-architect` + `devops-engineer`, ausdrücklich Empfehlung, keine Entscheidung)
+
+Die eigentliche Sorge hinter dieser Neubewertung — Repo-Größen-Explosion durch 500 Bilder — lässt sich technisch **entschärfen, ohne die bereits getroffene Grundsatzentscheidung (Option B, volle Abdeckung, private Nutzung ohne Attribution) zu kippen**: Die recherchierten GitHub-Limits zeigen, dass selbst volles Bundling von Originalen wahrscheinlich nicht an ein Hard-Limit stoßen würde, aber spürbar über die Performance-Komfortzone hinausgeht. Die naheliegendste Verbesserung ist daher **Option B′ (lokales Bundling, aber als komprimierte Thumbnails statt Originaldateien)**: gleiche 100-%-Offline-Tauglichkeit, gleiche Bildabdeckung, gleiche (bereits akzeptierte) Lizenzlage wie die bisherige Entscheidung, aber ein Bruchteil der Dateigröße (geschätzt 15–50 MB statt mehrere hundert MB) bei nur geringfügig höherem Pipeline-Aufwand (ein zusätzlicher Resize-Schritt in der ohnehin für Option B nötigen neuen Commons-API-Phase). Das ist eine reine **Verfeinerung**, keine Kursänderung.
+
+**Falls der Nutzer die Neubewertung stattdessen aus rechtlicher Vorsicht heraus wünscht** (nicht nur wegen Repo-Größe) — also die zugrunde liegende Frage ist nicht "wie groß wird das Repo", sondern "will ich überhaupt fremde, attributionspflichtige Bilddateien in meinem Repo redistribuieren" — ist **D′ (Bild-Hint als explizit optionale, online-abhängige Zusatzfunktion, technisch per Hotlinking/Option A)** der prinzipiell sauberere Weg: Die App selbst verbreitet dann nie eine Bilddatei, sie zeigt nur zur Laufzeit an, was Wikimedia direkt ausliefert, inkl. live abgerufener Attributionsdaten. Das kostet die 100-%-Offline-Eigenschaft für dieses eine Teil-Feature, ist dafür aber sofort mit einem im Projekt bereits etablierten Präzedenzmuster (gezielte NFR-Ausnahme wie bei Issue #14) sauber in `requirements.md` abbildbar.
+
+**Nicht empfohlen:** Option G als alleinige Lösung — die Reduktion auf 10,2 % Bildabdeckung schwächt den Nutzen der Rateshilfe stark, nur um ein Problem (Repo-Größe) zu lösen, das sich mit B′ günstiger lösen lässt, ohne Abdeckung zu verlieren.
+
+**Nächster sinnvoller Schritt vor einer endgültigen Entscheidung:** Reale Dateigrößen (Original **und** Thumbnail) für die 500 tatsächlichen Commons-Bilder messen (Erweiterung von `measure-image-coverage.js` um Dateigrößen aus `imageinfo`), um die obigen Schätzungen durch echte Zahlen zu ersetzen — passend zur im Projekt bereits etablierten Praxis, Kapazitäts-/Abdeckungsannahmen vor einer Entscheidung real zu verifizieren (siehe Issue #2, Issue #16-Bildabdeckungsmessung).
+
+### F) Performance-Messung Option D′ (14.08.2026, `software-architect`, echte Messwerte)
+
+**Anlass:** Konkrete Nutzerfrage zu D′ ("Bild-Hint als optionale Online-Zusatzfunktion"): Muss jedes Bild bei jedem Spielen neu geladen werden, und wie lange dauert ein Abruf tatsächlich? Gemessen an einer Zufallsstichprobe von 30 der 500 Tiere (`data/animals.json`, Wikidata-IDs), reale Wikidata-/Commons-API-Aufrufe und `curl`-Downloads, keine Schätzung.
+
+**1) Browser-Cache-Verhalten (real geprüft, `curl -I` gegen mehrere echte `upload.wikimedia.org`-Bild-URLs):**
+- Wikimedia setzt auf Bild-Antworten **kein** `Cache-Control`- oder `Expires`-Header (widerlegt die ursprüngliche Annahme im Auftrag) — verifiziert an mehreren Original- und Thumbnail-URLs.
+- Es sind aber `ETag` und `Last-Modified` gesetzt. Ein bedingter GET (`If-None-Match: <etag>`) liefert real gemessen **`304 Not Modified`** ohne Bild-Bytes im Body zurück.
+- Praktische Konsequenz: Browser cachen 200-Antworten auch ohne explizite Cache-Header (HTTP-Standardverhalten), meist per Heuristik anhand des `Last-Modified`-Alters. Bei erneutem Spielen auf demselben Gerät/Browserprofil (Cache nicht geleert) wird ein bereits gesehenes Bild also **entweder ganz ohne Netzwerk-Request** aus dem Cache angezeigt, **oder** es kommt zu einer schnellen bedingten Revalidierung (`304`, keine Bild-Bytes) statt eines vollen Re-Downloads. Ein voller Re-Download ist der **Worst Case** (Cache geleert, anderes Gerät, privater Modus), nicht der Regelfall.
+- Für garantierte Offline-Wiederverwendbarkeit unabhängig von Browser-Heuristiken wäre optional ein App-seitiger Cache (Blob in IndexedDB/Cache-API nach Erstabruf) möglich — deckt sich mit der bereits unter C)2 skizzierten "Browser-seitiges Caching"-Option.
+
+**2) Reale Dateigrößen (Commons-API `imageinfo`, n=30 Stichprobe, 100 % hatten ein P18-Bild):**
+
+| Variante | Min | Median | Mittelwert | Max |
+|---|---|---|---|---|
+| Original (Vollbild) | 57 KB | **1.621 KB (~1,6 MB)** | 3.031 KB (~3,0 MB) | **12.659 KB (~12,6 MB)** |
+| Thumbnail (`iiurlwidth=330`, `thumburl`) | 13 KB | **32 KB** | 33 KB | 72 KB |
+
+Die 330px-Thumbnail-Variante ist damit im Median **~50× kleiner** als das Original — bei für einen Kinderquiz-Bildschirm völlig ausreichender Auflösung.
+
+**3) Reale Download-Zeiten (`curl -w "%{time_total}"`, Messumgebung mit sehr guter Anbindung an die Wikimedia-CDN — reale Mobilfunk-/Heimnetz-Zeiten liegen je nach Bandbreite darüber):**
+
+| Bildgröße (Original) | Ladezeit Original | Ladezeit Thumbnail (330px) |
+|---|---|---|
+| 57 KB | 0,14 s | 0,12 s |
+| 405 KB | 0,20 s | 0,12 s |
+| 1.670 KB | 0,26 s | 0,14 s |
+| 5.587 KB | 0,41 s | 0,22 s |
+| 12.659 KB | **0,69 s** | 0,13 s |
+
+Zusätzlich vor dem eigentlichen Bild-Download nötig (falls `animals.json` nur die Wikidata-ID, nicht den P18-Dateinamen enthält): ein Wikidata-Lookup (`wbgetclaims`/`wbgetentities`, real gemessen **~0,23–0,28 s**) plus ein Commons-`imageinfo`-Lookup zur URL-Auflösung (real gemessen **~0,22–0,30 s**) — zusammen **~0,5 s** zusätzliche Latenz on top der Bildladezeit, auf jeder Verbindung, da latenz- nicht bandbreitengebunden (RTT-dominiert, auf Mobilfunk tendenziell etwas höher).
+
+**4) UX-Einordnung:**
+- **Nur Thumbnail laden ist klar der richtige Default:** Bei 13–72 KB (Median 32 KB) liegt die Gesamtzeit "Klick → Bild sichtbar" inkl. beider API-Lookups realistisch bei **~0,6–1,5 s** auch auf mäßigen Verbindungen — akzeptabel für einen Klick während einer aktiven Quizfrage, ein dezenter Lade-Zustand (z. B. Spinner im Button) ist trotzdem empfehlenswert, aber kein hartes Muss.
+- **Volle Originalbilder als Default sind nicht empfehlenswert:** Die gemessenen Ausreißer bis 12,6 MB brauchen auf einer langsamen Mobilfunkverbindung (z. B. 1 Mbit/s) potenziell **über 100 Sekunden** — dort ist ein Ladeindikator zwingend, und selbst dann ist die Wartezeit für ein Kind mitten im Quiz nicht akzeptabel.
+- **Empfehlung:** Für D′ (falls diese Variante gewählt wird) immer den Commons-`thumburl`-Parameter (z. B. 330–640px Breite) statt der Originaldatei anfragen — reduziert Größe und Ladezeit um Größenordnungen bei für den Zweck ausreichender Bildqualität. Zusätzlich: P18-Dateiname bereits zur Build-Zeit in `fetch-animals.js` mit auflösen und in `data/animals.json` ablegen (aktuell nicht der Fall, siehe `scripts/fetch-animals/fetch-animals.js`) — spart einen der beiden Laufzeit-API-Roundtrips (~0,25 s) bei jedem Bildabruf.
+
+### G) Bild-Rateshilfe (Issue #16): Finale technische Leitplanken für Option D′ (14.08.2026, `software-architect`, umsetzungsreif)
+
+**Status:** PM-Entscheidung ist final (siehe `requirements.md`, NFR 1 und Klärungstabelle "Veröffentlichung"): Option D′ wird umgesetzt. Dieser Abschnitt ersetzt die vorherige Option-B-Planung als verbindliche technische Grundlage für `web-developer`/`devops-engineer`.
+
+**Grundprinzip:** Klare Trennung zwischen dem, was zur **Build-/Fetch-Zeit** (offline, einmalig, Teil von `fetch-animals.js`) vorbereitet wird, und dem, was ausschließlich zur **Laufzeit** (im Browser, nur auf Klick) abgerufen wird. Es wird zu keinem Zeitpunkt ein Bild-Byte lokal gespeichert oder ins Repo committet.
+
+**1. Build-Zeit (`scripts/fetch-animals/fetch-animals.js`):**
+- `P18` (Property "image") wird wie jede andere String-Property per `getStringClaim()` aus den ohnehin bereits geladenen `claims` extrahiert (kein zusätzlicher Netzwerk-Call, analog zu `name_scientific`).
+- Ergebnis ist ausschließlich der **Commons-Dateiname als reiner Text** (z. B. `"Panthera leo cub.jpg"`), gespeichert im neuen optionalen Feld `image_filename` (siehe Datenschema/JSON-Schema oben). Kein Download, keine Auflösung zu einer URL, keine Lizenz-/Attributionsdaten — das bleibt vollständig der Laufzeit vorbehalten.
+- Zweck dieser Vorab-Auflösung: Sie spart bei jedem späteren Bildabruf einen von zwei Laufzeit-API-Roundtrips (den Wikidata-`wbgetclaims`-Lookup, real gemessen ~0,23–0,28 s, siehe Abschnitt F oben) — die App muss zur Laufzeit nur noch gegen die Commons-API auflösen, nicht mehr zusätzlich gegen Wikidata.
+
+**2. Laufzeit (Frontend, ausgelöst durch Klick auf "Bild zeigen"):**
+- Voraussetzung für sichtbaren Button: `image_filename` ist für das aktuelle Tier vorhanden. Fehlt das Feld bereits im Datensatz, wird der Button gar nicht erst gerendert (kein Klick, kein Fehlversuch nötig) — deckt den Fall "kein Bild verfügbar" bereits vor jedem Netzwerk-Call ab.
+- Bei Klick: **ein** Aufruf gegen die Wikimedia-Commons-API:
+  ```
+  GET https://commons.wikimedia.org/w/api.php
+    ?action=query
+    &titles=File:<image_filename>
+    &prop=imageinfo
+    &iiprop=url|extmetadata
+    &iiurlwidth=330
+    &format=json
+    &origin=*
+  ```
+  - `origin=*` aktiviert den von Commons unterstützten CORS-Modus für anonyme Browser-Anfragen (kein eigener Proxy-Server nötig, siehe Abschnitt B oben).
+  - `iiurlwidth=330` liefert im Response-Feld `thumburl` direkt eine fertige **330 px breite Thumbnail-URL** (Empfehlung 330–640px, siehe Performance-Messung Abschnitt F: Median 32 KB statt 1,6 MB beim Original) — **niemals** die Originaldatei anfragen.
+  - `extmetadata` liefert in derselben Antwort `Artist`, `LicenseShortName` und `LicenseUrl` (Fallback: `UsageTerms`, analog zur bereits genutzten Logik aus `measure-image-coverage.js`) — ein einziger Request deckt sowohl Bild als auch Attribution ab, kein zweiter Call nötig.
+- **Fehlerbehandlung (Netzwerkfehler, Timeout, Offline, leere/fehlende `imageinfo`-Antwort):** Button/Bildbereich blendet sich vollständig aus, kein Fehlertext, kein kaputter Platzhalter — identisch zum bereits bestehenden Verhalten bei fehlendem `image_filename`. Empfehlung: kurzes Timeout (z. B. 3–4 s) ansetzen, damit ein hängender Request die Frage nicht spürbar blockiert; nach Timeout gilt derselbe Ausblend-Pfad wie bei jedem anderen Fehlschlag.
+- **Kein Caching-Sonderkonzept:** Der Standard-HTTP-Cache des Browsers reicht aus (siehe Performance-Messung Abschnitt F: `ETag`/`Last-Modified` sind gesetzt, bedingte Requests liefern real `304 Not Modified`). Kein Service-Worker, keine IndexedDB-Zwischenspeicherung in diesem Schritt — bewusst kein Overengineering für ein optionales Nice-to-have-Feature.
+- **State-Reset:** Der aufgedeckte Zustand (Bild sichtbar, Ladezustand, ggf. Fehler-/Ausblend-Zustand) gehört zum lokalen UI-Zustand des Frage-Bildschirms (`src/screens/question.js`) und wird bei jedem Wechsel zur nächsten Frage zurückgesetzt — kein zusätzliches Feld im globalen Quiz-Zustand (`src/quiz/state.js`) nötig.
+
+**3. UX-Vorgaben (abgestimmt mit `ux-design`, siehe `docs/workflow/design.md`, Abschnitt "Bild-Rateshilfe"):** Ladeindikator im Button selbst (kein Vollbild-Spinner), kindgerechte, dezente Attributionszeile statt juristischem Disclaimer-Ton, kein Layout-Sprung im 2×2-Antwortraster. Details siehe `design.md`.
+
+**Zusammenfassung Aufwand:** Kleiner als die ursprünglich für Option B veranschlagte neue Pipeline-Phase — es gibt keine neue Build-Zeit-Pipelinephase mit eigenem Retry-/Rate-Limit-Bedarf (das war für Massenabruf bei Option B nötig, entfällt bei D′ komplett), nur eine kleine `getStringClaim()`-Erweiterung in `fetch-animals.js` plus ein neuer, schlanker Laufzeit-API-Call im Frontend.
+
 ## Änderungshistorie
 
 - 2026-08-13: Erste Version — Datenschema für die Tierdatenbank (Phase 1: Quizfragen-Modus), Lizenz-/Quellenmodell, Skizze zur Wikidata-Datenbeschaffung.
@@ -366,3 +514,6 @@ Vier vom `zoologe` vorgeschlagene Anreicherungs-Ideen wurden gegen `src/quiz/que
 - 2026-08-14: Merge-Vorkehrung für manuell kuratierte Felder (`diet`, `lifespan_years`) bei Pipeline-Reruns entschieden (Issue #15, Anlass: `wikipedia_url_de` erfordert Neugenerierung von `data/animals.json`), damit ein Rerun von `fetch-animals.js` diese seit #18/#19 kuratierten Werte nicht überschreibt — siehe Abschnitt "Pipeline-Regenerierung vs. manuell kuratierte Felder" oben.
 - 2026-08-14: Optionales Feld `wikipedia_url_de` ergänzt (Issue #15) — Link zum deutschen Wikipedia-Artikel für den Feedback-Bereich, aus dem bereits vorhandenen `sitelinks.dewiki.title` im Hydration-Cache abgeleitet, kein neuer Netzwerk-Call.
 - 2026-08-13: Verwechslungspaare (Issue #21) für `status:ready`-Freigabe konkretisiert: Mindestumfang 15 (Ziel 20–30) kuratierte Paare, Datenstruktur `data/confusionPairs.json` festgelegt (siehe Abschnitt "Verwechslungspaare — Datenstruktur & Mindestumfang").
+- 2026-08-14: Erweiterte Evaluation der Bild-Rateshilfe-Optionen (Issue #16, auf Nutzerwunsch, keine neue Entscheidung): recherchierte GitHub-/Git-LFS-Größenlimits, Hotlinking-vs-Bundling-Trade-offs inkl. Kompromissvariante "Bild-Hint als optionale Online-Zusatzfunktion", sowie speicherarme Alternativen (komprimierte Thumbnails, Browser-Caching, CC0-only-Subset) verglichen. Empfehlung: Option B′ (Thumbnails statt Originalen) als Verfeinerung der bestehenden Option-B-Entscheidung, siehe Abschnitt "Bild-Rateshilfe (Issue #16): Erweiterte Evaluation".
+- 2026-08-14: Reale Performance-Messung für Option D′ (Issue #16, auf Nutzerwunsch, keine neue Entscheidung): `curl`-Messung an 30 echten Commons-Bildern zeigt kein `Cache-Control`/`Expires` bei Wikimedia, aber funktionierende `ETag`-basierte 304-Revalidierung; Originalgrößen Median 1,6 MB (bis 12,6 MB), Thumbnails (330px) Median 32 KB (~50× kleiner); reale Ladezeiten 0,1–0,7 s (Original) bzw. durchgehend < 0,25 s (Thumbnail) plus ~0,5 s API-Lookup-Overhead. Empfehlung: Thumbnail statt Original als Default, P18-Dateiname zur Build-Zeit statt zur Laufzeit auflösen. Siehe Abschnitt "Performance-Messung Option D′".
+- 2026-08-14: **PM-Entscheidung final: Option D′.** Issue #16 komplett rescoped, Option B verworfen. Neues optionales Schema-Feld `image_filename` (P18-Dateiname, zur Build-Zeit aus bereits geladenen Claims extrahiert, kein Bild-Byte). Finale technische Leitplanken für Build- vs. Laufzeit-Split, Commons-`imageinfo`-Aufruf (`iiurlwidth=330`, `origin=*`, liefert `thumburl` + `extmetadata` in einem Request), Fehlerbehandlung (Button blendet sich bei fehlendem `image_filename` oder Netzwerkfehler aus), kein Caching-Sonderkonzept (Standard-HTTP-Cache reicht). `requirements.md` NFR 1 um gezielte Ausnahme ergänzt (analog Issue #14). Issue #17 (Attributionslösung vor Veröffentlichung) dadurch gegenstandslos, geschlossen. Siehe Abschnitt "Bild-Rateshilfe (Issue #16): Finale technische Leitplanken für Option D′".

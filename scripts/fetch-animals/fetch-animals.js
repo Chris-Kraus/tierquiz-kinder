@@ -99,6 +99,7 @@ const PROPS = {
   habitat: "P2974", // habitat
   endemicTo: "P183", // endemic to (bester verfügbarer Proxy für "continent", siehe README.md)
   continentDirect: "P30", // continent (auf dem per P183 referenzierten Ort)
+  image: "P18", // image (Issue #16, Option D′) — liefert den Commons-Dateinamen
 };
 
 const CONSERVATION_STATUS_MAP = {
@@ -521,6 +522,17 @@ function buildAnimal(candidate, entity, labelMap, endemicToContinents) {
     entity.sitelinks && entity.sitelinks.dewiki && entity.sitelinks.dewiki.title,
   );
 
+  // Issue #16 (Option D′): P18 ("image") wie jede andere String-Property per
+  // getStringClaim() aus den bereits geladenen claims extrahiert (kein neuer
+  // Netzwerk-Call, analog zu name_scientific) — liefert ausschließlich den
+  // Commons-Dateinamen als reinen Text (z. B. "Panthera leo cub.jpg"), OHNE
+  // "File:"-Präfix, ohne URL-Auflösung, ohne Lizenz-/Attributionsdaten. Das
+  // eigentliche Bild wird nie heruntergeladen/gespeichert — die Auflösung zu
+  // einer URL sowie Lizenz/Autor passieren ausschließlich zur Laufzeit im
+  // Frontend (siehe architecture.md, Abschnitt "G) Bild-Rateshilfe (Issue
+  // #16): Finale technische Leitplanken für Option D′").
+  const image_filename = getStringClaim(claims, PROPS.image);
+
   // name_scientific wurde bereits oben (vor pickAnimalNameDe) extrahiert.
 
   // `color` wurde nach dem ersten Testlauf komplett aus dem Schema entfernt
@@ -543,6 +555,7 @@ function buildAnimal(candidate, entity, labelMap, endemicToContinents) {
     ...(length_cm != null ? { length_cm } : {}),
     ...(conservation_status ? { conservation_status } : {}),
     ...(wikipedia_url_de ? { wikipedia_url_de } : {}),
+    ...(image_filename ? { image_filename } : {}),
     _sitelinks: candidate.sitelinks,
     _isExtinct: isExtinct,
   };
@@ -573,6 +586,7 @@ function computeOptionalFieldCoverage(animals) {
     "name_scientific",
     "conservation_status",
     "wikipedia_url_de",
+    "image_filename",
   ];
   const coverage = {};
   for (const f of fields) {
