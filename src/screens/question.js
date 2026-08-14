@@ -136,6 +136,31 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
         hidden
       ></p>
 
+      <!-- Issue #30: automatische Bild-Anzeige NACH der Antwort — eigenständige
+           DOM-Instanz neben dem unveränderten Pre-Answer-Bereich oben (Issue
+           #16), analog zum Fun-Fact-Block als eigenständigem Block statt
+           geteiltem Zustand (siehe architecture.md, "Bild-Rateshilfe:
+           Automatische Anzeige nach der Antwort"). Kein Button/Icon/Klick-
+           Ladezustand (design.md: "poppt still ein, sobald geladen") — bleibt
+           per hidden-Attribut versteckt, bis startFeedbackImageFetch() unten
+           einen Treffer liefert. Wird übersprungen, wenn das Bild bereits vor
+           der Antwort manuell
+           aufgedeckt wurde (Duplikat-Vermeidung, siehe dort). -->
+      <div class="question-screen__feedback-image" hidden>
+        <img class="question-screen__feedback-image-img" alt="" />
+        <p class="question-screen__feedback-image-attribution">
+          <span class="question-screen__feedback-image-attribution-text"></span>
+          <a
+            class="question-screen__feedback-image-attribution-link"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+            >(Lizenz)</a
+          >
+        </p>
+      </div>
+
       <p class="question-screen__info-sentence" hidden>
         <!-- Issue #24 QA-Bugfix (14.08.2026): Icon + "Wusstest du schon?"-
              Einleitung entfernt, die hier fälschlich dupliziert waren (siehe
@@ -231,6 +256,22 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   );
   const imageHintAttributionLinkEl = container.querySelector(
     ".image-hint__attribution-link",
+  );
+
+  // Issue #30: Elemente des automatischen Feedback-Bild-Blocks — eigene
+  // Referenzen statt Wiederverwendung der imageHint*-Elemente oben
+  // (eigenständige DOM-Instanz, siehe Datei-Kommentar beim Markup oben).
+  const feedbackImageEl = container.querySelector(
+    ".question-screen__feedback-image",
+  );
+  const feedbackImageImgEl = container.querySelector(
+    ".question-screen__feedback-image-img",
+  );
+  const feedbackImageAttributionTextEl = container.querySelector(
+    ".question-screen__feedback-image-attribution-text",
+  );
+  const feedbackImageAttributionLinkEl = container.querySelector(
+    ".question-screen__feedback-image-attribution-link",
   );
 
   // Bewacht gegen veraltete Antworten: wird bei jedem Reset (neue Frage)
@@ -331,6 +372,100 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
 
   imageHintButtonEl.addEventListener("click", handleImageHintClick);
 
+  // Issue #30: eigener Stale-Response-Schutz für den automatischen Feedback-
+  // Bild-Block, analog zu imageHintRequestId/imageHintAbortController oben,
+  // aber bewusst als eigenes Paar (eigenständige DOM-Instanz, kein geteilter
+  // Zustand mit dem Pre-Answer-Mechanismus).
+  let feedbackImageRequestId = 0;
+  let feedbackImageAbortController = null;
+
+  // Setzt den automatischen Feedback-Bild-Block bei jeder neuen Frage
+  // vollständig zurück (kein über die Frage hinaus sichtbares Bild) und
+  // bricht einen noch laufenden Abruf der vorherigen Frage aktiv ab.
+  function resetFeedbackImage() {
+    feedbackImageRequestId += 1;
+    if (feedbackImageAbortController) {
+      feedbackImageAbortController.abort();
+      feedbackImageAbortController = null;
+    }
+
+    feedbackImageEl.hidden = true;
+    feedbackImageImgEl.src = "";
+    feedbackImageImgEl.alt = "";
+    feedbackImageAttributionTextEl.textContent = "";
+    feedbackImageAttributionLinkEl.hidden = true;
+    feedbackImageAttributionLinkEl.href = "#";
+  }
+
+  // Löst den automatischen Bildabruf für den Feedback-Bereich aus (Issue #30:
+  // "Bild-Rateshilfe: Automatische Anzeige nach der Antwort"). Wiederverwendet
+  // bewusst dieselben reinen Hilfsfunktionen wie handleImageHintClick oben
+  // (URL-Bau/Antwort-Parsing/Attribution, keine Logik-Duplikation) und
+  // dieselbe Fehlerbehandlung (stiller Ausblend-Pfad, kein Fehlertext) — aber
+  // in einer eigenen DOM-Instanz mit eigenem Stale-Response-Schutz. Läuft
+  // nicht-blockierend: der Aufruf hier kehrt sofort zurück, der Rest von
+  // handleAnswer (Feedback/Infosatz/Fun Fact/"Weiter") wartet nicht auf das
+  // fetch()-Ergebnis.
+  function startFeedbackImageFetch(animal) {
+    if (!animal?.image_filename) return;
+
+    // Duplikat-Vermeidung (architecture.md, mit ux-design abgestimmt): Wurde
+    // das Bild für diese Frage bereits vor der Antwort manuell aufgedeckt
+    // (Pre-Answer-Bereich sichtbar, `resetImageHint()` feuert erst beim
+    // Wechsel zur nächsten Frage), wird der automatische Abruf übersprungen —
+    // kein zweiter Netzwerk-Call, kein doppeltes Bild auf dem Bildschirm.
+    if (!imageHintEl.hidden) return;
+
+    const requestId = ++feedbackImageRequestId;
+    const controller = new AbortController();
+    feedbackImageAbortController = controller;
+    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+    fetch(buildCommonsImageInfoUrl(animal.image_filename), {
+      signal: controller.signal,
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
+      .then((json) => {
+        // Zwischenzeitlich wurde bereits zur nächsten Frage gewechselt (z. B.
+        // "Weiter" vor Abschluss des Abrufs getippt) -> diese Antwort gehört
+        // nicht mehr zum aktuell sichtbaren Feedback-Bereich, nicht mehr
+        // anwenden (design.md, "nicht-blockierend").
+        if (requestId !== feedbackImageRequestId) return;
+
+        const info = extractImageInfo(json);
+        if (!info) return;
+
+        const attribution = buildAttribution(info);
+        // Bewusst MIT Tiernamen im Alt-Text (anders als beim Umkehr-Quiz-
+        // Modus #28): die richtige Antwort ist an dieser Stelle bereits
+        // bekannt/angezeigt, ein Klartext-Alt-Text verrät hier nichts.
+        feedbackImageImgEl.src = info.thumbUrl;
+        feedbackImageImgEl.alt = animal.name_de;
+        feedbackImageAttributionTextEl.textContent = attribution.text;
+        if (attribution.licenseUrl) {
+          feedbackImageAttributionLinkEl.href = attribution.licenseUrl;
+          feedbackImageAttributionLinkEl.hidden = false;
+        }
+        // Poppt still ein (design.md) -- kein Button/Ladezustand, der hier
+        // vorher etwas anderes angezeigt hätte.
+        feedbackImageEl.hidden = false;
+      })
+      .catch(() => {
+        // Identisch zu Issue #16: kein Netz, Timeout oder keine verwertbare
+        // Antwort -> Block bleibt schlicht ausgeblendet (Default-Zustand),
+        // kein Fehlertext, kein Layout-Sprung.
+      })
+      .finally(() => {
+        clearTimeout(timeoutId);
+        if (requestId === feedbackImageRequestId) {
+          feedbackImageAbortController = null;
+        }
+      });
+  }
+
   // Baut die Antwortkacheln für `question` komplett neu auf (statt nur
   // bestehende Kacheln zurückzusetzen), da die Optionsanzahl pro Frage
   // variiert (design.md, "Verwechslungspaare-Fragetyp"). Gleiche Kachel-
@@ -395,6 +530,10 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     // Issue #16: Bild-Rateshilfe bei jeder neuen Frage vollständig
     // zurücksetzen (design.md, Abschnitt "Reset").
     resetImageHint(animalById.get(question.animalId));
+    // Issue #30: automatischer Feedback-Bild-Block ist eine eigenständige
+    // DOM-Instanz mit eigenem Stale-Response-Schutz — ebenfalls bei jeder
+    // neuen Frage vollständig zurücksetzen (siehe resetFeedbackImage oben).
+    resetFeedbackImage();
 
     renderAnswerTiles(question);
 
@@ -418,6 +557,11 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     const selectedOption = question.options[selectedIndex];
     const correctIndex = question.options.findIndex((option) => option.correct);
     const correctButton = tileButtons[correctIndex];
+    // Vorgezogen (statt wie zuvor erst nach dem Feedback-Text ermittelt), da
+    // Issue #30 den animalById-Lookup bereits für den automatischen
+    // Bildabruf direkt nach `feedbackEl.hidden = false` unten braucht — ein
+    // einziger Lookup statt Duplikation.
+    const answeredAnimal = animalById.get(question.animalId);
 
     selectedButton.setAttribute("aria-pressed", "true");
 
@@ -445,10 +589,16 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
 
     feedbackEl.hidden = false;
 
+    // Issue #30: automatischer Bildabruf startet in dem Moment, in dem der
+    // Feedback-Bereich sichtbar wird — kein Klick nötig. Nicht-blockierend:
+    // startFeedbackImageFetch kehrt sofort zurück, der übrige Feedback-Ablauf
+    // unten (Infosatz/Fun Fact/"Weiter") wartet nicht auf das fetch()-
+    // Ergebnis (siehe Funktionskommentar oben).
+    startFeedbackImageFetch(answeredAnimal);
+
     // Issue #12: Infosatz wird IMMER angezeigt, unabhängig davon, ob richtig
     // oder falsch geantwortet wurde (siehe PM-Entscheidung im Issue) — daher
     // hier bewusst außerhalb des if/else oben, direkt nach dem Feedback.
-    const answeredAnimal = animalById.get(question.animalId);
     if (answeredAnimal) {
       infoSentenceTextEl.textContent = buildInfoSentence(answeredAnimal);
       infoSentenceEl.hidden = false;

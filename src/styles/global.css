@@ -399,6 +399,51 @@ button {
   margin-left: 0.3em;
 }
 
+/* Issue #30 (Bild-Rateshilfe: Automatische Anzeige nach der Antwort): visueller
+   Zwilling von .image-hint/.image-hint__image/.image-hint__attribution* oben
+   (gleiche Rahmen-Optik, design.md: "Gleiche Bildrahmen-Optik ... aber ohne
+   die Button-Chrome darüber") — bewusst eigene Selektoren statt geteilter
+   Klassen, da es sich um eine eigenständige DOM-Instanz im Feedback-Bereich
+   handelt (siehe question.js, feedbackImage*-Elemente), kein Button/Icon
+   darüber nötig. Zentriert sich wie der Fun-Fact-/Infosatz-Block automatisch
+   in die Fließspalte des Feedback-Bereichs ein. */
+.question-screen__feedback-image {
+  width: 100%;
+  max-width: 16rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Gleiche Cascade-Falle wie bei .image-hint[hidden] oben. */
+.question-screen__feedback-image[hidden] {
+  display: none;
+}
+
+.question-screen__feedback-image-img {
+  width: 100%;
+  height: 11rem;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 3px solid var(--color-secondary);
+  background: var(--color-disabled-bg);
+}
+
+.question-screen__feedback-image-attribution {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-secondary-dark);
+  text-align: center;
+}
+
+.question-screen__feedback-image-attribution-link {
+  color: inherit;
+  text-decoration: underline;
+  margin-left: 0.3em;
+}
+
 /* 2×2-Raster, untereinander gestapelt auf schmalen Bildschirmen (design.md,
    "Layout-Empfehlungen"). */
 .answer-grid {
