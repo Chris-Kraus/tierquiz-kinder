@@ -169,6 +169,36 @@ Finale UX-Leitplanken für die optionale Bild-Rateshilfe (Option D′, siehe `do
 
 **Kein Einfluss auf Kernablauf:** Der Button ändert nichts an Antwortauswahl, Feedback-Mechanik oder Punktestand — rein optionale Zusatzinfo während der aktiven Frage, wie in den Akzeptanzkriterien von Issue #16 festgehalten.
 
+## Bild-Rateshilfe: Automatische Anzeige nach der Antwort (Issue #30, 14.08.2026, `ux-design` + `software-architect`)
+
+Neue, ergänzende UX-Leitplanken zusätzlich zum obigen Abschnitt "Bild-Rateshilfe (Issue #16)", der **unverändert bestehen bleibt** (Pre-Answer-Button, optional, manueller Klick). Neu: Zusätzlich wird das Bild **nach** Abgabe der Antwort automatisch — ohne Klick — als Teil des Feedback-Bereichs angezeigt, ergänzend zu Infosatz/Fun Fact/Wikipedia-Link.
+
+**Platzierung/Reihenfolge im Feedback-Bereich:** Direkt **unterhalb** des Richtig/Falsch-Feedbacktexts, **oberhalb** des Infosatz-Blocks (inkl. eingebettetem Wikipedia-Link) und des Fun-Fact-Blocks:
+
+```
+Richtig/Falsch-Feedback
+   ▼
+Bild (neu, automatisch, Issue #30)
+   ▼
+Infosatz (inkl. Wikipedia-Link)
+   ▼
+Fun Fact (falls vorhanden)
+   ▼
+"Weiter"-Button
+```
+
+**Begründung der Reihenfolge:** Das Bild ist die unmittelbarste, am schnellsten erfassbare Ergänzung zur soeben aufgelösten richtigen Antwort ("So sieht das Tier aus") — passend direkt nach dem Feedbacktext, bevor die textbasierten Vertiefungen (Infosatz, Fun Fact) folgen. Passt zur bereits etablierten Lesereihenfolge "erst der unmittelbare Fakt, dann das Extra-Highlight" (siehe Fun-Fact-Reihenfolgebegründung oben).
+
+**Visuelle Unterscheidung vom weiterhin bestehenden Pre-Answer-Button:** Kein Button, kein Lupe-Icon, kein "Bild zeigen"-Label, kein Klick-Ladezustand — das Bild poppt still ein, sobald es geladen ist (siehe `architecture.md`, "nicht-blockierend"). Gleiche Bildrahmen-Optik (fester, moderat großer Rahmen mit abgerundeten Ecken, passend zur Kachel-Optik) wie beim aufgedeckten Pre-Answer-Bild, aber ohne die Button-Chrome darüber — im Feedback-Bereich wirkt es als selbstverständlicher Bestandteil der Antwort-Auflösung, nicht als weitere interaktive Zusatzoption. Attributionszeile direkt darunter, identisches Format wie beim Pre-Answer-Bild ("Foto: {Artist} · Wikimedia Commons", optionaler kleiner "(Lizenz)"-Link).
+
+**Verhalten bei bereits manuell aufgedecktem Bild:** Hat das Kind vor der Antwort bereits auf "Bild zeigen" getippt, ist das Bild zum Zeitpunkt des Feedbacks bereits oberhalb der Antwortkacheln sichtbar. In diesem Fall **erscheint der automatische Feedback-Bild-Block nicht zusätzlich** (siehe `architecture.md` für die technische Begründung) — eine zweite, identische Bildkopie auf demselben Bildschirm wäre für das Kind verwirrend ("warum ist das jetzt zweimal da?") statt hilfreich, und würde zudem unnötig Layout-Höhe kosten. Das bereits sichtbare Pre-Answer-Bild bleibt einfach stehen, kein zusätzlicher Effekt nötig.
+
+**Kein Bild vorhanden/Fehlschlag:** Identisch zum bestehenden Fun-Fact-/Infosatz-Muster — der Block erscheint schlicht nicht, kein Platzhalter, kein Fehlertext, kein Layout-Sprung. Für das Kind darf nicht auffallen, dass hier etwas fehlt.
+
+**Beide Altersstufen:** Gleiche Darstellung für 6–10 und 10–12 Jahre, kein Unterschied.
+
+**Barrierefreiheit:** Bild-`alt`-Text mit Tiernamen (z. B. `alt="{name_de}"`) — anders als beim Umkehr-Quiz-Modus (#28) ist die richtige Antwort an dieser Stelle bereits bekannt, ein Alt-Text mit Klartext-Namen verrät hier nichts. Der Bildblock selbst muss Screenreadern nicht separat per `aria-live` angekündigt werden (kein Ladezustand, der aktiv kommuniziert werden müsste, da es keinen Button/keine Interaktion gibt) — es reicht, dass er als normales Bild mit `alt`-Text im DOM erscheint, sobald geladen. Gleiche Kontrast-/Lesbarkeits-Anforderungen wie übriger Feedback-Inhalt.
+
 ## Modus-Auswahl auf dem Start-Bildschirm (Skizze, 14.08.2026, `ux-design`)
 
 Anlass: Der Nutzer hat drei neue Spielmodi vorgeschlagen (Umkehr-Quiz, Fehlerbild, Tiergeräusche — Bewertung siehe `requirements.md`/`architecture.md`). Der bestehende Start-Bildschirm (siehe "Nutzerfluss" oben) war bewusst schlank gehalten und hatte bereits einen Platzhalter-Hinweis ("Perspektivisch: Platz für spätere Modus-Auswahl vorsehen"). Diese Skizze konkretisiert das erstmals — **grobe Skizze, keine pixelgenaue Spezifikation**, da noch keiner der drei Modi final gescoped ist.
@@ -239,6 +269,66 @@ Finale UX-Leitplanken für den neuen Frage-Bildschirm des Umkehr-Quiz-Modus. Wie
 **Barrierefreiheit — wichtige Abweichung von Issue #16:**
 - Bild braucht einen aussagekräftigen `alt`-Text, aber **bewusst nicht den Tiernamen** — anders als bei der bestehenden Bild-Rateshilfe (dort ist der Name durch den Fragetext bereits bekannt, das Bild illustriert nur) wäre der Tiername hier die gesuchte Antwort selbst. Ein `alt`-Text mit Klartext-Namen würde die Antwort für Screenreader-Nutzer:innen vorwegnehmen und den Modus für sie unspielbar machen. **Entscheidung:** generischer, nicht verratender Alt-Text, z. B. `alt="Foto eines Tieres – errate, welches Tier das ist"`.
 - Ladezustand für Screenreader nicht komplett stumm (`aria-busy`/`aria-live`, wie bei Issue #16), gleiche Anforderung auch für den Fehlerzustand (Wechsel muss angekündigt werden).
+- Ansonsten identische Anforderungen wie bestehende Antwortkacheln (Tastaturbedienbarkeit, Tab-Reihenfolge, Kontrast, keine reine Farbcodierung).
+
+## Modus-Auswahl auf dem Start-Bildschirm: Dritte Kachel "Tiergeräusche" (14.08.2026, `ux-design`, Story-Freigabe #31)
+
+Ergänzt den obigen Abschnitt "Modus-Auswahl auf dem Start-Bildschirm (Skizze)", der bereits explizit beide neuen Modi mitgedacht hatte ("bis zu ca. 3–4 Modi" als Skalierungsgrenze für den Ein-Bildschirm-Ansatz). Mit der dritten Kachel wird diese Grenze erreicht, aber nicht überschritten — kein Wechsel zu einem vorgeschalteten Auswahlbildschirm nötig.
+
+```
+┌─────────────────────────────────┐
+│         🦁 Tierquiz              │
+│                                   │
+│  Was möchtest du spielen?        │
+│  ┌────────┐┌────────┐┌────────┐ │
+│  │Quizfragen││Wer bin ││Tier-   │ │
+│  │ (Start)  ││ich? 🌐 ││geräu-  │ │
+│  │          ││        ││sche 🔊🌐│ │
+│  └────────┘└────────┘└────────┘ │
+│                                   │
+│  Wie schwer?                     │
+│  ┌───────────┐ ┌───────────┐    │
+│  │  Einfach   │ │  Knifflig  │    │
+│  └───────────┘ └───────────┘    │
+│                                   │
+│        [ Los geht's! ]           │
+└─────────────────────────────────┘
+```
+
+- **Label:** "Tiergeräusche" bleibt wie im ursprünglichen Skizzen-Vorschlag unverändert stehen — bereits selbsterklärend für Kinder, kein kindgerechteres Umbenennen nötig (anders als "Umkehr-Quiz" → "Wer bin ich?").
+- **Icons:** kleines Lautsprecher-Icon (🔊) als Modus-Kennzeichnung, zusätzlich das bereits etablierte Online-Icon (🌐) mit `aria-label="Benötigt Internetverbindung"` — gleiche Behandlung wie bei "Wer bin ich?".
+- **Vorbelegung/Reihenfolge unverändert:** "Quizfragen" bleibt vorbelegt/hervorgehoben. Reihenfolge der drei Kacheln folgt der Priorisierung aus `requirements.md` (Quizfragen → Wer bin ich? → Tiergeräusche), keine willkürliche Anordnung.
+- **Fehlerfall ohne Internet:** identisches Muster wie bei "Wer bin ich?" (siehe Zustandstabelle oben und "Finale Leitplanken" im vorherigen Abschnitt) — Testabruf ist der erste Aufruf von `generateNextSoundQuestion()` für Frage 1, Ladezustand direkt in der Kachel, freundlicher Hinweis bei Fehlschlag, Auswahl verbleibt bei "Quizfragen".
+- **Layout-Prüfung:** Drei Kacheln nebeneinander bleiben innerhalb der bestehenden Vorgabe "Kein Scrollen bei der Kernaufgabe" — bei sehr schmalen Bildschirmen greift wie bei den Antwortkacheln das bestehende responsive Umschaltmuster (gestapelt statt nebeneinander).
+- **Barrierefreiheit:** identisch zu den bestehenden Modus-Kacheln (Tastaturbedienbarkeit, Tab-Reihenfolge, Kontrast, Text-Alternative für das Online-Icon).
+
+## Frage-/Feedback-Bildschirm "Tiergeräusche" (14.08.2026, `ux-design` + `software-architect`, Story-Freigabe #32/#33)
+
+Wiederverwendet den bestehenden Frage-/Feedback-Mechanismus (Fortschrittsanzeige, 2×2-Antwortraster, Sofort-Feedback, manueller "Weiter"-Button, Punktestand) fast unverändert — strukturell analog zum Abschnitt "Frage-/Feedback-Bildschirm 'Wer bin ich?'" oben. Neu ist, **was** im oberen Bereich des Bildschirms steht (Audio-Player statt Bild) sowie drei Punkte, die sich vom Bild-Modus unterscheiden: Wiederholbarkeit, kein Autoplay, und eine bewusst dokumentierte Barrierefreiheits-Einschränkung.
+
+**Layout:**
+- Fortschrittsanzeige oben, identisch zu den bestehenden Modi.
+- Feste Überschrift **"Welches Tier ist das?"** (analog zu "Wer bin ich?" beim Bild-Modus) — die "Frage" ist der Ton selbst, kein wechselnder Fragetext nötig.
+- Darunter ein großer, zentraler **Play-Button** (🔊-Icon, großzügige Touch-Fläche, gleiche Mindestgröße wie Antwortkacheln) statt eines Bildrahmens — bewusst prominent, da er die einzige Möglichkeit ist, an die zur Beantwortung nötige Information zu kommen (anders als beim Bild-Modus, wo das Bild passiv sichtbar ist, sobald geladen).
+- Direkt darunter die Attributionszeile (gleiches Format wie #16/#28: "Ton: {Artist} · Wikimedia Commons", optionaler kleiner "(Lizenz)"-Link, fehlende Felder werden übersprungen).
+- Darunter die 4 Namensoptionen im gewohnten 2×2-Kachel-Raster.
+
+**Abspiel-/Wiederholungs-Interaktion (neu gegenüber #28, dort nicht relevant):**
+- **Kein Autoplay.** Der Ton startet ausschließlich durch expliziten Tap/Klick auf den Play-Button — konsistent mit dem bestehenden Grundsatz "kein Hover-/Automatik-Aufdecken" (siehe Bild-Rateshilfe) und zusätzlich technisch geboten (Browser blockieren Ton-Autoplay ohne Nutzerinteraktion i. d. R. ohnehin).
+- **Beliebig oft wiederholbar:** Derselbe Play-Button kann erneut angetippt werden, um den Ton von vorn abzuspielen — kein separater "Nochmal"-Button, kein Limit, kein Zeitdruck (konsistent mit dem bestehenden Grundsatz "keine Countdown-/Zeitdruck-Elemente"). Während der Wiedergabe kann der Button optisch leicht abweichen (z. B. dezente "spielt gerade"-Animation), das ist aber ein Detail für `web-developer`, keine harte Vorgabe.
+- **Ladezustand vor Frage-Anzeige:** identisches Muster wie #28 — reservierter Player-Bereich zeigt eine dezente, kindgerechte Ladeanimation, während der Ton laut #32 vorab aufgelöst wird (Metadaten-Check, kein vollständiger Download nötig, siehe `architecture.md`). Danach erscheint der Play-Button an derselben Stelle, kein Layout-Sprung.
+- **Kurzer Pufferzustand beim ersten Abspielen:** Da die eigentliche Audiodatei erst beim Play-Tap zu laden beginnt (progressive Wiedergabe, siehe `architecture.md`), kann ein sehr kurzer Pufferzustand auftreten — dezenter Indikator im Button selbst (gleiches Muster wie der bestehende "Bild zeigen"-Button-Ladezustand), kein Vollbild-Spinner.
+
+**Fehlerzustand (nach 3 erfolglosen Versuchen aus #32):** identisches Muster wie #28 — freundlicher Hinweis im reservierten Player-Bereich, "Nochmal versuchen"-Button stößt eine neue Frage an, kein Rundenabbruch, kein Zurück zur Modus-Auswahl, zählt nicht als beantwortete/übersprungene Frage.
+
+**Reset:** Ton, Attribution und Player-/Ladezustand werden bei jedem Frage-Wechsel vollständig zurückgesetzt.
+
+**Feedback/Antwortmechanik:** unverändert (siehe "4. Feedback richtig/falsch" oben).
+
+**Barrierefreiheit:**
+- Play-Button als echtes `<button>`-Element, tastaturbedienbar (Enter/Space), mit aussagekräftigem `aria-label` (z. B. "Tierlaut abspielen" bzw. bei bereits einmal abgespieltem Ton "Tierlaut noch einmal abspielen"). Lade-/Pufferzustand nicht komplett stumm für Screenreader (`aria-busy`/`aria-live`, wie bei bestehenden Ladezuständen).
+- **Bewusst kein Transkript/keine Textbeschreibung des Tons** — anders als sonst bei Web-Barrierefreiheit üblich (z. B. Untertitel/Transkripte für Audio-Inhalte), da hier der Ton selbst das zu lösende Rätsel ist; eine Textbeschreibung würde die Antwort vorwegnehmen und den Modus unspielbar machen. Das ist eine bewusste, dokumentierte Abweichung vom allgemeinen Barrierefreiheits-Grundsatz, kein Versehen.
+- **Bekannte, bewusst dokumentierte Einschränkung: Dieser Modus ist für hörbeeinträchtigte/gehörlose Kinder strukturell nicht spielbar.** Es gibt keine gleichwertige visuelle/textliche Alternative zur Kernaufgabe (Ton erkennen), ohne den Modus selbst funktionslos zu machen. **Entscheidung (`business-analyst` + `ux-design`, 14.08.2026): kein Blocker für die Umsetzung** — der bestehende Quizfragen-Modus und der Umkehr-Quiz-Modus bleiben für diese Zielgruppe unverändert vollständig spielbar, nur dieser eine zusätzliche, optionale Modus ist betroffen. Wichtig ist Transparenz statt stillschweigendem Hinnehmen: siehe `requirements.md` für die formale Dokumentation dieser Einschränkung. Zum Vergleich: Der Umkehr-Quiz-Modus (#28) hat eine strukturell ähnliche, aber bislang nicht ebenso explizit als "bekannte Einschränkung" dokumentierte Lücke für sehbeeinträchtigte/blinde Kinder (Bild als Kernaufgabe ohne Audio-Alternative) — nicht Teil dieser Story, aber als Beobachtung für eine mögliche spätere Nachdokumentation vermerkt.
 - Ansonsten identische Anforderungen wie bestehende Antwortkacheln (Tastaturbedienbarkeit, Tab-Reihenfolge, Kontrast, keine reine Farbcodierung).
 
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
