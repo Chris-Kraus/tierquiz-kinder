@@ -377,6 +377,37 @@ button {
   border: 3px solid var(--color-accent);
 }
 
+/* Infosatz zum Tier (Issue #12): eigener, visuell abgesetzter Block
+   unterhalb des Richtig/Falsch-Feedbacks, oberhalb des "Weiter"-Buttons
+   (design.md, "Fun Fact im Feedback-Schritt" — dieselbe Platzierung/Optik
+   wird hier für den verwandten Infosatz-Baustein wiederverwendet). Dezente,
+   blaue Tönung (--color-secondary) statt der Grün/Gelb-Feedbackfarben, damit
+   der Block klar als "zusätzliche Info" statt als weiteres Richtig/Falsch-
+   Signal erkennbar ist. Wird IMMER angezeigt (PM-Entscheidung), daher kein
+   Sonderfall für "kein Infosatz vorhanden" nötig. */
+.question-screen__info-sentence {
+  margin: 0;
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-lg);
+  background: rgba(47, 128, 196, 0.1);
+  border: 3px solid var(--color-secondary);
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.question-screen__info-sentence-icon {
+  margin-right: 0.4em;
+}
+
+.question-screen__info-sentence-lead {
+  font-weight: 700;
+  color: var(--color-secondary-dark);
+  margin-right: 0.4em;
+}
+
 .next-button {
   min-width: 12rem;
   min-height: 4rem;

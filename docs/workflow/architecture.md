@@ -309,6 +309,12 @@ Vier vom `zoologe` vorgeschlagene Anreicherungs-Ideen wurden gegen `src/quiz/que
 3. **Auswahlkriterium für die ~500 Tiere:** Entscheidung: automatisiert nach Bekanntheits-/Popularitäts-Proxy (Wikidata-Sitelinks), wie in der Skizze oben beschrieben — keine zusätzliche manuelle Kuratierung der Grundliste.
 4. **`conservation_status` — didaktisch gewünscht?** Entscheidung: Feld bleibt optional im Schema, aber ohne aktiven Pflicht-Fragetyp — kann als gelegentliche Zusatzfrage in Stufe 10–12 genutzt werden, wenn Daten vorhanden sind (siehe oben), ist aber kein zentraler Bestandteil der Fragegenerierung.
 
+## Infosatz-Basisbaustein — Genus-Lücke bei Tiernamen (Issue #12, 14.08.2026)
+
+**Problem:** Die ursprüngliche Leitplanke ("Der/Die {name_de} ist ein/eine {category}.") setzt korrektes grammatisches Genus für `name_de` voraus — dafür gibt es aber kein Datenfeld, und Erraten würde regelmäßig falsch liegen (verstößt gegen das eigene Akzeptanzkriterium "kein wörtliches Einsetzen von Rohwerten in falscher Flexion").
+
+**Entscheidung:** `web-developer`s Lösung — Überschrift-/Doppelpunkt-Format ("{name_de}: Ein/e {category}, der/die/das …") statt Artikel vor dem Tiernamen — wird als **dauerhafte Lösung für diese Phase** akzeptiert, kein Nacharbeiten nötig. Begründung: garantiert korrekte Grammatik ohne zusätzliche Datenpflege, passt zum Grundsatz "keine Architektur/kein Datenaufwand für Nice-to-haves ohne klaren Bedarf". Eine kuratierte Genus-Tabelle je Tier (analog zu `diet`/`lifespan_years`-Kuration) wäre technisch möglich, ist aber reiner Stil-Feinschliff ohne funktionalen Mehrwert — daher wie `fun_fact` als **mögliche, unpriorisierte spätere Ausbaustufe** vermerkt, kein aktueller Task.
+
 ## Verwechslungspaare — Datenstruktur & Mindestumfang (Issue #21, 13.08.2026)
 
 **Mindestanzahl kuratierter Paare:** mindestens **15**, Zielgröße **20–30** für die erste Umsetzung. Begründung: Der Fragetyp ist einer von inzwischen ~9 möglichen Fragetypen (Kategorie, Lebensraum, Kontinent, Gewicht, Länge, Lebenserwartung, Ernährung, Gefährdungsstatus, Vergleichsfragen, Verwechslungspaare) und wird durch den bestehenden Diversitäts-Mechanismus aus Issue #11 (`orderFieldsByUsage`) ohnehin nicht öfter als andere Typen gezogen — bei 10 Fragen/Runde realistisch 0–2 Vorkommen. Mit 15 Paaren ist die Wiederholungswahrscheinlichkeit desselben Paars innerhalb einer Runde bzw. über wenige aufeinanderfolgende Runden gering; 20–30 sind komfortabel für Langzeit-Abwechslung, aber kein Blocker für den Start (Liste ist erweiterbar wie `data/animals.json` selbst).

@@ -21,6 +21,11 @@ import {
   advanceToNextQuestion,
   isQuizFinished,
 } from "../quiz/state.js";
+// Issue #12: kurzer Infosatz zum Tier, wird nach jeder Antwort (richtig wie
+// falsch) zusätzlich zum bestehenden Feedback angezeigt (siehe
+// PM-Entscheidung im Issue). Reine Template-Logik aus Wikidata-Feldern, kein
+// Wikipedia-Artikeltext (siehe infoSentence.js für die volle Herleitung).
+import { buildInfoSentence } from "../quiz/infoSentence.js";
 
 const OPTION_COUNT = 4;
 
@@ -46,6 +51,14 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   }
 
   const totalQuestions = quizState.questions.length;
+
+  // Issue #12: Lookup fürs schnelle Auffinden des vollen Tier-Objekts zu
+  // einer Frage (question.animalId) — die Frage selbst trägt nur die für
+  // Issue #5 nötigen Felder (text/options/animalId/field), nicht das
+  // komplette Tier-Objekt.
+  const animalById = new Map(
+    animalsData.animals.map((animal) => [animal.id, animal]),
+  );
 
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="question-heading">
@@ -75,6 +88,12 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
         hidden
       ></p>
 
+      <p class="question-screen__info-sentence" hidden>
+        <span class="question-screen__info-sentence-icon" aria-hidden="true">💡</span>
+        <span class="question-screen__info-sentence-lead">Wusstest du schon?</span>
+        <span class="question-screen__info-sentence-text"></span>
+      </p>
+
       <button type="button" class="next-button" hidden>Weiter</button>
     </section>
   `;
@@ -83,6 +102,12 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   const headingEl = container.querySelector(".question-screen__text");
   const tileButtons = Array.from(container.querySelectorAll(".answer-tile"));
   const feedbackEl = container.querySelector(".question-screen__feedback");
+  const infoSentenceEl = container.querySelector(
+    ".question-screen__info-sentence",
+  );
+  const infoSentenceTextEl = container.querySelector(
+    ".question-screen__info-sentence-text",
+  );
   const nextButton = container.querySelector(".next-button");
 
   function resetTilesForQuestion(question) {
@@ -111,6 +136,8 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
       "question-screen__feedback--correct",
       "question-screen__feedback--incorrect",
     );
+    infoSentenceEl.hidden = true;
+    infoSentenceTextEl.textContent = "";
     nextButton.hidden = true;
 
     resetTilesForQuestion(question);
@@ -160,6 +187,15 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     }
 
     feedbackEl.hidden = false;
+
+    // Issue #12: Infosatz wird IMMER angezeigt, unabhängig davon, ob richtig
+    // oder falsch geantwortet wurde (siehe PM-Entscheidung im Issue) — daher
+    // hier bewusst außerhalb des if/else oben, direkt nach dem Feedback.
+    const answeredAnimal = animalById.get(question.animalId);
+    if (answeredAnimal) {
+      infoSentenceTextEl.textContent = buildInfoSentence(answeredAnimal);
+      infoSentenceEl.hidden = false;
+    }
 
     recordAnswer(quizState, {
       question,
