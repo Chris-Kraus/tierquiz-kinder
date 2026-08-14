@@ -3,16 +3,17 @@
   "license": "CC0-1.0",
   "source": "Wikidata",
   "source_url": "https://www.wikidata.org/",
-  "retrieved_at": "2026-08-13",
+  "retrieved_at": "2026-08-14",
   "animals": [
     {
       "id": "Q140",
       "name_de": "Löwe",
       "name_scientific": "Panthera leo",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 126,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/L%C3%B6we",
+      "diet": "Fleischfresser",
       "lifespan_years": 14
     },
     {
@@ -23,9 +24,10 @@
       "habitat": [
         "Wald"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 120,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tiger",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -33,8 +35,9 @@
       "name_de": "Wolf",
       "name_scientific": "Canis lupus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wolf",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -46,8 +49,9 @@
         "Buschland",
         "Wald"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Leopard",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -55,8 +59,9 @@
       "name_de": "Wildschwein",
       "name_scientific": "Sus scrofa",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wildschwein",
+      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -64,9 +69,10 @@
       "name_de": "Eisbär",
       "name_scientific": "Ursus maritimus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 225.3,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eisb%C3%A4r",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -82,8 +88,9 @@
         "Feuchtgebiet",
         "städtisches Gebiet"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotfuchs",
+      "diet": "Allesfresser",
       "lifespan_years": 4
     },
     {
@@ -91,9 +98,10 @@
       "name_de": "Gepard",
       "name_scientific": "Acinonyx jubatus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 35,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gepard",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -101,9 +109,10 @@
       "name_de": "Afrikanischer Strauß",
       "name_scientific": "Struthio camelus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 100,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanischer_Strau%C3%9F",
+      "diet": "Allesfresser",
       "lifespan_years": 40
     },
     {
@@ -111,8 +120,9 @@
       "name_de": "Flusspferd",
       "name_scientific": "Hippopotamus amphibius",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Flusspferd",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 45
     },
     {
@@ -126,9 +136,10 @@
       "continent": [
         "Asien"
       ],
-      "diet": "Pflanzenfresser",
       "weight_kg": 58.802,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_Panda",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
     {
@@ -142,9 +153,10 @@
         "Feuchtgebiet",
         "Grasland"
       ],
-      "diet": "Allesfresser",
       "weight_kg": 0.0305,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haussperling",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -152,9 +164,10 @@
       "name_de": "Nord-Giraffe",
       "name_scientific": "Giraffa camelopardalis",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 54.5,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nord-Giraffe",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 25
     },
     {
@@ -167,9 +180,10 @@
         "Wald",
         "Borealer Nadelwald"
       ],
-      "diet": "Allesfresser",
       "weight_kg": 500,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Braunb%C3%A4r",
+      "diet": "Allesfresser",
       "lifespan_years": 25
     },
     {
@@ -177,10 +191,11 @@
       "name_de": "Kolkrabe",
       "name_scientific": "Corvus corax",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.9205,
       "length_cm": 68,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kolkrabe",
+      "diet": "Allesfresser",
       "lifespan_years": 15
     },
     {
@@ -188,9 +203,10 @@
       "name_de": "Elster",
       "name_scientific": "Pica pica",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.191,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Elster",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -198,8 +214,9 @@
       "name_de": "Stockente",
       "name_scientific": "Anas platyrhynchos",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Stockente",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -207,8 +224,9 @@
       "name_de": "Wiedehopf",
       "name_scientific": "Upupa epops",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wiedehopf",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -220,8 +238,9 @@
         "Berg",
         "Wald"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneeleopard",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -229,6 +248,7 @@
       "name_de": "Wasserbüffel",
       "name_scientific": "Bubalus bubalis",
       "category": "Säugetier",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wasserb%C3%BCffel",
       "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
@@ -237,9 +257,10 @@
       "name_de": "Jaguar",
       "name_scientific": "Panthera onca",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 0.8,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Jaguar",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -250,8 +271,9 @@
       "habitat": [
         "Buschland"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Elch",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -263,8 +285,9 @@
         "Ozeanien",
         "Australien"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Koala",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 12
     },
     {
@@ -272,8 +295,9 @@
       "name_de": "Amsel",
       "name_scientific": "Turdus merula",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Amsel",
+      "diet": "Allesfresser",
       "lifespan_years": 4
     },
     {
@@ -281,8 +305,9 @@
       "name_de": "Puma",
       "name_scientific": "Puma concolor",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Puma",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -290,8 +315,9 @@
       "name_de": "Europäischer Dachs",
       "name_scientific": "Meles meles",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Dachs",
+      "diet": "Allesfresser",
       "lifespan_years": 8
     },
     {
@@ -299,9 +325,10 @@
       "name_de": "Wachtel",
       "name_scientific": "Coturnix coturnix",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.008199999999999999,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wachtel_(Art)",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -312,9 +339,10 @@
       "habitat": [
         "Wald"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 0.0014,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mauswiesel",
+      "diet": "Fleischfresser",
       "lifespan_years": 2
     },
     {
@@ -331,9 +359,10 @@
         "Auwald",
         "Feuchtgebiet"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 0.11,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fischotter",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -344,8 +373,9 @@
       "habitat": [
         "Wald"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ren",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -353,9 +383,10 @@
       "name_de": "Rotkehlchen",
       "name_scientific": "Erithacus rubecula",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.0024,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotkehlchen",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -366,8 +397,9 @@
       "habitat": [
         "Grasland"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausmaus",
+      "diet": "Allesfresser",
       "lifespan_years": 1.5
     },
     {
@@ -375,8 +407,9 @@
       "name_de": "Walross",
       "name_scientific": "Odobenus rosmarus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Walross",
+      "diet": "Fleischfresser",
       "lifespan_years": 25
     },
     {
@@ -388,8 +421,9 @@
         "Ozeanien",
         "Australien"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schnabeltier",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -397,9 +431,10 @@
       "name_de": "Felsentaube",
       "name_scientific": "Columba livia",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.28049999999999997,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Felsentaube",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 5
     },
     {
@@ -407,9 +442,10 @@
       "name_de": "Kuckuck",
       "name_scientific": "Cuculus canorus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.106,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kuckuck",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -417,9 +453,10 @@
       "name_de": "Pirol",
       "name_scientific": "Oriolus oriolus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.0073,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Pirol",
+      "diet": "Allesfresser",
       "lifespan_years": 4
     },
     {
@@ -431,8 +468,9 @@
         "Wald",
         "Buschland"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eurasischer_Luchs",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -443,6 +481,7 @@
       "habitat": [
         "Weltmeere"
       ],
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwertwal",
       "diet": "Fleischfresser",
       "lifespan_years": 40
     },
@@ -451,9 +490,10 @@
       "name_de": "Graureiher",
       "name_scientific": "Ardea cinerea",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.061,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graureiher",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -461,9 +501,10 @@
       "name_de": "Eichelhäher",
       "name_scientific": "Garrulus glandarius",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.0085,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eichelh%C3%A4her",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -475,9 +516,10 @@
         "Buschland",
         "Wald"
       ],
-      "diet": "Pflanzenfresser",
       "weight_kg": 2.535,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Westlicher_Kleiner_Panda",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 10
     },
     {
@@ -485,9 +527,10 @@
       "name_de": "Kohlmeise",
       "name_scientific": "Parus major",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.01009,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kohlmeise",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -495,8 +538,9 @@
       "name_de": "Star",
       "name_scientific": "Sturnus vulgaris",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Star_(Art)",
+      "diet": "Allesfresser",
       "lifespan_years": 4
     },
     {
@@ -508,8 +552,9 @@
         "Wald",
         "urban habitat"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waschb%C3%A4r",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -517,9 +562,10 @@
       "name_de": "Blauwal",
       "name_scientific": "Balaenoptera musculus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "length_cm": 2710,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blauwal",
+      "diet": "Fleischfresser",
       "lifespan_years": 80
     },
     {
@@ -527,8 +573,9 @@
       "name_de": "Bachstelze",
       "name_scientific": "Motacilla alba",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bachstelze",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -536,8 +583,9 @@
       "name_de": "Rauchschwalbe",
       "name_scientific": "Hirundo rustica",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rauchschwalbe",
+      "diet": "Fleischfresser",
       "lifespan_years": 4
     },
     {
@@ -545,9 +593,10 @@
       "name_de": "Steinadler",
       "name_scientific": "Aquila chrysaetos",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 4.383,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinadler",
+      "diet": "Fleischfresser",
       "lifespan_years": 25
     },
     {
@@ -555,8 +604,9 @@
       "name_de": "Rothirsch",
       "name_scientific": "Cervus elaphus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rothirsch",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -564,8 +614,9 @@
       "name_de": "Eurasisches Eichhörnchen",
       "name_scientific": "Sciurus vulgaris",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eurasisches_Eichh%C3%B6rnchen",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -580,9 +631,10 @@
       "continent": [
         "Nordamerika"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 0.219,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hermelin",
+      "diet": "Fleischfresser",
       "lifespan_years": 2
     },
     {
@@ -590,8 +642,9 @@
       "name_de": "Karakal",
       "name_scientific": "Caracal caracal",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Karakal",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -599,6 +652,7 @@
       "name_de": "Dohle",
       "name_scientific": "Coloeus monedula",
       "category": "Vogel",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Dohle",
       "diet": "Allesfresser",
       "lifespan_years": 5
     },
@@ -607,8 +661,9 @@
       "name_de": "Goldfisch",
       "name_scientific": "Carassius auratus",
       "category": "Fisch",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Goldfisch",
+      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -619,6 +674,7 @@
       "habitat": [
         "Peru"
       ],
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausmeerschweinchen",
       "diet": "Pflanzenfresser",
       "lifespan_years": 6
     },
@@ -627,9 +683,10 @@
       "name_de": "Kojote",
       "name_scientific": "Canis latrans",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "weight_kg": 0.2625,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kojote",
+      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -637,9 +694,10 @@
       "name_de": "Weißstorch",
       "name_scientific": "Ciconia ciconia",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.11,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wei%C3%9Fstorch",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -647,9 +705,10 @@
       "name_de": "Kormoran",
       "name_scientific": "Phalacrocorax carbo",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 2.2,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kormoran_(Art)",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -661,8 +720,9 @@
         "Asien",
         "Ozeanien"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wanderfalke",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -670,8 +730,9 @@
       "name_de": "Kaffernbüffel",
       "name_scientific": "Syncerus caffer",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kaffernb%C3%BCffel",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 18
     },
     {
@@ -679,9 +740,10 @@
       "name_de": "Reh",
       "name_scientific": "Capreolus capreolus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 1.35,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Reh",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 10
     },
     {
@@ -689,9 +751,10 @@
       "name_de": "Uhu",
       "name_scientific": "Bubo bubo",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 2.38,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Uhu",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -699,9 +762,10 @@
       "name_de": "Fischadler",
       "name_scientific": "Pandion haliaetus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 1.4,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fischadler",
+      "diet": "Fleischfresser",
       "lifespan_years": 18
     },
     {
@@ -709,6 +773,7 @@
       "name_de": "Seidenspinner",
       "name_scientific": "Bombyx mori",
       "category": "Insekt",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seidenspinner",
       "diet": "Pflanzenfresser",
       "lifespan_years": 0.1
     },
@@ -717,9 +782,10 @@
       "name_de": "Vielfraß",
       "name_scientific": "Gulo gulo",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 10.6,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Vielfra%C3%9F",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -727,9 +793,10 @@
       "name_de": "Erdferkel",
       "name_scientific": "Orycteropus afer",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 1.9,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Erdferkel",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -737,9 +804,10 @@
       "name_de": "Turmfalke",
       "name_scientific": "Falco tinnunculus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.167,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Turmfalke",
+      "diet": "Fleischfresser",
       "lifespan_years": 4
     },
     {
@@ -747,6 +815,7 @@
       "name_de": "Westliche Honigbiene",
       "name_scientific": "Apis mellifera",
       "category": "Insekt",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Westliche_Honigbiene",
       "diet": "Pflanzenfresser",
       "lifespan_years": 0.1
     },
@@ -755,9 +824,10 @@
       "name_de": "Capybara",
       "name_scientific": "Hydrochoerus hydrochaeris",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 25.2,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Capybara",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 8
     },
     {
@@ -765,8 +835,9 @@
       "name_de": "Polarfuchs",
       "name_scientific": "Vulpes lagopus",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Polarfuchs",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -774,6 +845,7 @@
       "name_de": "Lama",
       "name_scientific": "Lama glama",
       "category": "Säugetier",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Lama_(Kamel)",
       "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
@@ -782,9 +854,10 @@
       "name_de": "Graugans",
       "name_scientific": "Anser anser",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 3.237,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graugans",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -792,9 +865,10 @@
       "name_de": "Sperber",
       "name_scientific": "Accipiter nisus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.13,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sperber_(Art)",
+      "diet": "Fleischfresser",
       "lifespan_years": 4
     },
     {
@@ -802,8 +876,9 @@
       "name_de": "Kranich",
       "name_scientific": "Grus grus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kranich",
+      "diet": "Allesfresser",
       "lifespan_years": 25
     },
     {
@@ -811,9 +886,10 @@
       "name_de": "Schleiereule",
       "name_scientific": "Tyto alba",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.58,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schleiereule",
+      "diet": "Fleischfresser",
       "lifespan_years": 4
     },
     {
@@ -821,9 +897,10 @@
       "name_de": "Stieglitz",
       "name_scientific": "Carduelis carduelis",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.0015300000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Stieglitz",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 3
     },
     {
@@ -835,8 +912,9 @@
         "Savanne",
         "Wald"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wildkatze",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -844,6 +922,7 @@
       "name_de": "Habicht",
       "name_scientific": "Astur gentilis",
       "category": "Vogel",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Habicht",
       "diet": "Fleischfresser",
       "lifespan_years": 10
     },
@@ -852,9 +931,10 @@
       "name_de": "Blässhuhn",
       "name_scientific": "Fulica atra",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.715,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bl%C3%A4sshuhn",
+      "diet": "Allesfresser",
       "lifespan_years": 6
     },
     {
@@ -862,9 +942,10 @@
       "name_de": "Saatkrähe",
       "name_scientific": "Corvus frugilegus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.4535,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Saatkr%C3%A4he",
+      "diet": "Allesfresser",
       "lifespan_years": 6
     },
     {
@@ -872,9 +953,10 @@
       "name_de": "Kiebitz",
       "name_scientific": "Vanellus vanellus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.025500000000000002,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kiebitz_(Art)",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -882,9 +964,10 @@
       "name_de": "Spießente",
       "name_scientific": "Anas acuta",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.9455,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Spie%C3%9Fente",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -892,9 +975,10 @@
       "name_de": "Schwarzmilan",
       "name_scientific": "Milvus migrans",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.44200000000000006,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzmilan",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -906,9 +990,10 @@
         "Wald",
         "Buschland"
       ],
-      "diet": "Allesfresser",
       "weight_kg": 0.026000000000000002,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Feldsperling",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -920,10 +1005,11 @@
         "Asien",
         "Ozeanien"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 70,
       "length_cm": 150,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Komodowaran",
+      "diet": "Fleischfresser",
       "lifespan_years": 30
     },
     {
@@ -931,9 +1017,10 @@
       "name_de": "Karpfen",
       "name_scientific": "Cyprinus carpio",
       "category": "Fisch",
-      "diet": "Allesfresser",
       "length_cm": 53,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Karpfen",
+      "diet": "Allesfresser",
       "lifespan_years": 25
     },
     {
@@ -945,8 +1032,9 @@
         "Savanne",
         "Wald"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Goldschakal",
+      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -954,8 +1042,9 @@
       "name_de": "Dromedar",
       "name_scientific": "Camelus dromedarius",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 450,
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Dromedar",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 40
     },
     {
@@ -963,8 +1052,9 @@
       "name_de": "Serval",
       "name_scientific": "Leptailurus serval",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Serval",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -972,9 +1062,10 @@
       "name_de": "Eisvogel",
       "name_scientific": "Alcedo atthis",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.0043,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eisvogel",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -982,9 +1073,10 @@
       "name_de": "Nachtigall",
       "name_scientific": "Luscinia megarhynchos",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.00265,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nachtigall",
+      "diet": "Fleischfresser",
       "lifespan_years": 4
     },
     {
@@ -992,8 +1084,9 @@
       "name_de": "Wildkaninchen",
       "name_scientific": "Oryctolagus cuniculus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wildkaninchen",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 2
     },
     {
@@ -1001,8 +1094,9 @@
       "name_de": "Blauer Pfau",
       "name_scientific": "Pavo cristatus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blauer_Pfau",
+      "diet": "Allesfresser",
       "lifespan_years": 20
     },
     {
@@ -1010,9 +1104,10 @@
       "name_de": "Gimpel",
       "name_scientific": "Pyrrhula pyrrhula",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.016705,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gimpel_(Art)",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 3
     },
     {
@@ -1020,6 +1115,7 @@
       "name_de": "Nebelkrähe",
       "name_scientific": "Corvus cornix",
       "category": "Vogel",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nebelkr%C3%A4he",
       "diet": "Allesfresser",
       "lifespan_years": 8
     },
@@ -1028,9 +1124,10 @@
       "name_de": "Zwergtaucher",
       "name_scientific": "Tachybaptus ruficollis",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.0137,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergtaucher",
+      "diet": "Fleischfresser",
       "lifespan_years": 4
     },
     {
@@ -1038,8 +1135,9 @@
       "name_de": "Amerikanischer Schwarzbär",
       "name_scientific": "Ursus americanus",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Amerikanischer_Schwarzb%C3%A4r",
+      "diet": "Allesfresser",
       "lifespan_years": 20
     },
     {
@@ -1047,8 +1145,9 @@
       "name_de": "Gemeiner Schimpanse",
       "name_scientific": "Pan troglodytes",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gemeiner_Schimpanse",
+      "diet": "Allesfresser",
       "lifespan_years": 40
     },
     {
@@ -1056,9 +1155,10 @@
       "name_de": "Bonobo",
       "name_scientific": "Pan paniscus",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "weight_kg": 38,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bonobo",
+      "diet": "Allesfresser",
       "lifespan_years": 40
     },
     {
@@ -1066,9 +1166,10 @@
       "name_de": "Teichralle",
       "name_scientific": "Gallinula chloropus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.34800000000000003,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Teichralle",
+      "diet": "Allesfresser",
       "lifespan_years": 4
     },
     {
@@ -1076,9 +1177,10 @@
       "name_de": "Mäusebussard",
       "name_scientific": "Buteo buteo",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.8575,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/M%C3%A4usebussard",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -1086,8 +1188,9 @@
       "name_de": "Schwarzstorch",
       "name_scientific": "Ciconia nigra",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzstorch",
+      "diet": "Fleischfresser",
       "lifespan_years": 18
     },
     {
@@ -1095,6 +1198,7 @@
       "name_de": "Alpaka",
       "name_scientific": "Vicugna pacos",
       "category": "Säugetier",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Alpaka",
       "diet": "Pflanzenfresser",
       "lifespan_years": 18
     },
@@ -1103,9 +1207,10 @@
       "name_de": "Okapi",
       "name_scientific": "Okapia johnstoni",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 136,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Okapi",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
     {
@@ -1113,10 +1218,11 @@
       "name_de": "Höckerschwan",
       "name_scientific": "Cygnus olor",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 10.735,
       "length_cm": 147.5,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/H%C3%B6ckerschwan",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 12
     },
     {
@@ -1124,9 +1230,10 @@
       "name_de": "Blaumeise",
       "name_scientific": "Cyanistes caeruleus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.006470000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blaumeise",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -1134,6 +1241,7 @@
       "name_de": "Trampeltier",
       "name_scientific": "Camelus bactrianus",
       "category": "Säugetier",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Trampeltier",
       "diet": "Pflanzenfresser",
       "lifespan_years": 40
     },
@@ -1142,8 +1250,9 @@
       "name_de": "Pottwal",
       "name_scientific": "Physeter macrocephalus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Pottwal",
+      "diet": "Fleischfresser",
       "lifespan_years": 60
     },
     {
@@ -1151,9 +1260,10 @@
       "name_de": "Auerhuhn",
       "name_scientific": "Tetrao urogallus",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 1.97,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Auerhuhn",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 8
     },
     {
@@ -1161,9 +1271,10 @@
       "name_de": "Buchfink",
       "name_scientific": "Fringilla coelebs",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.012079999999999999,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Buchfink",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -1174,9 +1285,10 @@
       "habitat": [
         "Feuchtgebiet"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 0.8300000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haubentaucher",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -1203,8 +1315,9 @@
         "Russland",
         "Republik China"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fasan",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -1212,9 +1325,10 @@
       "name_de": "Seeadler",
       "name_scientific": "Haliaeetus albicilla",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 4.014,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seeadler_(Art)",
+      "diet": "Fleischfresser",
       "lifespan_years": 25
     },
     {
@@ -1222,8 +1336,9 @@
       "name_de": "Baummarder",
       "name_scientific": "Martes martes",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Baummarder",
+      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -1231,8 +1346,9 @@
       "name_de": "Steinkauz",
       "name_scientific": "Athene noctua",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinkauz",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -1244,9 +1360,10 @@
         "Ozeanien",
         "Australien"
       ],
-      "diet": "Allesfresser",
       "weight_kg": 32.7,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_Emu",
+      "diet": "Allesfresser",
       "lifespan_years": 15
     },
     {
@@ -1254,9 +1371,10 @@
       "name_de": "Bartgeier",
       "name_scientific": "Gypaetus barbatus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 4.913,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bartgeier",
+      "diet": "Fleischfresser",
       "lifespan_years": 25
     },
     {
@@ -1264,8 +1382,9 @@
       "name_de": "Krickente",
       "name_scientific": "Anas crecca",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Krickente",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -1273,6 +1392,7 @@
       "name_de": "Stubenfliege",
       "name_scientific": "Musca domestica",
       "category": "Insekt",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Stubenfliege",
       "diet": "Allesfresser",
       "lifespan_years": 0.1
     },
@@ -1281,8 +1401,9 @@
       "name_de": "Impala",
       "name_scientific": "Aepyceros melampus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Impalas",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 13
     },
     {
@@ -1293,9 +1414,10 @@
       "habitat": [
         "Wald"
       ],
-      "diet": "Pflanzenfresser",
       "weight_kg": 95,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Asiatischer_Elefant",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 60
     },
     {
@@ -1303,8 +1425,9 @@
       "name_de": "Wisent",
       "name_scientific": "Bison bonasus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wisent",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
     {
@@ -1312,9 +1435,10 @@
       "name_de": "Amerikanischer Bison",
       "name_scientific": "Bison bison",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 645.029318,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Amerikanischer_Bison",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
     {
@@ -1322,8 +1446,9 @@
       "name_de": "Feldlerche",
       "name_scientific": "Alauda arvensis",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Feldlerche",
+      "diet": "Allesfresser",
       "lifespan_years": 4
     },
     {
@@ -1331,9 +1456,10 @@
       "name_de": "Hecht",
       "name_scientific": "Esox lucius",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "length_cm": 47.5,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hecht",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -1341,8 +1467,9 @@
       "name_de": "Silberreiher",
       "name_scientific": "Ardea alba",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Silberreiher",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -1350,9 +1477,10 @@
       "name_de": "Weißkopfseeadler",
       "name_scientific": "Haliaeetus leucocephalus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 4.13,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wei%C3%9Fkopfseeadler",
+      "diet": "Fleischfresser",
       "lifespan_years": 25
     },
     {
@@ -1360,8 +1488,9 @@
       "name_de": "Rebhuhn",
       "name_scientific": "Perdix perdix",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rebhuhn",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -1369,9 +1498,10 @@
       "name_de": "Schmutzgeier",
       "name_scientific": "Neophron percnopterus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 1.0355,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schmutzgeier",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -1379,9 +1509,10 @@
       "name_de": "Erdmännchen",
       "name_scientific": "Suricata suricatta",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "weight_kg": 0.37775,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Erdm%C3%A4nnchen",
+      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -1393,8 +1524,9 @@
         "Ozeanien",
         "Australien"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Beutelteufel",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -1402,9 +1534,10 @@
       "name_de": "Rostgans",
       "name_scientific": "Tadorna ferruginea",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 1.1,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rostgans",
+      "diet": "Allesfresser",
       "lifespan_years": 8
     },
     {
@@ -1412,8 +1545,9 @@
       "name_de": "Kuhreiher",
       "name_scientific": "Ardea ibis",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kuhreiher",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -1421,9 +1555,10 @@
       "name_de": "Ringeltaube",
       "name_scientific": "Columba palumbus",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.0189,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ringeltaube",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 5
     },
     {
@@ -1431,9 +1566,10 @@
       "name_de": "Honigdachs",
       "name_scientific": "Mellivora capensis",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "weight_kg": 12,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Honigdachs",
+      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -1441,9 +1577,10 @@
       "name_de": "Ozelot",
       "name_scientific": "Leopardus pardalis",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 13.5,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ozelot",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -1454,8 +1591,9 @@
       "habitat": [
         "Wald"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rohrkatze",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -1463,9 +1601,10 @@
       "name_de": "Nachtreiher",
       "name_scientific": "Nycticorax nycticorax",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.636,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nachtreiher",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -1473,8 +1612,9 @@
       "name_de": "Schnee-Eule",
       "name_scientific": "Bubo scandiacus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneeeule",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -1482,9 +1622,10 @@
       "name_de": "Rohrdommel",
       "name_scientific": "Botaurus stellaris",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 2.017,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rohrdommel",
+      "diet": "Fleischfresser",
       "lifespan_years": 8
     },
     {
@@ -1492,8 +1633,9 @@
       "name_de": "Schafstelze",
       "name_scientific": "Motacilla flava",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schafstelze",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -1501,9 +1643,10 @@
       "name_de": "Mauersegler",
       "name_scientific": "Apus apus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.0035,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mauersegler",
+      "diet": "Fleischfresser",
       "lifespan_years": 8
     },
     {
@@ -1517,8 +1660,9 @@
         "Berg",
         "Steppe"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Manul",
+      "diet": "Fleischfresser",
       "lifespan_years": 8
     },
     {
@@ -1526,8 +1670,9 @@
       "name_de": "Afrikanischer Wildhund",
       "name_scientific": "Lycaon pictus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanischer_Wildhund",
+      "diet": "Fleischfresser",
       "lifespan_years": 11
     },
     {
@@ -1538,8 +1683,9 @@
       "habitat": [
         "Wald"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kragenb%C3%A4r",
+      "diet": "Allesfresser",
       "lifespan_years": 25
     },
     {
@@ -1547,8 +1693,9 @@
       "name_de": "Afrikanischer Buschelefant",
       "name_scientific": "Loxodonta africana",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanischer_Elefant",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 60
     },
     {
@@ -1556,9 +1703,10 @@
       "name_de": "Seidenreiher",
       "name_scientific": "Egretta garzetta",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.28,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seidenreiher",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -1566,9 +1714,10 @@
       "name_de": "Gänsegeier",
       "name_scientific": "Gyps fulvus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 4.29,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/G%C3%A4nsegeier",
+      "diet": "Fleischfresser",
       "lifespan_years": 25
     },
     {
@@ -1576,8 +1725,9 @@
       "name_de": "Schnatterente",
       "name_scientific": "Mareca strepera",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schnatterente",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 8
     },
     {
@@ -1585,9 +1735,10 @@
       "name_de": "Singschwan",
       "name_scientific": "Cygnus cygnus",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 8.75,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Singschwan",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 12
     },
     {
@@ -1595,9 +1746,10 @@
       "name_de": "Türkentaube",
       "name_scientific": "Streptopelia decaocto",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.1011,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/T%C3%BCrkentaube",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 5
     },
     {
@@ -1605,9 +1757,10 @@
       "name_de": "Purpurreiher",
       "name_scientific": "Ardea purpurea",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.051000000000000004,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Purpurreiher",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -1615,9 +1768,10 @@
       "name_de": "Bienenfresser",
       "name_scientific": "Merops apiaster",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.006500000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bienenfresser_(Art)",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -1625,9 +1779,10 @@
       "name_de": "Rosapelikan",
       "name_scientific": "Pelecanus onocrotalus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 7.59,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rosapelikan",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -1635,9 +1790,10 @@
       "name_de": "Waldschnepfe",
       "name_scientific": "Scolopax rusticola",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.0245,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldschnepfe",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -1645,8 +1801,9 @@
       "name_de": "Aaskrähe",
       "name_scientific": "Corvus corone",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rabenkr%C3%A4he",
+      "diet": "Allesfresser",
       "lifespan_years": 8
     },
     {
@@ -1657,8 +1814,9 @@
       "habitat": [
         "Land"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kreuzotter",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -1666,8 +1824,9 @@
       "name_de": "Feldhase",
       "name_scientific": "Lepus europaeus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Feldhase",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 5
     },
     {
@@ -1679,9 +1838,10 @@
         "Ozeanien",
         "Australien"
       ],
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.00215,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wellensittich",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 8
     },
     {
@@ -1689,8 +1849,9 @@
       "name_de": "Pfeifente",
       "name_scientific": "Mareca penelope",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Pfeifente",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 8
     },
     {
@@ -1698,9 +1859,10 @@
       "name_de": "Baumfalke",
       "name_scientific": "Falco subbuteo",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.1815,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Baumfalke",
+      "diet": "Fleischfresser",
       "lifespan_years": 7
     },
     {
@@ -1708,9 +1870,10 @@
       "name_de": "Wachtelkönig",
       "name_scientific": "Crex crex",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.0132,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wachtelk%C3%B6nig",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -1718,6 +1881,7 @@
       "name_de": "Bettwanze",
       "name_scientific": "Cimex lectularius",
       "category": "Insekt",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bettwanze",
       "diet": "Fleischfresser",
       "lifespan_years": 0.5
     },
@@ -1726,8 +1890,9 @@
       "name_de": "Rothund",
       "name_scientific": "Cuon alpinus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rothund",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -1735,9 +1900,10 @@
       "name_de": "Narwal",
       "name_scientific": "Monodon monoceros",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 80,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Narwal",
+      "diet": "Fleischfresser",
       "lifespan_years": 40
     },
     {
@@ -1745,9 +1911,10 @@
       "name_de": "Turteltaube",
       "name_scientific": "Streptopelia turtur",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.0721,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Turteltaube",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 3
     },
     {
@@ -1755,9 +1922,10 @@
       "name_de": "Sekretär",
       "name_scientific": "Sagittarius serpentarius",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 2.0909999999999997,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sekret%C3%A4r_(Vogel)",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -1765,8 +1933,9 @@
       "name_de": "Löffelente",
       "name_scientific": "Spatula clypeata",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/L%C3%B6ffelente",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -1774,8 +1943,9 @@
       "name_de": "Knäkente",
       "name_scientific": "Spatula querquedula",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kn%C3%A4kente",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -1788,8 +1958,9 @@
         "Schotterbank",
         "Steinbruch"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Uferschwalbe",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -1797,8 +1968,9 @@
       "name_de": "Fennek",
       "name_scientific": "Vulpes zerda",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fennek",
+      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -1806,10 +1978,11 @@
       "name_de": "Buckelwal",
       "name_scientific": "Megaptera novaeangliae",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 23250,
       "length_cm": 1025,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Buckelwal",
+      "diet": "Fleischfresser",
       "lifespan_years": 45
     },
     {
@@ -1817,8 +1990,9 @@
       "name_de": "Breitmaulnashorn",
       "name_scientific": "Ceratotherium simum",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Breitmaulnashorn",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 40
     },
     {
@@ -1829,9 +2003,10 @@
       "habitat": [
         "Wald"
       ],
-      "diet": "Allesfresser",
       "weight_kg": 0.0275,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zobel",
+      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -1839,9 +2014,10 @@
       "name_de": "Rosaflamingo",
       "name_scientific": "Phoenicopterus roseus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "length_cm": 132.5,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rosaflamingo",
+      "diet": "Allesfresser",
       "lifespan_years": 25
     },
     {
@@ -1849,9 +2025,10 @@
       "name_de": "Bekassine",
       "name_scientific": "Gallinago gallinago",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.1195,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bekassine",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -1859,8 +2036,9 @@
       "name_de": "Zaunkönig",
       "name_scientific": "Troglodytes troglodytes",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zaunk%C3%B6nig",
+      "diet": "Fleischfresser",
       "lifespan_years": 2
     },
     {
@@ -1868,9 +2046,10 @@
       "name_de": "Rotschenkel",
       "name_scientific": "Tringa totanus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.07565,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotschenkel",
+      "diet": "Fleischfresser",
       "lifespan_years": 8
     },
     {
@@ -1878,8 +2057,9 @@
       "name_de": "Waldohreule",
       "name_scientific": "Asio otus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldohreule",
+      "diet": "Fleischfresser",
       "lifespan_years": 8
     },
     {
@@ -1887,9 +2067,10 @@
       "name_de": "Rotluchs",
       "name_scientific": "Lynx rufus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 0.31,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotluchs",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -1897,9 +2078,10 @@
       "name_de": "Damhirsch",
       "name_scientific": "Dama dama",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 5,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Damhirsch",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -1907,9 +2089,10 @@
       "name_de": "Spitzmaulnashorn",
       "name_scientific": "Diceros bicornis",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 36,
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Spitzmaulnashorn",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 37
     },
     {
@@ -1917,8 +2100,9 @@
       "name_de": "Bisamratte",
       "name_scientific": "Ondatra zibethicus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bisamratte",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 3
     },
     {
@@ -1926,9 +2110,10 @@
       "name_de": "Mönchsgeier",
       "name_scientific": "Aegypius monachus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.243,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/M%C3%B6nchsgeier",
+      "diet": "Fleischfresser",
       "lifespan_years": 25
     },
     {
@@ -1936,9 +2121,10 @@
       "name_de": "Brauner Sichler",
       "name_scientific": "Plegadis falcinellus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.633,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sichler_(Art)",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -1950,8 +2136,9 @@
         "Ozeanien",
         "Australien"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kakapo",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 60
     },
     {
@@ -1959,9 +2146,10 @@
       "name_de": "Brandgans",
       "name_scientific": "Tadorna tadorna",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 1.043,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Brandgans",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -1969,9 +2157,10 @@
       "name_de": "Buntspecht",
       "name_scientific": "Dendrocopos major",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.047349999999999996,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Buntspecht",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -1982,9 +2171,10 @@
       "habitat": [
         "Arktischer Ozean"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 60,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wei%C3%9Fwal",
+      "diet": "Fleischfresser",
       "lifespan_years": 40
     },
     {
@@ -1992,8 +2182,9 @@
       "name_de": "Moschusochse",
       "name_scientific": "Ovibos moschatus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Moschusochse",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -2001,8 +2192,9 @@
       "name_de": "Europäischer Iltis",
       "name_scientific": "Mustela putorius",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Iltis",
+      "diet": "Fleischfresser",
       "lifespan_years": 4
     },
     {
@@ -2010,9 +2202,10 @@
       "name_de": "Merlin",
       "name_scientific": "Falco columbarius",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.187,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Merlin_(Vogel)",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -2020,9 +2213,10 @@
       "name_de": "Rotmilan",
       "name_scientific": "Milvus milvus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 1.012,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotmilan",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -2030,8 +2224,9 @@
       "name_de": "Andenkondor",
       "name_scientific": "Vultur gryphus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Andenkondor",
+      "diet": "Fleischfresser",
       "lifespan_years": 50
     },
     {
@@ -2039,9 +2234,10 @@
       "name_de": "Stelzenläufer",
       "name_scientific": "Himantopus himantopus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.09090000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Stelzenl%C3%A4ufer",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -2049,9 +2245,10 @@
       "name_de": "Bluthänfling",
       "name_scientific": "Linaria cannabina",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.010329999999999999,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bluth%C3%A4nfling",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 3
     },
     {
@@ -2059,9 +2256,10 @@
       "name_de": "Kornweihe",
       "name_scientific": "Circus cyaneus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.4365,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kornweihe",
+      "diet": "Fleischfresser",
       "lifespan_years": 8
     },
     {
@@ -2069,9 +2267,10 @@
       "name_de": "Lachmöwe",
       "name_scientific": "Chroicocephalus ridibundus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.28049999999999997,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Lachm%C3%B6we",
+      "diet": "Allesfresser",
       "lifespan_years": 12
     },
     {
@@ -2079,9 +2278,10 @@
       "name_de": "Goldammer",
       "name_scientific": "Emberiza citrinella",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.00294,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Goldammer",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -2089,9 +2289,10 @@
       "name_de": "Reiherente",
       "name_scientific": "Aythya fuligula",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.056,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Reiherente",
+      "diet": "Fleischfresser",
       "lifespan_years": 8
     },
     {
@@ -2099,8 +2300,9 @@
       "name_de": "Flussuferläufer",
       "name_scientific": "Actitis hypoleucos",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Flussuferl%C3%A4ufer",
+      "diet": "Fleischfresser",
       "lifespan_years": 8
     },
     {
@@ -2111,8 +2313,9 @@
       "habitat": [
         "Berg"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/G%C3%A4mse",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -2120,8 +2323,9 @@
       "name_de": "Braunbrustigel",
       "name_scientific": "Erinaceus europaeus",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Braunbrustigel",
+      "diet": "Allesfresser",
       "lifespan_years": 4
     },
     {
@@ -2132,8 +2336,9 @@
       "habitat": [
         "Dschungel"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nebelparder",
+      "diet": "Fleischfresser",
       "lifespan_years": 11
     },
     {
@@ -2141,8 +2346,9 @@
       "name_de": "Bengalkatze",
       "name_scientific": "Prionailurus bengalensis",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bengalkatze",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -2154,9 +2360,10 @@
         "Ozeanien",
         "Australien"
       ],
-      "diet": "Pflanzenfresser",
       "weight_kg": 5.1,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzschwan",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
     {
@@ -2164,9 +2371,10 @@
       "name_de": "Schwarzspecht",
       "name_scientific": "Dryocopus martius",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.011800000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzspecht",
+      "diet": "Fleischfresser",
       "lifespan_years": 8
     },
     {
@@ -2174,9 +2382,10 @@
       "name_de": "Löffler",
       "name_scientific": "Platalea leucorodia",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.076,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/L%C3%B6ffler",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -2184,9 +2393,10 @@
       "name_de": "Erlenzeisig",
       "name_scientific": "Spinus spinus",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.0075450000000000005,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Erlenzeisig",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 3
     },
     {
@@ -2194,9 +2404,10 @@
       "name_de": "Tafelente",
       "name_scientific": "Aythya ferina",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.066,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tafelente",
+      "diet": "Allesfresser",
       "lifespan_years": 8
     },
     {
@@ -2204,8 +2415,9 @@
       "name_de": "Nilkrokodil",
       "name_scientific": "Crocodylus niloticus",
       "category": "Reptil",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nilkrokodil",
+      "diet": "Fleischfresser",
       "lifespan_years": 50
     },
     {
@@ -2213,8 +2425,9 @@
       "name_de": "Leistenkrokodil",
       "name_scientific": "Crocodylus porosus",
       "category": "Reptil",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Leistenkrokodil",
+      "diet": "Fleischfresser",
       "lifespan_years": 70
     },
     {
@@ -2222,8 +2435,9 @@
       "name_de": "Europäischer Wels",
       "name_scientific": "Silurus glanis",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Wels",
+      "diet": "Fleischfresser",
       "lifespan_years": 40
     },
     {
@@ -2231,8 +2445,9 @@
       "name_de": "Schwertfisch",
       "name_scientific": "Xiphias gladius",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwertfisch",
+      "diet": "Fleischfresser",
       "lifespan_years": 9
     },
     {
@@ -2243,8 +2458,9 @@
       "habitat": [
         "Buschland"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Marderhund",
+      "diet": "Allesfresser",
       "lifespan_years": 6
     },
     {
@@ -2252,8 +2468,9 @@
       "name_de": "Sandkatze",
       "name_scientific": "Felis margarita",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sandkatze",
+      "diet": "Fleischfresser",
       "lifespan_years": 13
     },
     {
@@ -2264,8 +2481,9 @@
       "habitat": [
         "Wald"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Biber",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -2273,8 +2491,9 @@
       "name_de": "Steinmarder",
       "name_scientific": "Martes foina",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinmarder",
+      "diet": "Allesfresser",
       "lifespan_years": 8
     },
     {
@@ -2282,9 +2501,10 @@
       "name_de": "Birkhuhn",
       "name_scientific": "Lyrurus tetrix",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.925,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Birkhuhn",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 6
     },
     {
@@ -2292,9 +2512,10 @@
       "name_de": "Kaiserpinguin",
       "name_scientific": "Aptenodytes forsteri",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.425,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kaiserpinguin",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -2302,9 +2523,10 @@
       "name_de": "Schlangenadler",
       "name_scientific": "Circaetus gallicus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.136,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schlangenadler",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -2312,9 +2534,10 @@
       "name_de": "Mandarinente",
       "name_scientific": "Aix galericulata",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.041,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mandarinente",
+      "diet": "Allesfresser",
       "lifespan_years": 8
     },
     {
@@ -2322,9 +2545,10 @@
       "name_de": "Steppenadler",
       "name_scientific": "Aquila nipalensis",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 2.459,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steppenadler",
+      "diet": "Fleischfresser",
       "lifespan_years": 16
     },
     {
@@ -2332,9 +2556,10 @@
       "name_de": "Bankivahuhn",
       "name_scientific": "Gallus gallus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.6719999999999999,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bankivahuhn",
+      "diet": "Allesfresser",
       "lifespan_years": 6
     },
     {
@@ -2342,9 +2567,10 @@
       "name_de": "Kampfläufer",
       "name_scientific": "Calidris pugnax",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.10200000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kampfl%C3%A4ufer",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -2352,9 +2578,10 @@
       "name_de": "Waldkauz",
       "name_scientific": "Strix aluco",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.475,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldkauz",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -2362,9 +2589,10 @@
       "name_de": "Rohrweihe",
       "name_scientific": "Circus aeruginosus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.04,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rohrweihe",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -2372,8 +2600,9 @@
       "name_de": "Schuhschnabel",
       "name_scientific": "Balaeniceps rex",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schuhschnabel",
+      "diet": "Fleischfresser",
       "lifespan_years": 35
     },
     {
@@ -2381,9 +2610,10 @@
       "name_de": "Großer Brachvogel",
       "name_scientific": "Numenius arquata",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.742,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_Brachvogel",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -2391,8 +2621,9 @@
       "name_de": "Königskobra",
       "name_scientific": "Ophiophagus hannah",
       "category": "Reptil",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/K%C3%B6nigskobra",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -2403,9 +2634,10 @@
       "habitat": [
         "Meer"
       ],
-      "diet": "Pflanzenfresser",
       "weight_kg": 200,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Dugong",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 70
     },
     {
@@ -2418,8 +2650,9 @@
         "Afrika",
         "Amerika"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Pardelluchs",
+      "diet": "Fleischfresser",
       "lifespan_years": 13
     },
     {
@@ -2434,8 +2667,9 @@
         "Asien",
         "Ozeanien"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Malaienb%C3%A4r",
+      "diet": "Allesfresser",
       "lifespan_years": 25
     },
     {
@@ -2443,8 +2677,9 @@
       "name_de": "Wapiti",
       "name_scientific": "Cervus canadensis",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wapiti",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -2456,8 +2691,9 @@
         "Landfläche",
         "Buschland"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wanderratte",
+      "diet": "Allesfresser",
       "lifespan_years": 1.5
     },
     {
@@ -2465,8 +2701,9 @@
       "name_de": "Sumpfohreule",
       "name_scientific": "Asio flammeus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sumpfohreule",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -2474,9 +2711,10 @@
       "name_de": "Kanadagans",
       "name_scientific": "Branta canadensis",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 3.814,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kanadagans",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -2484,8 +2722,9 @@
       "name_de": "Europäischer Aal",
       "name_scientific": "Anguilla anguilla",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Aal",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -2493,8 +2732,9 @@
       "name_de": "Guanako",
       "name_scientific": "Lama guanicoe",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Guanako",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 18
     },
     {
@@ -2502,8 +2742,9 @@
       "name_de": "Kernbeißer",
       "name_scientific": "Coccothraustes coccothraustes",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kernbei%C3%9Fer",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 3
     },
     {
@@ -2511,9 +2752,10 @@
       "name_de": "Grünfink",
       "name_scientific": "Chloris chloris",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.00217,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gr%C3%BCnfink",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 3
     },
     {
@@ -2521,9 +2763,10 @@
       "name_de": "Wendehals",
       "name_scientific": "Jynx torquilla",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.01985,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wendehals_(Vogel)",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -2531,8 +2774,9 @@
       "name_de": "Mehlschwalbe",
       "name_scientific": "Delichon urbicum",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mehlschwalbe",
+      "diet": "Fleischfresser",
       "lifespan_years": 4
     },
     {
@@ -2540,9 +2784,10 @@
       "name_de": "Säbelschnäbler",
       "name_scientific": "Recurvirostra avosetta",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.0317,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/S%C3%A4belschn%C3%A4bler",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -2550,9 +2795,10 @@
       "name_de": "Singdrossel",
       "name_scientific": "Turdus philomelos",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.03900000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Singdrossel",
+      "diet": "Allesfresser",
       "lifespan_years": 4
     },
     {
@@ -2560,8 +2806,9 @@
       "name_de": "Silbermöwe",
       "name_scientific": "Larus argentatus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Silberm%C3%B6we",
+      "diet": "Allesfresser",
       "lifespan_years": 15
     },
     {
@@ -2572,10 +2819,11 @@
       "habitat": [
         "coastal margin"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 32.5,
       "length_cm": 144,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seeotter",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -2583,9 +2831,10 @@
       "name_de": "Zwergtrappe",
       "name_scientific": "Tetrax tetrax",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.041,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergtrappe",
+      "diet": "Allesfresser",
       "lifespan_years": 8
     },
     {
@@ -2593,9 +2842,10 @@
       "name_de": "Wacholderdrossel",
       "name_scientific": "Turdus pilaris",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.0559,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wacholderdrossel",
+      "diet": "Allesfresser",
       "lifespan_years": 4
     },
     {
@@ -2603,8 +2853,9 @@
       "name_de": "Blaukehlchen",
       "name_scientific": "Luscinia svecica",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blaukehlchen",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -2612,8 +2863,9 @@
       "name_de": "Gartenrotschwanz",
       "name_scientific": "Phoenicurus phoenicurus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gartenrotschwanz",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -2621,8 +2873,9 @@
       "name_de": "Ziegenmelker",
       "name_scientific": "Caprimulgus europaeus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nachtschwalbe",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -2630,9 +2883,10 @@
       "name_de": "Flussregenpfeifer",
       "name_scientific": "Charadrius dubius",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.0077,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Flussregenpfeifer",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -2640,8 +2894,9 @@
       "name_de": "Haubenlerche",
       "name_scientific": "Galerida cristata",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haubenlerche",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -2649,8 +2904,9 @@
       "name_de": "Axolotl",
       "name_scientific": "Ambystoma mexicanum",
       "category": "Amphibie",
-      "diet": "Fleischfresser",
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Axolotl",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -2658,8 +2914,9 @@
       "name_de": "Schleie",
       "name_scientific": "Tinca tinca",
       "category": "Fisch",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schleie",
+      "diet": "Allesfresser",
       "lifespan_years": 15
     },
     {
@@ -2667,8 +2924,9 @@
       "name_de": "Guppy",
       "name_scientific": "Poecilia reticulata",
       "category": "Fisch",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Guppy",
+      "diet": "Allesfresser",
       "lifespan_years": 2
     },
     {
@@ -2676,8 +2934,9 @@
       "name_de": "Forelle",
       "name_scientific": "Salmo trutta",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Forelle",
+      "diet": "Fleischfresser",
       "lifespan_years": 8
     },
     {
@@ -2688,8 +2947,9 @@
       "habitat": [
         "Grasland"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Saiga",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 8
     },
     {
@@ -2697,9 +2957,10 @@
       "name_de": "Kleiber",
       "name_scientific": "Sitta europaea",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.012625,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kleiber_(Art)",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -2707,9 +2968,10 @@
       "name_de": "Grünspecht",
       "name_scientific": "Picus viridis",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.10095,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gr%C3%BCnspecht",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -2717,9 +2979,10 @@
       "name_de": "Östlicher Kaiseradler",
       "name_scientific": "Aquila heliaca",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 2.585,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kaiseradler_(Art)",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -2727,9 +2990,10 @@
       "name_de": "Wespenbussard",
       "name_scientific": "Pernis apivorus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.049,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wespenbussard",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -2737,9 +3001,10 @@
       "name_de": "Großtrappe",
       "name_scientific": "Otis tarda",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.14300000000000002,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Ftrappe",
+      "diet": "Allesfresser",
       "lifespan_years": 15
     },
     {
@@ -2747,8 +3012,9 @@
       "name_de": "Wasseramsel",
       "name_scientific": "Cinclus cinclus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wasseramsel",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -2756,8 +3022,9 @@
       "name_de": "Prachttaucher",
       "name_scientific": "Gavia arctica",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Prachttaucher",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -2765,8 +3032,9 @@
       "name_de": "Tannenhäher",
       "name_scientific": "Nucifraga caryocatactes",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tannenh%C3%A4her",
+      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -2774,9 +3042,10 @@
       "name_de": "Austernfischer",
       "name_scientific": "Haematopus ostralegus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.28235,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Austernfischer",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -2784,8 +3053,9 @@
       "name_de": "Seidenschwanz",
       "name_scientific": "Bombycilla garrulus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seidenschwanz_(Art)",
+      "diet": "Allesfresser",
       "lifespan_years": 4
     },
     {
@@ -2793,9 +3063,10 @@
       "name_de": "Papageitaucher",
       "name_scientific": "Fratercula arctica",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.376,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Papageitaucher",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -2803,8 +3074,9 @@
       "name_de": "Gangesgavial",
       "name_scientific": "Gavialis gangeticus",
       "category": "Reptil",
-      "diet": "Fleischfresser",
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gangesgavial",
+      "diet": "Fleischfresser",
       "lifespan_years": 45
     },
     {
@@ -2812,8 +3084,9 @@
       "name_de": "Brachse",
       "name_scientific": "Abramis brama",
       "category": "Fisch",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Brasse_(Fisch)",
+      "diet": "Allesfresser",
       "lifespan_years": 15
     },
     {
@@ -2825,8 +3098,9 @@
         "Savanne",
         "Wald"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gaur",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
     {
@@ -2834,8 +3108,9 @@
       "name_de": "Tüpfelhyäne",
       "name_scientific": "Crocuta crocuta",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/T%C3%BCpfelhy%C3%A4ne",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -2843,8 +3118,9 @@
       "name_de": "Europäischer Maulwurf",
       "name_scientific": "Talpa europaea",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Maulwurf",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -2855,8 +3131,9 @@
       "habitat": [
         "Wald"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Panzernashorn",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 40
     },
     {
@@ -2864,8 +3141,9 @@
       "name_de": "Schwanzmeise",
       "name_scientific": "Aegithalos caudatus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwanzmeise",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -2873,8 +3151,9 @@
       "name_de": "Schwarzhalstaucher",
       "name_scientific": "Podiceps nigricollis",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzhalstaucher",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -2882,9 +3161,10 @@
       "name_de": "Streifengans",
       "name_scientific": "Anser indicus",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 2.23,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Streifengans",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -2892,9 +3172,10 @@
       "name_de": "Sturmmöwe",
       "name_scientific": "Larus canus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.3865,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sturmm%C3%B6we",
+      "diet": "Allesfresser",
       "lifespan_years": 15
     },
     {
@@ -2902,9 +3183,10 @@
       "name_de": "Saatgans",
       "name_scientific": "Anser fabalis",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 2.843,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldsaatgans",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 12
     },
     {
@@ -2912,9 +3194,10 @@
       "name_de": "Grünschenkel",
       "name_scientific": "Tringa nebularia",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.10175000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gr%C3%BCnschenkel",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -2922,8 +3205,9 @@
       "name_de": "Flussseeschwalbe",
       "name_scientific": "Sterna hirundo",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Flussseeschwalbe",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -2931,8 +3215,9 @@
       "name_de": "Ringelnatter",
       "name_scientific": "Natrix natrix",
       "category": "Reptil",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ringelnatter",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -2940,8 +3225,9 @@
       "name_de": "Flussbarsch",
       "name_scientific": "Perca fluviatilis",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Flussbarsch",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -2949,8 +3235,9 @@
       "name_de": "Atlantischer Lachs",
       "name_scientific": "Salmo salar",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Atlantischer_Lachs",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -2958,8 +3245,9 @@
       "name_de": "Kanadischer Luchs",
       "name_scientific": "Lynx canadensis",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kanadischer_Luchs",
+      "diet": "Fleischfresser",
       "lifespan_years": 13
     },
     {
@@ -2971,8 +3259,9 @@
         "Wald",
         "Savanne"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rhesusaffe",
+      "diet": "Allesfresser",
       "lifespan_years": 25
     },
     {
@@ -2980,8 +3269,9 @@
       "name_de": "Vikunja",
       "name_scientific": "Vicugna vicugna",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Vikunja",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 18
     },
     {
@@ -2989,9 +3279,10 @@
       "name_de": "Nutria",
       "name_scientific": "Myocastor coypus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 6.36,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nutria",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 4
     },
     {
@@ -2999,8 +3290,9 @@
       "name_de": "Zwergohreule",
       "name_scientific": "Otus scops",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergohreule",
+      "diet": "Fleischfresser",
       "lifespan_years": 8
     },
     {
@@ -3008,8 +3300,9 @@
       "name_de": "Gerfalke",
       "name_scientific": "Falco rusticolus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gerfalke",
+      "diet": "Fleischfresser",
       "lifespan_years": 14
     },
     {
@@ -3017,8 +3310,9 @@
       "name_de": "Misteldrossel",
       "name_scientific": "Turdus viscivorus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Misteldrossel",
+      "diet": "Allesfresser",
       "lifespan_years": 4
     },
     {
@@ -3026,8 +3320,9 @@
       "name_de": "Blauracke",
       "name_scientific": "Coracias garrulus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blauracke",
+      "diet": "Fleischfresser",
       "lifespan_years": 9
     },
     {
@@ -3035,9 +3330,10 @@
       "name_de": "Rotfußfalke",
       "name_scientific": "Falco vespertinus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.15,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotfu%C3%9Ffalke",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -3045,9 +3341,10 @@
       "name_de": "Triel",
       "name_scientific": "Burhinus oedicnemus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.042,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Triel_(Art)",
+      "diet": "Fleischfresser",
       "lifespan_years": 16
     },
     {
@@ -3055,9 +3352,10 @@
       "name_de": "Wasserralle",
       "name_scientific": "Rallus aquaticus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.1115,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wasserralle",
+      "diet": "Allesfresser",
       "lifespan_years": 6
     },
     {
@@ -3065,9 +3363,10 @@
       "name_de": "Rosenstar",
       "name_scientific": "Pastor roseus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.0669,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rosenstar",
+      "diet": "Allesfresser",
       "lifespan_years": 6
     },
     {
@@ -3075,8 +3374,9 @@
       "name_de": "Steinschmätzer (Art)",
       "name_scientific": "Oenanthe oenanthe",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinschm%C3%A4tzer_(Art)",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -3084,8 +3384,9 @@
       "name_de": "Eisente",
       "name_scientific": "Clangula hyemalis",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eisente",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -3093,9 +3394,10 @@
       "name_de": "Sterntaucher",
       "name_scientific": "Gavia stellata",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 1.6030000000000002,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sterntaucher",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -3103,9 +3405,10 @@
       "name_de": "Zwergschnepfe",
       "name_scientific": "Lymnocryptes minimus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.05020000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergschnepfe",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -3113,8 +3416,9 @@
       "name_de": "Hausrotschwanz",
       "name_scientific": "Phoenicurus ochruros",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausrotschwanz",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -3122,9 +3426,10 @@
       "name_de": "Uferschnepfe",
       "name_scientific": "Limosa limosa",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.264,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Uferschnepfe",
+      "diet": "Fleischfresser",
       "lifespan_years": 16
     },
     {
@@ -3132,8 +3437,9 @@
       "name_de": "Westliche Blindschleiche",
       "name_scientific": "Anguis fragilis",
       "category": "Reptil",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blindschleiche",
+      "diet": "Fleischfresser",
       "lifespan_years": 25
     },
     {
@@ -3141,8 +3447,9 @@
       "name_de": "Makrele",
       "name_scientific": "Scomber scombrus",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Makrele",
+      "diet": "Fleischfresser",
       "lifespan_years": 17
     },
     {
@@ -3153,8 +3460,9 @@
       "habitat": [
         "Wald"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Java-Nashorn",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 35
     },
     {
@@ -3162,8 +3470,9 @@
       "name_de": "Hirschziegenantilope",
       "name_scientific": "Antilope cervicapra",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hirschziegenantilope",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 12
     },
     {
@@ -3171,8 +3480,9 @@
       "name_de": "Fischkatze",
       "name_scientific": "Prionailurus viverrinus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fischkatze",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -3180,6 +3490,7 @@
       "name_de": "Afrikanische Goldkatze",
       "name_scientific": "Profelis aurata",
       "category": "Säugetier",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanische_Goldkatze",
       "diet": "Fleischfresser",
       "lifespan_years": 12
     },
@@ -3188,9 +3499,10 @@
       "name_de": "Springböcke",
       "name_scientific": "Antidorcas marsupialis",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 37,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Springb%C3%B6cke",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 10
     },
     {
@@ -3198,8 +3510,9 @@
       "name_de": "Blässgans",
       "name_scientific": "Anser albifrons",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bl%C3%A4ssgans",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -3207,9 +3520,10 @@
       "name_de": "Haselhuhn",
       "name_scientific": "Tetrastes bonasia",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.194,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haselhuhn",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 6
     },
     {
@@ -3217,9 +3531,10 @@
       "name_de": "Zwergadler",
       "name_scientific": "Hieraaetus pennatus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.709,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergadler",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -3227,9 +3542,10 @@
       "name_de": "Rötelfalke",
       "name_scientific": "Falco naumanni",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.148,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/R%C3%B6telfalke",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -3237,8 +3553,9 @@
       "name_de": "Regenbrachvogel",
       "name_scientific": "Numenius phaeopus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Regenbrachvogel",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -3246,9 +3563,10 @@
       "name_de": "Waldwasserläufer",
       "name_scientific": "Tringa ochropus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.075,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldwasserl%C3%A4ufer",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -3256,8 +3574,9 @@
       "name_de": "Wildziege",
       "name_scientific": "Capra aegagrus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wildziege",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -3271,8 +3590,9 @@
       "continent": [
         "Asien"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Yak",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
     {
@@ -3280,9 +3600,10 @@
       "name_de": "Sakerfalke",
       "name_scientific": "Falco cherrug",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.875,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/W%C3%BCrgfalke",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -3290,8 +3611,9 @@
       "name_de": "Blauhäher",
       "name_scientific": "Cyanocitta cristata",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blauh%C3%A4her",
+      "diet": "Allesfresser",
       "lifespan_years": 7
     },
     {
@@ -3299,8 +3621,9 @@
       "name_de": "Krauskopfpelikan",
       "name_scientific": "Pelecanus crispus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Krauskopfpelikan",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -3308,9 +3631,10 @@
       "name_de": "Mönchsgrasmücke",
       "name_scientific": "Sylvia atricapilla",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.010145000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/M%C3%B6nchsgrasm%C3%BCcke",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -3318,8 +3642,9 @@
       "name_de": "Hoatzin",
       "name_scientific": "Opisthocomus hoazin",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hoatzin",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -3327,9 +3652,10 @@
       "name_de": "Mittelsäger",
       "name_scientific": "Mergus serrator",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.908,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mittels%C3%A4ger",
+      "diet": "Fleischfresser",
       "lifespan_years": 9
     },
     {
@@ -3337,9 +3663,10 @@
       "name_de": "Tüpfelsumpfhuhn",
       "name_scientific": "Porzana porzana",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.045450000000000004,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/T%C3%BCpfelsumpfhuhn",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -3347,9 +3674,10 @@
       "name_de": "Zwergdommel",
       "name_scientific": "Ixobrychus minutus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.08,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergdommel",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -3357,9 +3685,10 @@
       "name_de": "Hohltaube",
       "name_scientific": "Columba oenas",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.0167,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hohltaube",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 6
     },
     {
@@ -3367,9 +3696,10 @@
       "name_de": "Fichtenkreuzschnabel",
       "name_scientific": "Loxia curvirostra",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.0029500000000000004,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fichtenkreuzschnabel",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 3
     },
     {
@@ -3377,9 +3707,10 @@
       "name_de": "Wintergoldhähnchen",
       "name_scientific": "Regulus regulus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.0007700000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wintergoldh%C3%A4hnchen",
+      "diet": "Fleischfresser",
       "lifespan_years": 2
     },
     {
@@ -3387,9 +3718,10 @@
       "name_de": "Heringsmöwe",
       "name_scientific": "Larus fuscus",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.8175,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Heringsm%C3%B6we",
+      "diet": "Allesfresser",
       "lifespan_years": 18
     },
     {
@@ -3397,9 +3729,10 @@
       "name_de": "Schellente",
       "name_scientific": "Bucephala clangula",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.9,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schellente",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -3407,9 +3740,10 @@
       "name_de": "Atlantischer Kabeljau",
       "name_scientific": "Gadus morhua",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "length_cm": 90,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Atlantischer_Kabeljau",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -3417,8 +3751,9 @@
       "name_de": "Zitteraal",
       "name_scientific": "Electrophorus electricus",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Electrophorus_electricus",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -3426,8 +3761,9 @@
       "name_de": "Quappe",
       "name_scientific": "Lota lota",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Quappe",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -3435,8 +3771,9 @@
       "name_de": "Großer Tümmler",
       "name_scientific": "Tursiops truncatus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_T%C3%BCmmler",
+      "diet": "Fleischfresser",
       "lifespan_years": 40
     },
     {
@@ -3447,8 +3784,9 @@
       "habitat": [
         "Grasland"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneehase",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 6
     },
     {
@@ -3456,6 +3794,7 @@
       "name_de": "Jaguarundi",
       "name_scientific": "Puma yagouaroundi",
       "category": "Säugetier",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Jaguarundi",
       "diet": "Fleischfresser",
       "lifespan_years": 10
     },
@@ -3464,9 +3803,10 @@
       "name_de": "Streifenhyäne",
       "name_scientific": "Hyaena hyaena",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "weight_kg": 20.35,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Streifenhy%C3%A4ne",
+      "diet": "Allesfresser",
       "lifespan_years": 15
     },
     {
@@ -3478,9 +3818,10 @@
         "Savanne",
         "Wald"
       ],
-      "diet": "Pflanzenfresser",
       "weight_kg": 5.75,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sikahirsch",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -3488,8 +3829,9 @@
       "name_de": "Europäischer Nerz",
       "name_scientific": "Mustela lutreola",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Nerz",
+      "diet": "Fleischfresser",
       "lifespan_years": 4
     },
     {
@@ -3497,8 +3839,9 @@
       "name_de": "Amerikanischer Nerz",
       "name_scientific": "Neogale vison",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Amerikanischer_Nerz",
+      "diet": "Fleischfresser",
       "lifespan_years": 4
     },
     {
@@ -3506,9 +3849,10 @@
       "name_de": "Hirtenmaina",
       "name_scientific": "Acridotheres tristis",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.0070999999999999995,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hirtenmaina",
+      "diet": "Allesfresser",
       "lifespan_years": 6
     },
     {
@@ -3516,9 +3860,10 @@
       "name_de": "Rothalstaucher",
       "name_scientific": "Podiceps grisegena",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.7854,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rothalstaucher",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -3526,9 +3871,10 @@
       "name_de": "Gänsesäger",
       "name_scientific": "Mergus merganser",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 1.4705,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/G%C3%A4nses%C3%A4ger",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -3536,9 +3882,10 @@
       "name_de": "Moorente",
       "name_scientific": "Aythya nyroca",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.52,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Moorente",
+      "diet": "Allesfresser",
       "lifespan_years": 6
     },
     {
@@ -3546,9 +3893,10 @@
       "name_de": "Ohrentaucher",
       "name_scientific": "Podiceps auritus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.23600000000000002,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ohrentaucher",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -3556,8 +3904,9 @@
       "name_de": "Sanderling",
       "name_scientific": "Calidris alba",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sanderling",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -3565,8 +3914,9 @@
       "name_de": "Heckenbraunelle",
       "name_scientific": "Prunella modularis",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Heckenbraunelle",
+      "diet": "Allesfresser",
       "lifespan_years": 2
     },
     {
@@ -3574,9 +3924,10 @@
       "name_de": "Pfuhlschnepfe",
       "name_scientific": "Limosa lapponica",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.3335,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Pfuhlschnepfe",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -3584,9 +3935,10 @@
       "name_de": "Küstenseeschwalbe",
       "name_scientific": "Sterna paradisaea",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.114,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/K%C3%BCstenseeschwalbe",
+      "diet": "Fleischfresser",
       "lifespan_years": 25
     },
     {
@@ -3594,8 +3946,9 @@
       "name_de": "Truthuhn",
       "name_scientific": "Meleagris gallopavo",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Truthuhn",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -3603,8 +3956,9 @@
       "name_de": "Lederschildkröte",
       "name_scientific": "Dermochelys coriacea",
       "category": "Reptil",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Lederschildkr%C3%B6te",
+      "diet": "Fleischfresser",
       "lifespan_years": 45
     },
     {
@@ -3612,8 +3966,9 @@
       "name_de": "Grüne Meeresschildkröte",
       "name_scientific": "Chelonia mydas",
       "category": "Reptil",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gr%C3%BCne_Meeresschildkr%C3%B6te",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 70
     },
     {
@@ -3621,6 +3976,7 @@
       "name_de": "Regenbogenforelle",
       "name_scientific": "Oncorhynchus mykiss",
       "category": "Fisch",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Regenbogenforelle",
       "diet": "Fleischfresser",
       "lifespan_years": 6
     },
@@ -3629,8 +3985,9 @@
       "name_de": "Brillenbär",
       "name_scientific": "Tremarctos ornatus",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Brillenb%C3%A4r",
+      "diet": "Allesfresser",
       "lifespan_years": 20
     },
     {
@@ -3641,9 +3998,10 @@
       "continent": [
         "Afrika"
       ],
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.06,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Katta",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 18
     },
     {
@@ -3651,8 +4009,9 @@
       "name_de": "Elenantilope",
       "name_scientific": "Taurotragus oryx",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 27.75,
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Elenantilope",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 18
     },
     {
@@ -3664,8 +4023,9 @@
         "Buschland",
         "Wald"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sumatra-Nashorn",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 35
     },
     {
@@ -3673,8 +4033,9 @@
       "name_de": "Gartengrasmücke",
       "name_scientific": "Sylvia borin",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gartengrasm%C3%BCcke",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -3682,9 +4043,10 @@
       "name_de": "Königspinguin",
       "name_scientific": "Aptenodytes patagonicus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 11.5,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/K%C3%B6nigspinguin",
+      "diet": "Fleischfresser",
       "lifespan_years": 18
     },
     {
@@ -3692,8 +4054,9 @@
       "name_de": "Zilpzalp",
       "name_scientific": "Phylloscopus collybita",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zilpzalp",
+      "diet": "Fleischfresser",
       "lifespan_years": 2
     },
     {
@@ -3701,9 +4064,10 @@
       "name_de": "Tannenmeise",
       "name_scientific": "Periparus ater",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "weight_kg": 0.0010400000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tannenmeise",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -3711,9 +4075,10 @@
       "name_de": "Schneegans",
       "name_scientific": "Anser caerulescens",
       "category": "Vogel",
-      "diet": "Pflanzenfresser",
       "weight_kg": 1.3784999999999998,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneegans",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -3721,9 +4086,10 @@
       "name_de": "Schelladler",
       "name_scientific": "Clanga clanga",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.11,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schelladler",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -3731,9 +4097,10 @@
       "name_de": "Bruchwasserläufer",
       "name_scientific": "Tringa glareola",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.062,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bruchwasserl%C3%A4ufer",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -3741,8 +4108,9 @@
       "name_de": "Steinwälzer",
       "name_scientific": "Arenaria interpres",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinw%C3%A4lzer",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -3754,9 +4122,10 @@
         "Ozeanien",
         "Australien"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 0.634,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Raubseeschwalbe",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -3764,8 +4133,9 @@
       "name_de": "Feuersalamander",
       "name_scientific": "Salamandra salamandra",
       "category": "Amphibie",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Feuersalamander",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -3773,8 +4143,9 @@
       "name_de": "Rotauge",
       "name_scientific": "Rutilus rutilus",
       "category": "Fisch",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotauge",
+      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -3782,8 +4153,9 @@
       "name_de": "Großkopfmeeräsche",
       "name_scientific": "Mugil cephalus",
       "category": "Fisch",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fkopfmeer%C3%A4sche",
+      "diet": "Allesfresser",
       "lifespan_years": 13
     },
     {
@@ -3791,6 +4163,7 @@
       "name_de": "Großer Kohlweißling",
       "name_scientific": "Pieris brassicae",
       "category": "Insekt",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_Kohlwei%C3%9Fling",
       "diet": "Pflanzenfresser",
       "lifespan_years": 0.1
     },
@@ -3803,8 +4176,9 @@
         "Wald",
         "Savanne"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Lippenb%C3%A4r",
+      "diet": "Allesfresser",
       "lifespan_years": 25
     },
     {
@@ -3812,8 +4186,9 @@
       "name_de": "Alpensteinbock",
       "name_scientific": "Capra ibex",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Alpensteinbock",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 16
     },
     {
@@ -3821,8 +4196,9 @@
       "name_de": "Asiatischer Esel",
       "name_scientific": "Equus hemionus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Asiatischer_Esel",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
     {
@@ -3830,9 +4206,10 @@
       "name_de": "Erdwolf",
       "name_scientific": "Proteles cristata",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 10,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Erdwolf",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -3843,9 +4220,10 @@
       "continent": [
         "Afrika"
       ],
-      "diet": "Allesfresser",
       "weight_kg": 1.3075,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fingertier",
+      "diet": "Allesfresser",
       "lifespan_years": 20
     },
     {
@@ -3853,8 +4231,9 @@
       "name_de": "Waldelefant",
       "name_scientific": "Loxodonta cyclotis",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldelefant",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 60
     },
     {
@@ -3862,8 +4241,9 @@
       "name_de": "Seehund",
       "name_scientific": "Phoca vitulina",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seehund",
+      "diet": "Fleischfresser",
       "lifespan_years": 25
     },
     {
@@ -3871,9 +4251,10 @@
       "name_de": "Gebirgsstelze",
       "name_scientific": "Motacilla cinerea",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.009654999999999999,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gebirgsstelze",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -3881,8 +4262,9 @@
       "name_de": "Zitronenstelze",
       "name_scientific": "Motacilla citreola",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zitronenstelze",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -3890,8 +4272,9 @@
       "name_de": "Jungfernkranich",
       "name_scientific": "Anthropoides virgo",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Jungfernkranich",
+      "diet": "Allesfresser",
       "lifespan_years": 20
     },
     {
@@ -3903,9 +4286,10 @@
         "Ozeanien",
         "Australien"
       ],
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.045840000000000006,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nymphensittich",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 18
     },
     {
@@ -3913,9 +4297,10 @@
       "name_de": "Steppenweihe",
       "name_scientific": "Circus macrourus",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.322,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steppenweihe",
+      "diet": "Fleischfresser",
       "lifespan_years": 7
     },
     {
@@ -3923,9 +4308,10 @@
       "name_de": "Zwergseeschwalbe",
       "name_scientific": "Sternula albifrons",
       "category": "Vogel",
-      "diet": "Fleischfresser",
       "weight_kg": 0.0335,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergseeschwalbe",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -3933,8 +4319,9 @@
       "name_de": "Schneeammer",
       "name_scientific": "Plectrophenax nivalis",
       "category": "Vogel",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneeammer",
+      "diet": "Allesfresser",
       "lifespan_years": 3
     },
     {
@@ -3942,8 +4329,9 @@
       "name_de": "Erdkröte",
       "name_scientific": "Bufo bufo",
       "category": "Amphibie",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Erdkr%C3%B6te",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -3951,8 +4339,9 @@
       "name_de": "Admiral",
       "name_scientific": "Vanessa atalanta",
       "category": "Insekt",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Admiral_(Schmetterling)",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 0.5
     },
     {
@@ -3960,8 +4349,9 @@
       "name_de": "Siebenschläfer",
       "name_scientific": "Glis glis",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Siebenschl%C3%A4fer",
+      "diet": "Allesfresser",
       "lifespan_years": 7
     },
     {
@@ -3969,8 +4359,9 @@
       "name_de": "Finnwal",
       "name_scientific": "Balaenoptera physalus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Finnwal",
+      "diet": "Fleischfresser",
       "lifespan_years": 80
     },
     {
@@ -3978,9 +4369,10 @@
       "name_de": "Schwarzfußkatze",
       "name_scientific": "Felis nigripes",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 0.074,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzfu%C3%9Fkatze",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -3992,8 +4384,9 @@
         "Wald",
         "Buschland"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Argali",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 12
     },
     {
@@ -4001,8 +4394,9 @@
       "name_de": "Nilgauantilope",
       "name_scientific": "Boselaphus tragocamelus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nilgauantilope",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -4010,8 +4404,9 @@
       "name_de": "Mondfisch",
       "name_scientific": "Mola mola",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mondfisch",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -4019,8 +4414,9 @@
       "name_de": "Sardine",
       "name_scientific": "Sardina pilchardus",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sardine",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -4028,6 +4424,7 @@
       "name_de": "Schwalbenschwanz",
       "name_scientific": "Papilio machaon",
       "category": "Insekt",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwalbenschwanz_(Schmetterling)",
       "diet": "Pflanzenfresser",
       "lifespan_years": 0.1
     },
@@ -4040,9 +4437,10 @@
         "Grasland",
         "Buschland"
       ],
-      "diet": "Allesfresser",
       "weight_kg": 0.0625,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steppenfuchs",
+      "diet": "Allesfresser",
       "lifespan_years": 6
     },
     {
@@ -4050,6 +4448,7 @@
       "name_de": "Asiatische Goldkatze",
       "name_scientific": "Pardofelis temminckii",
       "category": "Säugetier",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Asiatische_Goldkatze",
       "diet": "Fleischfresser",
       "lifespan_years": 15
     },
@@ -4058,8 +4457,9 @@
       "name_de": "Hausratte",
       "name_scientific": "Rattus rattus",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausratte",
+      "diet": "Allesfresser",
       "lifespan_years": 1.5
     },
     {
@@ -4070,8 +4470,9 @@
       "habitat": [
         "Buschland"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Binturong",
+      "diet": "Allesfresser",
       "lifespan_years": 18
     },
     {
@@ -4082,8 +4483,9 @@
       "habitat": [
         "Buschland"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bengalfuchs",
+      "diet": "Allesfresser",
       "lifespan_years": 8
     },
     {
@@ -4091,8 +4493,9 @@
       "name_de": "Steppenzebra",
       "name_scientific": "Equus quagga",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steppenzebra",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 22
     },
     {
@@ -4104,8 +4507,9 @@
         "Wald",
         "Savanne"
       ],
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fleckenmusang",
+      "diet": "Allesfresser",
       "lifespan_years": 15
     },
     {
@@ -4113,8 +4517,9 @@
       "name_de": "Atlantischer Hering",
       "name_scientific": "Clupea harengus",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Atlantischer_Hering",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -4122,8 +4527,9 @@
       "name_de": "Grönlandwal",
       "name_scientific": "Balaena mysticetus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gr%C3%B6nlandwal",
+      "diet": "Fleischfresser",
       "lifespan_years": 200
     },
     {
@@ -4131,8 +4537,9 @@
       "name_de": "Warzenschwein",
       "name_scientific": "Phacochoerus africanus",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Warzenschwein",
+      "diet": "Allesfresser",
       "lifespan_years": 15
     },
     {
@@ -4143,9 +4550,10 @@
       "continent": [
         "Afrika"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 4.8,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fossa",
+      "diet": "Fleischfresser",
       "lifespan_years": 17
     },
     {
@@ -4153,8 +4561,9 @@
       "name_de": "Schraubenziege",
       "name_scientific": "Capra falconeri",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schraubenziege",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 13
     },
     {
@@ -4162,9 +4571,10 @@
       "name_de": "Mendesantilope",
       "name_scientific": "Addax nasomaculatus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 75,
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mendesantilope",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
     {
@@ -4175,9 +4585,10 @@
       "continent": [
         "Asien"
       ],
-      "diet": "Pflanzenfresser",
       "weight_kg": 0.455,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nasenaffe",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 18
     },
     {
@@ -4185,8 +4596,9 @@
       "name_de": "Berberaffe",
       "name_scientific": "Macaca sylvanus",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Berberaffe",
+      "diet": "Allesfresser",
       "lifespan_years": 22
     },
     {
@@ -4194,6 +4606,7 @@
       "name_de": "Hausyak",
       "name_scientific": "Bos grunniens",
       "category": "Säugetier",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausyak",
       "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
@@ -4202,6 +4615,7 @@
       "name_de": "Frettchen",
       "name_scientific": "Mustela furo",
       "category": "Säugetier",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Frettchen",
       "diet": "Fleischfresser",
       "lifespan_years": 8
     },
@@ -4213,8 +4627,9 @@
       "habitat": [
         "Wald"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Banteng",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 20
     },
     {
@@ -4222,8 +4637,9 @@
       "name_de": "Mandrill",
       "name_scientific": "Mandrillus sphinx",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mandrill",
+      "diet": "Allesfresser",
       "lifespan_years": 25
     },
     {
@@ -4235,8 +4651,9 @@
         "Wald",
         "Buschland"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Marmorkatze",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -4244,8 +4661,9 @@
       "name_de": "Axishirsch",
       "name_scientific": "Axis axis",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Axishirsch",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 12
     },
     {
@@ -4257,8 +4675,9 @@
         "Ozeanien",
         "Australien"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Quokka",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 10
     },
     {
@@ -4266,8 +4685,9 @@
       "name_de": "Graskarpfen",
       "name_scientific": "Ctenopharyngodon idella",
       "category": "Fisch",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graskarpfen",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 12
     },
     {
@@ -4275,8 +4695,9 @@
       "name_de": "Europäischer Wolfsbarsch",
       "name_scientific": "Dicentrarchus labrax",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Wolfsbarsch",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -4287,8 +4708,9 @@
       "continent": [
         "Asien"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Chinesischer_Flussdelfin",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -4296,8 +4718,9 @@
       "name_de": "Gangesdelfin",
       "name_scientific": "Platanista gangetica",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gangesdelfin",
+      "diet": "Fleischfresser",
       "lifespan_years": 28
     },
     {
@@ -4309,8 +4732,9 @@
         "Savanne",
         "Buschland"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sambar",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -4318,8 +4742,9 @@
       "name_de": "Zwergflusspferd",
       "name_scientific": "Choeropsis liberiensis",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergflusspferd",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 35
     },
     {
@@ -4331,8 +4756,9 @@
         "Grasland",
         "Wald"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wildpferd",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 25
     },
     {
@@ -4340,8 +4766,9 @@
       "name_de": "Siamesischer Kampffisch",
       "name_scientific": "Betta splendens",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Siamesischer_Kampffisch",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -4349,8 +4776,9 @@
       "name_de": "Seeleopard",
       "name_scientific": "Hydrurga leptonyx",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seeleopard",
+      "diet": "Fleischfresser",
       "lifespan_years": 26
     },
     {
@@ -4358,9 +4786,10 @@
       "name_de": "Gabelbock",
       "name_scientific": "Antilocapra americana",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 3.5,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gabelbock",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 11
     },
     {
@@ -4368,8 +4797,9 @@
       "name_de": "Tigerkatze",
       "name_scientific": "Leopardus tigrinus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/N%C3%B6rdliche_Tigerkatze",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -4377,8 +4807,9 @@
       "name_de": "Polarhase",
       "name_scientific": "Lepus arcticus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Polarhase",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 4
     },
     {
@@ -4386,8 +4817,9 @@
       "name_de": "Schellfisch",
       "name_scientific": "Melanogrammus aeglefinus",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schellfisch",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -4395,6 +4827,7 @@
       "name_de": "Hornisse",
       "name_scientific": "Vespa crabro",
       "category": "Insekt",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hornisse",
       "diet": "Allesfresser",
       "lifespan_years": 1
     },
@@ -4406,9 +4839,10 @@
       "habitat": [
         "Wiese"
       ],
-      "diet": "Allesfresser",
       "weight_kg": 11.6925,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/M%C3%A4hnenwolf",
+      "diet": "Allesfresser",
       "lifespan_years": 13
     },
     {
@@ -4416,8 +4850,9 @@
       "name_de": "Mantelpavian",
       "name_scientific": "Papio hamadryas",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mantelpavian",
+      "diet": "Allesfresser",
       "lifespan_years": 25
     },
     {
@@ -4425,8 +4860,9 @@
       "name_de": "Gemeiner Delfin",
       "name_scientific": "Delphinus delphis",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gemeiner_Delfin",
+      "diet": "Fleischfresser",
       "lifespan_years": 25
     },
     {
@@ -4442,8 +4878,9 @@
         "Süßwasser",
         "Sumpf"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kanadischer_Biber",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -4454,8 +4891,9 @@
       "habitat": [
         "Wald"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Takine",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -4463,9 +4901,10 @@
       "name_de": "Grevyzebra",
       "name_scientific": "Equus grevyi",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "weight_kg": 40,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Grevyzebra",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 22
     },
     {
@@ -4473,8 +4912,9 @@
       "name_de": "Afrikanische Zibetkatze",
       "name_scientific": "Civettictis civetta",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanische_Zibetkatze",
+      "diet": "Allesfresser",
       "lifespan_years": 17
     },
     {
@@ -4482,8 +4922,9 @@
       "name_de": "Kegelrobbe",
       "name_scientific": "Halichoerus grypus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kegelrobbe",
+      "diet": "Fleischfresser",
       "lifespan_years": 30
     },
     {
@@ -4491,8 +4932,9 @@
       "name_de": "Europäische Sardelle",
       "name_scientific": "Engraulis encrasicolus",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ische_Sardelle",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -4500,8 +4942,9 @@
       "name_de": "Monarchfalter",
       "name_scientific": "Danaus plexippus",
       "category": "Insekt",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Monarchfalter",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 0.5
     },
     {
@@ -4509,8 +4952,9 @@
       "name_de": "Grauwal",
       "name_scientific": "Eschrichtius robustus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Grauwal",
+      "diet": "Fleischfresser",
       "lifespan_years": 55
     },
     {
@@ -4518,9 +4962,10 @@
       "name_de": "Löffelhund",
       "name_scientific": "Otocyon megalotis",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "weight_kg": 2.1350000000000002,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/L%C3%B6ffelhund",
+      "diet": "Allesfresser",
       "lifespan_years": 8
     },
     {
@@ -4528,9 +4973,10 @@
       "name_de": "Großer Ameisenbär",
       "name_scientific": "Myrmecophaga tridactyla",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 1.35,
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_Ameisenb%C3%A4r",
+      "diet": "Fleischfresser",
       "lifespan_years": 16
     },
     {
@@ -4544,8 +4990,9 @@
       "continent": [
         "Asien"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graukatze",
+      "diet": "Fleischfresser",
       "lifespan_years": 11
     },
     {
@@ -4553,8 +5000,9 @@
       "name_de": "Haselmaus",
       "name_scientific": "Muscardinus avellanarius",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haselmaus",
+      "diet": "Allesfresser",
       "lifespan_years": 4
     },
     {
@@ -4565,8 +5013,9 @@
       "habitat": [
         "Savanne"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bergzebra",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 22
     },
     {
@@ -4574,6 +5023,7 @@
       "name_de": "Tagpfauenauge",
       "name_scientific": "Aglais io",
       "category": "Insekt",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tagpfauenauge",
       "diet": "Pflanzenfresser",
       "lifespan_years": 1
     },
@@ -4582,8 +5032,9 @@
       "name_de": "Seiwal",
       "name_scientific": "Balaenoptera borealis",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seiwal",
+      "diet": "Fleischfresser",
       "lifespan_years": 55
     },
     {
@@ -4594,9 +5045,10 @@
       "continent": [
         "Asien"
       ],
-      "diet": "Allesfresser",
       "weight_kg": 14,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Japanmakak",
+      "diet": "Allesfresser",
       "lifespan_years": 28
     },
     {
@@ -4607,9 +5059,10 @@
       "habitat": [
         "tropischer Regenwald"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 0.105,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Langschwanzkatze",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -4617,8 +5070,9 @@
       "name_de": "Mittelmeer-Mönchsrobbe",
       "name_scientific": "Monachus monachus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mittelmeer-M%C3%B6nchsrobbe",
+      "diet": "Fleischfresser",
       "lifespan_years": 25
     },
     {
@@ -4626,8 +5080,9 @@
       "name_de": "Anubispavian",
       "name_scientific": "Papio anubis",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Anubispavian",
+      "diet": "Allesfresser",
       "lifespan_years": 25
     },
     {
@@ -4635,8 +5090,9 @@
       "name_de": "Wasserbock",
       "name_scientific": "Kobus ellipsiprymnus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ellipsen-Wasserbock",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 17
     },
     {
@@ -4644,8 +5100,9 @@
       "name_de": "Grasfrosch",
       "name_scientific": "Rana temporaria",
       "category": "Amphibie",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Grasfrosch",
+      "diet": "Fleischfresser",
       "lifespan_years": 7
     },
     {
@@ -4653,8 +5110,9 @@
       "name_de": "Döbel",
       "name_scientific": "Squalius cephalus",
       "category": "Fisch",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/D%C3%B6bel",
+      "diet": "Allesfresser",
       "lifespan_years": 15
     },
     {
@@ -4662,9 +5120,10 @@
       "name_de": "Nordopossum",
       "name_scientific": "Didelphis virginiana",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "weight_kg": 0.00016,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nordopossum",
+      "diet": "Allesfresser",
       "lifespan_years": 2
     },
     {
@@ -4672,8 +5131,9 @@
       "name_de": "Bartrobbe",
       "name_scientific": "Erignathus barbatus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bartrobbe",
+      "diet": "Fleischfresser",
       "lifespan_years": 28
     },
     {
@@ -4681,8 +5141,9 @@
       "name_de": "Minkwal",
       "name_scientific": "Balaenoptera acutorostrata",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergwal",
+      "diet": "Fleischfresser",
       "lifespan_years": 40
     },
     {
@@ -4690,8 +5151,9 @@
       "name_de": "Spießbock",
       "name_scientific": "Oryx gazella",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Spie%C3%9Fbock",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 18
     },
     {
@@ -4699,8 +5161,9 @@
       "name_de": "Giraffengazelle",
       "name_scientific": "Litocranius walleri",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Giraffengazellen",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 10
     },
     {
@@ -4708,8 +5171,9 @@
       "name_de": "Chilenische Waldkatze",
       "name_scientific": "Leopardus guigna",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Chilenische_Waldkatze",
+      "diet": "Fleischfresser",
       "lifespan_years": 11
     },
     {
@@ -4717,8 +5181,9 @@
       "name_de": "Waldmaus",
       "name_scientific": "Apodemus sylvaticus",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldmaus",
+      "diet": "Allesfresser",
       "lifespan_years": 1
     },
     {
@@ -4726,8 +5191,9 @@
       "name_de": "Siamang",
       "name_scientific": "Symphalangus syndactylus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Siamang",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 30
     },
     {
@@ -4735,8 +5201,9 @@
       "name_de": "Weißwedelhirsch",
       "name_scientific": "Odocoileus virginianus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wei%C3%9Fwedelhirsch",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 8
     },
     {
@@ -4744,8 +5211,8 @@
       "name_de": "Nordafrikanische Kuhantilope",
       "name_scientific": "Alcelaphus buselaphus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 15
     },
     {
@@ -4753,8 +5220,9 @@
       "name_de": "Schneeziege",
       "name_scientific": "Oreamnos americanus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneeziege",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 14
     },
     {
@@ -4762,8 +5230,9 @@
       "name_de": "Wickelbär",
       "name_scientific": "Potos flavus",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wickelb%C3%A4r",
+      "diet": "Allesfresser",
       "lifespan_years": 23
     },
     {
@@ -4771,8 +5240,9 @@
       "name_de": "Schabrackenhyäne",
       "name_scientific": "Parahyaena brunnea",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schabrackenhy%C3%A4ne",
+      "diet": "Allesfresser",
       "lifespan_years": 14
     },
     {
@@ -4780,8 +5250,9 @@
       "name_de": "Gewöhnlicher Schweinswal",
       "name_scientific": "Phocoena phocoena",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gew%C3%B6hnlicher_Schweinswal",
+      "diet": "Fleischfresser",
       "lifespan_years": 15
     },
     {
@@ -4789,8 +5260,9 @@
       "name_de": "Karausche",
       "name_scientific": "Carassius carassius",
       "category": "Fisch",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Karausche",
+      "diet": "Allesfresser",
       "lifespan_years": 12
     },
     {
@@ -4798,8 +5270,9 @@
       "name_de": "Echter Bonito",
       "name_scientific": "Katsuwonus pelamis",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Echter_Bonito",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -4807,8 +5280,9 @@
       "name_de": "Rotfeder",
       "name_scientific": "Scardinius erythrophthalmus",
       "category": "Fisch",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotfeder",
+      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -4819,10 +5293,11 @@
       "continent": [
         "Afrika"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 16.5,
       "length_cm": 97,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/%C3%84thiopischer_Wolf",
+      "diet": "Fleischfresser",
       "lifespan_years": 9
     },
     {
@@ -4830,9 +5305,10 @@
       "name_de": "Waldhund",
       "name_scientific": "Speothos venaticus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 5.5,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldhund",
+      "diet": "Fleischfresser",
       "lifespan_years": 10
     },
     {
@@ -4843,8 +5319,9 @@
       "habitat": [
         "Süßwasser"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Amazonasdelfin",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -4852,6 +5329,7 @@
       "name_de": "Borneo-Goldkatze",
       "name_scientific": "Pardofelis badia",
       "category": "Säugetier",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Borneo-Goldkatze",
       "diet": "Fleischfresser",
       "lifespan_years": 11
     },
@@ -4860,8 +5338,9 @@
       "name_de": "Europäisches Gleithörnchen",
       "name_scientific": "Pteromys volans",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4isches_Gleith%C3%B6rnchen",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 6
     },
     {
@@ -4872,8 +5351,9 @@
       "continent": [
         "Afrika"
       ],
-      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanischer_Esel",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 25
     },
     {
@@ -4884,8 +5364,9 @@
       "habitat": [
         "Grasland"
       ],
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tigeriltis",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -4893,8 +5374,9 @@
       "name_de": "Bongo",
       "name_scientific": "Tragelaphus eurycerus",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bongo_(Antilope)",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 19
     },
     {
@@ -4902,9 +5384,10 @@
       "name_de": "Rostkatze",
       "name_scientific": "Prionailurus rubiginosus",
       "category": "Säugetier",
-      "diet": "Fleischfresser",
       "weight_kg": 1.5,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rostkatze",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -4912,9 +5395,10 @@
       "name_de": "Graufuchs",
       "name_scientific": "Urocyon cinereoargenteus",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "weight_kg": 0.08600000000000001,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graufuchs",
+      "diet": "Allesfresser",
       "lifespan_years": 7
     },
     {
@@ -4922,8 +5406,9 @@
       "name_de": "Westlicher Gorilla",
       "name_scientific": "Gorilla gorilla",
       "category": "Säugetier",
-      "diet": "Pflanzenfresser",
       "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Westlicher_Gorilla",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 35
     },
     {
@@ -4935,9 +5420,10 @@
         "Buschland",
         "Wald"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 0.565,
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Feuerwiesel",
+      "diet": "Fleischfresser",
       "lifespan_years": 3
     },
     {
@@ -4949,9 +5435,10 @@
         "Asien",
         "Ozeanien"
       ],
-      "diet": "Fleischfresser",
       "weight_kg": 67.9,
       "conservation_status": "stark gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Irawadidelfin",
+      "diet": "Fleischfresser",
       "lifespan_years": 28
     },
     {
@@ -4959,8 +5446,9 @@
       "name_de": "Anden-Makibär",
       "name_scientific": "Bassaricyon neblina",
       "category": "Säugetier",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Anden-Makib%C3%A4r",
+      "diet": "Allesfresser",
       "lifespan_years": 15
     },
     {
@@ -4968,8 +5456,9 @@
       "name_de": "Kaulbarsch",
       "name_scientific": "Gymnocephalus cernua",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kaulbarsch",
+      "diet": "Fleischfresser",
       "lifespan_years": 5
     },
     {
@@ -4977,8 +5466,9 @@
       "name_de": "Gewöhnlicher Hornhecht",
       "name_scientific": "Belone belone",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gew%C3%B6hnlicher_Hornhecht",
+      "diet": "Fleischfresser",
       "lifespan_years": 6
     },
     {
@@ -4986,8 +5476,9 @@
       "name_de": "Dreistachliger Stichling",
       "name_scientific": "Gasterosteus aculeatus",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Dreistachliger_Stichling",
+      "diet": "Fleischfresser",
       "lifespan_years": 2
     },
     {
@@ -4995,8 +5486,9 @@
       "name_de": "Zander",
       "name_scientific": "Sander lucioperca",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zander",
+      "diet": "Fleischfresser",
       "lifespan_years": 12
     },
     {
@@ -5004,8 +5496,9 @@
       "name_de": "Gelbflossen-Thun",
       "name_scientific": "Thunnus albacares",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gelbflossen-Thun",
+      "diet": "Fleischfresser",
       "lifespan_years": 7
     },
     {
@@ -5013,6 +5506,7 @@
       "name_de": "Gartenkreuzspinne",
       "name_scientific": "Araneus diadematus",
       "category": "Spinnentier",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gartenkreuzspinne",
       "diet": "Fleischfresser",
       "lifespan_years": 1
     },
@@ -5021,8 +5515,9 @@
       "name_de": "Grottenolm",
       "name_scientific": "Proteus anguinus",
       "category": "Amphibie",
-      "diet": "Fleischfresser",
       "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Grottenolm",
+      "diet": "Fleischfresser",
       "lifespan_years": 70
     },
     {
@@ -5030,8 +5525,9 @@
       "name_de": "Ukelei",
       "name_scientific": "Alburnus alburnus",
       "category": "Fisch",
-      "diet": "Allesfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ukelei",
+      "diet": "Allesfresser",
       "lifespan_years": 5
     },
     {
@@ -5039,8 +5535,9 @@
       "name_de": "Seeteufel",
       "name_scientific": "Lophius piscatorius",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seeteufel",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -5048,8 +5545,9 @@
       "name_de": "Steinbutt",
       "name_scientific": "Scophthalmus maximus",
       "category": "Fisch",
-      "diet": "Fleischfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinbutt",
+      "diet": "Fleischfresser",
       "lifespan_years": 20
     },
     {
@@ -5057,8 +5555,9 @@
       "name_de": "Roter Apollo",
       "name_scientific": "Parnassius apollo",
       "category": "Insekt",
-      "diet": "Pflanzenfresser",
       "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Roter_Apollo",
+      "diet": "Pflanzenfresser",
       "lifespan_years": 0.1
     }
   ]

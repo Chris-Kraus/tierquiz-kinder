@@ -408,6 +408,27 @@ button {
   margin-right: 0.4em;
 }
 
+/* Wikipedia-Link (Issue #15): eigener kleiner Block unterhalb des Infosatzes,
+   oberhalb des "Weiter"-Buttons. Nur im Markup sichtbar (siehe question.js),
+   wenn animal.wikipedia_url_de vorhanden ist. Dezenter als der Infosatz-Block
+   (kein eigener Rahmen), da es sich um einen optionalen Zusatzlink handelt,
+   nicht um eine weitere Feedback-/Infoebene. */
+.question-screen__wikipedia-link {
+  margin: 0;
+  width: 100%;
+  text-align: left;
+}
+
+.question-screen__wikipedia-link-anchor {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--color-secondary-dark);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
 .next-button {
   min-width: 12rem;
   min-height: 4rem;

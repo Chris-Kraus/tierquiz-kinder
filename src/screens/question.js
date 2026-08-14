@@ -94,6 +94,18 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
         <span class="question-screen__info-sentence-text"></span>
       </p>
 
+      <p class="question-screen__wikipedia-link" hidden>
+        <a
+          class="question-screen__wikipedia-link-anchor"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span aria-hidden="true">📖</span>
+          <span class="question-screen__wikipedia-link-text"></span>
+        </a>
+      </p>
+
       <button type="button" class="next-button" hidden>Weiter</button>
     </section>
   `;
@@ -107,6 +119,18 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   );
   const infoSentenceTextEl = container.querySelector(
     ".question-screen__info-sentence-text",
+  );
+  // Issue #15: Link zur deutschen Wikipedia-Seite des Tieres, nur sichtbar,
+  // wenn animal.wikipedia_url_de vorhanden ist (nicht jedes Tier hat einen
+  // deutschen Wikipedia-Artikel, siehe architecture.md).
+  const wikipediaLinkEl = container.querySelector(
+    ".question-screen__wikipedia-link",
+  );
+  const wikipediaLinkAnchorEl = container.querySelector(
+    ".question-screen__wikipedia-link-anchor",
+  );
+  const wikipediaLinkTextEl = container.querySelector(
+    ".question-screen__wikipedia-link-text",
   );
   const nextButton = container.querySelector(".next-button");
 
@@ -138,6 +162,12 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     );
     infoSentenceEl.hidden = true;
     infoSentenceTextEl.textContent = "";
+    // Issue #15: bei jeder neuen Frage vollständig zurücksetzen, damit der
+    // Link nie kurz mit dem vorherigen Tier sichtbar/erreichbar ist —
+    // `hidden` nimmt das <a>-Element zusätzlich aus der Tab-Reihenfolge.
+    wikipediaLinkEl.hidden = true;
+    wikipediaLinkAnchorEl.href = "#";
+    wikipediaLinkTextEl.textContent = "";
     nextButton.hidden = true;
 
     resetTilesForQuestion(question);
@@ -195,6 +225,15 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     if (answeredAnimal) {
       infoSentenceTextEl.textContent = buildInfoSentence(answeredAnimal);
       infoSentenceEl.hidden = false;
+    }
+
+    // Issue #15: Wikipedia-Link nur anzeigen, wenn wikipedia_url_de für das
+    // Tier vorhanden ist (kein generischer Such-Link-Fallback, siehe
+    // PM-Entscheidung im Issue) — kindgerechter Linktext statt roher URL.
+    if (answeredAnimal?.wikipedia_url_de) {
+      wikipediaLinkAnchorEl.href = answeredAnimal.wikipedia_url_de;
+      wikipediaLinkTextEl.textContent = `Mehr über ${answeredAnimal.name_de} auf Wikipedia lesen`;
+      wikipediaLinkEl.hidden = false;
     }
 
     recordAnswer(quizState, {

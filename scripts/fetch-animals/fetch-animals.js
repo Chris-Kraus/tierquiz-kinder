@@ -135,6 +135,17 @@ const CATEGORY_ENUM = [
   "Sonstiges",
 ];
 
+// Felder, die NICHT von dieser Pipeline befüllt werden, sondern ausschließlich
+// durch manuelle fachliche Kuration direkt in data/animals.json (siehe
+// architecture.md, Abschnitt "Pipeline-Regenerierung vs. manuell kuratierte
+// Felder", Issue #15; `diet` kuratiert in #18, `lifespan_years` in #19).
+// buildAnimal() hat für diese Felder bewusst KEINEN Code-Pfad. Bei jedem
+// Rerun dieser Pipeline (auch mit --use-cache) werden ihre Werte daher aus
+// der VORHERIGEN data/animals.json übernommen (siehe mergeManuallyCuratedFields
+// weiter unten) — sonst würde ein Rerun die Kuration aus #18/#19 stillschweigend
+// verwerfen, da buildAnimal() die neuen Tier-Objekte komplett neu aufbaut.
+const MANUALLY_CURATED_FIELDS = ["diet", "lifespan_years"];
+
 // --- HTTP-Hilfsfunktionen ------------------------------------------------
 
 // Der Wikidata Query Service liefert bei größeren/aufwändigeren Queries
@@ -417,6 +428,17 @@ function pickAnimalNameDe(entity, scientificName) {
   return null;
 }
 
+// Kanonische deutsche Wikipedia-URL aus dem Sitelink-Titel (Issue #15). Der
+// Titel ist bereits Teil des Hydration-Caches (hydrateEntities() lädt
+// props: "labels|claims|sitelinks") — kein zusätzlicher Netzwerk-Call nötig.
+// Leerzeichen werden zu Unterstrichen (Wikipedia-URL-Konvention), danach wird
+// URL-kodiert (deckt Umlaute/Sonderzeichen in Artikeltiteln ab).
+function buildWikipediaUrlDe(dewikiTitle) {
+  if (typeof dewikiTitle !== "string" || dewikiTitle.trim() === "") return null;
+  const underscored = dewikiTitle.trim().replace(/ /g, "_");
+  return `https://de.wikipedia.org/wiki/${encodeURIComponent(underscored)}`;
+}
+
 function getStringClaim(claims, prop) {
   const statements = claims[prop];
   if (!statements || statements.length === 0) return null;
@@ -493,6 +515,12 @@ function buildAnimal(candidate, entity, labelMap, endemicToContinents) {
     if (CONSERVATION_STATUS_MAP[q]) conservation_status = CONSERVATION_STATUS_MAP[q];
   }
 
+  // Issue #15: Link zur deutschen Wikipedia-Seite, aus dem bereits geladenen
+  // sitelinks.dewiki-Titel abgeleitet (siehe buildWikipediaUrlDe oben).
+  const wikipedia_url_de = buildWikipediaUrlDe(
+    entity.sitelinks && entity.sitelinks.dewiki && entity.sitelinks.dewiki.title,
+  );
+
   // name_scientific wurde bereits oben (vor pickAnimalNameDe) extrahiert.
 
   // `color` wurde nach dem ersten Testlauf komplett aus dem Schema entfernt
@@ -514,6 +542,7 @@ function buildAnimal(candidate, entity, labelMap, endemicToContinents) {
     ...(weight_kg != null ? { weight_kg } : {}),
     ...(length_cm != null ? { length_cm } : {}),
     ...(conservation_status ? { conservation_status } : {}),
+    ...(wikipedia_url_de ? { wikipedia_url_de } : {}),
     _sitelinks: candidate.sitelinks,
     _isExtinct: isExtinct,
   };
@@ -536,7 +565,15 @@ function validateRequiredFields(animal) {
 // Rein informative Abdeckungs-Statistik für die (jetzt optionalen) Felder —
 // fließt nicht in die Validierung ein, aber in den Lauf-Report/die Doku.
 function computeOptionalFieldCoverage(animals) {
-  const fields = ["habitat", "continent", "weight_kg", "length_cm", "name_scientific", "conservation_status"];
+  const fields = [
+    "habitat",
+    "continent",
+    "weight_kg",
+    "length_cm",
+    "name_scientific",
+    "conservation_status",
+    "wikipedia_url_de",
+  ];
   const coverage = {};
   for (const f of fields) {
     coverage[f] = animals.filter((a) => {
@@ -545,6 +582,58 @@ function computeOptionalFieldCoverage(animals) {
     }).length;
   }
   return coverage;
+}
+
+// --- Manuell kuratierte Felder über Reruns hinweg erhalten ---------------
+
+// Liest die zuvor geschriebene data/animals.json (falls vorhanden) und
+// überträgt MANUALLY_CURATED_FIELDS (aktuell: diet, lifespan_years) anhand
+// der Tier-`id` auf die neu aufgebauten Datensätze — diese Felder kennt
+// buildAnimal() nicht, sie kommen ausschließlich aus manueller fachlicher
+// Kuration (#18/#19) und würden bei einem reinen Neuaufbau sonst verloren
+// gehen (siehe architecture.md, Issue #15). Mutiert `finalAnimals` in-place
+// und gibt eine kleine Statistik für den Lauf-Report zurück.
+async function mergeManuallyCuratedFields(finalAnimals) {
+  const stats = {
+    counts: Object.fromEntries(MANUALLY_CURATED_FIELDS.map((f) => [f, 0])),
+    droppedAnimalIds: [],
+    hadPreviousFile: false,
+  };
+
+  let previousAnimals;
+  try {
+    const raw = await readFile(OUTPUT_PATH, "utf-8");
+    previousAnimals = JSON.parse(raw).animals || [];
+    stats.hadPreviousFile = true;
+  } catch {
+    // Kein vorheriger Lauf (Erstgenerierung) – nichts zu übernehmen.
+    return stats;
+  }
+
+  const previousById = new Map(previousAnimals.map((a) => [a.id, a]));
+
+  for (const animal of finalAnimals) {
+    const previous = previousById.get(animal.id);
+    if (!previous) continue;
+    for (const field of MANUALLY_CURATED_FIELDS) {
+      if (previous[field] != null && animal[field] == null) {
+        animal[field] = previous[field];
+        stats.counts[field] += 1;
+      }
+    }
+  }
+
+  // Sichtbarkeit, falls ein zuvor kuratiertes Tier aus der neuen
+  // Top-TARGET_TOTAL-Auswahl gefallen ist (z. B. durch Sitelink-Schwankungen)
+  // – kein harter Fehler, aber im Lauf-Report sichtbar machen.
+  const finalIds = new Set(finalAnimals.map((a) => a.id));
+  for (const [id, previous] of previousById.entries()) {
+    if (finalIds.has(id)) continue;
+    const hadCuratedValue = MANUALLY_CURATED_FIELDS.some((f) => previous[f] != null);
+    if (hadCuratedValue) stats.droppedAnimalIds.push(id);
+  }
+
+  return stats;
 }
 
 // --- Cache (Discovery + Hydration zwischenspeichern) -------------------
@@ -686,6 +775,21 @@ async function main() {
     }
   }
   console.log(`\n=> ${finalAnimals.length} Tiere gehen in data/animals.json (Ziel: ~${TARGET_TOTAL}).`);
+
+  const curationStats = await mergeManuallyCuratedFields(finalAnimals);
+  if (curationStats.hadPreviousFile) {
+    console.log(`\nManuell kuratierte Felder aus vorheriger ${path.basename(OUTPUT_PATH)} übernommen:`);
+    for (const field of MANUALLY_CURATED_FIELDS) {
+      console.log(`  - ${field}: ${curationStats.counts[field]}/${finalAnimals.length}`);
+    }
+    if (curationStats.droppedAnimalIds.length > 0) {
+      console.log(
+        `  WARNUNG: ${curationStats.droppedAnimalIds.length} Tier(e) mit zuvor kuratierten Werten sind aus der neuen Top-${TARGET_TOTAL}-Auswahl gefallen und daher nicht mehr in data/animals.json: ${curationStats.droppedAnimalIds.join(", ")}`,
+      );
+    }
+  } else {
+    console.log(`\nKeine vorherige ${path.basename(OUTPUT_PATH)} gefunden — keine manuell kuratierten Felder zu übernehmen (Erstgenerierung).`);
+  }
 
   const coverage = computeOptionalFieldCoverage(finalAnimals);
   console.log(`\nAbdeckung optionaler Felder in den finalen ${finalAnimals.length} Tieren:`);

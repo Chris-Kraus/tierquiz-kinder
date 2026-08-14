@@ -114,6 +114,7 @@ Die Trennung ist bewusst: Die App selbst hat zur Laufzeit keine Netzwerkabhängi
 | `lifespan_years` | number | nein | Ungefähre Lebenserwartung — eigener, bei Kindern beliebter Fragetyp ("Wie alt wird ein ...?"). Optional, Datenlage auf Wikidata schwankt. |
 | `conservation_status` | string, Enum (z. B. nicht gefährdet / gefährdet / stark gefährdet / vom Aussterben bedroht) | nein | Bildungswert (Artenschutz-Bewusstsein), aus IUCN-Daten auf Wikidata strukturiert verfügbar (Property P141). Kein zentraler Quiz-Fragetyp, aber sinnvoll als Zusatzinfo/gelegentliche Frage. Bewusst optional, kein Pflichtfeld, um die Datenbeschaffung nicht an lückenhafte IUCN-Abdeckung zu koppeln. |
 | `fun_fact` | string | nein | Kurzer, kindgerechter Fakt — hoher Engagement-Wert (z. B. als Zusatzinfo nach Beantwortung). **Wichtig:** Wikidata hat kein strukturiertes "Fun Fact"-Feld, das müsste separat kuratiert werden (siehe Offene Fragen). |
+| `wikipedia_url_de` | string (URL) | nein | Verweis auf den deutschen Wikipedia-Artikel des Tieres, für einen Weiterlese-Link im Feedback-Bereich (Issue #15) sowie als Zusatz-Referenzpunkt für eine mögliche spätere Bildlizenz-Klärung (Issue #16). Aus `entity.sitelinks.dewiki.title` zusammengesetzt (`https://de.wikipedia.org/wiki/<URL-kodierter Titel, Leerzeichen als Unterstrich>`), bereits Teil des bestehenden Hydration-Caches — kein neuer Netzwerk-Call nötig. Optional, da nicht jedes Tier einen deutschen Wikipedia-Artikel hat (Auswahl filtert nur nach Gesamt-Sitelinks über alle Sprachen, nicht spezifisch nach `dewiki`). Bewusst nur ein Link, **kein** Wikipedia-Artikeltext (lizenzrechtlicher Unterschied zu Issue #12, siehe dortige Begründung). |
 
 *\* `habitat`, `continent` und `weight_kg` waren in der ursprünglichen Version dieses Dokuments als Pflichtfelder vorgesehen. Ein realer, vollständiger Testlauf der Datenbeschaffungs-Pipeline (Issue #2, 13.08.2026, siehe `devops.md`) gegen 1.480 populäre Tier-Kandidaten zeigte: `habitat` ist nur bei 4,9 %, `continent` nur bei 6,3 % und `weight_kg` nur bei 14,4 % der Kandidaten auf Wikidata strukturiert vorhanden — bei strikter Pflicht wären dadurch praktisch 0 Tiere ins Quiz gekommen. Alle drei wurden daher nachträglich zu optionalen Feldern herabgestuft (siehe "Korrektur vom 13.08.2026" unten). `color` wurde komplett aus dem Schema entfernt (0 % Abdeckung, siehe unten) statt nur optional gesetzt, da hier auch als optionales Feld praktisch nie ein Wert vorläge.*
 
@@ -184,12 +185,15 @@ Zur Validierung durch `web-developer`/`devops-engineer` bei der Umsetzung:
           "type": "string",
           "enum": ["nicht gefährdet", "gefährdet", "stark gefährdet", "vom Aussterben bedroht"]
         },
-        "fun_fact": { "type": "string" }
+        "fun_fact": { "type": "string" },
+        "wikipedia_url_de": { "type": "string", "format": "uri" }
       }
     }
   }
 }
 ```
+
+**Änderung 14.08.2026 (Issue #15):** Optionales Feld `wikipedia_url_de` ergänzt (Link zum deutschen Wikipedia-Artikel, aus `sitelinks.dewiki.title` abgeleitet). Siehe Feldtabelle oben und Abschnitt "Pipeline-Regenerierung vs. manuell kuratierte Felder" unten.
 
 **Änderung 13.08.2026:** Pflichtfelder auf `id`, `name_de`, `category` reduziert; `habitat`, `continent`, `weight_kg` von Pflicht- zu optionalen Feldern herabgestuft; `color` als Property vollständig entfernt (nicht mehr in `properties`). Begründung siehe Abschnitt 1 oben ("Korrektur vom 13.08.2026").
 
@@ -336,6 +340,22 @@ Vier vom `zoologe` vorgeschlagene Anreicherungs-Ideen wurden gegen `src/quiz/que
 - `distinctions`: mindestens ein unterscheidendes Merkmal pro Paar (mehrere für Abwechslung möglich), `correct` referenziert die Tier-ID, auf die das Merkmal zutrifft. Fragegenerierung wählt zufällig ein Paar + eine Distinction daraus.
 - Kein Bezug zu `FIELD_DEFINITIONS`/`HARD_ONLY_FIELDS` — eigener, kleiner Fragepfad parallel zu `buildValueQuestion`/`buildIdentifyQuestion` (analog zur Vergleichsfragen-Story #20), da hier nicht aus einem Datenfeld generiert, sondern aus der kuratierten Paar-/Distinction-Liste gezogen wird.
 
+## Pipeline-Regenerierung vs. manuell kuratierte Felder (Issue #15, 14.08.2026)
+
+**Anlass:** Issue #15 (`wikipedia_url_de`) verlangt, `data/animals.json` mit dem erweiterten `fetch-animals.js` neu zu generieren (ggf. via `--use-cache`). Zwischen der ursprünglichen Pipeline-Erstellung und heute wurden aber `diet` (#18) und `lifespan_years` (#19) **manuell kuratiert direkt in `data/animals.json` eingepflegt** — wie in Abschnitt 5 oben ("Technische Einschätzung ... Zoologe/BA-Runde") bereits so vorgesehen: reine Daten-/Kurations-Story, bewusst **ohne** Pipeline-Code-Änderung. `buildAnimal()` in `fetch-animals.js` kennt diese beiden Felder entsprechend nicht (kein `PROPS`-Eintrag, keine Extraktion, kein Platz im zusammengebauten Objekt).
+
+**Risiko:** Ein einfacher Rerun von `fetch-animals.js` (auch mit `--use-cache`) baut `finalAnimals` komplett neu aus den Wikidata-Entities auf und **würde `diet`/`lifespan_years` für alle 500 Tiere kommentarlos verlieren**, da die Pipeline diese Felder nie geschrieben hat und beim Neuaufbau nicht "vererbt".
+
+**Entscheidung:** `fetch-animals.js` bekommt eine generische Merge-Vorkehrung für **manuell kuratierte Felder**, die die Pipeline selbst nicht befüllt:
+
+- Eine Konstante (z. B. `MANUALLY_CURATED_FIELDS = ["diet", "lifespan_years"]`) benennt explizit, welche Schema-Felder ausschließlich durch manuelle Kuration befüllt werden, nicht durch die Wikidata-Pipeline.
+- Vor dem Schreiben der Ausgabedatei liest `main()` die **bisherige** `data/animals.json` (falls vorhanden), indiziert sie nach `id`, und überträgt für jedes neu gebaute Tier die Werte der `MANUALLY_CURATED_FIELDS`-Felder aus dem alten Datensatz mit gleicher `id`, sofern dort vorhanden.
+- Lauf-Report ergänzt eine sichtbare Zeile pro kuratiertem Feld (z. B. "diet aus vorheriger animals.json übernommen: 500/500"), inkl. **Warnung**, falls ein Tier mit zuvor kuratiertem Wert in der neuen Auswahl (Top-500 nach Sitelinks) fehlt (Kandidat aus der Auswahl gefallen) — kein harter Fehler, aber sichtbar im Log.
+- Diese Vorkehrung ist bewusst generisch (Array statt Einzelfall-Sonderlogik für `diet`/`lifespan_years`), da absehbar weitere manuell kuratierte Felder dazukommen können (z. B. `fun_fact`, siehe offene Frage 1 oben) und jeder künftige Pipeline-Rerun dasselbe Risiko hätte.
+- Kein Rückgriff auf Git-Historie/separate Merge-Skripte nötig — die Pipeline wird dadurch selbst robust gegenüber eigenen Reruns, was dem bestehenden Cache-Rerun-Konzept (`--use-cache`) entspricht.
+
+**Verantwortung Umsetzung:** `web-developer` (Teil von Issue #15).
+
 ## Änderungshistorie
 
 - 2026-08-13: Erste Version — Datenschema für die Tierdatenbank (Phase 1: Quizfragen-Modus), Lizenz-/Quellenmodell, Skizze zur Wikidata-Datenbeschaffung.
@@ -343,4 +363,6 @@ Vier vom `zoologe` vorgeschlagene Anreicherungs-Ideen wurden gegen `src/quiz/que
 - 2026-08-13: Frontend-Tech-Stack entschieden (Issue #1): Vite + Vanilla JavaScript ohne UI-Framework, plain CSS, `data/animals.json` per statischem ES-Modul-Import eingebunden. Projektstruktur um Frontend-Ordner (`src/`, `tests/`) ergänzt.
 - 2026-08-13: Schema-Korrektur nach realem Pipeline-Testlauf (Issue #2): Pflichtfelder auf `id`/`name_de`/`category` reduziert (`habitat`, `continent`, `weight_kg` von Pflicht zu optional herabgestuft), `color` komplett aus dem Schema entfernt — reale Wikidata-Abdeckung dieser Felder bei populären Tier-Kandidaten lag bei 0–14 %, siehe `docs/workflow/devops.md` für die gemessenen Zahlen.
 - 2026-08-13: Technische Einschätzung der Zoologe-Anreicherungsideen für `business-analyst`: Gefährdungsstatus-Fragetyp ist bereits implementiert (Korrektur einer falschen Annahme), `diet`/`lifespan_years` sind reine Daten-Stories ohne Code-Bedarf, Vergleichs-/Rekordhalter-Fragen brauchen einen neuen gemeinsamen Mechanismus, Verwechslungspaare eine eigenständige kleine Erweiterung (siehe Abschnitt "Technische Entscheidungen & Trade-offs" Punkt 5).
+- 2026-08-14: Merge-Vorkehrung für manuell kuratierte Felder (`diet`, `lifespan_years`) bei Pipeline-Reruns entschieden (Issue #15, Anlass: `wikipedia_url_de` erfordert Neugenerierung von `data/animals.json`), damit ein Rerun von `fetch-animals.js` diese seit #18/#19 kuratierten Werte nicht überschreibt — siehe Abschnitt "Pipeline-Regenerierung vs. manuell kuratierte Felder" oben.
+- 2026-08-14: Optionales Feld `wikipedia_url_de` ergänzt (Issue #15) — Link zum deutschen Wikipedia-Artikel für den Feedback-Bereich, aus dem bereits vorhandenen `sitelinks.dewiki.title` im Hydration-Cache abgeleitet, kein neuer Netzwerk-Call.
 - 2026-08-13: Verwechslungspaare (Issue #21) für `status:ready`-Freigabe konkretisiert: Mindestumfang 15 (Ziel 20–30) kuratierte Paare, Datenstruktur `data/confusionPairs.json` festgelegt (siehe Abschnitt "Verwechslungspaare — Datenstruktur & Mindestumfang").
