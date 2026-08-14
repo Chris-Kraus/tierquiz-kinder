@@ -16,7 +16,8 @@
       "image_filename": "Lion in masai mara.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 14,
-      "fun_fact": "Löwen sind die einzigen Katzen der Welt, die in einer richtigen Familiengruppe leben – im Rudel!"
+      "fun_fact": "Löwen sind die einzigen Katzen der Welt, die in einer richtigen Familiengruppe leben – im Rudel!",
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q19939",
@@ -32,7 +33,8 @@
       "image_filename": "Adult male Royal Bengal tiger.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 15,
-      "fun_fact": "Kein Tiger sieht aus wie der andere – ihre Streifen sind so einzigartig wie ein Fingerabdruck."
+      "fun_fact": "Kein Tiger sieht aus wie der andere – ihre Streifen sind so einzigartig wie ein Fingerabdruck.",
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q18498",
@@ -44,7 +46,8 @@
       "image_filename": "Eurasian wolf 2.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 10,
-      "fun_fact": "Wölfe verständigen sich mit ihrem berühmten Heulen über weite Entfernungen – bei guten Bedingungen kilometerweit."
+      "fun_fact": "Wölfe verständigen sich mit ihrem berühmten Heulen über weite Entfernungen – bei guten Bedingungen kilometerweit.",
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q34706",
@@ -59,7 +62,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Leopard",
       "image_filename": "Male leopard - Mara.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q58697",
@@ -70,7 +74,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wildschwein",
       "image_filename": "Wildschwein, Nähe Pulverstampftor.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q33609",
@@ -83,7 +88,8 @@
       "image_filename": "Polar Bear - Alaska (cropped).jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 20,
-      "fun_fact": "Unter seinem weißen Fell hat der Eisbär schwarze Haut, damit er die Sonnenwärme besser speichern kann."
+      "fun_fact": "Unter seinem weißen Fell hat der Eisbär schwarze Haut, damit er die Sonnenwärme besser speichern kann.",
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q8332",
@@ -103,7 +109,8 @@
       "image_filename": "Fox at the British Wildlife Centre, Newchapel, Surrey - geograph.org.uk - 2221750.jpg",
       "diet": "Allesfresser",
       "lifespan_years": 4,
-      "fun_fact": "Ein Rotfuchs kann sogar das leise Rascheln einer Maus unter einer dicken Schneedecke hören."
+      "fun_fact": "Ein Rotfuchs kann sogar das leise Rascheln einer Maus unter einer dicken Schneedecke hören.",
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q23907",
@@ -116,7 +123,8 @@
       "image_filename": "Cheetah (Acinonyx jubatus) female 2.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 12,
-      "fun_fact": "Der Gepard ist das schnellste Landtier der Welt und kann in nur drei Sekunden von null auf 100 km/h beschleunigen."
+      "fun_fact": "Der Gepard ist das schnellste Landtier der Welt und kann in nur drei Sekunden von null auf 100 km/h beschleunigen.",
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q17592",
@@ -128,7 +136,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanischer_Strau%C3%9F",
       "image_filename": "North African Ostrich - Masai Ostrich (Struthio camelus massaicus) - Flickr - Lip Kee.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 40
+      "lifespan_years": 40,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q34505",
@@ -140,7 +149,8 @@
       "image_filename": "Hippo (Hippopotamus amphibius) (16485955207).jpg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 45,
-      "fun_fact": "Flusspferde können gar nicht schwimmen – sie laufen und hüpfen einfach über den Grund des Wassers."
+      "fun_fact": "Flusspferde können gar nicht schwimmen – sie laufen und hüpfen einfach über den Grund des Wassers.",
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q33602",
@@ -159,7 +169,8 @@
       "image_filename": "Giant Panda 2004-03-2.jpg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 20,
-      "fun_fact": "Ein Großer Panda verbringt bis zu 12 Stunden am Tag mit Fressen – fast nur Bambus!"
+      "fun_fact": "Ein Großer Panda verbringt bis zu 12 Stunden am Tag mit Fressen – fast nur Bambus!",
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q14683",
@@ -177,7 +188,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haussperling",
       "image_filename": "House sparrow male in Prospect Park (53532).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q15083",
@@ -190,7 +202,8 @@
       "image_filename": "Rothschild's giraffe (Giraffa camelopardalis rothschildi) - Murchison Falls National Park.jpg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 25,
-      "fun_fact": "Giraffen haben genauso viele Halswirbel wie wir Menschen – nur ist bei ihnen jeder einzelne riesig lang!"
+      "fun_fact": "Giraffen haben genauso viele Halswirbel wie wir Menschen – nur ist bei ihnen jeder einzelne riesig lang!",
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q36341",
@@ -207,7 +220,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Braunb%C3%A4r",
       "image_filename": "Kamchatka Brown Bear near Dvuhyurtochnoe on 2015-07-23.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25357",
@@ -220,7 +234,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kolkrabe",
       "image_filename": "Corvus corax ad berlin 090516.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q25307",
@@ -232,7 +247,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Elster",
       "image_filename": "Eurasian magpie (10860).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25348",
@@ -243,7 +259,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Stockente",
       "image_filename": "Male mallard3.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25247",
@@ -254,7 +271,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wiedehopf",
       "image_filename": "Upupa epops Madrid 02.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q30197",
@@ -269,7 +287,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneeleopard",
       "image_filename": "Uncia uncia.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q42710",
@@ -279,7 +298,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wasserb%C3%BCffel",
       "image_filename": "Wasserbüffel (25787818312).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q35694",
@@ -291,7 +311,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Jaguar",
       "image_filename": "Junior-Jaguar-Belize-Zoo.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q35517",
@@ -305,7 +326,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Elch",
       "image_filename": "Elk-telemark.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q36101",
@@ -321,7 +343,8 @@
       "image_filename": "Koala climbing tree.jpg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 12,
-      "fun_fact": "Koalas schlafen bis zu 20 Stunden am Tag, weil ihre Nahrung, die Eukalyptusblätter, ihnen kaum Energie liefert."
+      "fun_fact": "Koalas schlafen bis zu 20 Stunden am Tag, weil ihre Nahrung, die Eukalyptusblätter, ihnen kaum Energie liefert.",
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q25234",
@@ -332,7 +355,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Amsel",
       "image_filename": "20190722 Turdus Merula 02.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q35255",
@@ -343,7 +367,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Puma",
       "image_filename": "Puma - 49044464307.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q27066",
@@ -354,7 +379,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Dachs",
       "image_filename": "European badger (Meles meles taxus) Drenthe.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q28358",
@@ -366,7 +392,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wachtel_(Art)",
       "image_filename": "Coturnix coturnix, Fraunberg, Bayern, Deutschland 2, Ausschnitt.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25311",
@@ -381,7 +408,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mauswiesel",
       "image_filename": "Mustela nivalis -British Wildlife Centre-4.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 2
+      "lifespan_years": 2,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q29995",
@@ -402,7 +430,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fischotter",
       "image_filename": "Otter.png",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q39624",
@@ -416,7 +445,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ren",
       "image_filename": "Caribou.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25334",
@@ -428,7 +458,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotkehlchen",
       "image_filename": "Erithacus rubecula with cocked head.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q83310",
@@ -442,7 +473,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausmaus",
       "image_filename": "Домовая мышь (Mus musculus), Москва.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 1.5
+      "lifespan_years": 1.5,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q40994",
@@ -453,7 +485,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Walross",
       "image_filename": "Walrus in the Russian Arctic National Park, Novaya Zemlya 2015-2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q15343",
@@ -468,7 +501,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schnabeltier",
       "image_filename": "Duck-billed platypus (Ornithorhynchus anatinus) Scottsdale.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q42326",
@@ -480,7 +514,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Felsentaube",
       "image_filename": "Columba livia (Rock Dove, wild), Duncansby Head, Caithness, Scotland 1.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q18845",
@@ -492,7 +527,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kuckuck",
       "image_filename": "Cuculus canorus vogelartinfo chris romeiks CHR0791 cropped.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q25388",
@@ -504,7 +540,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Pirol",
       "image_filename": "Loriot d'Europe by Michel Idre.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "gelb"
     },
     {
       "id": "Q43375",
@@ -519,7 +556,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eurasischer_Luchs",
       "image_filename": "Lynx lynx poing.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26843",
@@ -532,7 +570,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwertwal",
       "image_filename": "Killerwhales jumping.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 40
+      "lifespan_years": 40,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25273",
@@ -544,7 +583,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graureiher",
       "image_filename": "Ardea cinerea EM1A2714 (27349354381).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q25354",
@@ -556,7 +596,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eichelh%C3%A4her",
       "image_filename": "Garrulus glandarius 1 Luc Viatour.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q41960",
@@ -572,7 +613,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Westlicher_Kleiner_Panda",
       "image_filename": "RedPanda SingalilaNationalPark DFrame.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q25485",
@@ -584,7 +626,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kohlmeise",
       "image_filename": "Great tit (Parus major), Parc de Woluwé, Brussels (13042792905).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25469",
@@ -595,7 +638,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Star_(Art)",
       "image_filename": "Toulouse - Sturnus vulgaris - 2012-02-26 - 2.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q121439",
@@ -611,7 +655,8 @@
       "image_filename": "Raccoon in Central Park (35264).jpg",
       "diet": "Allesfresser",
       "lifespan_years": 5,
-      "fun_fact": "Waschbären ertasten ihr Futter mit sehr empfindlichen Pfoten – besonders gern im Wasser, daher auch ihr Name."
+      "fun_fact": "Waschbären ertasten ihr Futter mit sehr empfindlichen Pfoten – besonders gern im Wasser, daher auch ihr Name.",
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q42196",
@@ -624,7 +669,8 @@
       "image_filename": "Anim1755 - Flickr - NOAA Photo Library.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 80,
-      "fun_fact": "Der Blauwal ist das größte Tier, das jemals auf der Erde gelebt hat – größer als jeder Dinosaurier."
+      "fun_fact": "Der Blauwal ist das größte Tier, das jemals auf der Erde gelebt hat – größer als jeder Dinosaurier.",
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q25399",
@@ -635,7 +681,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bachstelze",
       "image_filename": "20180415 015 Winterswijk Witte kwikstaart (40785272624).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25429",
@@ -646,7 +693,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rauchschwalbe",
       "image_filename": "Rauchschwalbe Hirundo rustica.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q41181",
@@ -658,7 +706,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinadler",
       "image_filename": "Maakotka (Aquila chrysaetos) by Jarkko Järvinen.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q79794",
@@ -669,7 +718,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rothirsch",
       "image_filename": "Cervus elaphus Luc Viatour 6.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q4388",
@@ -680,7 +730,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eurasisches_Eichh%C3%B6rnchen",
       "image_filename": "Squirrel posing.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q25345",
@@ -699,7 +750,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hermelin",
       "image_filename": "Røyskatt (Mustela erminea erminea), Lista, Norway.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 2
+      "lifespan_years": 2,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q30847",
@@ -710,7 +762,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Karakal",
       "image_filename": "Caracal Caracal-001.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25345384",
@@ -720,7 +773,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Dohle",
       "image_filename": "Coloeus monedula -Munkedal, Vastra Gotaland, Sweden-8.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q123141",
@@ -744,7 +798,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausmeerschweinchen",
       "image_filename": "Cochon d'Inde (Cavia porcellus) (2).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q44299",
@@ -756,7 +811,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kojote",
       "image_filename": "2009-Coyote-Yosemite.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25352",
@@ -768,7 +824,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wei%C3%9Fstorch",
       "image_filename": "Ciconia ciconia.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q25440",
@@ -780,7 +837,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kormoran_(Art)",
       "image_filename": "2021-05-05 Phalacrocorax carbo carbo, Killingworth Lake, Northumberland 1-2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q30535",
@@ -795,7 +853,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wanderfalke",
       "image_filename": "Faucon pelerin 7 mai.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q160042",
@@ -806,7 +865,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kaffernb%C3%BCffel",
       "image_filename": "African Buffalo.JPG",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q122069",
@@ -818,7 +878,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Reh",
       "image_filename": "Capreolus (js)11.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q130933",
@@ -830,7 +891,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Uhu",
       "image_filename": "Hubro (Bubo bubo).JPG",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25332",
@@ -842,7 +904,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fischadler",
       "image_filename": "Balbuzard pecheur Lac de Tunis.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q134747",
@@ -864,7 +927,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Vielfra%C3%9F",
       "image_filename": "Gulo gulo 2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q46212",
@@ -876,7 +940,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Erdferkel",
       "image_filename": "Porc formiguer.JPG",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q26490",
@@ -888,7 +953,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Turmfalke",
       "image_filename": "Common kestrel falco tinnunculus.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q30034",
@@ -910,7 +976,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Capybara",
       "image_filename": "Capybaras (Hydrochoerus hydrachaeris) female and young suckling ... (48427191032).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q82738",
@@ -921,7 +988,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Polarfuchs",
       "image_filename": "Самка песца со спутниковым предатчиком.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q42569",
@@ -931,7 +999,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Lama_(Kamel)",
       "image_filename": "18-08-25-Åland RRK6596a.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q25882",
@@ -943,7 +1012,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graugans",
       "image_filename": "00 3688 Graugans (Anser anser).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q25380",
@@ -955,7 +1025,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sperber_(Art)",
       "image_filename": "Sperber (Accipiter nisus) male -20200308 (2).JPG",
       "diet": "Fleischfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q4764",
@@ -966,7 +1037,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kranich",
       "image_filename": "2017.07.04.-01-Wendisch Rietz--Kranich.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q25317",
@@ -978,7 +1050,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schleiereule",
       "image_filename": "Tyto alba tylluan wen detail.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q25418",
@@ -990,7 +1063,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Stieglitz",
       "image_filename": "Carduelis carduelis (2012).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q43576",
@@ -1005,7 +1079,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wildkatze",
       "image_filename": "Wildcat at British Wildlife Centre.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q137474876",
@@ -1015,7 +1090,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Habicht",
       "image_filename": "Northern Goshawk ad M2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q25376",
@@ -1027,7 +1103,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bl%C3%A4sshuhn",
       "image_filename": "Fulica atra Georges-Valbon 01.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q25386",
@@ -1039,7 +1116,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Saatkr%C3%A4he",
       "image_filename": "Corvus frugilegus -Dartmoor, Devon, England-8.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q25392",
@@ -1051,7 +1129,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kiebitz_(Art)",
       "image_filename": "Northern-Lapwing-Vanellus-vanellus.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25450",
@@ -1063,7 +1142,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Spie%C3%9Fente",
       "image_filename": "Male northern pintail at Llano Seco.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q80362",
@@ -1075,7 +1155,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzmilan",
       "image_filename": "Milvus migrans front(ThKraft).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25968",
@@ -1091,7 +1172,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Feldsperling",
       "image_filename": "Tree-Sparrow-2009-16-02.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q4504",
@@ -1135,7 +1217,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Goldschakal",
       "image_filename": "033 Golden jackal in Keoladeo National Park Photo by Giles Laurent.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q71516",
@@ -1146,7 +1229,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Dromedar",
       "image_filename": "Camelcalf-feeding.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 40
+      "lifespan_years": 40,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q42699",
@@ -1157,7 +1241,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Serval",
       "image_filename": "Leptailurus serval 61666728, crop.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q79915",
@@ -1169,7 +1254,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eisvogel",
       "image_filename": "Alcedo Atthis.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25393",
@@ -1181,7 +1267,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nachtigall",
       "image_filename": "Luscinia megarhynchos - Common nightingale - Nachtegaal.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25851",
@@ -1192,7 +1279,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wildkaninchen",
       "image_filename": "Oryctolagus cuniculus Tasmania 2 (cropped).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 2
+      "lifespan_years": 2,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q61865",
@@ -1203,7 +1291,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blauer_Pfau",
       "image_filename": "Indian Peacock in Tholpetty Wildlife Sanctuary 01.JPG",
       "diet": "Allesfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25382",
@@ -1215,7 +1304,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gimpel_(Art)",
       "image_filename": "Bullfinch male.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25405",
@@ -1225,7 +1315,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nebelkr%C3%A4he",
       "image_filename": "Corvus cornix (33515567265).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25421",
@@ -1237,7 +1328,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergtaucher",
       "image_filename": "Zwergtaucher 060319 3.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q122783",
@@ -1248,7 +1340,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Amerikanischer_Schwarzb%C3%A4r",
       "image_filename": "Canadian Rockies - the bear at Lake Louise.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q4126704",
@@ -1260,7 +1353,8 @@
       "image_filename": "013 Alpha male chimpanzee at Kibale forest National Park Photo by Giles Laurent.jpg",
       "diet": "Allesfresser",
       "lifespan_years": 40,
-      "fun_fact": "Schimpansen benutzen Werkzeuge – zum Beispiel angespitzte Stöckchen, um damit Termiten aus ihrem Bau zu angeln."
+      "fun_fact": "Schimpansen benutzen Werkzeuge – zum Beispiel angespitzte Stöckchen, um damit Termiten aus ihrem Bau zu angeln.",
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q19537",
@@ -1272,7 +1366,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bonobo",
       "image_filename": "Les bonobos utilisent certaines feuilles aux vertus pharmacologique contre leurs parasites intestinaux.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 40
+      "lifespan_years": 40,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q18847",
@@ -1284,7 +1379,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Teichralle",
       "image_filename": "Common moorhen (Gallinula chloropus) France.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q25385",
@@ -1296,7 +1392,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/M%C3%A4usebussard",
       "image_filename": "Common Buzzard by caroline legg (cropped).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25398",
@@ -1307,7 +1404,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzstorch",
       "image_filename": "Ciconia nigra -Kruger National Park-8.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q81564",
@@ -1317,7 +1415,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Alpaka",
       "image_filename": "Alpacas Sillustani (pixinn.net).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q82037",
@@ -1329,7 +1428,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Okapi",
       "image_filename": "Okapia johnstoni -Marwell Wildlife, Hampshire, England-8a.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25402",
@@ -1342,7 +1442,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/H%C3%B6ckerschwan",
       "image_filename": "Mute Swan Emsworth2.JPG",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q25404",
@@ -1354,7 +1455,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blaumeise",
       "image_filename": "ParusCaeruleus.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q132922",
@@ -1364,7 +1466,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Trampeltier",
       "image_filename": "2011 Trampeltier 1528.JPG",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 40
+      "lifespan_years": 40,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q81214",
@@ -1375,7 +1478,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Pottwal",
       "image_filename": "Mother and baby sperm whale.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 60
+      "lifespan_years": 60,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q129059",
@@ -1387,7 +1491,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Auerhuhn",
       "image_filename": "Tetrao urogallus, Glenfeshie, Scotland 1.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q25383",
@@ -1399,7 +1504,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Buchfink",
       "image_filename": "Fringilla coelebs (5577610542).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25422",
@@ -1414,7 +1520,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haubentaucher",
       "image_filename": "Great Crested Grebe (52909695022).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25432",
@@ -1444,7 +1551,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fasan",
       "image_filename": "A monograph of the pheasants (10052517376).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25438",
@@ -1456,7 +1564,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seeadler_(Art)",
       "image_filename": "Adult White-tailed Eagle defending prey, Rezerwat Gostynin-Wloclawek, Poland.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26046",
@@ -1467,7 +1576,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Baummarder",
       "image_filename": "Martes martes crop (cropped).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q129958",
@@ -1478,7 +1588,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinkauz",
       "image_filename": "Athene noctua, Ambula, Montenegro 2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q93208",
@@ -1494,7 +1605,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_Emu",
       "image_filename": "Emu 1 - Tidbinbilla.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q126167",
@@ -1506,7 +1618,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bartgeier",
       "image_filename": "Bearded Vulture - Catalan Pyrenees - Spain (25098398432).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25700",
@@ -1517,7 +1630,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Krickente",
       "image_filename": "Common Teal Male (8602525826).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q166111",
@@ -1538,7 +1652,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Impalas",
       "image_filename": "Impala, Chobe National Park, Botswana (51879018932).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 13
+      "lifespan_years": 13,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q133006",
@@ -1553,7 +1668,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Asiatischer_Elefant",
       "image_filename": "Elephas maximus (Bandipur).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 60
+      "lifespan_years": 60,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q81091",
@@ -1564,7 +1680,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wisent",
       "image_filename": "European bison (Bison bonasus) male Białowieza.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q82728",
@@ -1576,7 +1693,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Amerikanischer_Bison",
       "image_filename": "American bison k5680-1.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25961",
@@ -1587,7 +1705,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Feldlerche",
       "image_filename": "Alouette des champs Zaghouan001.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q165278",
@@ -1610,7 +1729,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Silberreiher",
       "image_filename": "Great Egret (Ardea alba) (25562005404).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q127216",
@@ -1622,7 +1742,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wei%C3%9Fkopfseeadler",
       "image_filename": "Bald Eagle (Haliaeetus leucocephalus) Kachemak Bay, Alaska.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26106",
@@ -1633,7 +1754,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rebhuhn",
       "image_filename": "Nurmkana (cropped).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q33504",
@@ -1645,7 +1767,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schmutzgeier",
       "image_filename": "Egyptian Vultures - Immature(L) and Adult (R).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q134015",
@@ -1658,7 +1781,8 @@
       "image_filename": "Meerkat (Suricata suricatta).jpg",
       "diet": "Allesfresser",
       "lifespan_years": 10,
-      "fun_fact": "Erdmännchen halten immer Wache: Während die Gruppe frisst, hält mindestens eines als Wächter Ausschau nach Gefahr."
+      "fun_fact": "Erdmännchen halten immer Wache: Während die Gruppe frisst, hält mindestens eines als Wächter Ausschau nach Gefahr.",
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q134964",
@@ -1673,7 +1797,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Beutelteufel",
       "image_filename": "Sarcophilus harrisii taranna.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q170723",
@@ -1685,7 +1810,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rostgans",
       "image_filename": "Ruddy shelduck David Raju.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q106447604",
@@ -1696,7 +1822,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kuhreiher",
       "image_filename": "Héron garde boeufs à Oued Mejerda.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q26026",
@@ -1708,7 +1835,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ringeltaube",
       "image_filename": "Columba palumbus ssp. palumbus.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q173128",
@@ -1720,7 +1848,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Honigdachs",
       "image_filename": "Honey badger.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q33261",
@@ -1732,7 +1861,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ozelot",
       "image_filename": "081 Ocelot in Encontro das Águas State Park Photo by Giles Laurent.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q42623",
@@ -1746,7 +1876,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rohrkatze",
       "image_filename": "Jungle Cat Felis chaus by Dr. Raju Kasambe DSCN7957 (3).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q126216",
@@ -1758,7 +1889,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nachtreiher",
       "image_filename": "Nycticorax nycticorax nycticorax, Camargue (33620984464).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q170177",
@@ -1769,7 +1901,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneeeule",
       "image_filename": "Bubo scandiacus male Muskegon.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q25709",
@@ -1781,7 +1914,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rohrdommel",
       "image_filename": "Eurasian Bittern - Torrile - Italy 4528 (15409347121).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25984",
@@ -1792,7 +1926,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schafstelze",
       "image_filename": "Wiesenschafstelze.JPG",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "gelb"
     },
     {
       "id": "Q25377",
@@ -1804,7 +1939,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mauersegler",
       "image_filename": "Common Swift 2025 07 18 02 (cropped).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q166794",
@@ -1821,7 +1957,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Manul",
       "image_filename": "WhfPallasCat.JPG",
       "diet": "Fleischfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q173651",
@@ -1832,7 +1969,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanischer_Wildhund",
       "image_filename": "Lycaon pictus (Temminck, 1820).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 11
+      "lifespan_years": 11,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q124410",
@@ -1846,7 +1984,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kragenb%C3%A4r",
       "image_filename": "Ursus thibetanus 3 (Wroclaw zoo).JPG",
       "diet": "Allesfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q36557",
@@ -1858,7 +1997,8 @@
       "image_filename": "178 Male African bush elephant in Etosha National Park Photo by Giles Laurent.jpg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 60,
-      "fun_fact": "Mit seinem Rüssel kann ein Elefant Wasser trinken, einen Baum umknicken und ganz vorsichtig eine kleine Nuss aufheben – und er hat darin nicht einen einzigen Knochen!"
+      "fun_fact": "Mit seinem Rüssel kann ein Elefant Wasser trinken, einen Baum umknicken und ganz vorsichtig eine kleine Nuss aufheben – und er hat darin nicht einen einzigen Knochen!",
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q131709",
@@ -1870,7 +2010,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seidenreiher",
       "image_filename": "Aigrette garzette au lac sud de Tunis (site RAMSAR).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q177856",
@@ -1882,7 +2023,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/G%C3%A4nsegeier",
       "image_filename": "Gyps fulvus -Basque Country-8.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q28106966",
@@ -1893,7 +2035,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schnatterente",
       "image_filename": "Gadwall-Anas-strepera.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q25612",
@@ -1905,7 +2048,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Singschwan",
       "image_filename": "Cygnus cygnus 070416 IOL.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q54696",
@@ -1917,7 +2061,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/T%C3%BCrkentaube",
       "image_filename": "Streptopelia decaocto, Hărman, România (34881606270).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q160488",
@@ -1929,7 +2074,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Purpurreiher",
       "image_filename": "Ardea purpurea (Domaine des oiseaux).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q170718",
@@ -1941,7 +2087,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bienenfresser_(Art)",
       "image_filename": "Merops apiaster 04.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q199427",
@@ -1953,7 +2100,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rosapelikan",
       "image_filename": "Great white pelican (Pelecanus onocrotalus).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q26114",
@@ -1965,7 +2113,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldschnepfe",
       "image_filename": "Waldschnepfe (scolopax rusticola) - Spiekeroog, Nationalpark Niedersächsisches Wattenmeer.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26198",
@@ -1976,7 +2125,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rabenkr%C3%A4he",
       "image_filename": "Carrion crow 2022 04 05 05 02.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q192056",
@@ -2001,7 +2151,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Feldhase",
       "image_filename": "European Brown Hare (50341079472).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q121221",
@@ -2017,7 +2168,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wellensittich",
       "image_filename": "Budgerigar-male-strzelecki-qld.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q28106837",
@@ -2028,7 +2180,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Pfeifente",
       "image_filename": "Eurasian Wigeon - male.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25876",
@@ -2040,7 +2193,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Baumfalke",
       "image_filename": "Eurasian Hobby (14574008925) (cropped).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 7
+      "lifespan_years": 7,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q26017",
@@ -2052,7 +2206,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wachtelk%C3%B6nig",
       "image_filename": "Corncrake2.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q940337",
@@ -2073,7 +2228,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rothund",
       "image_filename": "Dhole (Asiatic wild dog) cropped.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q159426",
@@ -2085,7 +2241,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Narwal",
       "image_filename": "Нарвал в российской Арктике.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 40
+      "lifespan_years": 40,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q168514",
@@ -2097,7 +2254,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Turteltaube",
       "image_filename": "2015-05-21 Streptopelia turtur, Sutton Bank, Yorkshire 06.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q168748",
@@ -2109,7 +2267,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sekret%C3%A4r_(Vogel)",
       "image_filename": "Secretario (Sagittarius serpentarius), parque nacional de Amboseli, Kenia, 2024-05-23, DD 13.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q28106731",
@@ -2120,7 +2279,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/L%C3%B6ffelente",
       "image_filename": "Northern shoveler Steve Sinclair outreach use only (19838806616).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q28106902",
@@ -2131,7 +2291,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kn%C3%A4kente",
       "image_filename": "Garganey ( Anas querquedula ) Drake ... South Yorkshire (53695451967).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25909",
@@ -2147,7 +2308,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Uferschwalbe",
       "image_filename": "Riparia riparia -Markinch, Fife, Scotland -flying-8-4c.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q131564",
@@ -2158,7 +2320,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fennek",
       "image_filename": "Fennec Fox Peek.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q132905",
@@ -2171,7 +2334,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Buckelwal",
       "image_filename": "Humpback whales in singing position.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 45
+      "lifespan_years": 45,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q159918",
@@ -2183,7 +2347,8 @@
       "image_filename": "White rhinoceros africa.jpg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 40,
-      "fun_fact": "Das Breitmaulnashorn heißt nicht wegen seiner Farbe so, sondern wegen seines breiten Mauls zum Grasfressen."
+      "fun_fact": "Das Breitmaulnashorn heißt nicht wegen seiner Farbe so, sondern wegen seines breiten Mauls zum Grasfressen.",
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q26423",
@@ -2198,7 +2363,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zobel",
       "image_filename": "Sobol bur.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q179863",
@@ -2210,7 +2376,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rosaflamingo",
       "image_filename": "Flamant rose Thyna009.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q25692",
@@ -2222,7 +2389,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bekassine",
       "image_filename": "Bekassine (Blick nach oben).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25740",
@@ -2233,7 +2401,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zaunk%C3%B6nig",
       "image_filename": "Eurasian wren (Troglodytes troglodytes).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 2
+      "lifespan_years": 2,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q18859",
@@ -2245,7 +2414,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotschenkel",
       "image_filename": "Common Redshank Tringa totanus.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25384",
@@ -2256,7 +2426,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldohreule",
       "image_filename": "Asio otus11.JPG",
       "diet": "Fleischfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q131907",
@@ -2268,7 +2439,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotluchs",
       "image_filename": "Bobcat at Columbus Zoo Boo.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q159857",
@@ -2280,7 +2452,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Damhirsch",
       "image_filename": "Fallow deer in field.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q95036",
@@ -2292,7 +2465,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Spitzmaulnashorn",
       "image_filename": "2012 Black Rhinoceros Gemsbokvlakte.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 37
+      "lifespan_years": 37,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q26283",
@@ -2303,7 +2477,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bisamratte",
       "image_filename": "Muskrat Foraging.JPG",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q168677",
@@ -2315,7 +2490,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/M%C3%B6nchsgeier",
       "image_filename": "Buitre negro.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q178811",
@@ -2327,7 +2503,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sichler_(Art)",
       "image_filename": "Plegadis falcinellus Syracuse.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q179959",
@@ -2342,7 +2519,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kakapo",
       "image_filename": "Sirocco full length portrait.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 60
+      "lifespan_years": 60,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25761",
@@ -2354,7 +2532,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Brandgans",
       "image_filename": "2014-04-18 Tadorna tadorna pair, Swallow Pond.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26209",
@@ -2366,7 +2545,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Buntspecht",
       "image_filename": "Dendrocopos major EM1B2679 (35219263071).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q132072",
@@ -2381,7 +2561,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wei%C3%9Fwal",
       "image_filename": "Beluga oceanografic.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 40
+      "lifespan_years": 40,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q184004",
@@ -2392,7 +2573,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Moschusochse",
       "image_filename": "Ovibos moschatus qtl3.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26582",
@@ -2403,7 +2585,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Iltis",
       "image_filename": "Storm the polecat.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q131918",
@@ -2415,7 +2598,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Merlin_(Vogel)",
       "image_filename": "Merlin prey fencepost Cochrane cropped.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q156250",
@@ -2427,7 +2611,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotmilan",
       "image_filename": "Milvus milvus Jura.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q170598",
@@ -2438,7 +2623,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Andenkondor",
       "image_filename": "204 - Canyon de Colca - Condor des Andes - Juin 2010.JPG",
       "diet": "Fleischfresser",
-      "lifespan_years": 50
+      "lifespan_years": 50,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q178821",
@@ -2450,7 +2636,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Stelzenl%C3%A4ufer",
       "image_filename": "Himantopus himantopus - Pak Thale.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q27075852",
@@ -2462,7 +2649,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bluth%C3%A4nfling",
       "image_filename": "Carduelis cannabina -England -male-8.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25572",
@@ -2474,7 +2662,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kornweihe",
       "image_filename": "Circus cyaneus 265961899.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q25634",
@@ -2486,7 +2675,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Lachm%C3%B6we",
       "image_filename": "Lachmöwe Chroicocephalus ridibundus.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q26205",
@@ -2498,7 +2688,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Goldammer",
       "image_filename": "Emberiza citrinella -Midtjylland, Denmark -male-8.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "gelb"
     },
     {
       "id": "Q26444",
@@ -2510,7 +2701,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Reiherente",
       "image_filename": "Tufted Duck 09 05 2025 02.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q18850",
@@ -2521,7 +2713,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Flussuferl%C3%A4ufer",
       "image_filename": "Common sandpiper lake geneva-4.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q131340",
@@ -2535,7 +2728,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/G%C3%A4mse",
       "image_filename": "064 Wild Chamois Parc régional Chasseral Photo by Giles Laurent.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q6145",
@@ -2546,7 +2740,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Braunbrustigel",
       "image_filename": "Erinaceus europaeus (Linnaeus, 1758).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q36135",
@@ -2560,7 +2755,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nebelparder",
       "image_filename": "Clouded Leopard (205918213).jpeg",
       "diet": "Fleischfresser",
-      "lifespan_years": 11
+      "lifespan_years": 11,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q42627",
@@ -2571,7 +2767,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bengalkatze",
       "image_filename": "Close-up of a Leopard Cat in Sundarban.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q131044",
@@ -2587,7 +2784,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzschwan",
       "image_filename": "00 2102 Trauerschwäne (Breisach am Rhein).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q143284",
@@ -2599,7 +2797,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzspecht",
       "image_filename": "BlackWoods.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q171360",
@@ -2611,7 +2810,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/L%C3%B6ffler",
       "image_filename": "Eurasian Spoonbill.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q27075864",
@@ -2623,7 +2823,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Erlenzeisig",
       "image_filename": "Carduelis spinus male.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "gelb"
     },
     {
       "id": "Q26742",
@@ -2635,7 +2836,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tafelente",
       "image_filename": "Aythya ferina Sandwell 2.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q168745",
@@ -2694,7 +2896,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Marderhund",
       "image_filename": "Енотовидная собака Гродно (cropped 2).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q175329",
@@ -2705,7 +2908,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sandkatze",
       "image_filename": "SandCat12.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 13
+      "lifespan_years": 13,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q181191",
@@ -2719,7 +2923,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Biber",
       "image_filename": "Beaver pho34.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q27366",
@@ -2730,7 +2935,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinmarder",
       "image_filename": "Steinmarder (cropped).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q155878",
@@ -2742,7 +2948,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Birkhuhn",
       "image_filename": "Birkhahn.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q161829",
@@ -2755,7 +2962,8 @@
       "image_filename": "Aptenodytes forsteri -Snow Hill Island, Antarctica -adults and juvenile-8.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 20,
-      "fun_fact": "Bei Kaiserpinguinen brütet der Papa das Ei ganz allein auf seinen Füßen aus – mitten im eisigen Winter, mehrere Monate lang."
+      "fun_fact": "Bei Kaiserpinguinen brütet der Papa das Ei ganz allein auf seinen Füßen aus – mitten im eisigen Winter, mehrere Monate lang.",
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q170251",
@@ -2767,7 +2975,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schlangenadler",
       "image_filename": "Short-toed Snake-Eagle in Bhigwan August 2025 by Tisha Mukherjee 01.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q200339",
@@ -2779,7 +2988,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mandarinente",
       "image_filename": "Mandarin ducks by the Weiming Lake of Peking University 16.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q179359",
@@ -2791,7 +3001,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steppenadler",
       "image_filename": "Мангистауская область, степной орёл.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 16
+      "lifespan_years": 16,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q184774",
@@ -2803,7 +3014,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bankivahuhn",
       "image_filename": "Red jungle fowl.png",
       "diet": "Allesfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q28122714",
@@ -2815,7 +3027,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kampfl%C3%A4ufer",
       "image_filename": "Philomachus pugnaxRuffKampfläufer.JPG",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25756",
@@ -2827,7 +3040,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldkauz",
       "image_filename": "Strix aluco aluco.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26431",
@@ -2839,7 +3053,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rohrweihe",
       "image_filename": "Western Marsh Harrier- Bangalore, India.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q18700",
@@ -2850,7 +3065,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schuhschnabel",
       "image_filename": "Entebbe Shoe Bill Stork.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 35
+      "lifespan_years": 35,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q18854",
@@ -2862,7 +3078,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_Brachvogel",
       "image_filename": "Eurasian Curlew.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q48186",
@@ -2888,7 +3105,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Dugong",
       "image_filename": "Dugong Marsa Alam.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 70
+      "lifespan_years": 70,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q129727",
@@ -2904,7 +3122,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Pardelluchs",
       "image_filename": "Lince ibérico (Lynx pardinus), Almuradiel, Ciudad Real, España, 2021-12-19, DD 07.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 13
+      "lifespan_years": 13,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q144923",
@@ -2922,7 +3141,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Malaienb%C3%A4r",
       "image_filename": "Sitting sun bear.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q180404",
@@ -2933,7 +3153,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wapiti",
       "image_filename": "Jasper.Wapiti-Hirsch.P1033401.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q184224",
@@ -2948,7 +3169,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wanderratte",
       "image_filename": "Brown rat (Rattus norvegicus) Drenthe 2.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 1.5
+      "lifespan_years": 1.5,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25769",
@@ -2959,7 +3181,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sumpfohreule",
       "image_filename": "Hibou des marais.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26733",
@@ -2971,7 +3194,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kanadagans",
       "image_filename": "La Roche-en-Ardenne - Bernache du Canada, Branta canadensis.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26387",
@@ -2993,7 +3217,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Guanako",
       "image_filename": "Guanaco at SF Zoo.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q174088",
@@ -3004,7 +3229,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kernbei%C3%9Fer",
       "image_filename": "Coccothraustes coccothraustes 1 (Martin Mecnarowski).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q27075785",
@@ -3016,7 +3242,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gr%C3%BCnfink",
       "image_filename": "Chloris chloris (profile).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "gelb"
     },
     {
       "id": "Q25678",
@@ -3028,7 +3255,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wendehals_(Vogel)",
       "image_filename": "Jynx torquilla (34536504885).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26055",
@@ -3039,7 +3267,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mehlschwalbe",
       "image_filename": "Delichon urbica.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26147",
@@ -3051,7 +3280,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/S%C3%A4belschn%C3%A4bler",
       "image_filename": "Avocette élégante Thyna019.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26349",
@@ -3063,7 +3293,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Singdrossel",
       "image_filename": "Song thrush (Turdus philomelos philomelos).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q28236",
@@ -3074,7 +3305,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Silberm%C3%B6we",
       "image_filename": "European herring gull vocalizing (00170).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q41407",
@@ -3090,7 +3322,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seeotter",
       "image_filename": "Sea otter cropped.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q188601",
@@ -3102,7 +3335,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergtrappe",
       "image_filename": "Tettet.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q25777",
@@ -3114,7 +3348,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wacholderdrossel",
       "image_filename": "Björktrast (Turdus pilaris)-4.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26578",
@@ -3125,7 +3360,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blaukehlchen",
       "image_filename": "Blåhake Bluethroat (20162398078).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26620",
@@ -3136,7 +3372,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gartenrotschwanz",
       "image_filename": "Gartenrotschwanz 1.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26717",
@@ -3147,7 +3384,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nachtschwalbe",
       "image_filename": "Caprimulgus europaeus g.JPG",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q18851",
@@ -3159,7 +3397,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Flussregenpfeifer",
       "image_filename": "Charadrius dubius (49820761043).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26982",
@@ -3170,7 +3409,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haubenlerche",
       "image_filename": "Pipíška chochlatá (Galerida cristata).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q22718",
@@ -3228,7 +3468,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Saiga",
       "image_filename": "Saiga antelope at the Stepnoi Sanctuary.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q156767",
@@ -3240,7 +3481,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kleiber_(Art)",
       "image_filename": "Sitta europaea europaea, Slottsskogen, Göteborg, Sweden 3.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q166171",
@@ -3252,7 +3494,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gr%C3%BCnspecht",
       "image_filename": "Green woodpecker Franconville 2022 01 21 2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q168976",
@@ -3264,7 +3507,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kaiseradler_(Art)",
       "image_filename": "Eastern Imperial Eagle cr.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q170466",
@@ -3276,7 +3520,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wespenbussard",
       "image_filename": "Wespenbussard European honey buzzard Pernis apivorus, crop.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q171655",
@@ -3288,7 +3533,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Ftrappe",
       "image_filename": "Otis tarda, Hortobagy, Hungary 1.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q201831",
@@ -3299,7 +3545,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wasseramsel",
       "image_filename": "Cinclus cinclus bronwen y dwr.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q184432",
@@ -3310,7 +3557,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Prachttaucher",
       "image_filename": "Plongeon arctique nid.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q184820",
@@ -3321,7 +3569,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tannenh%C3%A4her",
       "image_filename": "Nucifraga caryocatactes, Kotka, Finland 1.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q25928",
@@ -3333,7 +3582,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Austernfischer",
       "image_filename": "Haematopus ostralegus He.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26135",
@@ -3344,7 +3594,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seidenschwanz_(Art)",
       "image_filename": "Bombycilla garrulus, Novosibirsk 1.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26685",
@@ -3356,7 +3607,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Papageitaucher",
       "image_filename": "Puffin (Fratercula arctica).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q17134",
@@ -3393,7 +3645,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gaur",
       "image_filename": "Indian Gaur from anaimalai hills JEG5290.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q178089",
@@ -3404,7 +3657,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/T%C3%BCpfelhy%C3%A4ne",
       "image_filename": "Hiena manchada (Crocuta crocuta), parque nacional Kruger, Sudáfrica, 2018-07-26, DD 22.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q209067",
@@ -3415,7 +3669,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Maulwurf",
       "image_filename": "Talpa europaea MHNT.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q47910",
@@ -3429,7 +3684,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Panzernashorn",
       "image_filename": "Rhinoceros unicornis 12zz.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 40
+      "lifespan_years": 40,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q170831",
@@ -3440,7 +3696,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwanzmeise",
       "image_filename": "Long-tailed tit (74940).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q185183",
@@ -3451,7 +3708,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzhalstaucher",
       "image_filename": "Schwarzhalstaucher (Podiceps nigricollis) im NSG Wagbachniederung 2 (crop).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q191125",
@@ -3463,7 +3721,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Streifengans",
       "image_filename": "Bar-headed Goose by Dr. Raju Kasambe DSCN7530 (23).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26427",
@@ -3475,7 +3734,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sturmm%C3%B6we",
       "image_filename": "Larus canus Common Gull in Norway.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q26452",
@@ -3487,7 +3747,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldsaatgans",
       "image_filename": "Anser fabalis fabalis (Taiga Bean Goose), Naturschutzgebiet Schellbruch, Lübeck, Germany.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q18840",
@@ -3499,7 +3760,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gr%C3%BCnschenkel",
       "image_filename": "Greenshank (Tringa nebularia).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q18875",
@@ -3510,7 +3772,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Flussseeschwalbe",
       "image_filename": "Common tern 2025 07 08 08.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q170713",
@@ -3554,7 +3817,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kanadischer_Luchs",
       "image_filename": "Canada lynx by Michael Zahra.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 13
+      "lifespan_years": 13,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q156606",
@@ -3569,7 +3833,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rhesusaffe",
       "image_filename": "Female and juvenile rhesus macaque at Galtaji, Jaipur, Rajasthan, India.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q167797",
@@ -3580,7 +3845,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Vikunja",
       "image_filename": "Vicunacrop.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q187704",
@@ -3592,7 +3858,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nutria",
       "image_filename": "Myocastor coypus - ragondin.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q171563",
@@ -3603,7 +3870,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergohreule",
       "image_filename": "Scops Owl (Otus scops), Kalloni, Lesvos, Greece, 19.04.2015 (16773748434).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q177688",
@@ -3614,7 +3882,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gerfalke",
       "image_filename": "Falco rusticolus white cropped.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 14
+      "lifespan_years": 14,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q178942",
@@ -3625,7 +3894,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Misteldrossel",
       "image_filename": "Turdus viscivorus Brych y coed.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q179367",
@@ -3636,7 +3906,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blauracke",
       "image_filename": "Coracias garrulus - European roller 02.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 9
+      "lifespan_years": 9,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q179625",
@@ -3648,7 +3919,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotfu%C3%9Ffalke",
       "image_filename": "Rotfußfalke Falco vespertinus.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q184834",
@@ -3660,7 +3932,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Triel_(Art)",
       "image_filename": "Eurasian Thicknee - Along Po river - Italy FJ0A1202 (28252446508).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 16
+      "lifespan_years": 16,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q185099",
@@ -3672,7 +3945,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wasserralle",
       "image_filename": "Water rail 2022 04 30 01.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q20823352",
@@ -3684,7 +3958,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rosenstar",
       "image_filename": "Pastor roseus by Koshy Koshy.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26420",
@@ -3695,7 +3970,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinschm%C3%A4tzer_(Art)",
       "image_filename": "Steinschmaetzer Northern wheatear male.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26597",
@@ -3706,7 +3982,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eisente",
       "image_filename": "Long-tailed-duck.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26691",
@@ -3718,7 +3995,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sterntaucher",
       "image_filename": "Gavia stellata -Iceland -swimming-8.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q26711",
@@ -3730,7 +4008,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergschnepfe",
       "image_filename": "Lymnocryptes minimus.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26755",
@@ -3741,7 +4020,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausrotschwanz",
       "image_filename": "Hausrotschwanz Brutpflege 2006-05-21-05.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q18841",
@@ -3753,7 +4033,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Uferschnepfe",
       "image_filename": "Black-tailed Godwit cropped.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 16
+      "lifespan_years": 16,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q183660",
@@ -3789,7 +4070,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Java-Nashorn",
       "image_filename": "Rhinoceros sondaicus in London Zoo.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 35
+      "lifespan_years": 35,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q183339",
@@ -3800,7 +4082,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hirschziegenantilope",
       "image_filename": "BlackBuck.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q190674",
@@ -3811,7 +4094,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fischkatze",
       "image_filename": "Prionailurus viverrinus 01.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q192231",
@@ -3821,7 +4105,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanische_Goldkatze",
       "image_filename": "FelisAurataKeulemans.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q213084",
@@ -3833,7 +4118,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Springb%C3%B6cke",
       "image_filename": "174 Male Springbok in Etosha National Park Photo by Giles Laurent.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q172093",
@@ -3844,7 +4130,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bl%C3%A4ssgans",
       "image_filename": "Anser albifrons albifrons Swallow Pond 2.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q182761",
@@ -3856,7 +4143,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haselhuhn",
       "image_filename": "Tetrastes bonasia.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q182971",
@@ -3868,7 +4156,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergadler",
       "image_filename": "Booted eagle, Hieraaetus pennatus, at Kgalagadi Transfrontier Pa (32334023348).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q229408",
@@ -3880,7 +4169,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/R%C3%B6telfalke",
       "image_filename": "Falco naumanni, Israel 11.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q18858",
@@ -3891,7 +4181,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Regenbrachvogel",
       "image_filename": "Whimbrel Numenius phaeopus.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q28450",
@@ -3903,7 +4194,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldwasserl%C3%A4ufer",
       "image_filename": "Green Sandpiper ( Tringa ochropus ) ... Tophill Low , Yorkshire (53182606905).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q178228",
@@ -3914,7 +4206,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wildziege",
       "image_filename": "6 Bezoar Goat.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26547",
@@ -3931,7 +4224,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Yak",
       "image_filename": "Wild Yak Stuffed.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q165974",
@@ -3943,7 +4237,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/W%C3%BCrgfalke",
       "image_filename": "Falco cherrug 1 (Bohuš Číčel).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q199758",
@@ -3954,7 +4249,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blauh%C3%A4her",
       "image_filename": "Blue jay in PP (30960).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 7
+      "lifespan_years": 7,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q184751",
@@ -3965,7 +4261,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Krauskopfpelikan",
       "image_filename": "Dalmatian Pelican Pelecanus crispus by Dr. Raju Kasambe DSCN6899 (3).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q188446",
@@ -3977,7 +4274,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/M%C3%B6nchsgrasm%C3%BCcke",
       "image_filename": "Sylvia atricapilla -Lullington Heath, East Sussex, England -male-8.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q188660",
@@ -3988,7 +4286,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hoatzin",
       "image_filename": "Hoatzin (Opisthocomus hoazin) Rio Napo.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q189609",
@@ -4000,7 +4299,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mittels%C3%A4ger",
       "image_filename": "Merganser (53630992394).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 9
+      "lifespan_years": 9,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q194024",
@@ -4012,7 +4312,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/T%C3%BCpfelsumpfhuhn",
       "image_filename": "Porzana porzana 3 (Marek Szczepanek).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26129",
@@ -4024,7 +4325,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergdommel",
       "image_filename": "47-090506-little-bittern-at-upper-ford-near-Sigri-.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26140",
@@ -4036,7 +4338,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hohltaube",
       "image_filename": "2019-03-17 Columba oenas, Jesmond Dene 1.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q26552",
@@ -4048,7 +4351,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fichtenkreuzschnabel",
       "image_filename": "Red crossbill (53582346437).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q26657",
@@ -4060,7 +4364,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wintergoldh%C3%A4hnchen",
       "image_filename": "Goldcrest 1.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 2
+      "lifespan_years": 2,
+      "fur_feather_color": "gelb"
     },
     {
       "id": "Q27160",
@@ -4072,7 +4377,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Heringsm%C3%B6we",
       "image_filename": "Larus fuscus Finnboda 2012.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q29865",
@@ -4084,7 +4390,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schellente",
       "image_filename": "Common Goldeneye (Bucephala clangula).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q199788",
@@ -4130,7 +4437,8 @@
       "image_filename": "Tursiops truncatus 01-cropped.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 40,
-      "fun_fact": "Delfine schlafen mit nur einer Gehirnhälfte auf einmal, damit sie immer wach genug bleiben, um zum Atmen aufzutauchen."
+      "fun_fact": "Delfine schlafen mit nur einer Gehirnhälfte auf einmal, damit sie immer wach genug bleiben, um zum Atmen aufzutauchen.",
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q180035",
@@ -4144,7 +4452,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneehase",
       "image_filename": "Lepus timidus in Volgograd Oblast.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q182304",
@@ -4154,7 +4463,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Jaguarundi",
       "image_filename": "Herpailurus yagouaroundi - Adeilson Melo - Reddish (cropped).jpeg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q188657",
@@ -4166,7 +4476,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Streifenhy%C3%A4ne",
       "image_filename": "Striped Hyena Adult.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q190516",
@@ -4182,7 +4493,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sikahirsch",
       "image_filename": "Cervus nippon 002.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26559",
@@ -4193,7 +4505,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Nerz",
       "image_filename": "Europäischer Nerz.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q27179",
@@ -4204,7 +4517,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Amerikanischer_Nerz",
       "image_filename": "MinkforWiki.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q116667",
@@ -4216,7 +4530,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hirtenmaina",
       "image_filename": "Common Myna in Rabindra Sarobar February 2025 by Tisha Mukherjee 01.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q179919",
@@ -4228,7 +4543,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rothalstaucher",
       "image_filename": "Podiceps grisegena (33665871935).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q180991",
@@ -4240,7 +4556,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/G%C3%A4nses%C3%A4ger",
       "image_filename": "Mergus merganser -Sandwell -England -male-8.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q191723",
@@ -4252,7 +4569,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Moorente",
       "image_filename": "Ferruginous Pochard Aythya nyroca Male by Dr. Raju Kasambe DSCN2746 (12).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q192058",
@@ -4264,7 +4582,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ohrentaucher",
       "image_filename": "Podiceps auritus (13909575538) (cropped).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q58958",
@@ -4275,7 +4594,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sanderling",
       "image_filename": "2014-05-25 Sanderling, Paignton Beach, Devon 1.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q26698",
@@ -4286,7 +4606,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Heckenbraunelle",
       "image_filename": "Järnsparv Dunnock (13329301154).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 2
+      "lifespan_years": 2,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q18864",
@@ -4298,7 +4619,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Pfuhlschnepfe",
       "image_filename": "Bar-tailed Godwit.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26800",
@@ -4310,7 +4632,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/K%C3%BCstenseeschwalbe",
       "image_filename": "2009 07 02 - Arctic tern on Farne Islands - The blue rope demarcates the visitors' path.JPG",
       "diet": "Fleischfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q26844",
@@ -4321,7 +4644,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Truthuhn",
       "image_filename": "Wild Turkey, Creekside Park, 8 May 2014 (14145843695).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q120043",
@@ -4364,7 +4688,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Brillenb%C3%A4r",
       "image_filename": "Spectacled Bear - Houston Zoo.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q185385",
@@ -4379,7 +4704,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Katta",
       "image_filename": "Lemur catta 001.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q216815",
@@ -4390,7 +4716,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Elenantilope",
       "image_filename": "Taurotragus oryx - young bull - Etosha 2015.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q29220",
@@ -4405,7 +4732,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sumatra-Nashorn",
       "image_filename": "Sumatran Rhino 2.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 35
+      "lifespan_years": 35,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q202478",
@@ -4416,7 +4744,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gartengrasm%C3%BCcke",
       "image_filename": "Sylvia borin (Örebro County).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q182209",
@@ -4428,7 +4757,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/K%C3%B6nigspinguin",
       "image_filename": "King Penguins on Saunders Island (5586254113).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q185784",
@@ -4439,7 +4769,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zilpzalp",
       "image_filename": "Common Chiffchaff 2025 04 04 01.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 2
+      "lifespan_years": 2,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q191096",
@@ -4451,7 +4782,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tannenmeise",
       "image_filename": "Svartmeis.JPG",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q27074540",
@@ -4463,7 +4795,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneegans",
       "image_filename": "Snow Goose (24510697391).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q21090684",
@@ -4475,7 +4808,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schelladler",
       "image_filename": "Greater spotted eagle.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q18837",
@@ -4487,7 +4821,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bruchwasserl%C3%A4ufer",
       "image_filename": "Wood Sandpiper (50206067826), crop.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26892",
@@ -4498,7 +4833,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinw%C3%A4lzer",
       "image_filename": "Ruddy Turnstone (1).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q27129",
@@ -4514,7 +4850,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Raubseeschwalbe",
       "image_filename": "Sterna-caspia-010.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q26395",
@@ -4572,7 +4909,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Lippenb%C3%A4r",
       "image_filename": "SlothBear.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q168327",
@@ -4583,7 +4921,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Alpensteinbock",
       "image_filename": "Bouquetin en Vanoise, été 2023 03.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 16
+      "lifespan_years": 16,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q180960",
@@ -4594,7 +4933,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Asiatischer_Esel",
       "image_filename": "Kulan (cropped).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q185295",
@@ -4606,7 +4946,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Erdwolf",
       "image_filename": "Proteles cristatus1.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q186778",
@@ -4621,7 +4962,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fingertier",
       "image_filename": "Aye-aye (Daubentonia madagascariensis), Tsimbazaza Zoo, Madagascar (3897947810).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q189514",
@@ -4632,7 +4974,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldelefant",
       "image_filename": "Loxodontacyclotis.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 60
+      "lifespan_years": 60,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q26913",
@@ -4643,7 +4986,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seehund",
       "image_filename": "Common Seal Phoca vitulina.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q201316",
@@ -4655,7 +4999,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gebirgsstelze",
       "image_filename": "Terîhejoka boçikzer.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q206540",
@@ -4666,7 +5011,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zitronenstelze",
       "image_filename": "Motacilla citreola 2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "gelb"
     },
     {
       "id": "Q191683",
@@ -4677,7 +5023,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Jungfernkranich",
       "image_filename": "Demoiselle Cranes at Tal Chappar.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q514809",
@@ -4693,7 +5040,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nymphensittich",
       "image_filename": "Wild cockatiel - panoramio.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q230837",
@@ -4705,7 +5053,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steppenweihe",
       "image_filename": "Pallid Harrier Adult Male (46333226825).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 7
+      "lifespan_years": 7,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q12267692",
@@ -4717,7 +5066,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergseeschwalbe",
       "image_filename": "Крячок малий.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q26416",
@@ -4728,7 +5078,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneeammer",
       "image_filename": "Plectrophenax nivalis P3130099.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q146375",
@@ -4761,7 +5112,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Siebenschl%C3%A4fer",
       "image_filename": "Glis glis 4058.JPG",
       "diet": "Allesfresser",
-      "lifespan_years": 7
+      "lifespan_years": 7,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q179020",
@@ -4772,7 +5124,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Finnwal",
       "image_filename": "LMazzuca Fin Whale.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 80
+      "lifespan_years": 80,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q204814",
@@ -4784,7 +5137,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzfu%C3%9Fkatze",
       "image_filename": "Zoo Wuppertal Schwarzfusskatze.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q186267",
@@ -4799,7 +5153,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Argali",
       "image_filename": "Argali.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q200444",
@@ -4810,7 +5165,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nilgauantilope",
       "image_filename": "Nilgai (Boselaphus tragocamelus) male.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q192285",
@@ -4858,7 +5214,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steppenfuchs",
       "image_filename": "Vulpes corsac.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q192233",
@@ -4868,7 +5225,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Asiatische_Goldkatze",
       "image_filename": "Asian Golden cat.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q106133",
@@ -4879,7 +5237,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausratte",
       "image_filename": "20191212 Szczury w Świątyni Karni Maty w Deśnok 1038 8111 DxO.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 1.5
+      "lifespan_years": 1.5,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q213141",
@@ -4893,7 +5252,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Binturong",
       "image_filename": "Binturong in Overloon.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q214835",
@@ -4907,7 +5267,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bengalfuchs",
       "image_filename": "Bengal Fox - Shreeram M V - Rajasthan, India.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q245305",
@@ -4919,7 +5280,8 @@
       "image_filename": "Plains Zebra Equus quagga.jpg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 22,
-      "fun_fact": "Jedes Zebra hat sein ganz eigenes Streifenmuster – wie einen Fingerabdruck gibt es das kein zweites Mal."
+      "fun_fact": "Jedes Zebra hat sein ganz eigenes Streifenmuster – wie einen Fingerabdruck gibt es das kein zweites Mal.",
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q18764",
@@ -4934,7 +5296,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fleckenmusang",
       "image_filename": "Asian Palm Civet Over A Tree.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q2396858",
@@ -4956,7 +5319,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gr%C3%B6nlandwal",
       "image_filename": "Bowheads42.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 200
+      "lifespan_years": 200,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q183255",
@@ -4967,7 +5331,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Warzenschwein",
       "image_filename": "Nolan warthog (Phacochoerus africanus africanus).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q183330",
@@ -4982,7 +5347,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fossa",
       "image_filename": "Cryptoprocta Ferox.JPG",
       "diet": "Fleischfresser",
-      "lifespan_years": 17
+      "lifespan_years": 17,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q187927",
@@ -4993,7 +5359,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schraubenziege",
       "image_filename": "Markhor Schraubenziege Capra falconeri Zoo Augsburg-02.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 13
+      "lifespan_years": 13,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q190154",
@@ -5005,7 +5372,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mendesantilope",
       "image_filename": "Addax (Addax nasomaculatus) adult male and juvenile.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q192029",
@@ -5020,7 +5388,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nasenaffe",
       "image_filename": "Proboscis Monkey in Borneo.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q199962",
@@ -5031,7 +5400,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Berberaffe",
       "image_filename": "Portrait of a father.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 22
+      "lifespan_years": 22,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q13408062",
@@ -5041,7 +5411,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausyak",
       "image_filename": "Schwarzer Yakbulle.JPG",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q178973",
@@ -5051,7 +5422,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Frettchen",
       "image_filename": "Ferret 2008.png",
       "diet": "Fleischfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q183035",
@@ -5065,7 +5437,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Banteng",
       "image_filename": "Bos javanicus javanicus.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q189868",
@@ -5076,7 +5449,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mandrill",
       "image_filename": "Mandrill at san francisco zoo.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q80191",
@@ -5091,7 +5465,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Marmorkatze",
       "image_filename": "Marbled cat borneo.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q232054",
@@ -5102,7 +5477,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Axishirsch",
       "image_filename": "Spotted Deer Kanha.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q726151",
@@ -5117,7 +5493,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Quokka",
       "image_filename": "Rottnest Quokka 2004 SeanMcClean.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q76098",
@@ -5153,7 +5530,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Chinesischer_Flussdelfin",
       "image_filename": "Baiji Dolphin killed by Charles Hoy 1914.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q210872",
@@ -5164,7 +5542,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gangesdelfin",
       "image_filename": "Ganges River Dolphin cropped.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 28
+      "lifespan_years": 28,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q229337",
@@ -5179,7 +5558,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sambar",
       "image_filename": "A Sambal Deer at Peace.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q22110899",
@@ -5190,7 +5570,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergflusspferd",
       "image_filename": "Pygmy hippopotamus pair.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 35
+      "lifespan_years": 35,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q27742",
@@ -5205,7 +5586,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wildpferd",
       "image_filename": "Equus ferus (wild horse) gallery.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q549",
@@ -5227,7 +5609,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seeleopard",
       "image_filename": "Hydrurga leptonyx edit1.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 26
+      "lifespan_years": 26,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q187943",
@@ -5239,7 +5622,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gabelbock",
       "image_filename": "Antilocapra americana.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 11
+      "lifespan_years": 11,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q205948",
@@ -5250,7 +5634,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/N%C3%B6rdliche_Tigerkatze",
       "image_filename": "Snethlage's Tigrina imported from iNaturalist photo 354017009 on 2 August 2024 (cropped).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q231625",
@@ -5261,7 +5646,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Polarhase",
       "image_filename": "Lepus arcticus (2).JPG",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q202406",
@@ -5297,7 +5683,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/M%C3%A4hnenwolf",
       "image_filename": "Chrysocyon brachyurus no Parque Nacional da Serra da Canastra por Celso Ferrarezi Jr (07).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 13
+      "lifespan_years": 13,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q189484",
@@ -5308,7 +5695,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mantelpavian",
       "image_filename": "Hamadryas baboon (Papio hamadryas) female.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q207114",
@@ -5319,7 +5707,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gemeiner_Delfin",
       "image_filename": "Delphinus delphis 326708883.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q81056",
@@ -5338,7 +5727,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kanadischer_Biber",
       "image_filename": "North American Beaver, Humber River near Kleinburg, Ontario (39637607974).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q193469",
@@ -5352,7 +5742,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Takine",
       "image_filename": "Budorcas taxicolor01.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q219565",
@@ -5364,7 +5755,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Grevyzebra",
       "image_filename": "Grevy's Zebra Stallion.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 22
+      "lifespan_years": 22,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q241256",
@@ -5375,7 +5767,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanische_Zibetkatze",
       "image_filename": "Civettictis civetta 11.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 17
+      "lifespan_years": 17,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q27370",
@@ -5386,7 +5779,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kegelrobbe",
       "image_filename": "Two seals in the water.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 30
+      "lifespan_years": 30,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q188387",
@@ -5419,7 +5813,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Grauwal",
       "image_filename": "Gray whale.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 55
+      "lifespan_years": 55,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q200400",
@@ -5431,7 +5826,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/L%C3%B6ffelhund",
       "image_filename": "187 Bat-eared fox in Otjozondjupa Region Photo by Giles Laurent.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q203033",
@@ -5443,7 +5839,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_Ameisenb%C3%A4r",
       "image_filename": "Myresluger2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 16
+      "lifespan_years": 16,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q204322",
@@ -5460,7 +5857,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graukatze",
       "image_filename": "Chinese Mountain Cat (Felis Bieti) in XiNing Wild Zoo 2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 11
+      "lifespan_years": 11,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q207148",
@@ -5471,7 +5869,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haselmaus",
       "image_filename": "Haselmaus.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q243213",
@@ -5485,7 +5884,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bergzebra",
       "image_filename": "Equus zebra - Disney's Animal Kingdom Lodge, Orlando, Florida, USA - 20100119.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 22
+      "lifespan_years": 22,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q158699",
@@ -5506,7 +5906,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seiwal",
       "image_filename": "Balaenoptera borealis 3.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 55
+      "lifespan_years": 55,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q191781",
@@ -5521,7 +5922,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Japanmakak",
       "image_filename": "Macaca fuscata fuscata1.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 28
+      "lifespan_years": 28,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q192421",
@@ -5536,7 +5938,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Langschwanzkatze",
       "image_filename": "Margay in Costa Rica.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q208549",
@@ -5547,7 +5950,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mittelmeer-M%C3%B6nchsrobbe",
       "image_filename": "Monachus monachus DSC 0274.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q208561",
@@ -5558,7 +5962,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Anubispavian",
       "image_filename": "Olive baboon Ngorongoro.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q623434",
@@ -5569,7 +5974,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ellipsen-Wasserbock",
       "image_filename": "Ugandan defassa waterbuck (Kobus ellipsiprymnus defassa) male.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 17
+      "lifespan_years": 17,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q27465",
@@ -5603,7 +6009,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nordopossum",
       "image_filename": "Opossum 2.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 2
+      "lifespan_years": 2,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q149405",
@@ -5614,7 +6021,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bartrobbe",
       "image_filename": "Seal by Christopher Michel.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 28
+      "lifespan_years": 28,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q201808",
@@ -5625,7 +6033,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergwal",
       "image_filename": "Balaenoptera-acutorostrata.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 40
+      "lifespan_years": 40,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q207043",
@@ -5636,7 +6045,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Spie%C3%9Fbock",
       "image_filename": "Gemsbok (Oryx gazella) male.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 18
+      "lifespan_years": 18,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q208112",
@@ -5647,7 +6057,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Giraffengazellen",
       "image_filename": "Giraffe gazelle africa.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q211042",
@@ -5658,7 +6069,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Chilenische_Waldkatze",
       "image_filename": "Leopardus guigna.jpeg",
       "diet": "Fleischfresser",
-      "lifespan_years": 11
+      "lifespan_years": 11,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q212185",
@@ -5669,7 +6081,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldmaus",
       "image_filename": "Apodemus sylvaticus (Sardinia).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 1
+      "lifespan_years": 1,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q213889",
@@ -5680,7 +6093,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Siamang",
       "image_filename": "Siamang 2014.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 30
+      "lifespan_years": 30,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q215887",
@@ -5691,7 +6105,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wei%C3%9Fwedelhirsch",
       "image_filename": "White-tailed deer.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 8
+      "lifespan_years": 8,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q622880",
@@ -5701,7 +6116,8 @@
       "conservation_status": "nicht gefährdet",
       "image_filename": "Payamfarahani - africa (20).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q242602",
@@ -5712,7 +6128,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneeziege",
       "image_filename": "Mountain Goat Mount Massive.JPG",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 14
+      "lifespan_years": 14,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q254630",
@@ -5723,7 +6140,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wickelb%C3%A4r",
       "image_filename": "Potos flavus (8973438737).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 23
+      "lifespan_years": 23,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q28157482",
@@ -5734,7 +6152,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schabrackenhy%C3%A4ne",
       "image_filename": "Brown Hyena (Parahyaena brunnea) (6472940707).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 14
+      "lifespan_years": 14,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q27027",
@@ -5745,7 +6164,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gew%C3%B6hnlicher_Schweinswal",
       "image_filename": "Daan Close Up.PNG",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q194031",
@@ -5794,7 +6214,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/%C3%84thiopischer_Wolf",
       "image_filename": "Ethiopian wolf (Canis simensis citernii) 2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 9
+      "lifespan_years": 9,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q191737",
@@ -5806,7 +6227,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldhund",
       "image_filename": "Cachorro-vinagre.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q205329",
@@ -5820,7 +6242,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Amazonasdelfin",
       "image_filename": "Amazonas Flussdelfin Apure Orinoco Duisburg 01.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q213044",
@@ -5830,7 +6253,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Borneo-Goldkatze",
       "image_filename": "Bay cat 1 Jim Sanderson-cropped.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 11
+      "lifespan_years": 11,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q243339",
@@ -5841,7 +6265,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4isches_Gleith%C3%B6rnchen",
       "image_filename": "Pteromys volans.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 6
+      "lifespan_years": 6,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q208140",
@@ -5855,7 +6280,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanischer_Esel",
       "image_filename": "African wild Ass.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q70529",
@@ -5869,7 +6295,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tigeriltis",
       "image_filename": "Marbled Polecat, Suzakskiy, Kazakhstan 2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q193400",
@@ -5880,7 +6307,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bongo_(Antilope)",
       "image_filename": "Bongo NashvilleZoo.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 19
+      "lifespan_years": 19,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q309274",
@@ -5892,7 +6320,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rostkatze",
       "image_filename": "Rostkatze.JPG",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q215250",
@@ -5904,7 +6333,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graufuchs",
       "image_filename": "Gray fox.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 7
+      "lifespan_years": 7,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q737838",
@@ -5915,7 +6345,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Westlicher_Gorilla",
       "image_filename": "Gorille.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 35
+      "lifespan_years": 35,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q271459",
@@ -5931,7 +6362,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Feuerwiesel",
       "image_filename": "Siberian weasel.jpeg",
       "diet": "Fleischfresser",
-      "lifespan_years": 3
+      "lifespan_years": 3,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q273331",
@@ -5947,7 +6379,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Irawadidelfin",
       "image_filename": "Orcaella brevirostris 1878.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 28
+      "lifespan_years": 28,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q14592562",
@@ -5958,7 +6391,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Anden-Makib%C3%A4r",
       "image_filename": "Olinguito ZooKeys 324, solo.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q187981",
