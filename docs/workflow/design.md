@@ -165,6 +165,41 @@ Finale UX-Leitplanken für die optionale Bild-Rateshilfe (Option D′, siehe `do
 
 **Kein Einfluss auf Kernablauf:** Der Button ändert nichts an Antwortauswahl, Feedback-Mechanik oder Punktestand — rein optionale Zusatzinfo während der aktiven Frage, wie in den Akzeptanzkriterien von Issue #16 festgehalten.
 
+## Modus-Auswahl auf dem Start-Bildschirm (Skizze, 14.08.2026, `ux-design`)
+
+Anlass: Der Nutzer hat drei neue Spielmodi vorgeschlagen (Umkehr-Quiz, Fehlerbild, Tiergeräusche — Bewertung siehe `requirements.md`/`architecture.md`). Der bestehende Start-Bildschirm (siehe "Nutzerfluss" oben) war bewusst schlank gehalten und hatte bereits einen Platzhalter-Hinweis ("Perspektivisch: Platz für spätere Modus-Auswahl vorsehen"). Diese Skizze konkretisiert das erstmals — **grobe Skizze, keine pixelgenaue Spezifikation**, da noch keiner der drei Modi final gescoped ist.
+
+**Grundprinzip: Modus-Auswahl ergänzt die bestehende Schwierigkeitsstufen-Auswahl, ersetzt sie nicht.** Beide sind unabhängige, einfache Ein-Tap-Entscheidungen — kein Grund, daraus einen mehrstufigen Assistenten zu machen, solange die Gesamtzahl sichtbarer Elemente klein bleibt (siehe bestehender Grundsatz "Wenig Text pro Bildschirm", "Ein Gedanke pro Bildschirm").
+
+**Vorschlag — ein Bildschirm, zwei klar getrennte Auswahl-Gruppen:**
+
+```
+┌─────────────────────────────────┐
+│         🦁 Tierquiz              │
+│                                   │
+│  Was möchtest du spielen?        │
+│  ┌───────────┐ ┌───────────┐    │
+│  │ Quizfragen │ │ Wer bin   │    │
+│  │  (Start)   │ │  ich? 🌐  │    │
+│  └───────────┘ └───────────┘    │
+│                                   │
+│  Wie schwer?                     │
+│  ┌───────────┐ ┌───────────┐    │
+│  │  Einfach   │ │  Knifflig  │    │
+│  └───────────┘ └───────────┘    │
+│                                   │
+│        [ Los geht's! ]           │
+└─────────────────────────────────┘
+```
+
+- **Reihenfolge:** Modus-Auswahl **über** der Schwierigkeitsstufen-Auswahl, da sie die grundlegendere Entscheidung ist (was spiele ich) vor der feineren (wie schwer). Beide bleiben große, klar unterscheidbare Kacheln im bestehenden Stil (siehe "Layout-Empfehlungen" oben) — kein neues visuelles Vokabular, nur eine zweite Kachelreihe.
+- **Vorbelegung:** "Quizfragen" (bestehender Modus) ist standardmäßig vorausgewählt/hervorgehoben, damit ein Kind, das einfach nur spielen will, ohne bewusste Zusatzentscheidung genau das bekommt, was es heute schon kennt. Nur bei explizitem Tap auf einen anderen Modus wechselt die Auswahl.
+- **Kindgerechte Labels statt Fachbegriffe:** "Umkehr-Quiz" ist ein Projekt-interner Arbeitsname, kein kindgerechtes Label — Vorschlag "Wer bin ich?" (Bild zeigen, Namen erraten). "Tiergeräusche" kann als Label direkt stehen bleiben (bereits selbsterklärend für Kinder), ggf. mit einem kleinen Lautsprecher-Icon. Finaler Wortlaut sollte mit `zoologe`/Nutzer abgestimmt werden, wenn die Modi tatsächlich gebaut werden.
+- **Online-Kennzeichnung bei online-abhängigen Modi:** Modi, die laut `architecture.md` zwingend eine Internetverbindung brauchen (Umkehr-Quiz, Tiergeräusche — siehe dortige NFR-1-Diskussion), bekommen ein kleines, dezentes Icon auf der Kachel (z. B. 🌐 oder ein WLAN-Symbol), **kein** Warntext/Ausrufezeichen — passend zum bestehenden Grundsatz, Fehlerzustände nie bedrohlich wirken zu lassen. Der bestehende Quizfragen-Modus bekommt kein Icon, da er ohne Einschränkung offline läuft.
+- **Fehlerfall ohne Internet:** Tippt ein Kind auf einen online-abhängigen Modus ohne bestehende Verbindung, greift dasselbe kindgerechte, nicht-technische Fehlermuster wie beim bestehenden "Bild zeigen"-Button (siehe Zustandstabelle oben) — statt den Modus zu betreten und dort mitten in einer Frage zu scheitern, wird das idealerweise schon beim Versuch, den Modus zu starten, freundlich abgefangen (z. B. kurzer Hinweis "Dafür brauchst du Internet" plus automatischer Verbleib bei "Quizfragen"). Konkrete technische Umsetzung (Vorab-Check vs. Fehler beim ersten Frage-Laden) ist Aufgabe von `software-architect`/`web-developer`.
+- **Skalierungsgrenze:** Dieser Ein-Bildschirm-Ansatz funktioniert gut für bis zu ca. 3–4 Modi nebeneinander (aktuell: Quizfragen + 2 realistisch verfolgte neue Modi, siehe Priorisierung in `requirements.md` — Fehlerbild vorerst zurückgestellt). Sollten deutlich mehr Modi hinzukommen, sollte die Modus-Auswahl in einen eigenen, vorgeschalteten Bildschirm ausgelagert werden (Schritt 0 vor der heutigen Schwierigkeitsauswahl) statt eine wachsende Kachel-Wand auf einem Bildschirm zu erzeugen — für den aktuell absehbaren Umfang (max. 3 Modi) ist das aber noch nicht nötig.
+- **Barrierefreiheit:** Gleiche Anforderungen wie bestehende Auswahlkacheln (Tastaturbedienbarkeit, Tab-Reihenfolge, Kontrast, keine reine Farbcodierung) — das Online-Icon braucht zusätzlich einen Text-Alternativtext (z. B. `aria-label="Benötigt Internetverbindung"`), nicht nur ein Icon ohne Beschreibung.
+
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
 
 Alle vorherigen offenen Fragen sind geklärt: Zielalter → zwei Stufen 6–10/10–12 (siehe "Zielgruppe"), Sound-Effekte → nein, Fragenanzahl → 10 pro Runde (fest), Weiter-Mechanik → manueller Button, Sprache → Deutsch. Details jeweils in den Abschnitten oben eingearbeitet.
