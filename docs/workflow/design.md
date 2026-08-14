@@ -126,6 +126,8 @@ Details je Schritt:
 
 Anlass: `zoologe` kuratiert perspektivisch kurze Fun Facts (`fun_fact`-Feld, füllt sich nur schrittweise, viele Tiere bleiben vorerst leer). Empfehlung für die Einbindung im Feedback-Schritt (siehe "4. Feedback richtig/falsch" oben):
 
+**Bestätigung 14.08.2026 (`business-analyst`-Entscheidung, siehe `requirements.md` "Bewertung vorgeschlagener Content-Erweiterungen"):** Die hier beschriebene Teilbefüllungs-Auslegung ist bewusst passend zur Entscheidung, `fun_fact` **nicht** vollständig vor Launch zu befüllen — die erste Kurations-Tranche umfasst 20 Tiere (Größenordnung analog zur Verwechslungspaare-Mindestmenge, Issue #21). Diese Design-Vorgabe (kein Layout-Sprung, kein Platzhalter bei fehlendem Wert) bleibt damit unverändert korrekt und muss für den kleinen Ersttranche-Umfang nicht angepasst werden.
+
 - **Platzierung:** Fun Fact erscheint **unterhalb** des bestehenden Richtig/Falsch-Feedbacks, oberhalb des "Weiter"-Buttons — ergänzt das Feedback, ersetzt es nicht. Kein eigener Zwischenbildschirm, um den Ablauf nicht zusätzlich zu verlangsamen (Rundenlänge/Tempo ist laut Requirements bewusst schlicht gehalten).
 - **Kein Fun Fact vorhanden:** Feedback-Bereich sieht exakt wie heute aus, keine leere Box/Platzhalter, kein "Kein Fun Fact verfügbar"-Hinweis — für das Kind darf nicht auffallen, dass hier "etwas fehlt". Layout darf sich also nicht abhängig vom Vorhandensein verschieben (fester Rahmen, der optional befüllt wird, oder Bereich komplett weggelassen).
 - **Vorhanden:** Kurzer, visuell abgesetzter Block (z. B. eigenes Icon wie eine Glühbirne/ein Fragezeichen-Tier, dezente Hintergrundfarbe passend zur bestehenden Farbwelt), Einleitung kindgerecht framen ("Wusstest du schon?") statt trocken als Datenfeld zu präsentieren.
