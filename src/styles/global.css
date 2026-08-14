@@ -481,3 +481,80 @@ button {
 .result-screen__back-to-start:active {
   transform: scale(0.97);
 }
+
+/* Verlaufsliste der letzten Ergebnisse (Issue #14): dezenter, standardmäßig
+   eingeklappter Bereich unterhalb der beiden Folgeaktionen (Abstimmung mit
+   `ux-design`, siehe Issue-Kommentar). Nutzt natives <details>/<summary>
+   statt eigener Toggle-Logik — von Haus aus per Tastatur bedienbar
+   (design.md, "Barrierefreiheit") und liefert den auf-/zugeklappten Zustand
+   bereits über den nativen Dreiecks-Indikator. */
+.result-history {
+  width: 100%;
+  margin-top: var(--space-sm);
+}
+
+.result-history__toggle {
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-secondary-dark);
+}
+
+.result-history__toggle:hover {
+  text-decoration: underline;
+}
+
+.result-history__intro {
+  margin: var(--space-sm) 0 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.result-history__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+/* Bewusst kein Ranking-/Medaillen-Look: alle Einträge gleich gestaltet,
+   ausschließlich chronologisch (neueste zuerst), keine Ampelfarben je nach
+   Ergebnis (design.md-Abstimmung, "durchgehend deskriptiv statt wertend"). */
+.result-history__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.6rem var(--space-sm);
+  border: 2px solid var(--color-secondary);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+/* Der aktuelle Versuch steht als neuester Eintrag immer an erster Stelle und
+   wird zusätzlich per Badge hervorgehoben (ux-design: "Das war deine Runde
+   von heute!"), nicht kommentarlos in eine Rangfolge eingereiht. */
+.result-history__item--current {
+  border-color: var(--color-primary-dark);
+  background: var(--color-bg);
+}
+
+.result-history__current-badge {
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.result-history__result {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.result-history__meta {
+  font-size: 0.85rem;
+  color: var(--color-secondary-dark);
+}

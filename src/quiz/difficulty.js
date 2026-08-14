@@ -15,6 +15,15 @@ export const DIFFICULTY_LEVELS = Object.freeze({
   HARD: "10-12",
 });
 
+// Kindgerechte Anzeige-Labels je Stufe (siehe design.md, Issue #4: "Einfach"/
+// "Knifflig" als Label, Altersangabe als Zusatzinfo). Zentral hier definiert,
+// damit Start-Bildschirm (start.js) und Ergebnis-Verlaufsliste (Issue #14,
+// history.js/result.js) dieselben Labels nutzen statt sie zu duplizieren.
+export const DIFFICULTY_LABELS = Object.freeze({
+  [DIFFICULTY_LEVELS.EASY]: "Einfach",
+  [DIFFICULTY_LEVELS.HARD]: "Knifflig",
+});
+
 // Reihenfolge ist bewusst wie in architecture.md aufgeführt.
 const EASY_FIELDS = Object.freeze(["category", "habitat", "continent"]);
 const HARD_ONLY_FIELDS = Object.freeze([

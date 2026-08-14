@@ -16,7 +16,7 @@
 // Stufen-Wahl bleibt. Anders als die Schwierigkeitsstufe ist hier bereits ein
 // Wert vorbelegt (kein Pflicht-Interaktionsschritt vor dem Spielstart nötig).
 
-import { DIFFICULTY_LEVELS } from "../quiz/difficulty.js";
+import { DIFFICULTY_LEVELS, DIFFICULTY_LABELS } from "../quiz/difficulty.js";
 import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 import { createQuizState } from "../quiz/state.js";
 
@@ -32,12 +32,12 @@ const ROUND_LENGTH_OPTIONS = [5, 10, 15, 20];
 const DIFFICULTY_OPTIONS = [
   {
     value: DIFFICULTY_LEVELS.EASY,
-    label: "Einfach",
+    label: DIFFICULTY_LABELS[DIFFICULTY_LEVELS.EASY],
     hint: "6–10 Jahre",
   },
   {
     value: DIFFICULTY_LEVELS.HARD,
-    label: "Knifflig",
+    label: DIFFICULTY_LABELS[DIFFICULTY_LEVELS.HARD],
     hint: "10–12 Jahre",
   },
 ];
