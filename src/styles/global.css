@@ -384,7 +384,8 @@ button {
    nicht mit dem Quiz-Inhalt konkurriert, aber bei Bedarf lesbar bleibt
    (design.md: kindgerechter Text statt juristischem Disclaimer-Ton).
    Wiederverwendet dieselbe bereits gegen WCAG-AA geprüfte Farbe wie
-   .question-screen__wikipedia-link-anchor oben, kein neues Farbpaar. */
+   .question-screen__info-sentence-wikipedia-link weiter unten, kein neues
+   Farbpaar. */
 .image-hint__attribution {
   margin: 0;
   font-size: 0.75rem;
@@ -535,25 +536,30 @@ button {
   margin-right: 0.4em;
 }
 
-/* Wikipedia-Link (Issue #15): eigener kleiner Block unterhalb des Infosatzes,
-   oberhalb des "Weiter"-Buttons. Nur im Markup sichtbar (siehe question.js),
-   wenn animal.wikipedia_url_de vorhanden ist. Dezenter als der Infosatz-Block
-   (kein eigener Rahmen), da es sich um einen optionalen Zusatzlink handelt,
-   nicht um eine weitere Feedback-/Infoebene. */
-.question-screen__wikipedia-link {
-  margin: 0;
-  width: 100%;
-  text-align: left;
-}
-
-.question-screen__wikipedia-link-anchor {
-  display: inline-flex;
+/* Wikipedia-Link (Issue #15): seit der Zusammenführungs-Anfrage (14.08.2026)
+   kein eigener, danebenstehender Block mehr, sondern letztes Element
+   INNERHALB des Infosatz-Blocks oben (gleicher Rahmen/Hintergrund, kein
+   zweiter Kasten). `display: flex` sorgt dafür, dass der Link auf einer
+   eigenen Zeile unterhalb des Infosatz-Texts erscheint, statt sich mitten in
+   den Fließtext einzureihen. Nur im Markup sichtbar (siehe question.js),
+   wenn animal.wikipedia_url_de vorhanden ist — der Infosatz selbst bleibt
+   unverändert, wenn der Link fehlt (kein erzwungener Leerraum). */
+.question-screen__info-sentence-wikipedia-link {
+  display: flex;
   align-items: center;
   gap: 0.4em;
+  margin-top: 0.5em;
   color: var(--color-secondary-dark);
   font-size: 1rem;
   font-weight: 700;
   text-decoration: underline;
+}
+
+/* Höhere Spezifität als die UA-Regel `[hidden] { display: none }` nötig,
+   da wir oben bereits `display: flex` für dieselbe Klasse setzen (gleiches
+   Muster wie bei .image-hint[hidden] weiter oben in dieser Datei). */
+.question-screen__info-sentence-wikipedia-link[hidden] {
+  display: none;
 }
 
 .next-button {

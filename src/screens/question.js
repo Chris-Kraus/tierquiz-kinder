@@ -131,17 +131,21 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
         <span class="question-screen__info-sentence-icon" aria-hidden="true">💡</span>
         <span class="question-screen__info-sentence-lead">Wusstest du schon?</span>
         <span class="question-screen__info-sentence-text"></span>
-      </p>
-
-      <p class="question-screen__wikipedia-link" hidden>
+        <!-- Issue #15: Wikipedia-Link, seit dem Zusammenführungs-Wunsch als
+             letztes Element INNERHALB des Infosatz-Blocks statt als eigener,
+             danebenstehender Block (siehe Datei-Kommentar unten bei
+             wikipediaLinkEl). Eigenes hidden-Attribut unabhängig vom
+             umschließenden p-Element -- der Infosatz bleibt unverändert
+             sichtbar, wenn das Tier keinen wikipedia_url_de-Eintrag hat. -->
         <a
-          class="question-screen__wikipedia-link-anchor"
+          class="question-screen__info-sentence-wikipedia-link"
           href="#"
           target="_blank"
           rel="noopener noreferrer"
+          hidden
         >
           <span aria-hidden="true">📖</span>
-          <span class="question-screen__wikipedia-link-text"></span>
+          <span class="question-screen__info-sentence-wikipedia-link-text"></span>
         </a>
       </p>
 
@@ -169,15 +173,16 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   );
   // Issue #15: Link zur deutschen Wikipedia-Seite des Tieres, nur sichtbar,
   // wenn animal.wikipedia_url_de vorhanden ist (nicht jedes Tier hat einen
-  // deutschen Wikipedia-Artikel, siehe architecture.md).
+  // deutschen Wikipedia-Artikel, siehe architecture.md). Seit dem
+  // Zusammenführungs-Wunsch (Nutzeranfrage 14.08.2026) lebt der Link direkt
+  // im Infosatz-Block (Issue #12) statt in einem eigenen, danebenstehenden
+  // Element — `wikipediaLinkEl` ist damit direkt das `<a>`-Element, kein
+  // umschließendes `<p>` mehr nötig.
   const wikipediaLinkEl = container.querySelector(
-    ".question-screen__wikipedia-link",
-  );
-  const wikipediaLinkAnchorEl = container.querySelector(
-    ".question-screen__wikipedia-link-anchor",
+    ".question-screen__info-sentence-wikipedia-link",
   );
   const wikipediaLinkTextEl = container.querySelector(
-    ".question-screen__wikipedia-link-text",
+    ".question-screen__info-sentence-wikipedia-link-text",
   );
   const nextButton = container.querySelector(".next-button");
 
@@ -345,7 +350,7 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     // Link nie kurz mit dem vorherigen Tier sichtbar/erreichbar ist —
     // `hidden` nimmt das <a>-Element zusätzlich aus der Tab-Reihenfolge.
     wikipediaLinkEl.hidden = true;
-    wikipediaLinkAnchorEl.href = "#";
+    wikipediaLinkEl.href = "#";
     wikipediaLinkTextEl.textContent = "";
     nextButton.hidden = true;
 
@@ -415,7 +420,7 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     // Tier vorhanden ist (kein generischer Such-Link-Fallback, siehe
     // PM-Entscheidung im Issue) — kindgerechter Linktext statt roher URL.
     if (answeredAnimal?.wikipedia_url_de) {
-      wikipediaLinkAnchorEl.href = answeredAnimal.wikipedia_url_de;
+      wikipediaLinkEl.href = answeredAnimal.wikipedia_url_de;
       wikipediaLinkTextEl.textContent = `Mehr über ${answeredAnimal.name_de} auf Wikipedia lesen`;
       wikipediaLinkEl.hidden = false;
     }
