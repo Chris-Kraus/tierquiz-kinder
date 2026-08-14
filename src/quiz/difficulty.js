@@ -6,9 +6,14 @@
 // unterscheidbar).
 // Stufe 10–12 (anspruchsvoll): zusätzlich weight_kg/length_cm/lifespan_years/
 // diet/conservation_status — Falschantworten möglichst nah am richtigen Wert
-// (schwerer zu erraten). Die eigentliche Fragetext-/Antwortlogik lebt in
-// questionGenerator.js, hier wird nur festgelegt, welche Felder pro Stufe
-// erlaubt sind.
+// (schwerer zu erraten). Zusätzlich das Vergleichs-Pseudofeld
+// `heaviest_animal` (Issue #20): strukturell kein Datenbank-Feld, sondern ein
+// eigener Fragemechanismus (4 Tiere als Optionen statt 1 Zieltier + Werte),
+// aber bewusst als ganz normaler Eintrag in HARD_ONLY_FIELDS geführt, damit
+// er automatisch an der bestehenden orderFieldsByUsage-Priorisierung
+// (Issue #11) teilnimmt statt sie zu umgehen. Die eigentliche
+// Fragetext-/Antwortlogik lebt in questionGenerator.js, hier wird nur
+// festgelegt, welche Felder pro Stufe erlaubt sind.
 
 export const DIFFICULTY_LEVELS = Object.freeze({
   EASY: "6-10",
@@ -32,6 +37,9 @@ const HARD_ONLY_FIELDS = Object.freeze([
   "lifespan_years",
   "diet",
   "conservation_status",
+  // Vergleichsfrage-Pseudofeld (Issue #20), kein echtes Tierdatenbank-Feld —
+  // siehe questionGenerator.js, COMPARISON_FIELD_DEFINITIONS.
+  "heaviest_animal",
 ]);
 const HARD_FIELDS = Object.freeze([...EASY_FIELDS, ...HARD_ONLY_FIELDS]);
 

@@ -21,7 +21,7 @@ describe("getFieldsForDifficulty", () => {
     expect(fields).toEqual(["category", "habitat", "continent"]);
   });
 
-  it("liefert für Stufe 10-12 zusätzlich die anspruchsvolleren Felder", () => {
+  it("liefert für Stufe 10-12 zusätzlich die anspruchsvolleren Felder inkl. Vergleichsfrage-Pseudofeld (Issue #20)", () => {
     const fields = getFieldsForDifficulty(DIFFICULTY_LEVELS.HARD);
     expect(fields).toEqual(
       expect.arrayContaining([
@@ -33,9 +33,10 @@ describe("getFieldsForDifficulty", () => {
         "lifespan_years",
         "diet",
         "conservation_status",
+        "heaviest_animal",
       ]),
     );
-    expect(fields).toHaveLength(8);
+    expect(fields).toHaveLength(9);
   });
 
   it("wirft bei unbekannter Schwierigkeitsstufe", () => {

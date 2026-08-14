@@ -133,6 +133,28 @@ const FIELD_DEFINITIONS = {
   },
 };
 
+// Vergleichsfragen (Issue #20, siehe architecture.md Abschnitt "Technische
+// Einschätzung: Anreicherungs-Ideen", Punkt 4): strukturell anders als
+// FIELD_DEFINITIONS, denn hier sind die 4 Antwortoptionen selbst Tiere statt
+// Feldwerte eines einzelnen Zieltiers. Deckt "Vergleichsfrage" und
+// "Rekordhalter-Frage" in einem Mechanismus ab — kein separater
+// Vorberechnungsschritt nötig, da die richtige Antwort einfach das Tier mit
+// dem höchsten Wert unter den 4 zufällig gezogenen Kandidaten ist. Zunächst
+// nur `weight_kg` (42 % Datenabdeckung); `length_cm` bewusst nicht (nur
+// 2,2 % Abdeckung, siehe Issue).
+const COMPARISON_FIELD_DEFINITIONS = {
+  heaviest_animal: {
+    question: "Welches dieser vier Tiere ist am schwersten?",
+    getValue: (animal) =>
+      isFiniteNumber(animal.weight_kg) ? animal.weight_kg : null,
+  },
+};
+
+// Wie oft eine neue 4er-Zufallsauswahl versucht wird, wenn der Höchstwert
+// unter den gezogenen Kandidaten mehrfach vorkommt (Gleichstand -> keine
+// eindeutig richtige Antwort möglich, siehe buildComparisonQuestion unten).
+const COMPARISON_MAX_ATTEMPTS = 20;
+
 function shuffle(array, rng) {
   const result = array.slice();
   for (let i = result.length - 1; i > 0; i -= 1) {
@@ -312,6 +334,97 @@ function buildIdentifyQuestion({
   };
 }
 
+/** Baut eine Vergleichsfrage (Issue #20): zieht `OPTION_COUNT` zufällige,
+ * unbenutzte Tiere mit befülltem Quellfeld aus `candidateAnimals`, die
+ * Optionen sind die Tiernamen selbst, korrekt ist das Tier mit dem höchsten
+ * Wert. Bei Gleichstand um den Höchstwert (keine eindeutig richtige Antwort
+ * möglich) wird eine neue 4er-Auswahl versucht (bis zu
+ * `COMPARISON_MAX_ATTEMPTS`-mal). Liefert `null`, wenn entweder nicht genug
+ * unterschiedlich benannte, unbenutzte Kandidaten mit dem Feld vorhanden sind
+ * oder auch nach allen Versuchen kein gleichstandsfreies Quartett gefunden
+ * wurde. Analog zu `tryBuildQuestionForField` liefert die Funktion
+ * `{ question, animal }`, wobei `animal` hier das Gewinner-Tier ist (für die
+ * `usedAnimalIds`-Buchführung in `generateQuestions` — dieselbe Semantik wie
+ * bei den übrigen Fragetypen: das "Zieltier" der Frage wird pro Runde nicht
+ * doppelt verwendet, die 3 unterlegenen Tiere bleiben wie sonstige
+ * Falschantwort-Kandidaten frei wiederverwendbar). */
+function buildComparisonQuestion({ def, field, candidateAnimals, usedAnimalIds, rng }) {
+  const eligible = candidateAnimals.filter((animal) => {
+    if (usedAnimalIds.has(animal.id)) return false;
+    const value = def.getValue(animal);
+    return isFiniteNumber(value);
+  });
+
+  // Dedupe nach Anzeigename wie bei buildIdentifyQuestion: die Optionen sind
+  // Tiernamen, zwei Kandidaten mit demselben name_de würden sonst als
+  // Options-Duplikat auffallen.
+  const pool = dedupeAnimalsByName(eligible);
+  if (pool.length < OPTION_COUNT) return null;
+
+  for (let attempt = 0; attempt < COMPARISON_MAX_ATTEMPTS; attempt += 1) {
+    const candidates = shuffle(pool, rng).slice(0, OPTION_COUNT);
+    const values = candidates.map((animal) => def.getValue(animal));
+    const maxValue = Math.max(...values);
+    const winners = candidates.filter((_, index) => values[index] === maxValue);
+    if (winners.length !== 1) continue; // Gleichstand -> neu ziehen
+
+    const winner = winners[0];
+    const options = shuffle(
+      candidates.map((animal) => ({
+        text: animal.name_de,
+        correct: animal.id === winner.id,
+      })),
+      rng,
+    );
+
+    return {
+      question: {
+        id: `${winner.id}-${field}-comparison`,
+        animalId: winner.id,
+        animalName: winner.name_de,
+        field,
+        questionType: "comparison",
+        text: def.question,
+        options,
+      },
+      animal: winner,
+    };
+  }
+
+  return null;
+}
+
+/** Baut eine Vergleichsfrage für ein bestimmtes Pseudofeld direkt aus einer
+ * Tierliste, oder `null`, wenn dafür nicht genug Tiere mit befülltem Feld
+ * vorhanden sind. Pendant zu `buildQuestionForField` für Vergleichsfragen —
+ * eigene Funktion statt Wiederverwendung derselben Signatur, da es (anders
+ * als bei den übrigen Fragetypen) kein einzelnes Zieltier gibt, auf das sich
+ * die Frage bezieht. Primär von `generateQuestions` genutzt, aber auch direkt
+ * exportiert für gezielte Tests dieser Feld-Strategie.
+ * @param {string} field eines der von COMPARISON_FIELD_DEFINITIONS unterstützten Pseudofelder
+ * @param {object[]} animals vollständige Tierliste
+ * @param {() => number} [rng] Zufallsquelle, Standard Math.random (für Tests austauschbar)
+ */
+export function buildComparisonQuestionForField(field, animals, rng = Math.random) {
+  const def = COMPARISON_FIELD_DEFINITIONS[field];
+  if (!def || !Array.isArray(animals)) return null;
+
+  const usableAnimals = animals.filter(
+    (animal) =>
+      animal && isNonEmptyString(animal.name_de) && isNonEmptyString(animal.id),
+  );
+
+  const result = buildComparisonQuestion({
+    def,
+    field,
+    candidateAnimals: usableAnimals,
+    usedAnimalIds: new Set(),
+    rng,
+  });
+
+  return result ? result.question : null;
+}
+
 /**
  * Baut eine einzelne Frage für ein bestimmtes Tier/Feld, oder `null`, wenn
  * dafür (z. B. wegen fehlender Daten) keine gültige 4-Optionen-Frage gebildet
@@ -443,7 +556,10 @@ function tryBuildQuestionForField({
  * zu 100 % vs. `habitat` zu ~5 % befüllt). Erst wenn kein unterrepräsen-
  * tiertes Feld mehr für ein verbleibendes Tier verfügbar ist, greift die
  * Runde wieder auf ein bereits häufiger genutztes Feld (i. d. R. `category`)
- * zurück.
+ * zurück. Das Vergleichsfrage-Pseudofeld `heaviest_animal` (Issue #20) nimmt
+ * an genau derselben Priorisierung teil (siehe `buildComparisonQuestion`),
+ * verdrängt die übrigen Fragetypen also nicht und wird umgekehrt nicht von
+ * ihnen verdrängt.
  *
  * @param {object[]} animals Tierliste, je Eintrag laut architecture.md-Schema
  * @param {object} options
@@ -482,17 +598,31 @@ export function generateQuestions(animals, options = {}) {
     let builtThisSlot = false;
 
     for (const field of fieldOrder) {
-      const def = FIELD_DEFINITIONS[field];
-      if (!def) continue;
+      // Vergleichsfrage-Pseudofelder (Issue #20) laufen über einen eigenen
+      // Builder statt FIELD_DEFINITIONS/tryBuildQuestionForField — nehmen
+      // aber an derselben fieldOrder/fieldUsageCount-Priorisierung teil, so
+      // dass sie sich in die Feld-Durchmischung aus Issue #11 einreihen statt
+      // sie zu umgehen.
+      const comparisonDef = COMPARISON_FIELD_DEFINITIONS[field];
+      const def = comparisonDef ? null : FIELD_DEFINITIONS[field];
+      if (!comparisonDef && !def) continue;
 
-      const result = tryBuildQuestionForField({
-        def,
-        field,
-        difficulty,
-        candidateAnimals,
-        usedAnimalIds,
-        rng,
-      });
+      const result = comparisonDef
+        ? buildComparisonQuestion({
+            def: comparisonDef,
+            field,
+            candidateAnimals,
+            usedAnimalIds,
+            rng,
+          })
+        : tryBuildQuestionForField({
+            def,
+            field,
+            difficulty,
+            candidateAnimals,
+            usedAnimalIds,
+            rng,
+          });
 
       if (result) {
         questions.push(result.question);

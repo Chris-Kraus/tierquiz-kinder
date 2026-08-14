@@ -8,6 +8,7 @@ import { describe, it, expect } from "vitest";
 import {
   generateQuestions,
   buildQuestionForField,
+  buildComparisonQuestionForField,
   DEFAULT_ROUND_LENGTH,
 } from "./questionGenerator.js";
 import { DIFFICULTY_LEVELS, getFieldsForDifficulty } from "./difficulty.js";
@@ -313,5 +314,145 @@ describe("buildQuestionForField — diet-Feld (nur 3 mögliche Enum-Werte)", () 
     expectValidQuestionShape(question);
     // Fallback-Frageform: Optionen sind Tiernamen, nicht Diät-Werte.
     expect(question.questionType).toBe("identify");
+  });
+});
+
+describe("buildComparisonQuestionForField — Vergleichsfrage 'heaviest_animal' (Issue #20)", () => {
+  it("wählt unter 4 Kandidaten mit eindeutigem Höchstgewicht genau das schwerste Tier als korrekte Option", () => {
+    // Kontrollierte 4er-Teilmenge mit eindeutig unterschiedlichen Gewichten
+    // (Löwe 190 < Tiger 220 < Braunbär 300 < Zebra 350) — da die Teilmenge
+    // exakt 4 Tiere umfasst, ist das Ergebnis unabhängig vom Zufalls-Shuffle
+    // immer dieselbe Auswahl, nur die Reihenfolge der Optionen variiert.
+    const byName = (name) => sampleAnimals.find((a) => a.name_de === name);
+    const subset = ["Löwe", "Tiger", "Braunbär", "Zebra"].map(byName);
+
+    const question = buildComparisonQuestionForField(
+      "heaviest_animal",
+      subset,
+    );
+
+    expect(question).not.toBeNull();
+    expect(question.questionType).toBe("comparison");
+    expect(question.text).toBe("Welches dieser vier Tiere ist am schwersten?");
+    expectValidQuestionShape(question);
+
+    const optionNames = question.options.map((o) => o.text).sort();
+    expect(optionNames).toEqual(
+      ["Löwe", "Tiger", "Braunbär", "Zebra"].sort(),
+    );
+
+    const correctOption = question.options.find((o) => o.correct);
+    expect(correctOption.text).toBe("Zebra");
+    expect(question.animalName).toBe("Zebra");
+    expect(question.animalId).toBe(byName("Zebra").id);
+  });
+
+  it("liefert null, wenn weniger als 4 Tiere ein befülltes weight_kg haben", () => {
+    const subset = sampleAnimals
+      .filter((a) => typeof a.weight_kg === "number")
+      .slice(0, 3);
+    expect(
+      buildComparisonQuestionForField("heaviest_animal", subset),
+    ).toBeNull();
+  });
+
+  it("liefert null für ein unbekanntes Pseudofeld statt zu crashen", () => {
+    expect(() =>
+      buildComparisonQuestionForField("does_not_exist", sampleAnimals),
+    ).not.toThrow();
+    expect(
+      buildComparisonQuestionForField("does_not_exist", sampleAnimals),
+    ).toBeNull();
+  });
+
+  it("liefert null, wenn der Höchstwert unter den 4 Kandidaten mehrfach vorkommt (kein eindeutig korrekter Gewinner)", () => {
+    // Exakt 4 Kandidaten, davon zwei mit dem (gemeinsamen) Höchstgewicht ->
+    // jede der COMPARISON_MAX_ATTEMPTS Neuziehungen wählt zwangsläufig
+    // dieselben 4 Tiere (nur andere Reihenfolge) und trifft immer wieder auf
+    // denselben Gleichstand -> muss null liefern statt zwei "korrekte"
+    // Optionen zu erzeugen.
+    const tiedAnimals = [
+      { id: "T1", name_de: "Tier A", weight_kg: 20 },
+      { id: "T2", name_de: "Tier B", weight_kg: 20 },
+      { id: "T3", name_de: "Tier C", weight_kg: 10 },
+      { id: "T4", name_de: "Tier D", weight_kg: 5 },
+    ];
+    expect(
+      buildComparisonQuestionForField("heaviest_animal", tiedAnimals),
+    ).toBeNull();
+  });
+
+  it("dedupliziert Kandidaten nach Anzeigename (name_de), nicht nach id", () => {
+    const duplicateNameAnimals = [
+      { id: "T1", name_de: "Zwilling", weight_kg: 20 },
+      { id: "T2", name_de: "Zwilling", weight_kg: 25 }, // gleicher Name, andere id
+      { id: "T3", name_de: "Tier C", weight_kg: 10 },
+      { id: "T4", name_de: "Tier D", weight_kg: 5 },
+    ];
+    // Nach Dedupe bleiben nur 3 eindeutig benannte Tiere übrig -> zu wenige
+    // für eine 4-Optionen-Frage.
+    expect(
+      buildComparisonQuestionForField("heaviest_animal", duplicateNameAnimals),
+    ).toBeNull();
+  });
+});
+
+describe("generateQuestions — 'heaviest_animal' ist nur in Stufe 10-12 verfügbar und fügt sich in die Feld-Priorisierung (Issue #20)", () => {
+  it("Stufe 6-10 erzeugt niemals eine 'heaviest_animal'-Frage", () => {
+    for (let i = 0; i < 10; i += 1) {
+      const questions = generateQuestions(sampleAnimals, { difficulty: EASY });
+      questions.forEach((q) => expect(q.field).not.toBe("heaviest_animal"));
+    }
+  });
+
+  it("Stufe 10-12: 'heaviest_animal'-Fragen (falls gezogen) sind gültig und korrekt ausgewertet", () => {
+    const weightByName = Object.fromEntries(
+      sampleAnimals.map((a) => [a.name_de, a.weight_kg]),
+    );
+    let sawComparisonQuestion = false;
+
+    for (let i = 0; i < 30; i += 1) {
+      const questions = generateQuestions(sampleAnimals, {
+        difficulty: HARD,
+        count: 10,
+      });
+
+      questions
+        .filter((q) => q.field === "heaviest_animal")
+        .forEach((question) => {
+          sawComparisonQuestion = true;
+          expect(question.questionType).toBe("comparison");
+          expectValidQuestionShape(question);
+
+          const correctOption = question.options.find((o) => o.correct);
+          const maxWeight = Math.max(
+            ...question.options.map((o) => weightByName[o.text]),
+          );
+          expect(weightByName[correctOption.text]).toBe(maxWeight);
+        });
+    }
+
+    // sampleAnimals hat >4 Tiere mit befülltem weight_kg, also muss der
+    // Fragetyp über 30 Runden hinweg mindestens einmal gezogen werden — sonst
+    // wäre er faktisch nicht in die Priorisierung eingebunden (Issue #11).
+    expect(sawComparisonQuestion).toBe(true);
+  });
+
+  it("Stufe 10-12: 'heaviest_animal' verdrängt die übrigen Fragetypen nicht (kein Feld dominiert >60% einer Runde)", () => {
+    // Regressionsschutz analog zum bestehenden Issue-#11-Test oben: stellt
+    // sicher, dass die Einbindung des neuen Pseudofelds die bestehende
+    // Durchmischung nicht kaputt macht.
+    let worstShare = 0;
+    for (let i = 0; i < 30; i += 1) {
+      const questions = generateQuestions(sampleAnimals, {
+        difficulty: HARD,
+        count: 10,
+      });
+      const tally = {};
+      for (const q of questions) tally[q.field] = (tally[q.field] || 0) + 1;
+      const share = Math.max(...Object.values(tally)) / questions.length;
+      worstShare = Math.max(worstShare, share);
+    }
+    expect(worstShare).toBeLessThanOrEqual(0.6);
   });
 });
