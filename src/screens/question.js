@@ -33,6 +33,15 @@ import {
 // PM-Entscheidung im Issue). Reine Template-Logik aus Wikidata-Feldern, kein
 // Wikipedia-Artikeltext (siehe infoSentence.js für die volle Herleitung).
 import { buildInfoSentence } from "../quiz/infoSentence.js";
+// Issue #24: Fun Fact im Feedback-Schritt. Bewusst EIGENSTÄNDIGER Block neben
+// dem Infosatz-Block oben (Issue #12) statt darin integriert — der Infosatz
+// baut Sätze ausschließlich aus strukturierten Enum-/Zahlenfeldern über feste
+// Satzbausteine (infoSentence.js), `fun_fact` ist dagegen roher, kuratierter
+// Freitext ohne Baustein-Fallback-System (siehe architecture.md, "Besonder-
+// heiten des Tieres — Deckungsgleich mit fun_fact, aber Anzeige-Code fehlt
+// noch"). Keine eigene Logik-Datei nötig (anders als infoSentence.js/
+// imageHint.js) — reines Vorhandensein/Text-Auslesen von animal.fun_fact,
+// keine Herleitung/Transformation.
 // Issue #16 (Option D′): Bild-Rateshilfe. Reine URL-Konstruktion/Antwort-
 // Parsing-Logik lebt in imageHint.js (testbar ohne DOM/fetch-Mock, siehe
 // dortiger Datei-Kommentar) — der eigentliche fetch()-Aufruf und die
@@ -128,8 +137,13 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
       ></p>
 
       <p class="question-screen__info-sentence" hidden>
-        <span class="question-screen__info-sentence-icon" aria-hidden="true">💡</span>
-        <span class="question-screen__info-sentence-lead">Wusstest du schon?</span>
+        <!-- Issue #24 QA-Bugfix (14.08.2026): Icon + "Wusstest du schon?"-
+             Einleitung entfernt, die hier fälschlich dupliziert waren (siehe
+             design.md, "Klarstellung 14.08.2026 (Rückfrage aus Issue #24)").
+             Icon+Wording sind laut Klarstellung das exklusive Erkennungs-
+             merkmal des Fun-Fact-Blocks unten; der Infosatz-Block behält sein
+             ursprüngliches Überschrift-/Doppelpunkt-Format ("{name_de}:
+             Ein/e {category}...", siehe infoSentence.js) ohne Icon/Lead. -->
         <span class="question-screen__info-sentence-text"></span>
         <!-- Issue #15: Wikipedia-Link, seit dem Zusammenführungs-Wunsch als
              letztes Element INNERHALB des Infosatz-Blocks statt als eigener,
@@ -147,6 +161,18 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
           <span aria-hidden="true">📖</span>
           <span class="question-screen__info-sentence-wikipedia-link-text"></span>
         </a>
+      </p>
+
+      <!-- Issue #24: Fun Fact — eigenständiger Block unterhalb des Infosatz-
+           Blocks oben, oberhalb des "Weiter"-Buttons (design.md, "Fun Fact im
+           Feedback-Schritt"). Nur sichtbar, wenn animal.fun_fact vorhanden
+           ist (siehe showQuestion/handleAnswer unten) — kein Platzhalter/
+           Hinweis bei fehlendem Wert, damit sich das Layout nicht abhängig
+           vom Vorhandensein verschiebt. -->
+      <p class="question-screen__fun-fact" hidden>
+        <span class="question-screen__fun-fact-icon" aria-hidden="true">💡</span>
+        <span class="question-screen__fun-fact-lead">Wusstest du schon?</span>
+        <span class="question-screen__fun-fact-text"></span>
       </p>
 
       <button type="button" class="next-button" hidden>Weiter</button>
@@ -183,6 +209,13 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   );
   const wikipediaLinkTextEl = container.querySelector(
     ".question-screen__info-sentence-wikipedia-link-text",
+  );
+  // Issue #24: Fun-Fact-Block-Elemente — bewusst eigene Referenzen statt
+  // Wiederverwendung der Infosatz-Elemente oben (konzeptionell eigenständiger
+  // Block, siehe Datei-Kommentar beim buildInfoSentence-Import).
+  const funFactEl = container.querySelector(".question-screen__fun-fact");
+  const funFactTextEl = container.querySelector(
+    ".question-screen__fun-fact-text",
   );
   const nextButton = container.querySelector(".next-button");
 
@@ -352,6 +385,11 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     wikipediaLinkEl.hidden = true;
     wikipediaLinkEl.href = "#";
     wikipediaLinkTextEl.textContent = "";
+    // Issue #24: bei jeder neuen Frage vollständig zurücksetzen, damit der
+    // Fun Fact des vorherigen Tieres nie kurz sichtbar bleibt (gleiches
+    // Muster wie beim Wikipedia-Link oben).
+    funFactEl.hidden = true;
+    funFactTextEl.textContent = "";
     nextButton.hidden = true;
 
     // Issue #16: Bild-Rateshilfe bei jeder neuen Frage vollständig
@@ -423,6 +461,16 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
       wikipediaLinkEl.href = answeredAnimal.wikipedia_url_de;
       wikipediaLinkTextEl.textContent = `Mehr über ${answeredAnimal.name_de} auf Wikipedia lesen`;
       wikipediaLinkEl.hidden = false;
+    }
+
+    // Issue #24: Fun Fact nur anzeigen, wenn animal.fun_fact vorhanden ist —
+    // kein Platzhalter/"nicht verfügbar"-Hinweis bei fehlendem Wert (design.md,
+    // "Fun Fact im Feedback-Schritt": "Layout darf sich nicht abhängig vom
+    // Vorhandensein verschieben"). Wie der Infosatz oben unabhängig davon, ob
+    // richtig oder falsch geantwortet wurde.
+    if (answeredAnimal?.fun_fact) {
+      funFactTextEl.textContent = answeredAnimal.fun_fact;
+      funFactEl.hidden = false;
     }
 
     recordAnswer(quizState, {

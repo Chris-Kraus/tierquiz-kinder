@@ -132,6 +132,8 @@ Anlass: `zoologe` kuratiert perspektivisch kurze Fun Facts (`fun_fact`-Feld, fü
 - **Kein Fun Fact vorhanden:** Feedback-Bereich sieht exakt wie heute aus, keine leere Box/Platzhalter, kein "Kein Fun Fact verfügbar"-Hinweis — für das Kind darf nicht auffallen, dass hier "etwas fehlt". Layout darf sich also nicht abhängig vom Vorhandensein verschieben (fester Rahmen, der optional befüllt wird, oder Bereich komplett weggelassen).
 - **Vorhanden:** Kurzer, visuell abgesetzter Block (z. B. eigenes Icon wie eine Glühbirne/ein Fragezeichen-Tier, dezente Hintergrundfarbe passend zur bestehenden Farbwelt), Einleitung kindgerecht framen ("Wusstest du schon?") statt trocken als Datenfeld zu präsentieren.
 - **Beide Altersstufen:** Gleiche Darstellung für 6–10 und 10–12 — der Unterschied liegt im Textinhalt selbst (Aufgabe von `zoologe`: altersgerechte Formulierung), nicht in der UI-Behandlung.
+
+**Klarstellung 14.08.2026 (Rückfrage aus Issue #24):** Der Infosatz-Block (Issue #12) wurde tatsächlich mit einem eigenen Überschrift-/Doppelpunkt-Format umgesetzt ("{name_de}: Ein/e {category}...", siehe `architecture.md` "Infosatz-Basisbaustein — Genus-Lücke"), **nicht** mit "Wusstest du schon?"/Glühbirne. Diese Formulierung + Icon sind damit in der Praxis das **alleinige, exklusive Erkennungsmerkmal des Fun-Fact-Blocks** — keine Überschneidung, keine Anpassung nötig. Die beiden Blöcke sind bereits ausreichend unterscheidbar (unterschiedliche Akzentfarbe: Infosatz blau-getönt, Fun Fact gelb/orange-getönt; unterschiedliches Icon: keins vs. Glühbirne 💡; unterschiedlicher Textstil: sachlicher Fakten-Satz vs. "Wusstest du schon?"-Einleitung). **Reihenfolge, falls beide vorhanden sind:** Infosatz zuerst (immer vorhanden, faktenbasiert), Fun Fact darunter (selten vorhanden, überraschender Bonus-Charakter) — passt zur Lesereihenfolge "erst Fakten, dann Extra-Highlight".
 - **Barrierefreiheit:** Gleiche Kontrast-/Schriftgrößen-Vorgaben wie übriger Feedback-Text (siehe "Visuelle Grundlinie"/"Barrierefreiheit" oben), kein separates Regelwerk nötig.
 
 ## Verwechslungspaare-Fragetyp (Issue #21, 13.08.2026)
@@ -201,6 +203,43 @@ Anlass: Der Nutzer hat drei neue Spielmodi vorgeschlagen (Umkehr-Quiz, Fehlerbil
 - **Fehlerfall ohne Internet:** Tippt ein Kind auf einen online-abhängigen Modus ohne bestehende Verbindung, greift dasselbe kindgerechte, nicht-technische Fehlermuster wie beim bestehenden "Bild zeigen"-Button (siehe Zustandstabelle oben) — statt den Modus zu betreten und dort mitten in einer Frage zu scheitern, wird das idealerweise schon beim Versuch, den Modus zu starten, freundlich abgefangen (z. B. kurzer Hinweis "Dafür brauchst du Internet" plus automatischer Verbleib bei "Quizfragen"). Konkrete technische Umsetzung (Vorab-Check vs. Fehler beim ersten Frage-Laden) ist Aufgabe von `software-architect`/`web-developer`.
 - **Skalierungsgrenze:** Dieser Ein-Bildschirm-Ansatz funktioniert gut für bis zu ca. 3–4 Modi nebeneinander (aktuell: Quizfragen + 2 realistisch verfolgte neue Modi, siehe Priorisierung in `requirements.md` — Fehlerbild vorerst zurückgestellt). Sollten deutlich mehr Modi hinzukommen, sollte die Modus-Auswahl in einen eigenen, vorgeschalteten Bildschirm ausgelagert werden (Schritt 0 vor der heutigen Schwierigkeitsauswahl) statt eine wachsende Kachel-Wand auf einem Bildschirm zu erzeugen — für den aktuell absehbaren Umfang (max. 3 Modi) ist das aber noch nicht nötig.
 - **Barrierefreiheit:** Gleiche Anforderungen wie bestehende Auswahlkacheln (Tastaturbedienbarkeit, Tab-Reihenfolge, Kontrast, keine reine Farbcodierung) — das Online-Icon braucht zusätzlich einen Text-Alternativtext (z. B. `aria-label="Benötigt Internetverbindung"`), nicht nur ein Icon ohne Beschreibung.
+
+**Finale Leitplanken (14.08.2026, `ux-design` + `software-architect`, Story-Freigabe #26):**
+
+- **Label final bestätigt:** "Wer bin ich?" für den neuen Modus, "Quizfragen" bleibt unverändert für den bestehenden Modus (vorbelegt/hervorgehoben, siehe oben).
+- **"Testabruf" beim Moduseinstieg ist kein separater Mechanismus:** Er ist identisch mit dem ersten Aufruf der neuen Fragegenerierungs-Funktion aus #27 (siehe `architecture.md`, Abschnitt "1. Umkehr-Quiz" → "Finale technische Leitplanken") für Frage 1 der Runde. Gelingt er, wechselt der Bildschirm direkt mit der bereits fertigen ersten Frage in den Modus — kein zusätzlicher Ladebildschirm nach dem Tap. Schlägt er (nach den intern 3 Versuchen aus #27) fehl, bleibt die Auswahl bei "Quizfragen", mit kurzem freundlichem Hinweis (z. B. "Dafür brauchst du gerade Internet 🌐" statt technischer Fehlermeldung).
+- **Ladezustand während des Testabrufs:** Kleiner, dezenter Indikator direkt **in der "Wer bin ich?"-Kachel selbst** (gleiches Muster wie der bestehende "Bild zeigen"-Button-Ladezustand, siehe Zustandstabelle oben) — kein Vollbild-Spinner, keine Sperre der übrigen Start-Bildschirm-Bedienung währenddessen.
+
+## Frage-/Feedback-Bildschirm "Wer bin ich?" (Issue #28, 14.08.2026, `ux-design` + `software-architect`)
+
+Finale UX-Leitplanken für den neuen Frage-Bildschirm des Umkehr-Quiz-Modus. Wiederverwendet den bestehenden Frage-/Feedback-Mechanismus (Fortschrittsanzeige, 2×2-Antwortraster, Sofort-Feedback, manueller "Weiter"-Button, Punktestand — siehe "Nutzerfluss" oben) fast unverändert; neu ist nur, **was** im oberen Bereich des Bildschirms steht (Bild statt Fragetext) und die Pflicht-Attribution.
+
+**Layout:**
+- Fortschrittsanzeige oben, identisch zum bestehenden Modus (z. B. "Frage 3 von 10").
+- Statt eines pro Frage wechselnden Fragetexts: eine kurze, feste Überschrift **"Wer bin ich?"** (immer gleich, da die eigentliche "Frage" das Bild selbst ist) — passt zur bestehenden Vorgabe "Ein Gedanke pro Bildschirm", kein zusätzlicher Text nötig.
+- Darunter das aufgelöste Bild (330px-Thumbnail, nicht das Original) in einem festen, moderat großen Rahmen mit abgerundeten Ecken (gleiche Bildrahmen-Optik wie bei der bestehenden Bild-Rateshilfe, Issue #16) — hier aber als **primärer** Bildschirminhalt bewusst größer/zentraler positioniert als der dortige sekundäre Hint-Rahmen, jedoch weiterhin so bemessen, dass Bild + Attributionszeile + 4 Antwortkacheln ohne Scrollen auf einen Blick passen (siehe bestehende Vorgabe "Kein Scrollen bei der Kernaufgabe").
+- Direkt unter dem Bild: die Attributionszeile (siehe unten).
+- Darunter die 4 Namensoptionen im gewohnten 2×2-Kachel-Raster (gleiche Optik/Größe wie im bestehenden Modus).
+
+**Attributionszeile — auf jeder Frage, gleiche Formulierung wie Issue #16:**
+- Gleiches Format wie bei der bestehenden Bild-Rateshilfe ("Foto: {Artist} · Wikimedia Commons", optionaler kleiner "(Lizenz)"-Link, fehlende Metadatenfelder werden übersprungen statt "unbekannt" anzuzeigen) — kein neuer Formulierungsstil nötig, nur eine neue Platzierung (fest statt optional nach Klick).
+- Da sie jetzt Pflichtbestandteil jeder Frage ist (nicht mehr Rand-Detail eines optionalen Buttons), bleibt sie trotzdem klein/dezent (Fußnoten-Schriftgröße, gedeckte Farbe) — sie soll informativ, aber nicht das visuell dominante Element sein; das Bild und die Antwortkacheln bleiben der Fokus.
+
+**Ladezustand vor Frage-Anzeige (Zusammenspiel mit #27):**
+- Da das Bild laut #27 **vor** Anzeige der Frage vorab aufgelöst wird, reserviert der Bildschirm den späteren Bildrahmen bereits während des Ladens (fester Platzhalter in Bildrahmen-Größe, kein Layout-Sprung beim Nachladen) und zeigt darin eine einfache, kindgerechte Ladeanimation (z. B. dezent pulsierendes Icon), keinen technischen Spinner — konsistent mit der bestehenden Vorgabe für Ladezustände (Zustandstabelle oben). Fortschrittsanzeige und Bildschirmrahmen bleiben währenddessen sichtbar/stabil, nur der Bildbereich zeigt den Ladezustand.
+- Erwartete Dauer meist unter 1,5 s (siehe Performance-Messung `architecture.md` Abschnitt F) — kein aufwendiger Ladebildschirm nötig, reiner Inline-Ladezustand reicht.
+
+**Fehlerzustand (nach 3 erfolglosen Versuchen aus #27, echter Sonderfall):**
+- Im selben reservierten Bildrahmen erscheint statt Ladeanimation ein freundliches, nicht technisches Hinweisbild/-icon (z. B. ein ratloses Tier-Icon) mit kurzem Text (z. B. "Dieses Bild will gerade nicht laden") und einem "Nochmal versuchen"-Button, der eine neue Frage anstößt — **kein** Rundenabbruch, **kein** Zurück zur Modus-Auswahl, zählt nicht als beantwortete/übersprungene Frage. Gleicher freundlicher Ton wie bei allen übrigen Fehlerzuständen im Projekt (siehe Zustandstabelle oben, "Fehlerzustand").
+
+**Reset:** Bild, Attribution und Ladezustand werden bei jedem Frage-Wechsel vollständig zurückgesetzt — identisches Prinzip wie bei der bestehenden Bild-Rateshilfe.
+
+**Feedback/Antwortmechanik:** unverändert (siehe "4. Feedback richtig/falsch" oben) — Sofort-Feedback, "Weiter"-Button, Punktestand, Ergebnis-Bildschirm am Rundenende, alles identisch zum bestehenden Modus.
+
+**Barrierefreiheit — wichtige Abweichung von Issue #16:**
+- Bild braucht einen aussagekräftigen `alt`-Text, aber **bewusst nicht den Tiernamen** — anders als bei der bestehenden Bild-Rateshilfe (dort ist der Name durch den Fragetext bereits bekannt, das Bild illustriert nur) wäre der Tiername hier die gesuchte Antwort selbst. Ein `alt`-Text mit Klartext-Namen würde die Antwort für Screenreader-Nutzer:innen vorwegnehmen und den Modus für sie unspielbar machen. **Entscheidung:** generischer, nicht verratender Alt-Text, z. B. `alt="Foto eines Tieres – errate, welches Tier das ist"`.
+- Ladezustand für Screenreader nicht komplett stumm (`aria-busy`/`aria-live`, wie bei Issue #16), gleiche Anforderung auch für den Fehlerzustand (Wechsel muss angekündigt werden).
+- Ansonsten identische Anforderungen wie bestehende Antwortkacheln (Tastaturbedienbarkeit, Tab-Reihenfolge, Kontrast, keine reine Farbcodierung).
 
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
 

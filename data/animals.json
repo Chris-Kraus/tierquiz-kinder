@@ -15,7 +15,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/L%C3%B6we",
       "image_filename": "Lion in masai mara.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 14
+      "lifespan_years": 14,
+      "fun_fact": "Löwen sind die einzigen Katzen der Welt, die in einer richtigen Familiengruppe leben – im Rudel!"
     },
     {
       "id": "Q19939",
@@ -30,7 +31,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tiger",
       "image_filename": "Adult male Royal Bengal tiger.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 15
+      "lifespan_years": 15,
+      "fun_fact": "Kein Tiger sieht aus wie der andere – ihre Streifen sind so einzigartig wie ein Fingerabdruck."
     },
     {
       "id": "Q18498",
@@ -41,7 +43,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wolf",
       "image_filename": "Eurasian wolf 2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fun_fact": "Wölfe verständigen sich mit ihrem berühmten Heulen über weite Entfernungen – bei guten Bedingungen kilometerweit."
     },
     {
       "id": "Q34706",
@@ -79,7 +82,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eisb%C3%A4r",
       "image_filename": "Polar Bear - Alaska (cropped).jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fun_fact": "Unter seinem weißen Fell hat der Eisbär schwarze Haut, damit er die Sonnenwärme besser speichern kann."
     },
     {
       "id": "Q8332",
@@ -98,7 +102,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotfuchs",
       "image_filename": "Fox at the British Wildlife Centre, Newchapel, Surrey - geograph.org.uk - 2221750.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 4
+      "lifespan_years": 4,
+      "fun_fact": "Ein Rotfuchs kann sogar das leise Rascheln einer Maus unter einer dicken Schneedecke hören."
     },
     {
       "id": "Q23907",
@@ -110,7 +115,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gepard",
       "image_filename": "Cheetah (Acinonyx jubatus) female 2.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fun_fact": "Der Gepard ist das schnellste Landtier der Welt und kann in nur drei Sekunden von null auf 100 km/h beschleunigen."
     },
     {
       "id": "Q17592",
@@ -133,7 +139,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Flusspferd",
       "image_filename": "Hippo (Hippopotamus amphibius) (16485955207).jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 45
+      "lifespan_years": 45,
+      "fun_fact": "Flusspferde können gar nicht schwimmen – sie laufen und hüpfen einfach über den Grund des Wassers."
     },
     {
       "id": "Q33602",
@@ -151,7 +158,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_Panda",
       "image_filename": "Giant Panda 2004-03-2.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fun_fact": "Ein Großer Panda verbringt bis zu 12 Stunden am Tag mit Fressen – fast nur Bambus!"
     },
     {
       "id": "Q14683",
@@ -181,7 +189,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nord-Giraffe",
       "image_filename": "Rothschild's giraffe (Giraffa camelopardalis rothschildi) - Murchison Falls National Park.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 25
+      "lifespan_years": 25,
+      "fun_fact": "Giraffen haben genauso viele Halswirbel wie wir Menschen – nur ist bei ihnen jeder einzelne riesig lang!"
     },
     {
       "id": "Q36341",
@@ -311,7 +320,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Koala",
       "image_filename": "Koala climbing tree.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 12
+      "lifespan_years": 12,
+      "fun_fact": "Koalas schlafen bis zu 20 Stunden am Tag, weil ihre Nahrung, die Eukalyptusblätter, ihnen kaum Energie liefert."
     },
     {
       "id": "Q25234",
@@ -600,7 +610,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waschb%C3%A4r",
       "image_filename": "Raccoon in Central Park (35264).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 5
+      "lifespan_years": 5,
+      "fun_fact": "Waschbären ertasten ihr Futter mit sehr empfindlichen Pfoten – besonders gern im Wasser, daher auch ihr Name."
     },
     {
       "id": "Q42196",
@@ -612,7 +623,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blauwal",
       "image_filename": "Anim1755 - Flickr - NOAA Photo Library.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 80
+      "lifespan_years": 80,
+      "fun_fact": "Der Blauwal ist das größte Tier, das jemals auf der Erde gelebt hat – größer als jeder Dinosaurier."
     },
     {
       "id": "Q25399",
@@ -1247,7 +1259,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gemeiner_Schimpanse",
       "image_filename": "013 Alpha male chimpanzee at Kibale forest National Park Photo by Giles Laurent.jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 40
+      "lifespan_years": 40,
+      "fun_fact": "Schimpansen benutzen Werkzeuge – zum Beispiel angespitzte Stöckchen, um damit Termiten aus ihrem Bau zu angeln."
     },
     {
       "id": "Q19537",
@@ -1644,7 +1657,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Erdm%C3%A4nnchen",
       "image_filename": "Meerkat (Suricata suricatta).jpg",
       "diet": "Allesfresser",
-      "lifespan_years": 10
+      "lifespan_years": 10,
+      "fun_fact": "Erdmännchen halten immer Wache: Während die Gruppe frisst, hält mindestens eines als Wächter Ausschau nach Gefahr."
     },
     {
       "id": "Q134964",
@@ -1843,7 +1857,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanischer_Elefant",
       "image_filename": "178 Male African bush elephant in Etosha National Park Photo by Giles Laurent.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 60
+      "lifespan_years": 60,
+      "fun_fact": "Mit seinem Rüssel kann ein Elefant Wasser trinken, einen Baum umknicken und ganz vorsichtig eine kleine Nuss aufheben – und er hat darin nicht einen einzigen Knochen!"
     },
     {
       "id": "Q131709",
@@ -2167,7 +2182,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Breitmaulnashorn",
       "image_filename": "White rhinoceros africa.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 40
+      "lifespan_years": 40,
+      "fun_fact": "Das Breitmaulnashorn heißt nicht wegen seiner Farbe so, sondern wegen seines breiten Mauls zum Grasfressen."
     },
     {
       "id": "Q26423",
@@ -2630,7 +2646,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nilkrokodil",
       "image_filename": "Crocodylus niloticus6.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 50
+      "lifespan_years": 50,
+      "fun_fact": "Ein Nilkrokodil kann seine Luft sehr lange anhalten und geduldig fast reglos unter Wasser auf Beute warten."
     },
     {
       "id": "Q182599",
@@ -2737,7 +2754,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kaiserpinguin",
       "image_filename": "Aptenodytes forsteri -Snow Hill Island, Antarctica -adults and juvenile-8.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 20
+      "lifespan_years": 20,
+      "fun_fact": "Bei Kaiserpinguinen brütet der Papa das Ei ganz allein auf seinen Füßen aus – mitten im eisigen Winter, mehrere Monate lang."
     },
     {
       "id": "Q170251",
@@ -4111,7 +4129,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_T%C3%BCmmler",
       "image_filename": "Tursiops truncatus 01-cropped.jpg",
       "diet": "Fleischfresser",
-      "lifespan_years": 40
+      "lifespan_years": 40,
+      "fun_fact": "Delfine schlafen mit nur einer Gehirnhälfte auf einmal, damit sie immer wach genug bleiben, um zum Atmen aufzutauchen."
     },
     {
       "id": "Q180035",
@@ -4899,7 +4918,8 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steppenzebra",
       "image_filename": "Plains Zebra Equus quagga.jpg",
       "diet": "Pflanzenfresser",
-      "lifespan_years": 22
+      "lifespan_years": 22,
+      "fun_fact": "Jedes Zebra hat sein ganz eigenes Streifenmuster – wie einen Fingerabdruck gibt es das kein zweites Mal."
     },
     {
       "id": "Q18764",

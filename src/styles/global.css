@@ -526,16 +526,6 @@ button {
   text-align: left;
 }
 
-.question-screen__info-sentence-icon {
-  margin-right: 0.4em;
-}
-
-.question-screen__info-sentence-lead {
-  font-weight: 700;
-  color: var(--color-secondary-dark);
-  margin-right: 0.4em;
-}
-
 /* Wikipedia-Link (Issue #15): seit der Zusammenführungs-Anfrage (14.08.2026)
    kein eigener, danebenstehender Block mehr, sondern letztes Element
    INNERHALB des Infosatz-Blocks oben (gleicher Rahmen/Hintergrund, kein
@@ -560,6 +550,42 @@ button {
    Muster wie bei .image-hint[hidden] weiter oben in dieser Datei). */
 .question-screen__info-sentence-wikipedia-link[hidden] {
   display: none;
+}
+
+/* Fun Fact (Issue #24, design.md "Fun Fact im Feedback-Schritt"): eigener,
+   visuell abgesetzter Block direkt unterhalb des Infosatz-Blocks oben,
+   oberhalb des "Weiter"-Buttons — konzeptionell EIGENSTÄNDIG neben dem
+   Infosatz (architecture.md: "kein Baustein-Fallback-System wie
+   infoSentence.js", roher kuratierter Freitext). Bewusst die Akzent-
+   Gelb/Orange-Tönung statt der blauen Infosatz-Farbe, damit beide Blöcke bei
+   gleichzeitiger Anzeige klar als zwei unterschiedliche Bausteine erkennbar
+   bleiben, statt wie ein einzelner, zusammenhängender Block zu wirken.
+   Wiederverwendet dieselbe bereits gegen WCAG-AA geprüfte Akzentfarb-
+   Kombination wie .question-screen__feedback--incorrect/.answer-tile--
+   selected-wrong, kein neues Farbpaar. `hidden` per Default (siehe
+   question.js) -> reserviert keinen Platz, solange kein fun_fact vorhanden
+   ist (kein Layout-Sprung). */
+.question-screen__fun-fact {
+  margin: 0;
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-lg);
+  background: rgba(245, 184, 51, 0.18);
+  border: 3px solid var(--color-accent);
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.question-screen__fun-fact-icon {
+  margin-right: 0.4em;
+}
+
+.question-screen__fun-fact-lead {
+  font-weight: 700;
+  color: var(--color-accent-text);
+  margin-right: 0.4em;
 }
 
 .next-button {
