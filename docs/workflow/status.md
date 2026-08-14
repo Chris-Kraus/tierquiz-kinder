@@ -4,7 +4,7 @@ Laufender Fortschritts-Tracker, gepflegt von `pm-workflow`. Einzel-Story-Status 
 
 ## Aktuelle Phase
 
-**Etappe 2 "Backlog-Erweiterung" ist fertig und vollständig QA-abgenommen (#12–#21, außer #17 bewusst zurückgestellt).** Spielbar via `npm install && npm run dev` (oder `npm run build && npm run preview` für den Produktions-Build).
+**Etappe 2 "Backlog-Erweiterung" ist vollständig fertig und QA-abgenommen — alle Stories #12–#21 done oder hinfällig geschlossen, kein offenes Issue im Backlog mehr.** Spielbar via `npm install && npm run dev` (oder `npm run build && npm run preview` für den Produktions-Build).
 
 ## Prozess-Korrektur (13.08.2026)
 
@@ -38,11 +38,16 @@ QA war für #1/#3/#4/#5 zunächst nur Selbsttest der umsetzenden Rolle, keine un
 | 15 | web-developer | Wikipedia-Link im Feedback | done (QA: 0 Datenverluste bei diet/lifespan_years nach Pipeline-Regenerierung) |
 | 20 | web-developer | Vergleichsfragen: schwerstes Tier von 4 | done (QA: 80+60 simulierte Runden, keine Domination, keine Leaks) |
 | 21 | zoologe + web-developer | Verwechslungspaare-Fragetyp (30 Paare) | done (QA: 500+500 simulierte Runden, Datenintegrität verifiziert) |
-| 17 | business-analyst | Bild-Lizenzlösung | bewusst zurückgestellt, kein aktueller Blocker |
+| 16 | business-analyst + devops-engineer + web-developer | Bild-Rateshilfe (Option D': Live-Thumbnails von Wikimedia Commons) | done (QA: 8 Browser-Szenarien inkl. Netzwerkfehler/Offline-Kernquiz, Datenintegrität aller 500 Tiere) |
+| 17 | business-analyst | Bild-Lizenzlösung | geschlossen, hinfällig — Option D' löst Attribution strukturell zur Laufzeit statt durch Bundling |
 
 ## Nächster Schritt
 
-Etappe 2 ist fertig. Offen: Issue #17 (Bild-Lizenzlösung) aktivieren, sobald eine Veröffentlichung konkret geplant wird. Weitere Folgeschritte (z. B. weitere Spielmodi) noch nicht gescoped.
+Etappe 2 ist vollständig abgeschlossen — alle Backlog-Stories (#12–#21) sind done oder hinfällig geschlossen. Weitere Folgeschritte (z. B. weitere Spielmodi wie Tiergeräusche/Fehlerbild/Schattenrätsel) noch nicht gescoped, keine offenen Stories im Backlog.
+
+## Nachtrag: Bild-Rateshilfe — Entscheidungsverlauf (14.08.2026)
+
+Issue #16 war zu Sessionbeginn zwar mit `status:ready` gelabelt, inhaltlich aber veraltet (Optionen A–G noch offen, Entscheidung "Option B" aus `requirements.md` nicht in den Issue-Text übernommen). Auf Nutzeranfrage wurde vor der Umsetzung eine zusätzliche Evaluation durchgeführt (Live-Einbindung vs. lokales Bundling, reale Git/GitHub-Größenlimits, speicherarme Alternativen wie Thumbnails/Browser-Caching), inkl. echter Performance-Messung (Stichprobe von 30 Commons-Bildern: Original-Median 1,6 MB bis 12,6 MB vs. Thumbnail-Median 32 KB/<0,25s). Ergebnis: **Option D'** (Bild-Rateshilfe als explizit optionale Online-Zusatzfunktion, Live-Thumbnails statt lokalem Bundling) statt der ursprünglich angedachten Option B. `requirements.md` NFR 1 bekam dafür eine gezielte, dokumentierte Ausnahme (Präzedenz: Issue #14). Issue #17 (Lizenzlösung vor Veröffentlichung) wurde dadurch hinfällig und geschlossen, da Attribution jetzt strukturell zur Laufzeit gelöst ist, unabhängig vom Veröffentlichungsstatus.
 
 ## Bekannte, akzeptierte Einschränkungen (kein Blocker)
 
