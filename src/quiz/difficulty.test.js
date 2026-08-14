@@ -16,12 +16,13 @@ describe("DIFFICULTY_LEVELS", () => {
 });
 
 describe("getFieldsForDifficulty", () => {
-  it("liefert für Stufe 6-10 category/habitat/continent plus das Verwechslungspaare-Pseudofeld (Issue #21, steht laut Akzeptanzkriterien in beiden Stufen zur Verfügung)", () => {
+  it("liefert für Stufe 6-10 category/habitat/continent/fur_feather_color plus das Verwechslungspaare-Pseudofeld (Issue #21, steht laut Akzeptanzkriterien in beiden Stufen zur Verfügung)", () => {
     const fields = getFieldsForDifficulty(DIFFICULTY_LEVELS.EASY);
     expect(fields).toEqual([
       "category",
       "habitat",
       "continent",
+      "fur_feather_color",
       "confusion_pair",
     ]);
   });
@@ -33,6 +34,7 @@ describe("getFieldsForDifficulty", () => {
         "category",
         "habitat",
         "continent",
+        "fur_feather_color",
         "confusion_pair",
         "weight_kg",
         "length_cm",
@@ -42,7 +44,7 @@ describe("getFieldsForDifficulty", () => {
         "heaviest_animal",
       ]),
     );
-    expect(fields).toHaveLength(10);
+    expect(fields).toHaveLength(11);
   });
 
   it("wirft bei unbekannter Schwierigkeitsstufe", () => {

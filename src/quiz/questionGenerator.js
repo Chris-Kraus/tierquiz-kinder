@@ -131,6 +131,27 @@ const FIELD_DEFINITIONS = {
     hasValue: (animal, value) => animal.conservation_status === value,
     format: (value) => value,
   },
+  // Fell-/Federfarbe (Issue #22): technisch identisch zum diet-Muster oben —
+  // kleines, festes Enum (7 grobe Farbklassen statt exakter Naturtöne, siehe
+  // architecture.md "Fell-/Federn-Farbe"). Nur für Säugetiere/Vögel
+  // sinnvoll befüllbar (434/500 Tiere); bei den übrigen 66 (Fisch, Reptil,
+  // Amphibie, Insekt, Spinnentier) bleibt das Feld schlicht `null` — kein
+  // eigener "nicht anwendbar"-Mechanismus nötig, das bestehende
+  // Optional-Feld-Verhalten (getValue liefert null, getCorrectValue
+  // überspringt) deckt das bereits ab. Werte selbst sind Teil der separaten
+  // Kurations-Story (#23), diese Story liefert nur den Fragetyp.
+  fur_feather_color: {
+    kind: "enum",
+    question: (name) => `Welche Farbe hat das Fell/Gefieder von ${name}?`,
+    identifyQuestion: (value) =>
+      `Welches Tier hat ein Fell/Gefieder in der Farbe „${value}“?`,
+    getValue: (animal) =>
+      isNonEmptyString(animal.fur_feather_color)
+        ? animal.fur_feather_color
+        : null,
+    hasValue: (animal, value) => animal.fur_feather_color === value,
+    format: (value) => value,
+  },
 };
 
 // Vergleichsfragen (Issue #20, siehe architecture.md Abschnitt "Technische

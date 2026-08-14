@@ -39,10 +39,18 @@ export const DIFFICULTY_LABELS = Object.freeze({
 // Tierdatenbank-Feld, sondern ein Pseudofeld mit eigenem Fragepfad (siehe
 // questionGenerator.js, buildConfusionPairQuestion) — hier wird nur seine
 // Verfügbarkeit je Stufe festgelegt.
+// "fur_feather_color" (Issue #22, Fell-/Federfarbe): steht laut Entscheidung
+// von business-analyst der einfachen Stufe zur Verfügung — Farbe ist ein
+// unmittelbar visuell erschließbares Merkmal, konzeptionell näher an
+// category/habitat/continent als an den numerischen Stufe-10–12-Feldern
+// (siehe architecture.md, "Finale Leitplanken"). Echtes Tierdatenbank-Feld
+// (kein Pseudofeld wie confusion_pair/heaviest_animal), läuft aber technisch
+// über denselben FIELD_DEFINITIONS-Mechanismus wie category/diet.
 const EASY_FIELDS = Object.freeze([
   "category",
   "habitat",
   "continent",
+  "fur_feather_color",
   "confusion_pair",
 ]);
 const HARD_ONLY_FIELDS = Object.freeze([

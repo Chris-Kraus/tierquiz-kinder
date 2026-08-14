@@ -76,7 +76,7 @@ describe("generateQuestions — Grundform", () => {
 });
 
 describe("generateQuestions — Schwierigkeitsstufen nutzen unterschiedliche Felder", () => {
-  it("Stufe 6-10 nutzt ausschließlich die für diese Stufe erlaubten Felder (category/habitat/continent/confusion_pair)", () => {
+  it("Stufe 6-10 nutzt ausschließlich die für diese Stufe erlaubten Felder (category/habitat/continent/fur_feather_color/confusion_pair)", () => {
     const easyFields = new Set(getFieldsForDifficulty(EASY));
     // Über mehrere Läufe prüfen, da die Feld-/Tierauswahl zufällig ist.
     for (let i = 0; i < 10; i += 1) {
@@ -315,6 +315,54 @@ describe("buildQuestionForField — diet-Feld (nur 3 mögliche Enum-Werte)", () 
     expectValidQuestionShape(question);
     // Fallback-Frageform: Optionen sind Tiernamen, nicht Diät-Werte.
     expect(question.questionType).toBe("identify");
+  });
+});
+
+describe("buildQuestionForField — fur_feather_color-Feld (Issue #22)", () => {
+  it("liefert null, wenn das Tier keine Fell-/Federfarbe hat (z. B. Reptil, kein Fell-/Feder-Träger)", () => {
+    const krokodil = sampleAnimals.find((a) => a.name_de === "Krokodil");
+    expect(krokodil.fur_feather_color).toBeUndefined();
+    expect(() =>
+      buildQuestionForField(krokodil, "fur_feather_color", sampleAnimals, EASY),
+    ).not.toThrow();
+    expect(
+      buildQuestionForField(krokodil, "fur_feather_color", sampleAnimals, EASY),
+    ).toBeNull();
+  });
+
+  it("erzeugt eine gültige Wert-Frage bei genug unterschiedlichen Farb-Kandidaten im Datensatz", () => {
+    // Lokaler, testspezifischer Datensatz (bewusst nicht sampleAnimals, siehe
+    // QA-Bug-#5-Testblock oben für dasselbe Muster): sampleAnimals enthält
+    // noch keine fur_feather_color-Werte (Kuration ist die separate Story
+    // #23), daher hier ein Mini-Datensatz mit klar unterschiedlichen Enum-
+    // Werten, um die "value"-Fragevariante gezielt zu testen.
+    const braunbaer = {
+      id: "F1",
+      name_de: "Testbär",
+      category: "Säugetier",
+      fur_feather_color: "braun",
+    };
+    const otherAnimals = [
+      { id: "F2", name_de: "Testfuchs", category: "Säugetier", fur_feather_color: "rot/orange" },
+      { id: "F3", name_de: "Testwolf", category: "Säugetier", fur_feather_color: "grau" },
+      { id: "F4", name_de: "Testrabe", category: "Vogel", fur_feather_color: "schwarz" },
+      { id: "F5", name_de: "Testschwan", category: "Vogel", fur_feather_color: "weiß" },
+    ];
+
+    const question = buildQuestionForField(
+      braunbaer,
+      "fur_feather_color",
+      [braunbaer, ...otherAnimals],
+      EASY,
+    );
+
+    expect(question).not.toBeNull();
+    expectValidQuestionShape(question);
+    expect(question.questionType).toBe("value");
+    expect(question.field).toBe("fur_feather_color");
+
+    const correctOption = question.options.find((o) => o.correct);
+    expect(correctOption.text).toBe("braun");
   });
 });
 
