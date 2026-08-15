@@ -139,13 +139,25 @@ const CATEGORY_ENUM = [
 // Felder, die NICHT von dieser Pipeline befüllt werden, sondern ausschließlich
 // durch manuelle fachliche Kuration direkt in data/animals.json (siehe
 // architecture.md, Abschnitt "Pipeline-Regenerierung vs. manuell kuratierte
-// Felder", Issue #15; `diet` kuratiert in #18, `lifespan_years` in #19).
+// Felder", Issue #15; `diet` kuratiert in #18, `lifespan_years` in #19,
+// `fur_feather_color` in #23, `fun_fact` in #24/#25).
 // buildAnimal() hat für diese Felder bewusst KEINEN Code-Pfad. Bei jedem
 // Rerun dieser Pipeline (auch mit --use-cache) werden ihre Werte daher aus
 // der VORHERIGEN data/animals.json übernommen (siehe mergeManuallyCuratedFields
-// weiter unten) — sonst würde ein Rerun die Kuration aus #18/#19 stillschweigend
+// weiter unten) — sonst würde ein Rerun die Kuration stillschweigend
 // verwerfen, da buildAnimal() die neuen Tier-Objekte komplett neu aufbaut.
-const MANUALLY_CURATED_FIELDS = ["diet", "lifespan_years"];
+// WICHTIG (gefunden bei der Habitat/Kontinent-Bugfix-Regenerierung vom
+// 15.08.2026): `fur_feather_color` (#23) und `fun_fact` (#24/#25) wurden bei
+// Einführung nicht zu dieser Liste hinzugefügt — ein Rerun mit dem damaligen
+// Stand hätte diese Kuration für 434 bzw. 20 Tiere stillschweigend
+// verworfen, obwohl der Merge-Mechanismus selbst korrekt arbeitet. Jedes neu
+// eingeführte manuell kuratierte Feld MUSS hier ergänzt werden.
+// Reihenfolge entspricht der bisherigen Schlüsselreihenfolge in
+// data/animals.json (fun_fact vor fur_feather_color) – rein kosmetisch
+// relevant für die JSON-Objektschlüsselreihenfolge beim Merge unten
+// (Object.assign-Reihenfolge = Reihenfolge der ersten Zuweisung), damit ein
+// Rerun keine unnötige Diff-Unruhe durch reine Schlüsselvertauschung erzeugt.
+const MANUALLY_CURATED_FIELDS = ["diet", "lifespan_years", "fun_fact", "fur_feather_color"];
 
 // --- HTTP-Hilfsfunktionen ------------------------------------------------
 
@@ -332,10 +344,13 @@ async function fetchLabels(qids) {
       action: "wbgetentities",
       ids: batch.join("|"),
       props: "labels",
-      languages: "de|en",
+      // Nur noch "de" anfragen (siehe pickGermanLabel() unten – ein
+      // en-Fallback wird hier bewusst nicht mehr verwendet, "en" würde also
+      // ungenutzt bleiben).
+      languages: "de",
     });
     for (const [qid, entity] of Object.entries(data.entities || {})) {
-      labels.set(qid, pickLabel(entity));
+      labels.set(qid, pickGermanLabel(entity));
     }
   }
   return labels;
@@ -360,26 +375,41 @@ async function fetchClaimsOnly(qids) {
 
 // --- Claim-Extraktion -------------------------------------------------
 
-function pickLabel(entity) {
+// Deutsches Label für Habitat-/Kontinent-Items (einzige Verwendung: über
+// fetchLabels() für labelMap, s. o.). Bewusst KEIN Fallback auf das
+// englische Label mehr (siehe Bugfix-Historie in architecture.md, gemeldet
+// als Seeotter-Habitat "coastal margin" statt "Küste" o. Ä.): fetchLabels()
+// fragte zwar Wikidata mit languages: "de|en" ab, wenn aber kein deutsches
+// Label existierte, gab diese Funktion früher unmarkiert den englischen
+// Wert zurück (z. B. Q64537438 "coastal margin", Q116004123
+// "urban habitat") – für ein deutschsprachiges Kinderquiz ebenso unpassend
+// wie der bereits in Issue #10 behobene Fall eines lateinischen Artnamens
+// in name_de. Anders als dort (name_de ist Pflichtfeld) ist hier `null`
+// unkritisch: habitat/continent sind Arrays, ein einzelner Eintrag ohne
+// deutsches Label wird über `.filter(Boolean)` in buildAnimal() einfach aus
+// der Liste entfernt, statt englischen Text durchsickern zu lassen. Ein
+// dewiki-Sitelink-Fallback (wie bei pickAnimalNameDe()) entfällt hier
+// bewusst: fetchLabels() lädt nur props: "labels" (kein "sitelinks"), und
+// Habitat-/Kontinent-Konzept-Items haben ohnehin selten einen eigenen
+// Wikipedia-Artikel, dessen Titel als Kurzbegriff taugen würde.
+function pickGermanLabel(entity) {
   const labels = entity.labels || {};
   if (labels.de) return labels.de.value;
-  if (labels.en) return labels.en.value;
-  // Fallback: deutscher Wikipedia-Seitentitel, falls kein Wikidata-Label vorhanden.
-  const dewiki = entity.sitelinks && entity.sitelinks.dewiki;
-  if (dewiki) return dewiki.title;
   return null;
 }
 
 // Heuristik: Ist `value` tatsächlich der lateinische Artname statt eines
 // echten deutschen/englischen Trivialnamens? Hintergrund (Issue #10): 37 von
 // 500 Tieren hatten fälschlich den wissenschaftlichen Namen in name_de. Root
-// Cause war KEIN fehlendes Label (das den bestehenden Fallback in pickLabel()
-// ausgelöst hätte), sondern ein tatsächlich VORHANDENES Wikidata-"de"-Label,
-// dessen Wert selbst der lateinische Binomial-Name ist (z. B. Q14683 „Haus-
-// sperling“: labels.de = "Passer domesticus", obwohl sitelinks.dewiki.title
-// korrekt "Haussperling" ist) – pickLabel() gab dieses Label unverändert
-// zurück, da es ja "vorhanden" war. Verifiziert an den echten Rohdaten im
-// Hydration-Cache für alle 37 betroffenen Tiere.
+// Cause war KEIN fehlendes deutsches Label (das einen en-Fallback ausgelöst
+// hätte, analog zum späteren Habitat/Kontinent-Bugfix bei pickGermanLabel()
+// oben), sondern ein tatsächlich VORHANDENES Wikidata-"de"-Label, dessen Wert
+// selbst der lateinische Binomial-Name ist (z. B. Q14683 „Haussperling“:
+// labels.de = "Passer domesticus", obwohl sitelinks.dewiki.title korrekt
+// "Haussperling" ist) – ein einfaches "labels.de vorhanden? dann nehmen"
+// (wie es pickGermanLabel() für Habitat/Kontinent bewusst tut) hätte dieses
+// Label unverändert zurückgegeben, da es ja "vorhanden" war. Verifiziert an
+// den echten Rohdaten im Hydration-Cache für alle 37 betroffenen Tiere.
 function looksLikeScientificName(value, scientificName) {
   if (!value) return false;
   const v = value.trim();
@@ -394,11 +424,14 @@ function looksLikeScientificName(value, scientificName) {
   return /^[A-ZÄÖÜ][a-zäöüß]+ [a-zäöüß][a-zäöüß-]*$/.test(v);
 }
 
-// Anzeigename für ein Tier (name_de). Strengere Variante von pickLabel(), die
-// zusätzlich lateinische Artnamen als Label verwirft (siehe Issue #10) statt
-// sie unverändert zu übernehmen. Nur für Tiernamen verwendet – pickLabel()
-// bleibt für Habitat-/Kontinent-Item-Labels unverändert (dort ist der Bug
-// nicht relevant).
+// Anzeigename für ein Tier (name_de). Prüft zusätzlich zum reinen
+// labels.de-Zugriff, ob das Label selbst ein lateinischer Artname ist, und
+// verwirft es dann (siehe Issue #10) statt es unverändert zu übernehmen.
+// Nur für Tiernamen verwendet – für Habitat-/Kontinent-Item-Labels
+// verwendet fetchLabels() stattdessen pickGermanLabel() (s. o.), das dafür
+// den lateinischen Sonderfall nicht prüfen muss (Habitat-/Kontinent-Items
+// haben keinen wissenschaftlichen Namen, der mit dem Label kollidieren
+// könnte), dafür aber – anders als hier – bewusst keinen en-Fallback hat.
 function pickAnimalNameDe(entity, scientificName) {
   const labels = entity.labels || {};
   if (labels.de && !looksLikeScientificName(labels.de.value, scientificName)) {
@@ -652,13 +685,14 @@ async function mergeManuallyCuratedFields(finalAnimals) {
 
 // --- Cache (Discovery + Hydration zwischenspeichern) -------------------
 
-async function saveCache({ pool, entities, endemicToContinents, labelMap }) {
+// labelMap ist bewusst NICHT Teil des Cache-Payloads — siehe Kommentar bei
+// computeLabelMap() oben.
+async function saveCache({ pool, entities, endemicToContinents }) {
   const payload = {
     savedAt: new Date().toISOString(),
     pool,
     entities: Object.fromEntries(entities),
     endemicToContinents: Object.fromEntries(endemicToContinents),
-    labelMap: Object.fromEntries(labelMap),
   };
   await mkdir(path.dirname(CACHE_PATH), { recursive: true });
   await writeFile(CACHE_PATH, JSON.stringify(payload), "utf-8");
@@ -676,8 +710,11 @@ async function loadCache() {
   return {
     pool: payload.pool,
     entities: new Map(Object.entries(payload.entities)),
+    // Ältere Cache-Dateien (vor dem Bugfix vom 15.08.2026) enthalten evtl.
+    // noch ein persistiertes labelMap-Feld im JSON – das wird hier bewusst
+    // ignoriert (kein Destructuring/Rückgabe davon), computeLabelMap() holt
+    // die Labels bei jedem Lauf frisch.
     endemicToContinents: new Map(Object.entries(payload.endemicToContinents)),
-    labelMap: new Map(Object.entries(payload.labelMap)),
     savedAt: payload.savedAt,
   };
 }
@@ -716,17 +753,35 @@ async function fetchAndHydrate() {
     for (const q of conts) allContinentQids.add(q);
   }
 
-  // Labels für alle referenzierten Habitat- und Kontinent-Items sammeln.
+  return { pool, entities, endemicToContinents };
+}
+
+// Labels für alle referenzierten Habitat- und Kontinent-Items auflösen.
+// Bewusst NICHT Teil des gecachten fetchAndHydrate()-Ergebnisses und NICHT
+// Teil von saveCache()/loadCache() (siehe Bugfix-Historie in
+// architecture.md, 15.08.2026): anders als pool/entities/endemicToContinents
+// (rohe Wikidata-Claims, unabhängig von unserer Interpretation) hängt
+// labelMap direkt von pickGermanLabel() ab – also von Code, der sich ändern
+// kann (wie beim Seeotter/Waschbär-Bugfix geschehen). Ein gecachtes labelMap
+// hätte einen Fix an pickGermanLabel()/fetchLabels() bei `--use-cache`
+// stillschweigend wirkungslos gemacht, da die alten (fehlerhaften) Label-
+// Werte einfach unverändert aus dem Cache übernommen worden wären. Die
+// Anzahl der Habitat-/Kontinent-Items ist klein (siehe Log-Ausgabe unten),
+// ein Neuabruf bei jedem Lauf – auch mit `--use-cache` – daher unkritisch
+// (kein Vergleich zur teuren Discovery/Hydration in fetchAndHydrate()).
+async function computeLabelMap(pool, entities, endemicToContinents) {
   const habitatQids = new Set();
   for (const c of pool) {
     const entity = entities.get(c.id);
     if (!entity) continue;
     for (const q of getItemQids(entity.claims || {}, PROPS.habitat)) habitatQids.add(q);
   }
+  const allContinentQids = new Set();
+  for (const conts of endemicToContinents.values()) {
+    for (const q of conts) allContinentQids.add(q);
+  }
   console.log(`Löse Labels für ${habitatQids.size} Habitat- und ${allContinentQids.size} Kontinent-Items auf ...`);
-  const labelMap = await fetchLabels([...habitatQids, ...allContinentQids]);
-
-  return { pool, entities, endemicToContinents, labelMap };
+  return fetchLabels([...habitatQids, ...allContinentQids]);
 }
 
 // --- Hauptablauf -----------------------------------------------------
@@ -736,12 +791,12 @@ async function main() {
   console.log(`Zielgröße: ~${TARGET_TOTAL} Tiere, Popularitäts-Schwelle: sitelinks > ${SITELINKS_MIN}\n`);
 
   const useCache = process.argv.includes("--use-cache");
-  let pool, entities, endemicToContinents, labelMap;
+  let pool, entities, endemicToContinents;
 
   if (useCache) {
     const cached = await loadCache();
     if (cached) {
-      ({ pool, entities, endemicToContinents, labelMap } = cached);
+      ({ pool, entities, endemicToContinents } = cached);
       console.log(
         `--use-cache: Cache geladen (${CACHE_PATH}, gespeichert ${cached.savedAt}) — ${pool.length} Kandidaten, ${entities.size} hydrierte Entities. Phase 1+2 (Discovery/Hydration) werden übersprungen.\n`,
       );
@@ -751,9 +806,14 @@ async function main() {
   }
 
   if (!pool) {
-    ({ pool, entities, endemicToContinents, labelMap } = await fetchAndHydrate());
-    await saveCache({ pool, entities, endemicToContinents, labelMap });
+    ({ pool, entities, endemicToContinents } = await fetchAndHydrate());
+    await saveCache({ pool, entities, endemicToContinents });
   }
+
+  // labelMap wird bewusst IMMER frisch berechnet, auch bei `--use-cache`
+  // (siehe computeLabelMap()-Kommentar oben) – kleiner, unkritischer
+  // Zusatzaufwand ggü. der teuren Discovery/Hydration.
+  const labelMap = await computeLabelMap(pool, entities, endemicToContinents);
 
   console.log("\n=== Phase 3: Zusammenbau & Validierung ===");
   const built = [];
