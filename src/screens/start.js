@@ -50,12 +50,35 @@
 // überflüssigen Netzwerk-Aufruf für Frage 1 und zeigt sie ohne zusätzlichen
 // Ladebildschirm direkt an (design.md: "kein zusätzlicher Ladebildschirm nach
 // dem Moduswechsel").
+//
+// Seit Issue #31: dritte Kachel "Tiergeräusche" (design.md, "Modus-Auswahl
+// auf dem Start-Bildschirm: Dritte Kachel 'Tiergeräusche'") — Reihenfolge
+// Quizfragen -> Wer bin ich? -> Tiergeräusche folgt der Priorisierung aus
+// requirements.md, keine willkürliche Anordnung. Testabruf/Ladezustand/
+// Fehlerfallback sind 1:1 dasselbe Muster wie bei "Wer bin ich?" oben (daher
+// eigener, aber strukturell identischer Satz an Handlern statt Wieder-
+// verwendung eines generischen Mode-Handlers — bewusste Konsistenz mit dem
+// bereits etablierten Muster, kein DRY-Zwang an dieser Stelle). Anders als
+// beim "Wer bin ich?"-Modus wird das Testabruf-Ergebnis hier NICHT
+// zwischengespeichert (kein `pendingSoundQuestion`-Äquivalent zu
+// `pendingReverseQuestion`): das Pendant zum Frage-/Feedback-Bildschirm
+// (Issue #33) existiert auf diesem Branch noch nicht, es gäbe also keinen
+// Abnehmer dafür — analog zum Umkehr-Quiz-Modus vor Issue #28. Der
+// zugehörige Fragegenerierungs-Pfad `generateNextSoundQuestion` (Issue #32)
+// liegt ebenfalls noch nicht auf diesem Branch vor (separater Branch
+// `feature/tiergeraeusche`, siehe Issue #31) — `soundQuestionGenerator.js`
+// enthält bis dahin bewusst nur die abgestimmte Schnittstelle als
+// Platzhalter, die jeden Aufruf ablehnt (siehe dortiger Datei-Kommentar).
+// Der Testabruf hier schlägt auf diesem Branch also unabhängig von einer
+// bestehenden Internetverbindung immer fehl — genau das in #31 geforderte
+// "kindgerecht/freundlich abgefangen, Auswahl verbleibt bei 'Quizfragen'".
 
 import animalsData from "../../data/animals.json";
 import { DIFFICULTY_LEVELS, DIFFICULTY_LABELS } from "../quiz/difficulty.js";
 import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 import { createQuizState } from "../quiz/state.js";
 import { generateNextReverseQuestion } from "../quiz/reverseQuestionGenerator.js";
+import { generateNextSoundQuestion } from "../quiz/soundQuestionGenerator.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
 
 // Werte laut UX-Abstimmung zu Issue #13: 4 Chips, gleichermaßen für beide
@@ -140,6 +163,24 @@ export function renderStartScreen(container, { onStart } = {}) {
               >🌐</span
             >
           </button>
+          <button
+            type="button"
+            class="mode-button"
+            data-mode="${GAME_MODE.SOUND}"
+            aria-pressed="false"
+            aria-busy="false"
+          >
+            <span class="mode-button__check" aria-hidden="true">✓</span>
+            <span class="mode-button__icon" aria-hidden="true">🔊</span>
+            <span class="mode-button__spinner" aria-hidden="true"></span>
+            <span class="mode-button__label">Tiergeräusche</span>
+            <span
+              class="mode-button__online-icon"
+              role="img"
+              aria-label="Benötigt Internetverbindung"
+              >🌐</span
+            >
+          </button>
         </div>
         <p
           class="mode-picker__hint"
@@ -210,6 +251,12 @@ export function renderStartScreen(container, { onStart } = {}) {
   const reverseModeLabelEl = reverseModeButton.querySelector(
     ".mode-button__label",
   );
+  const soundModeButton = container.querySelector(
+    `[data-mode="${GAME_MODE.SOUND}"]`,
+  );
+  const soundModeLabelEl = soundModeButton.querySelector(
+    ".mode-button__label",
+  );
   const modeHintEl = container.querySelector(".mode-picker__hint");
 
   const difficultyButtons = Array.from(
@@ -251,6 +298,16 @@ export function renderStartScreen(container, { onStart } = {}) {
     reverseModeLabelEl.textContent = isBusy
       ? "Wird geprüft …"
       : "Wer bin ich?";
+  }
+
+  // Identisches Ladezustand-Muster wie setReverseModeBusy oben (Issue #31,
+  // design.md-Vorgabe "identisches Muster wie bei 'Wer bin ich?'").
+  function setSoundModeBusy(isBusy) {
+    soundModeButton.disabled = isBusy;
+    soundModeButton.setAttribute("aria-busy", String(isBusy));
+    soundModeLabelEl.textContent = isBusy
+      ? "Wird geprüft …"
+      : "Tiergeräusche";
   }
 
   quizModeButton.addEventListener("click", () => {
@@ -310,6 +367,53 @@ export function renderStartScreen(container, { onStart } = {}) {
     } finally {
       if (requestId === reverseModeRequestId) {
         setReverseModeBusy(false);
+      }
+    }
+  });
+
+  // requestId-Muster wie beim "Wer bin ich?"-Handler oben, aber ein eigener
+  // Zähler — jede Kachel schützt sich nur gegen ihre eigenen veralteten
+  // Antworten, ganz wie die beiden Kacheln bereits unabhängig voneinander
+  // ihren jeweiligen Ladezustand verwalten.
+  let soundModeRequestId = 0;
+
+  soundModeButton.addEventListener("click", async () => {
+    hideModeHint();
+    const requestId = ++soundModeRequestId;
+    setSoundModeBusy(true);
+
+    try {
+      // Testabruf = erster Aufruf von generateNextSoundQuestion für Frage 1
+      // der Runde (Issue #31 Akzeptanzkriterium: "identisch mit dem ersten
+      // Aufruf der neuen Fragegenerierungs-Funktion aus #32"). Solange #32
+      // noch nicht gemerged ist, liefert soundQuestionGenerator.js nur den
+      // abgestimmten Schnittstellen-Platzhalter, der jeden Aufruf ablehnt
+      // (siehe dortiger Datei-Kommentar) — der Fehlerfall unten greift dann
+      // unabhängig von einer bestehenden Internetverbindung.
+      const question = await generateNextSoundQuestion(
+        animalsData.animals,
+        new Set(),
+        selectedDifficulty ?? DIFFICULTY_LEVELS.EASY,
+      );
+
+      if (requestId !== soundModeRequestId) return;
+      // Bewusst kein Zwischenspeichern des Ergebnisses (anders als
+      // pendingReverseQuestion oben) — es gibt auf diesem Branch noch keinen
+      // Frage-/Feedback-Bildschirm (Issue #33), der es konsumieren könnte.
+      void question;
+      selectedMode = GAME_MODE.SOUND;
+      setSelectedMode(GAME_MODE.SOUND);
+    } catch {
+      if (requestId !== soundModeRequestId) return;
+      // Kindgerechtes, nicht-technisches Abfangen, identisch zum "Wer bin
+      // ich?"-Fehlerfall oben (design.md/Issue #31 Akzeptanzkriterium):
+      // Auswahl bleibt bei "Quizfragen".
+      selectedMode = GAME_MODE.QUIZ;
+      setSelectedMode(GAME_MODE.QUIZ);
+      showModeHint("Dafür brauchst du gerade Internet 🌐");
+    } finally {
+      if (requestId === soundModeRequestId) {
+        setSoundModeBusy(false);
       }
     }
   });

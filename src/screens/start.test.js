@@ -1,14 +1,14 @@
 // @vitest-environment jsdom
 //
-// DOM-Tests für die neue Modus-Auswahl auf dem Start-Bildschirm (Issue #26,
+// DOM-Tests für die Modus-Auswahl auf dem Start-Bildschirm (Issue #26/#31,
 // design.md "Modus-Auswahl auf dem Start-Bildschirm"). Analog zum Muster in
 // question.test.js: `data/animals.json` wird gemockt (Inhalt spielt für diese
-// Story keine Rolle, siehe reverseQuestionGenerator.js), und
-// `../quiz/reverseQuestionGenerator.js` wird ebenfalls gemockt, damit sowohl
-// der Erfolgs- als auch der Fehlschlag-Pfad des "Testabrufs" deterministisch
-// prüfbar sind — unabhängig davon, ob die echte Implementierung aus Issue
-// #27 bereits vorliegt oder (aktueller Stand) noch als Schnittstellen-Stub
-// immer ablehnt.
+// Story keine Rolle, siehe reverseQuestionGenerator.js/
+// soundQuestionGenerator.js), und die beiden Fragegenerierungs-Module werden
+// ebenfalls gemockt, damit sowohl der Erfolgs- als auch der Fehlschlag-Pfad
+// des jeweiligen "Testabrufs" deterministisch prüfbar sind — unabhängig
+// davon, ob die echte Implementierung (#27 bzw. #32) bereits vorliegt oder
+// (aktueller Stand für #32) noch als Schnittstellen-Stub immer ablehnt.
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { DIFFICULTY_LEVELS } from "../quiz/difficulty.js";
@@ -21,6 +21,11 @@ const generateNextReverseQuestion = vi.fn();
 vi.mock("../quiz/reverseQuestionGenerator.js", () => ({
   generateNextReverseQuestion: (...args) =>
     generateNextReverseQuestion(...args),
+}));
+
+const generateNextSoundQuestion = vi.fn();
+vi.mock("../quiz/soundQuestionGenerator.js", () => ({
+  generateNextSoundQuestion: (...args) => generateNextSoundQuestion(...args),
 }));
 
 const { renderStartScreen } = await import("./start.js");
@@ -36,6 +41,7 @@ function render() {
 beforeEach(() => {
   document.body.innerHTML = "";
   generateNextReverseQuestion.mockReset();
+  generateNextSoundQuestion.mockReset();
 });
 
 describe("Modus-Auswahl (Issue #26)", () => {
@@ -150,6 +156,153 @@ describe("Modus-Auswahl (Issue #26)", () => {
       true,
     );
     expect(startButton.disabled).toBe(false);
+  });
+});
+
+describe("Modus-Auswahl: dritte Kachel 'Tiergeräusche' (Issue #31)", () => {
+  it("zeigt 'Tiergeräusche' mit Lautsprecher- und Online-Icon, ohne die bestehenden zwei Kacheln zu verändern", () => {
+    const { container } = render();
+
+    const quizButton = container.querySelector('[data-mode="quiz"]');
+    const reverseButton = container.querySelector('[data-mode="reverse"]');
+    const soundButton = container.querySelector('[data-mode="sound"]');
+
+    expect(soundButton).not.toBeNull();
+    expect(soundButton.querySelector(".mode-button__label").textContent).toBe(
+      "Tiergeräusche",
+    );
+    expect(soundButton.querySelector(".mode-button__icon").textContent).toBe(
+      "🔊",
+    );
+    const onlineIcon = soundButton.querySelector(".mode-button__online-icon");
+    expect(onlineIcon).not.toBeNull();
+    expect(onlineIcon.getAttribute("aria-label")).toMatch(/Internet/);
+    expect(soundButton.classList.contains("mode-button--selected")).toBe(
+      false,
+    );
+    expect(soundButton.getAttribute("aria-pressed")).toBe("false");
+
+    // Die beiden bestehenden Kacheln bleiben unverändert (Akzeptanzkriterium
+    // "bleiben unverändert erhalten und funktionieren unabhängig von der
+    // neuen dritten Kachel").
+    expect(quizButton.classList.contains("mode-button--selected")).toBe(true);
+    expect(reverseButton.querySelector(".mode-button__label").textContent).toBe(
+      "Wer bin ich?",
+    );
+  });
+
+  it("bleibt bei 'Quizfragen', wenn der Testabruf für 'Tiergeräusche' fehlschlägt, mit freundlichem Hinweis statt Fehlertext", async () => {
+    generateNextSoundQuestion.mockRejectedValue(new Error("Netzwerkfehler"));
+    const { container } = render();
+
+    const soundButton = container.querySelector('[data-mode="sound"]');
+    soundButton.click();
+
+    expect(soundButton.getAttribute("aria-busy")).toBe("true");
+    expect(soundButton.disabled).toBe(true);
+
+    await vi.waitFor(() => {
+      expect(soundButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    const quizButton = container.querySelector('[data-mode="quiz"]');
+    expect(quizButton.classList.contains("mode-button--selected")).toBe(true);
+    expect(soundButton.classList.contains("mode-button--selected")).toBe(
+      false,
+    );
+    expect(soundButton.disabled).toBe(false);
+
+    const hintEl = container.querySelector(".mode-picker__hint");
+    expect(hintEl.hidden).toBe(false);
+    expect(hintEl.textContent).toBe("Dafür brauchst du gerade Internet 🌐");
+    expect(container.textContent).not.toMatch(/Netzwerkfehler|Error/);
+  });
+
+  it("wählt 'Tiergeräusche' aus, wenn der Testabruf gelingt", async () => {
+    generateNextSoundQuestion.mockResolvedValue({ text: "Tiergeräusch" });
+    const { container } = render();
+
+    const soundButton = container.querySelector('[data-mode="sound"]');
+    soundButton.click();
+
+    await vi.waitFor(() => {
+      expect(soundButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    expect(soundButton.classList.contains("mode-button--selected")).toBe(
+      true,
+    );
+    expect(soundButton.getAttribute("aria-pressed")).toBe("true");
+    const quizButton = container.querySelector('[data-mode="quiz"]');
+    expect(quizButton.classList.contains("mode-button--selected")).toBe(
+      false,
+    );
+    expect(container.querySelector(".mode-picker__hint").hidden).toBe(true);
+  });
+
+  it("ruft den Testabruf für 'Tiergeräusche' mit der aktuell gewählten Schwierigkeitsstufe auf", async () => {
+    generateNextSoundQuestion.mockResolvedValue({ text: "x" });
+    const { container } = render();
+
+    container
+      .querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.HARD}"]`)
+      .click();
+    container.querySelector('[data-mode="sound"]').click();
+
+    await vi.waitFor(() => {
+      expect(generateNextSoundQuestion).toHaveBeenCalled();
+    });
+    expect(generateNextSoundQuestion.mock.calls[0][2]).toBe(
+      DIFFICULTY_LEVELS.HARD,
+    );
+  });
+
+  it("erzeugt beim Start einen Quiz-Zustand mit mode 'sound', wenn 'Tiergeräusche' erfolgreich ausgewählt wurde", async () => {
+    generateNextSoundQuestion.mockResolvedValue({ text: "Tiergeräusch" });
+    const { container, onStart } = render();
+
+    container
+      .querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.EASY}"]`)
+      .click();
+    const soundButton = container.querySelector('[data-mode="sound"]');
+    soundButton.click();
+    await vi.waitFor(() => {
+      expect(soundButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    container.querySelector(".start-button").click();
+
+    expect(onStart).toHaveBeenCalledTimes(1);
+    const quizState = onStart.mock.calls[0][0];
+    expect(quizState.mode).toBe("sound");
+  });
+
+  it("wechselt unabhängig zwischen 'Wer bin ich?' und 'Tiergeräusche', ohne dass sich die Kacheln gegenseitig stören", async () => {
+    generateNextReverseQuestion.mockResolvedValue({ text: "Wer bin ich?" });
+    generateNextSoundQuestion.mockResolvedValue({ text: "Tiergeräusch" });
+    const { container } = render();
+
+    const reverseButton = container.querySelector('[data-mode="reverse"]');
+    reverseButton.click();
+    await vi.waitFor(() => {
+      expect(reverseButton.getAttribute("aria-busy")).toBe("false");
+    });
+    expect(reverseButton.classList.contains("mode-button--selected")).toBe(
+      true,
+    );
+
+    const soundButton = container.querySelector('[data-mode="sound"]');
+    soundButton.click();
+    await vi.waitFor(() => {
+      expect(soundButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    expect(soundButton.classList.contains("mode-button--selected")).toBe(
+      true,
+    );
+    expect(reverseButton.classList.contains("mode-button--selected")).toBe(
+      false,
+    );
   });
 });
 
