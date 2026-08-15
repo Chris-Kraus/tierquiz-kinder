@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+# commit-msg-Hook: erzwingt, dass Code-/Daten-Commits, die sich auf ein
+# GitHub Issue beziehen, nur committet werden, wenn dieses Issue tatsächlich
+# status:done ist (= unabhängig durch qa-engineer geprüft, siehe
+# pm-workflow-Skill, Abschnitt "Nicht tun": "Niemals eine Story als
+# done/geschlossen akzeptieren, nur weil die umsetzende Rolle sie selbst
+# getestet hat").
+#
+# Aktivierung: `git config core.hooksPath scripts/git-hooks` (repo-weit,
+# gilt auch für alle git-worktrees desselben Repos).
+#
+# Verhalten:
+#   - Merge-Commits: übersprungen (kein Blocker für Branch-Merges).
+#   - Reine docs/-Commits (kein src/, data/, scripts/-Change): übersprungen,
+#     da BA/UX/Architektur-Dokumentation keine QA-Prüfung durchläuft.
+#   - Commit-Message ohne "#<Zahl>"-Referenz: erlaubt, aber mit Warnung
+#     (kann nicht verifiziert werden, keine Issue-Verknüpfung vorhanden).
+#   - Commit-Message mit "#<Zahl>"-Referenz(en): jedes referenzierte Issue
+#     wird per `gh issue view` geprüft. Fehlt bei irgendeinem Issue das
+#     Label status:done, wird der Commit blockiert.
+#   - `gh`-Aufruf schlägt fehl (offline/nicht authentifiziert): Warnung,
+#     Commit wird NICHT blockiert (fail-open, um die Arbeitsfähigkeit bei
+#     Netzwerkproblemen nicht komplett zu verlieren).
+
+set -euo pipefail
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG="$(cat "$COMMIT_MSG_FILE")"
+
+# Merge-Commits überspringen.
+if [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ] 2>/dev/null; then
+  exit 0
+fi
+
+# Nur staged Dateien betrachten.
+STAGED_FILES="$(git diff --cached --name-only)"
+
+if [ -z "$STAGED_FILES" ]; then
+  exit 0
+fi
+
+# Reine docs/-Commits sind von der QA-Pflicht ausgenommen.
+NON_DOCS_FILES="$(echo "$STAGED_FILES" | grep -v '^docs/' || true)"
+if [ -z "$NON_DOCS_FILES" ]; then
+  exit 0
+fi
+
+# Issue-Nummern aus der Commit-Message extrahieren (z. B. "(#22)", "#23, #24").
+# "|| true" nötig, da grep bei 0 Treffern exit 1 liefert, was unter "set -e"
+# sonst das gesamte Skript sofort abbrechen würde, bevor die eigentliche
+# Leer-Prüfung unten überhaupt läuft.
+ISSUE_NUMBERS="$(echo "$COMMIT_MSG" | grep -oE '#[0-9]+' | tr -d '#' | sort -u || true)"
+
+if [ -z "$ISSUE_NUMBERS" ]; then
+  echo "⚠️  commit-msg-Hook: Keine Issue-Referenz (#<Zahl>) in der Commit-Message gefunden." >&2
+  echo "    QA-Status kann nicht automatisch verifiziert werden — Commit wird zugelassen." >&2
+  exit 0
+fi
+
+if ! command -v gh >/dev/null 2>&1; then
+  echo "⚠️  commit-msg-Hook: 'gh' CLI nicht gefunden — QA-Status kann nicht geprüft werden, Commit wird zugelassen." >&2
+  exit 0
+fi
+
+BLOCKED=0
+for NUM in $ISSUE_NUMBERS; do
+  ISSUE_JSON="$(gh issue view "$NUM" --json state,labels 2>/dev/null || true)"
+  if [ -z "$ISSUE_JSON" ]; then
+    echo "⚠️  commit-msg-Hook: Issue #$NUM konnte nicht abgerufen werden (offline/kein Zugriff) — wird nicht geprüft." >&2
+    continue
+  fi
+
+  HAS_DONE_LABEL="$(echo "$ISSUE_JSON" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+labels = [l['name'] for l in data.get('labels', [])]
+print('yes' if 'status:done' in labels else 'no')
+")"
+
+  if [ "$HAS_DONE_LABEL" != "yes" ]; then
+    CURRENT_LABELS="$(echo "$ISSUE_JSON" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+print(', '.join(l['name'] for l in data.get('labels', [])) or '(keine Labels)')
+")"
+    echo "❌ commit-msg-Hook: Issue #$NUM ist nicht status:done (aktuell: $CURRENT_LABELS)." >&2
+    echo "   Commit blockiert — erst qa-engineer unabhängig prüfen lassen und das Issue auf status:done setzen lassen." >&2
+    BLOCKED=1
+  fi
+done
+
+if [ "$BLOCKED" -eq 1 ]; then
+  echo "" >&2
+  echo "Falls dieser Commit wirklich keine QA-Prüfung braucht (z. B. reines Tooling/Hook-Setup), commit-msg-Hook umgehen mit:" >&2
+  echo "  git commit --no-verify" >&2
+  exit 1
+fi
+
+exit 0
