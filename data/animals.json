@@ -14,6 +14,7 @@
       "conservation_status": "gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/L%C3%B6we",
       "image_filename": "Lion in masai mara.jpg",
+      "audio_filename": "Lion raring-sound1TamilNadu178.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 14,
       "fun_fact": "Löwen sind die einzigen Katzen der Welt, die in einer richtigen Familiengruppe leben – im Rudel!",
@@ -44,6 +45,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wolf",
       "image_filename": "Eurasian wolf 2.jpg",
+      "audio_filename": "Wolf howls.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 10,
       "fun_fact": "Wölfe verständigen sich mit ihrem berühmten Heulen über weite Entfernungen – bei guten Bedingungen kilometerweit.",
@@ -73,6 +75,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wildschwein",
       "image_filename": "Wildschwein, Nähe Pulverstampftor.jpg",
+      "audio_filename": "Boar.Grwls(1).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 10,
       "fur_feather_color": "braun"
@@ -107,6 +110,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotfuchs",
       "image_filename": "Fox at the British Wildlife Centre, Newchapel, Surrey - geograph.org.uk - 2221750.jpg",
+      "audio_filename": "Red Fox (Vulpes vulpes) (W1CDR0001529 BD12).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 4,
       "fun_fact": "Ein Rotfuchs kann sogar das leise Rascheln einer Maus unter einer dicken Schneedecke hören.",
@@ -121,6 +125,7 @@
       "conservation_status": "gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gepard",
       "image_filename": "Cheetah (Acinonyx jubatus) female 2.jpg",
+      "audio_filename": "Acoustic-Structure-and-Contextual-Use-of-Calls-by-Captive-Male-and-Female-Cheetahs-(Acinonyx-pone.0158546.s001.oga",
       "diet": "Fleischfresser",
       "lifespan_years": 12,
       "fun_fact": "Der Gepard ist das schnellste Landtier der Welt und kann in nur drei Sekunden von null auf 100 km/h beschleunigen.",
@@ -187,6 +192,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haussperling",
       "image_filename": "House sparrow male in Prospect Park (53532).jpg",
+      "audio_filename": "House Sparrows (Passer domesticus) (W1CDR0001537 BD13).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "braun"
@@ -200,6 +206,7 @@
       "conservation_status": "gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nord-Giraffe",
       "image_filename": "Rothschild's giraffe (Giraffa camelopardalis rothschildi) - Murchison Falls National Park.jpg",
+      "audio_filename": "Giraffe Hum.oga",
       "diet": "Pflanzenfresser",
       "lifespan_years": 25,
       "fun_fact": "Giraffen haben genauso viele Halswirbel wie wir Menschen – nur ist bei ihnen jeder einzelne riesig lang!",
@@ -219,6 +226,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Braunb%C3%A4r",
       "image_filename": "Kamchatka Brown Bear near Dvuhyurtochnoe on 2015-07-23.jpg",
+      "audio_filename": "Yellowstone sound library - Grizzly Bear Eating - 002.mp3",
       "diet": "Allesfresser",
       "lifespan_years": 25,
       "fur_feather_color": "braun"
@@ -233,6 +241,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kolkrabe",
       "image_filename": "Corvus corax ad berlin 090516.jpg",
+      "audio_filename": "Common Raven (Corvus corax) (W1CDR0001449 BD6).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 15,
       "fur_feather_color": "schwarz"
@@ -246,6 +255,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Elster",
       "image_filename": "Eurasian magpie (10860).jpg",
+      "audio_filename": "Eurasian Magpie (Pica pica) (W1CDR0001537 BD28).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 5,
       "fur_feather_color": "bunt/gemustert"
@@ -270,6 +280,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wiedehopf",
       "image_filename": "Upupa epops Madrid 02.jpg",
+      "audio_filename": "Upupa epops.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
@@ -310,6 +321,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Jaguar",
       "image_filename": "Junior-Jaguar-Belize-Zoo.jpg",
+      "audio_filename": "Jaguar saw.flac",
       "diet": "Fleischfresser",
       "lifespan_years": 15,
       "fur_feather_color": "bunt/gemustert"
@@ -325,6 +337,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Elch",
       "image_filename": "Elk-telemark.jpg",
+      "audio_filename": "Moose mate.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 15,
       "fur_feather_color": "braun"
@@ -354,6 +367,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Amsel",
       "image_filename": "20190722 Turdus Merula 02.jpg",
+      "audio_filename": "Common Blackbird (Turdus merula) (W1CDR0001525 BD22).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 4,
       "fur_feather_color": "schwarz"
@@ -378,6 +392,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4ischer_Dachs",
       "image_filename": "European badger (Meles meles taxus) Drenthe.jpg",
+      "audio_filename": "European Badger (Meles meles) (W1CDR0001490 BD4).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 8,
       "fur_feather_color": "bunt/gemustert"
@@ -391,6 +406,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wachtel_(Art)",
       "image_filename": "Coturnix coturnix, Fraunberg, Bayern, Deutschland 2, Ausschnitt.jpg",
+      "audio_filename": "Common Quail (Coturnix coturnix) (W1CDR0001390 BD1).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "braun"
@@ -457,6 +473,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotkehlchen",
       "image_filename": "Erithacus rubecula with cocked head.jpg",
+      "audio_filename": "European Robin (Erithacus rubecula) (W1CDR0001425 BD16).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "rot/orange"
@@ -526,6 +543,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kuckuck",
       "image_filename": "Cuculus canorus vogelartinfo chris romeiks CHR0791 cropped.jpg",
+      "audio_filename": "Common Cuckoo (Cuculus canorus) (W1CDR0001463 BD1).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 6,
       "fur_feather_color": "grau"
@@ -539,9 +557,25 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Pirol",
       "image_filename": "Loriot d'Europe by Michel Idre.jpg",
+      "audio_filename": "Pirol Nähe Dahme-Mark (Andreas Plank, 21.05.2011).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 4,
       "fur_feather_color": "gelb"
+    },
+    {
+      "id": "Q26843",
+      "name_de": "Schwertwal",
+      "name_scientific": "Orcinus orca",
+      "category": "Säugetier",
+      "habitat": [
+        "Weltmeere"
+      ],
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwertwal",
+      "image_filename": "Killerwhales jumping.jpg",
+      "audio_filename": "Killer whale.ogg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 40,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q43375",
@@ -560,20 +594,6 @@
       "fur_feather_color": "braun"
     },
     {
-      "id": "Q26843",
-      "name_de": "Schwertwal",
-      "name_scientific": "Orcinus orca",
-      "category": "Säugetier",
-      "habitat": [
-        "Weltmeere"
-      ],
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwertwal",
-      "image_filename": "Killerwhales jumping.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 40,
-      "fur_feather_color": "bunt/gemustert"
-    },
-    {
       "id": "Q25273",
       "name_de": "Graureiher",
       "name_scientific": "Ardea cinerea",
@@ -582,6 +602,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graureiher",
       "image_filename": "Ardea cinerea EM1A2714 (27349354381).jpg",
+      "audio_filename": "Grey Heron (Ardea cinerea) (W ARDEA CINEREA R1 C19).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 5,
       "fur_feather_color": "grau"
@@ -595,6 +616,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eichelh%C3%A4her",
       "image_filename": "Garrulus glandarius 1 Luc Viatour.jpg",
+      "audio_filename": "Garrulus glandarius iphigenia.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 5,
       "fur_feather_color": "bunt/gemustert"
@@ -617,6 +639,19 @@
       "fur_feather_color": "rot/orange"
     },
     {
+      "id": "Q25469",
+      "name_de": "Star",
+      "name_scientific": "Sturnus vulgaris",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Star_(Art)",
+      "image_filename": "Toulouse - Sturnus vulgaris - 2012-02-26 - 2.jpg",
+      "audio_filename": "Sturnus vulgaris juveniles sound recording.ogg",
+      "diet": "Allesfresser",
+      "lifespan_years": 4,
+      "fur_feather_color": "schwarz"
+    },
+    {
       "id": "Q25485",
       "name_de": "Kohlmeise",
       "name_scientific": "Parus major",
@@ -625,21 +660,10 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kohlmeise",
       "image_filename": "Great tit (Parus major), Parc de Woluwé, Brussels (13042792905).jpg",
+      "audio_filename": "Great Tit (Parus major) (W1CDR0001393 BD1).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
-    },
-    {
-      "id": "Q25469",
-      "name_de": "Star",
-      "name_scientific": "Sturnus vulgaris",
-      "category": "Vogel",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Star_(Art)",
-      "image_filename": "Toulouse - Sturnus vulgaris - 2012-02-26 - 2.jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 4,
-      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q121439",
@@ -691,6 +715,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rauchschwalbe",
       "image_filename": "Rauchschwalbe Hirundo rustica.jpg",
+      "audio_filename": "Hirundo rustica - Barn Swallow - XC83449.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 4,
       "fur_feather_color": "bunt/gemustert"
@@ -704,6 +729,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinadler",
       "image_filename": "Maakotka (Aquila chrysaetos) by Jarkko Järvinen.jpg",
+      "audio_filename": "Golden Eagle (Aquila chrysaetos) (W1CDR0001387 BD6).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 25,
       "fur_feather_color": "braun"
@@ -716,21 +742,10 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rothirsch",
       "image_filename": "Cervus elaphus Luc Viatour 6.jpg",
+      "audio_filename": "Red Deer (Cervus elaphus) (W1CDR0001424 BD3).ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 15,
       "fur_feather_color": "braun"
-    },
-    {
-      "id": "Q4388",
-      "name_de": "Eurasisches Eichhörnchen",
-      "name_scientific": "Sciurus vulgaris",
-      "category": "Säugetier",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eurasisches_Eichh%C3%B6rnchen",
-      "image_filename": "Squirrel posing.jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 5,
-      "fur_feather_color": "rot/orange"
     },
     {
       "id": "Q25345",
@@ -753,6 +768,18 @@
       "fur_feather_color": "braun"
     },
     {
+      "id": "Q4388",
+      "name_de": "Eurasisches Eichhörnchen",
+      "name_scientific": "Sciurus vulgaris",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Eurasisches_Eichh%C3%B6rnchen",
+      "image_filename": "Squirrel posing.jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 5,
+      "fur_feather_color": "rot/orange"
+    },
+    {
       "id": "Q30847",
       "name_de": "Karakal",
       "name_scientific": "Caracal caracal",
@@ -771,6 +798,7 @@
       "category": "Vogel",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Dohle",
       "image_filename": "Coloeus monedula -Munkedal, Vastra Gotaland, Sweden-8.jpg",
+      "audio_filename": "European Jackdaw's croaking.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 5,
       "fur_feather_color": "schwarz"
@@ -796,6 +824,7 @@
       ],
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausmeerschweinchen",
       "image_filename": "Cochon d'Inde (Cavia porcellus) (2).jpg",
+      "audio_filename": "Guinea Pig Feeding Wheek.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 6,
       "fur_feather_color": "bunt/gemustert"
@@ -822,6 +851,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wei%C3%9Fstorch",
       "image_filename": "Ciconia ciconia.jpg",
+      "audio_filename": "Klapperstorch.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 20,
       "fur_feather_color": "weiß"
@@ -856,18 +886,6 @@
       "fur_feather_color": "grau"
     },
     {
-      "id": "Q160042",
-      "name_de": "Kaffernbüffel",
-      "name_scientific": "Syncerus caffer",
-      "category": "Säugetier",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kaffernb%C3%BCffel",
-      "image_filename": "African Buffalo.JPG",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 18,
-      "fur_feather_color": "schwarz"
-    },
-    {
       "id": "Q122069",
       "name_de": "Reh",
       "name_scientific": "Capreolus capreolus",
@@ -879,6 +897,18 @@
       "diet": "Pflanzenfresser",
       "lifespan_years": 10,
       "fur_feather_color": "braun"
+    },
+    {
+      "id": "Q160042",
+      "name_de": "Kaffernbüffel",
+      "name_scientific": "Syncerus caffer",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kaffernb%C3%BCffel",
+      "image_filename": "African Buffalo.JPG",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 18,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q130933",
@@ -902,6 +932,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fischadler",
       "image_filename": "Balbuzard pecheur Lac de Tunis.jpg",
+      "audio_filename": "Osprey (Pandion haliaetus) (W1CDR0001434 BD8).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 18,
       "fur_feather_color": "bunt/gemustert"
@@ -962,6 +993,7 @@
       "category": "Insekt",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Westliche_Honigbiene",
       "image_filename": "(MHNT) Apis mellifera (female) - on viburnum tinus flowers.jpg",
+      "audio_filename": "BioAcoustica 413-2 Apis mellifera 524 .flac",
       "diet": "Pflanzenfresser",
       "lifespan_years": 0.1
     },
@@ -1002,19 +1034,6 @@
       "fur_feather_color": "weiß"
     },
     {
-      "id": "Q25882",
-      "name_de": "Graugans",
-      "name_scientific": "Anser anser",
-      "category": "Vogel",
-      "weight_kg": 3.237,
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graugans",
-      "image_filename": "00 3688 Graugans (Anser anser).jpg",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 15,
-      "fur_feather_color": "grau"
-    },
-    {
       "id": "Q25380",
       "name_de": "Sperber",
       "name_scientific": "Accipiter nisus",
@@ -1023,20 +1042,23 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sperber_(Art)",
       "image_filename": "Sperber (Accipiter nisus) male -20200308 (2).JPG",
+      "audio_filename": "Accipiter nisus - Eurasian Sparrowhawk XC380491.mp3",
       "diet": "Fleischfresser",
       "lifespan_years": 4,
       "fur_feather_color": "grau"
     },
     {
-      "id": "Q4764",
-      "name_de": "Kranich",
-      "name_scientific": "Grus grus",
+      "id": "Q25882",
+      "name_de": "Graugans",
+      "name_scientific": "Anser anser",
       "category": "Vogel",
+      "weight_kg": 3.237,
       "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kranich",
-      "image_filename": "2017.07.04.-01-Wendisch Rietz--Kranich.jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 25,
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graugans",
+      "image_filename": "00 3688 Graugans (Anser anser).jpg",
+      "audio_filename": "Anser anser - Greylag Goose XC436358.mp3",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 15,
       "fur_feather_color": "grau"
     },
     {
@@ -1048,6 +1070,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schleiereule",
       "image_filename": "Tyto alba tylluan wen detail.jpg",
+      "audio_filename": "Barn Owl (Tyto alba) (W TYTO ALBA R1 C16).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 4,
       "fur_feather_color": "weiß"
@@ -1061,9 +1084,22 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Stieglitz",
       "image_filename": "Carduelis carduelis (2012).jpg",
+      "audio_filename": "European Goldfinch (Carduelis carduelis) (W1CDR0001491 BD15).ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
+    },
+    {
+      "id": "Q4764",
+      "name_de": "Kranich",
+      "name_scientific": "Grus grus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kranich",
+      "image_filename": "2017.07.04.-01-Wendisch Rietz--Kranich.jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 25,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q43576",
@@ -1082,17 +1118,6 @@
       "fur_feather_color": "bunt/gemustert"
     },
     {
-      "id": "Q137474876",
-      "name_de": "Habicht",
-      "name_scientific": "Astur gentilis",
-      "category": "Vogel",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Habicht",
-      "image_filename": "Northern Goshawk ad M2.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 10,
-      "fur_feather_color": "grau"
-    },
-    {
       "id": "Q25376",
       "name_de": "Blässhuhn",
       "name_scientific": "Fulica atra",
@@ -1101,6 +1126,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bl%C3%A4sshuhn",
       "image_filename": "Fulica atra Georges-Valbon 01.jpg",
+      "audio_filename": "Fulica atra - Eurasian Coot XC432890.mp3",
       "diet": "Allesfresser",
       "lifespan_years": 6,
       "fur_feather_color": "schwarz"
@@ -1114,6 +1140,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Saatkr%C3%A4he",
       "image_filename": "Corvus frugilegus -Dartmoor, Devon, England-8.jpg",
+      "audio_filename": "Corvus frugilegus.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 6,
       "fur_feather_color": "schwarz"
@@ -1127,6 +1154,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kiebitz_(Art)",
       "image_filename": "Northern-Lapwing-Vanellus-vanellus.jpg",
+      "audio_filename": "Northern Lapwing (Vanellus vanellus) (W1CDR0001471 BD4).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 5,
       "fur_feather_color": "bunt/gemustert"
@@ -1140,9 +1168,22 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Spie%C3%9Fente",
       "image_filename": "Male northern pintail at Llano Seco.jpg",
+      "audio_filename": "Anas acuta.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 5,
       "fur_feather_color": "bunt/gemustert"
+    },
+    {
+      "id": "Q137474876",
+      "name_de": "Habicht",
+      "name_scientific": "Astur gentilis",
+      "category": "Vogel",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Habicht",
+      "image_filename": "Northern Goshawk ad M2.jpg",
+      "audio_filename": "Accipiter gentilis - Northern Goshawk XC124806.ogg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 10,
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q80362",
@@ -1170,6 +1211,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Feldsperling",
       "image_filename": "Tree-Sparrow-2009-16-02.jpg",
+      "audio_filename": "Passer montanus.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "braun"
@@ -1215,6 +1257,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Goldschakal",
       "image_filename": "033 Golden jackal in Keoladeo National Park Photo by Giles Laurent.jpg",
+      "audio_filename": "Jackal.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 10,
       "fur_feather_color": "braun"
@@ -1239,6 +1282,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Serval",
       "image_filename": "Leptailurus serval 61666728, crop.jpg",
+      "audio_filename": "Artis, serval kat - SoundCloud - Beeld en Geluid.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 12,
       "fur_feather_color": "bunt/gemustert"
@@ -1265,6 +1309,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nachtigall",
       "image_filename": "Luscinia megarhynchos - Common nightingale - Nachtegaal.jpg",
+      "audio_filename": "Common Nightingale (Luscinia megarhynchos) (W1CDR0001376 BD18).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 4,
       "fur_feather_color": "braun"
@@ -1302,6 +1347,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gimpel_(Art)",
       "image_filename": "Bullfinch male.jpg",
+      "audio_filename": "Bullfinch (Pyrrhula pyrrhula) (W1CDR0001509 BD14).ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
@@ -1313,6 +1359,7 @@
       "category": "Vogel",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nebelkr%C3%A4he",
       "image_filename": "Corvus cornix (33515567265).jpg",
+      "audio_filename": "Каркання.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 8,
       "fur_feather_color": "bunt/gemustert"
@@ -1326,6 +1373,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergtaucher",
       "image_filename": "Zwergtaucher 060319 3.jpg",
+      "audio_filename": "Tachybaptus ruficollis (call).wav",
       "diet": "Fleischfresser",
       "lifespan_years": 4,
       "fur_feather_color": "braun"
@@ -1350,6 +1398,7 @@
       "conservation_status": "stark gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gemeiner_Schimpanse",
       "image_filename": "013 Alpha male chimpanzee at Kibale forest National Park Photo by Giles Laurent.jpg",
+      "audio_filename": "Chimpanzee-Alarm-Call-Production-Meets-Key-Criteria-for-Intentionality-pone.0076674.s005.oga",
       "diet": "Allesfresser",
       "lifespan_years": 40,
       "fun_fact": "Schimpansen benutzen Werkzeuge – zum Beispiel angespitzte Stöckchen, um damit Termiten aus ihrem Bau zu angeln.",
@@ -1366,19 +1415,6 @@
       "image_filename": "Les bonobos utilisent certaines feuilles aux vertus pharmacologique contre leurs parasites intestinaux.jpg",
       "diet": "Allesfresser",
       "lifespan_years": 40,
-      "fur_feather_color": "schwarz"
-    },
-    {
-      "id": "Q18847",
-      "name_de": "Teichralle",
-      "name_scientific": "Gallinula chloropus",
-      "category": "Vogel",
-      "weight_kg": 0.34800000000000003,
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Teichralle",
-      "image_filename": "Common moorhen (Gallinula chloropus) France.jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 4,
       "fur_feather_color": "schwarz"
     },
     {
@@ -1404,6 +1440,20 @@
       "image_filename": "Ciconia nigra -Kruger National Park-8.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 18,
+      "fur_feather_color": "schwarz"
+    },
+    {
+      "id": "Q18847",
+      "name_de": "Teichralle",
+      "name_scientific": "Gallinula chloropus",
+      "category": "Vogel",
+      "weight_kg": 0.34800000000000003,
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Teichralle",
+      "image_filename": "Common moorhen (Gallinula chloropus) France.jpg",
+      "audio_filename": "Gallinula chloropus - Common Moorhen XC432931.mp3",
+      "diet": "Allesfresser",
+      "lifespan_years": 4,
       "fur_feather_color": "schwarz"
     },
     {
@@ -1440,6 +1490,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/H%C3%B6ckerschwan",
       "image_filename": "Mute Swan Emsworth2.JPG",
+      "audio_filename": "Cygnus olor - Mute Swan XC434964.mp3",
       "diet": "Pflanzenfresser",
       "lifespan_years": 12,
       "fur_feather_color": "weiß"
@@ -1453,6 +1504,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blaumeise",
       "image_filename": "ParusCaeruleus.jpg",
+      "audio_filename": "Blue Tit (Cyanistes caeruleus) (W1CDR0001535 BD30).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
@@ -1489,6 +1541,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Auerhuhn",
       "image_filename": "Tetrao urogallus, Glenfeshie, Scotland 1.jpg",
+      "audio_filename": "Western Capercaillie (Tetrao urogallus) (W1CDR0001418 BD47).ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 8,
       "fur_feather_color": "schwarz"
@@ -1502,6 +1555,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Buchfink",
       "image_filename": "Fringilla coelebs (5577610542).jpg",
+      "audio_filename": "Chaffinch (Fringilla coelebs) (W1CDR0001527 BD14).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
@@ -1518,6 +1572,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haubentaucher",
       "image_filename": "Great Crested Grebe (52909695022).jpg",
+      "audio_filename": "Great Crested Grebe (Podiceps cristatus) (W1CDR0001488 BD4).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 10,
       "fur_feather_color": "braun"
@@ -1549,6 +1604,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fasan",
       "image_filename": "A monograph of the pheasants (10052517376).jpg",
+      "audio_filename": "PhasianusColchicusSlovakia.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
@@ -1586,6 +1642,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinkauz",
       "image_filename": "Athene noctua, Ambula, Montenegro 2.jpg",
+      "audio_filename": "Athene noctua - Little Owl XC309481.mp3",
       "diet": "Fleischfresser",
       "lifespan_years": 5,
       "fur_feather_color": "braun"
@@ -1628,6 +1685,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Krickente",
       "image_filename": "Common Teal Male (8602525826).jpg",
+      "audio_filename": "Eurasian Teal (Anas crecca) (W1CDR0001378 BD3).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 5,
       "fur_feather_color": "bunt/gemustert"
@@ -1666,6 +1724,7 @@
       "conservation_status": "stark gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Asiatischer_Elefant",
       "image_filename": "Elephas maximus (Bandipur).jpg",
+      "audio_filename": "Elephant voice - trumpeting.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 60,
       "fur_feather_color": "grau"
@@ -1691,6 +1750,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Amerikanischer_Bison",
       "image_filename": "American bison k5680-1.jpg",
+      "audio_filename": "Bison.wav",
       "diet": "Pflanzenfresser",
       "lifespan_years": 20,
       "fur_feather_color": "braun"
@@ -1703,6 +1763,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Feldlerche",
       "image_filename": "Alouette des champs Zaghouan001.jpg",
+      "audio_filename": "Eurasian Skylark (Alauda arvensis) (W1CDR0001421 BD2).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 4,
       "fur_feather_color": "braun"
@@ -1727,6 +1788,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Silberreiher",
       "image_filename": "Great Egret (Ardea alba) (25562005404).jpg",
+      "audio_filename": "Ardea alba - Great Egret XC131650.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 15,
       "fur_feather_color": "weiß"
@@ -1740,21 +1802,10 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wei%C3%9Fkopfseeadler",
       "image_filename": "Bald Eagle (Haliaeetus leucocephalus) Kachemak Bay, Alaska.jpg",
+      "audio_filename": "Bald Eagle Yellowstone National Park.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 25,
       "fur_feather_color": "bunt/gemustert"
-    },
-    {
-      "id": "Q26106",
-      "name_de": "Rebhuhn",
-      "name_scientific": "Perdix perdix",
-      "category": "Vogel",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rebhuhn",
-      "image_filename": "Nurmkana (cropped).jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 3,
-      "fur_feather_color": "braun"
     },
     {
       "id": "Q33504",
@@ -1768,6 +1819,18 @@
       "diet": "Fleischfresser",
       "lifespan_years": 20,
       "fur_feather_color": "weiß"
+    },
+    {
+      "id": "Q26106",
+      "name_de": "Rebhuhn",
+      "name_scientific": "Perdix perdix",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rebhuhn",
+      "image_filename": "Nurmkana (cropped).jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q134015",
@@ -1808,6 +1871,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rostgans",
       "image_filename": "Ruddy shelduck David Raju.jpg",
+      "audio_filename": "Artis, casarca - SoundCloud - Beeld en Geluid.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 8,
       "fur_feather_color": "rot/orange"
@@ -1833,6 +1897,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Ringeltaube",
       "image_filename": "Columba palumbus ssp. palumbus.jpg",
+      "audio_filename": "Columba palumbus birdsong.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 5,
       "fur_feather_color": "grau"
@@ -1887,6 +1952,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nachtreiher",
       "image_filename": "Nycticorax nycticorax nycticorax, Camargue (33620984464).jpg",
+      "audio_filename": "Nycticorax nycticorax - Black-crowned Night Heron XC436935.mp3",
       "diet": "Fleischfresser",
       "lifespan_years": 12,
       "fur_feather_color": "grau"
@@ -1904,6 +1970,20 @@
       "fur_feather_color": "weiß"
     },
     {
+      "id": "Q25377",
+      "name_de": "Mauersegler",
+      "name_scientific": "Apus apus",
+      "category": "Vogel",
+      "weight_kg": 0.0035,
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mauersegler",
+      "image_filename": "Common Swift 2025 07 18 02 (cropped).jpg",
+      "audio_filename": "Mauersegler.ogg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 8,
+      "fur_feather_color": "schwarz"
+    },
+    {
       "id": "Q25709",
       "name_de": "Rohrdommel",
       "name_scientific": "Botaurus stellaris",
@@ -1912,6 +1992,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rohrdommel",
       "image_filename": "Eurasian Bittern - Torrile - Italy 4528 (15409347121).jpg",
+      "audio_filename": "Eurasian Bittern (Botaurus stellaris) (W BOTAURUS STELLARIS R1 C1).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 8,
       "fur_feather_color": "braun"
@@ -1929,16 +2010,18 @@
       "fur_feather_color": "gelb"
     },
     {
-      "id": "Q25377",
-      "name_de": "Mauersegler",
-      "name_scientific": "Apus apus",
-      "category": "Vogel",
-      "weight_kg": 0.0035,
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mauersegler",
-      "image_filename": "Common Swift 2025 07 18 02 (cropped).jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 8,
+      "id": "Q124410",
+      "name_de": "Kragenbär",
+      "name_scientific": "Ursus thibetanus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kragenb%C3%A4r",
+      "image_filename": "Ursus thibetanus 3 (Wroclaw zoo).JPG",
+      "diet": "Allesfresser",
+      "lifespan_years": 25,
       "fur_feather_color": "schwarz"
     },
     {
@@ -1970,21 +2053,6 @@
       "diet": "Fleischfresser",
       "lifespan_years": 11,
       "fur_feather_color": "bunt/gemustert"
-    },
-    {
-      "id": "Q124410",
-      "name_de": "Kragenbär",
-      "name_scientific": "Ursus thibetanus",
-      "category": "Säugetier",
-      "habitat": [
-        "Wald"
-      ],
-      "conservation_status": "gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kragenb%C3%A4r",
-      "image_filename": "Ursus thibetanus 3 (Wroclaw zoo).JPG",
-      "diet": "Allesfresser",
-      "lifespan_years": 25,
-      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q36557",
@@ -2033,22 +2101,10 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schnatterente",
       "image_filename": "Gadwall-Anas-strepera.jpg",
+      "audio_filename": "Mareca strepera - Gadwall XC436359.mp3",
       "diet": "Pflanzenfresser",
       "lifespan_years": 8,
       "fur_feather_color": "grau"
-    },
-    {
-      "id": "Q25612",
-      "name_de": "Singschwan",
-      "name_scientific": "Cygnus cygnus",
-      "category": "Vogel",
-      "weight_kg": 8.75,
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Singschwan",
-      "image_filename": "Cygnus cygnus 070416 IOL.jpg",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 12,
-      "fur_feather_color": "weiß"
     },
     {
       "id": "Q54696",
@@ -2059,9 +2115,24 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/T%C3%BCrkentaube",
       "image_filename": "Streptopelia decaocto, Hărman, România (34881606270).jpg",
+      "audio_filename": "Кольчатая Горлица.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 5,
       "fur_feather_color": "braun"
+    },
+    {
+      "id": "Q25612",
+      "name_de": "Singschwan",
+      "name_scientific": "Cygnus cygnus",
+      "category": "Vogel",
+      "weight_kg": 8.75,
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Singschwan",
+      "image_filename": "Cygnus cygnus 070416 IOL.jpg",
+      "audio_filename": "Whooper Swan (Cygnus cygnus) (W CYGNUS CYGNUS R1 C6).ogg",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 12,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q160488",
@@ -2072,6 +2143,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Purpurreiher",
       "image_filename": "Ardea purpurea (Domaine des oiseaux).jpg",
+      "audio_filename": "Ardea purpurea - Purple Heron XC135429.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 12,
       "fur_feather_color": "braun"
@@ -2085,6 +2157,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bienenfresser_(Art)",
       "image_filename": "Merops apiaster 04.jpg",
+      "audio_filename": "Bijeneter - SoundCloud - Beeld en Geluid.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 5,
       "fur_feather_color": "bunt/gemustert"
@@ -2123,6 +2196,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rabenkr%C3%A4he",
       "image_filename": "Carrion crow 2022 04 05 05 02.jpg",
+      "audio_filename": "Carrion Crow (Corvus corone) (W1CDR0001425 BD18).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 8,
       "fur_feather_color": "schwarz"
@@ -2178,6 +2252,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Pfeifente",
       "image_filename": "Eurasian Wigeon - male.jpg",
+      "audio_filename": "Eurasian Wigeon (Anas penelope) (W1CDR0001386 BD2).ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 8,
       "fur_feather_color": "bunt/gemustert"
@@ -2252,6 +2327,7 @@
       "conservation_status": "gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Turteltaube",
       "image_filename": "2015-05-21 Streptopelia turtur, Sutton Bank, Yorkshire 06.jpg",
+      "audio_filename": "Streptopelia turtur - European Turtle Dove XC582028.mp3",
       "diet": "Pflanzenfresser",
       "lifespan_years": 3,
       "fur_feather_color": "braun"
@@ -2318,6 +2394,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Fennek",
       "image_filename": "Fennec Fox Peek.jpg",
+      "audio_filename": "Fennec Singing.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 10,
       "fur_feather_color": "braun"
@@ -2332,6 +2409,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Buckelwal",
       "image_filename": "Humpback whales in singing position.jpg",
+      "audio_filename": "Humpback-Whale-Song-on-the-Southern-Ocean-Feeding-Grounds-Implications-for-Cultural-Transmission-pone.0079422.s003.oga",
       "diet": "Fleischfresser",
       "lifespan_years": 45,
       "fur_feather_color": "grau"
@@ -2379,31 +2457,6 @@
       "fur_feather_color": "rot/orange"
     },
     {
-      "id": "Q25692",
-      "name_de": "Bekassine",
-      "name_scientific": "Gallinago gallinago",
-      "category": "Vogel",
-      "weight_kg": 0.1195,
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bekassine",
-      "image_filename": "Bekassine (Blick nach oben).jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 5,
-      "fur_feather_color": "braun"
-    },
-    {
-      "id": "Q25740",
-      "name_de": "Zaunkönig",
-      "name_scientific": "Troglodytes troglodytes",
-      "category": "Vogel",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zaunk%C3%B6nig",
-      "image_filename": "Eurasian wren (Troglodytes troglodytes).jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 2,
-      "fur_feather_color": "braun"
-    },
-    {
       "id": "Q18859",
       "name_de": "Rotschenkel",
       "name_scientific": "Tringa totanus",
@@ -2412,6 +2465,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotschenkel",
       "image_filename": "Common Redshank Tringa totanus.jpg",
+      "audio_filename": "Tringa totanus - Common Redshank XC432923.mp3",
       "diet": "Fleischfresser",
       "lifespan_years": 8,
       "fur_feather_color": "braun"
@@ -2424,8 +2478,36 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldohreule",
       "image_filename": "Asio otus11.JPG",
+      "audio_filename": "Asio otus - Long-eared Owl XC513606.mp3",
       "diet": "Fleischfresser",
       "lifespan_years": 8,
+      "fur_feather_color": "braun"
+    },
+    {
+      "id": "Q25692",
+      "name_de": "Bekassine",
+      "name_scientific": "Gallinago gallinago",
+      "category": "Vogel",
+      "weight_kg": 0.1195,
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bekassine",
+      "image_filename": "Bekassine (Blick nach oben).jpg",
+      "audio_filename": "Common Snipe (Gallinago gallinago) (W GALLINAGO GALLINAGO R3 C5).ogg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 5,
+      "fur_feather_color": "braun"
+    },
+    {
+      "id": "Q25740",
+      "name_de": "Zaunkönig",
+      "name_scientific": "Troglodytes troglodytes",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zaunk%C3%B6nig",
+      "image_filename": "Eurasian wren (Troglodytes troglodytes).jpg",
+      "audio_filename": "Eurasian Wren (Troglodytes troglodytes) (W1CDR0001461 BD5).ogg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 2,
       "fur_feather_color": "braun"
     },
     {
@@ -2442,17 +2524,21 @@
       "fur_feather_color": "bunt/gemustert"
     },
     {
-      "id": "Q159857",
-      "name_de": "Damhirsch",
-      "name_scientific": "Dama dama",
+      "id": "Q132072",
+      "name_de": "Weißwal",
+      "name_scientific": "Delphinapterus leucas",
       "category": "Säugetier",
-      "weight_kg": 5,
+      "habitat": [
+        "Arktischer Ozean"
+      ],
+      "weight_kg": 60,
       "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Damhirsch",
-      "image_filename": "Fallow deer in field.jpg",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 15,
-      "fur_feather_color": "bunt/gemustert"
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wei%C3%9Fwal",
+      "image_filename": "Beluga oceanografic.jpg",
+      "audio_filename": "Beluga vocalizations.ogg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 40,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q95036",
@@ -2466,6 +2552,20 @@
       "diet": "Pflanzenfresser",
       "lifespan_years": 37,
       "fur_feather_color": "grau"
+    },
+    {
+      "id": "Q159857",
+      "name_de": "Damhirsch",
+      "name_scientific": "Dama dama",
+      "category": "Säugetier",
+      "weight_kg": 5,
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Damhirsch",
+      "image_filename": "Fallow deer in field.jpg",
+      "audio_filename": "Quality-prevails-over-identity-in-the-sexually-selected-vocalisations-of-an-ageing-mammal-1741-7007-8-35-S1.ogg",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q26283",
@@ -2501,6 +2601,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sichler_(Art)",
       "image_filename": "Plegadis falcinellus Syracuse.jpg",
+      "audio_filename": "Plegadis falcinellus - Glossy Ibis XC129140.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 15,
       "fur_feather_color": "braun"
@@ -2517,6 +2618,7 @@
       "conservation_status": "vom Aussterben bedroht",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kakapo",
       "image_filename": "Sirocco full length portrait.jpg",
+      "audio_filename": "051226-kakapo-billbooming.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 60,
       "fur_feather_color": "bunt/gemustert"
@@ -2530,6 +2632,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Brandgans",
       "image_filename": "2014-04-18 Tadorna tadorna pair, Swallow Pond.jpg",
+      "audio_filename": "Common Shelduck (Tadorna tadorna) (W1CDR0001430 BD7).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 10,
       "fur_feather_color": "bunt/gemustert"
@@ -2546,22 +2649,6 @@
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
-    },
-    {
-      "id": "Q132072",
-      "name_de": "Weißwal",
-      "name_scientific": "Delphinapterus leucas",
-      "category": "Säugetier",
-      "habitat": [
-        "Arktischer Ozean"
-      ],
-      "weight_kg": 60,
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wei%C3%9Fwal",
-      "image_filename": "Beluga oceanografic.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 40,
-      "fur_feather_color": "weiß"
     },
     {
       "id": "Q184004",
@@ -2634,6 +2721,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Stelzenl%C3%A4ufer",
       "image_filename": "Himantopus himantopus - Pak Thale.jpg",
+      "audio_filename": "Black-winged stilt (Himantopus himantopus himantopus).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 10,
       "fur_feather_color": "bunt/gemustert"
@@ -2673,6 +2761,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Lachm%C3%B6we",
       "image_filename": "Lachmöwe Chroicocephalus ridibundus.jpg",
+      "audio_filename": "Black-headed Gulls (Larus ridibundus) (W1CDR0001402 BD19).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 12,
       "fur_feather_color": "weiß"
@@ -2686,6 +2775,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Goldammer",
       "image_filename": "Emberiza citrinella -Midtjylland, Denmark -male-8.jpg",
+      "audio_filename": "Yellowhammer (Emberiza citrinella) (W1CDR0001422 BD1).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "gelb"
@@ -2699,6 +2789,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Reiherente",
       "image_filename": "Tufted Duck 09 05 2025 02.jpg",
+      "audio_filename": "Tufted Duck.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 8,
       "fur_feather_color": "bunt/gemustert"
@@ -2711,6 +2802,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Flussuferl%C3%A4ufer",
       "image_filename": "Common sandpiper lake geneva-4.jpg",
+      "audio_filename": "Common Sandpiper (Actitis hypoleucos) (W1CDR0001405 BD3).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 8,
       "fur_feather_color": "braun"
@@ -2795,6 +2887,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwarzspecht",
       "image_filename": "BlackWoods.jpg",
+      "audio_filename": "Dryocopus martius spring call kuikuikuikui.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 8,
       "fur_feather_color": "schwarz"
@@ -2821,6 +2914,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Erlenzeisig",
       "image_filename": "Carduelis spinus male.jpg",
+      "audio_filename": "Eurasian Siskin (Carduelis spinus) (W1CDR0001494 BD4).ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 3,
       "fur_feather_color": "gelb"
@@ -2839,6 +2933,17 @@
       "fur_feather_color": "bunt/gemustert"
     },
     {
+      "id": "Q182599",
+      "name_de": "Leistenkrokodil",
+      "name_scientific": "Crocodylus porosus",
+      "category": "Reptil",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Leistenkrokodil",
+      "image_filename": "Laurie's crocodile in the garden.jpg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 70
+    },
+    {
       "id": "Q168745",
       "name_de": "Nilkrokodil",
       "name_scientific": "Crocodylus niloticus",
@@ -2849,17 +2954,6 @@
       "diet": "Fleischfresser",
       "lifespan_years": 50,
       "fun_fact": "Ein Nilkrokodil kann seine Luft sehr lange anhalten und geduldig fast reglos unter Wasser auf Beute warten."
-    },
-    {
-      "id": "Q182599",
-      "name_de": "Leistenkrokodil",
-      "name_scientific": "Crocodylus porosus",
-      "category": "Reptil",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Leistenkrokodil",
-      "image_filename": "Laurie's crocodile in the garden.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 70
     },
     {
       "id": "Q159323",
@@ -2946,6 +3040,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Birkhuhn",
       "image_filename": "Birkhahn.jpg",
+      "audio_filename": "Black Grouse (Tetrao tetrix) (W1CDR0001396 BD3).ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 6,
       "fur_feather_color": "schwarz"
@@ -2978,19 +3073,6 @@
       "fur_feather_color": "braun"
     },
     {
-      "id": "Q200339",
-      "name_de": "Mandarinente",
-      "name_scientific": "Aix galericulata",
-      "category": "Vogel",
-      "weight_kg": 0.041,
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mandarinente",
-      "image_filename": "Mandarin ducks by the Weiming Lake of Peking University 16.jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 8,
-      "fur_feather_color": "bunt/gemustert"
-    },
-    {
       "id": "Q179359",
       "name_de": "Steppenadler",
       "name_scientific": "Aquila nipalensis",
@@ -3017,6 +3099,19 @@
       "fur_feather_color": "bunt/gemustert"
     },
     {
+      "id": "Q200339",
+      "name_de": "Mandarinente",
+      "name_scientific": "Aix galericulata",
+      "category": "Vogel",
+      "weight_kg": 0.041,
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mandarinente",
+      "image_filename": "Mandarin ducks by the Weiming Lake of Peking University 16.jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 8,
+      "fur_feather_color": "bunt/gemustert"
+    },
+    {
       "id": "Q28122714",
       "name_de": "Kampfläufer",
       "name_scientific": "Calidris pugnax",
@@ -3038,6 +3133,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldkauz",
       "image_filename": "Strix aluco aluco.jpg",
+      "audio_filename": "Waldkauz.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 10,
       "fur_feather_color": "braun"
@@ -3076,6 +3172,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_Brachvogel",
       "image_filename": "Eurasian Curlew.jpg",
+      "audio_filename": "Eurasian Curlew (Numenius arquata) (W1CDR0001389 BD26).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 15,
       "fur_feather_color": "braun"
@@ -3125,25 +3222,6 @@
       "fur_feather_color": "bunt/gemustert"
     },
     {
-      "id": "Q144923",
-      "name_de": "Malaienbär",
-      "name_scientific": "Helarctos malayanus",
-      "category": "Säugetier",
-      "habitat": [
-        "Wald"
-      ],
-      "continent": [
-        "Asien",
-        "Ozeanien"
-      ],
-      "conservation_status": "gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Malaienb%C3%A4r",
-      "image_filename": "Sitting sun bear.jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 25,
-      "fur_feather_color": "schwarz"
-    },
-    {
       "id": "Q180404",
       "name_de": "Wapiti",
       "name_scientific": "Cervus canadensis",
@@ -3151,6 +3229,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wapiti",
       "image_filename": "Jasper.Wapiti-Hirsch.P1033401.jpg",
+      "audio_filename": "Elkbellow.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 15,
       "fur_feather_color": "braun"
@@ -3170,6 +3249,25 @@
       "diet": "Allesfresser",
       "lifespan_years": 1.5,
       "fur_feather_color": "braun"
+    },
+    {
+      "id": "Q144923",
+      "name_de": "Malaienbär",
+      "name_scientific": "Helarctos malayanus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "continent": [
+        "Asien",
+        "Ozeanien"
+      ],
+      "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Malaienb%C3%A4r",
+      "image_filename": "Sitting sun bear.jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 25,
+      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q25769",
@@ -3192,6 +3290,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kanadagans",
       "image_filename": "La Roche-en-Ardenne - Bernache du Canada, Branta canadensis.jpg",
+      "audio_filename": "Canada Geese (Branta canadensis) (W1CDR0001421 BD11).ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 15,
       "fur_feather_color": "bunt/gemustert"
@@ -3240,6 +3339,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gr%C3%BCnfink",
       "image_filename": "Chloris chloris (profile).jpg",
+      "audio_filename": "Carduelis chloris.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 3,
       "fur_feather_color": "gelb"
@@ -3253,6 +3353,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wendehals_(Vogel)",
       "image_filename": "Jynx torquilla (34536504885).jpg",
+      "audio_filename": "Väänkael audio.wav",
       "diet": "Fleischfresser",
       "lifespan_years": 3,
       "fur_feather_color": "braun"
@@ -3265,6 +3366,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Mehlschwalbe",
       "image_filename": "Delichon urbica.jpg",
+      "audio_filename": "Delichon urbicum contact call.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 4,
       "fur_feather_color": "bunt/gemustert"
@@ -3278,6 +3380,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/S%C3%A4belschn%C3%A4bler",
       "image_filename": "Avocette élégante Thyna019.jpg",
+      "audio_filename": "Avocet (Recurvirostra avosetta) (W1CDR0001419 BD20).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 12,
       "fur_feather_color": "bunt/gemustert"
@@ -3303,6 +3406,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Silberm%C3%B6we",
       "image_filename": "European herring gull vocalizing (00170).jpg",
+      "audio_filename": "Herring Gull (Larus argentatus) (W1CDR0001420 BD12).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 15,
       "fur_feather_color": "weiß"
@@ -3355,6 +3459,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blaukehlchen",
       "image_filename": "Blåhake Bluethroat (20162398078).jpg",
+      "audio_filename": "Luscinia svecica.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
@@ -3367,6 +3472,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gartenrotschwanz",
       "image_filename": "Gartenrotschwanz 1.jpg",
+      "audio_filename": "Common Redstart (Phoenicurus phoenicurus) (W1CDR0001505 BD3).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
@@ -3379,8 +3485,21 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nachtschwalbe",
       "image_filename": "Caprimulgus europaeus g.JPG",
+      "audio_filename": "European Nightjar (Caprimulgus europaeus) (W1CDR0001526 BD23).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 5,
+      "fur_feather_color": "braun"
+    },
+    {
+      "id": "Q26982",
+      "name_de": "Haubenlerche",
+      "name_scientific": "Galerida cristata",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haubenlerche",
+      "image_filename": "Pipíška chochlatá (Galerida cristata).jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 3,
       "fur_feather_color": "braun"
     },
     {
@@ -3394,18 +3513,6 @@
       "image_filename": "Charadrius dubius (49820761043).jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 6,
-      "fur_feather_color": "braun"
-    },
-    {
-      "id": "Q26982",
-      "name_de": "Haubenlerche",
-      "name_scientific": "Galerida cristata",
-      "category": "Vogel",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haubenlerche",
-      "image_filename": "Pipíška chochlatá (Galerida cristata).jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 3,
       "fur_feather_color": "braun"
     },
     {
@@ -3476,6 +3583,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kleiber_(Art)",
       "image_filename": "Sitta europaea europaea, Slottsskogen, Göteborg, Sweden 3.jpg",
+      "audio_filename": "Eurasian Nuthatch (Sitta europaea) (W1CDR0001520 BD24).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
@@ -3489,6 +3597,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gr%C3%BCnspecht",
       "image_filename": "Green woodpecker Franconville 2022 01 21 2.jpg",
+      "audio_filename": "Green Woodpecker (Picus viridis) (W1CDR0001497 BD6).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 6,
       "fur_feather_color": "bunt/gemustert"
@@ -3533,18 +3642,6 @@
       "fur_feather_color": "braun"
     },
     {
-      "id": "Q201831",
-      "name_de": "Wasseramsel",
-      "name_scientific": "Cinclus cinclus",
-      "category": "Vogel",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wasseramsel",
-      "image_filename": "Cinclus cinclus bronwen y dwr.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 5,
-      "fur_feather_color": "bunt/gemustert"
-    },
-    {
       "id": "Q184432",
       "name_de": "Prachttaucher",
       "name_scientific": "Gavia arctica",
@@ -3564,8 +3661,22 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tannenh%C3%A4her",
       "image_filename": "Nucifraga caryocatactes, Kotka, Finland 1.jpg",
+      "audio_filename": "Nucifraga caryocatactes - Spotted Nutcracker XC441534.mp3",
       "diet": "Allesfresser",
       "lifespan_years": 10,
+      "fur_feather_color": "bunt/gemustert"
+    },
+    {
+      "id": "Q201831",
+      "name_de": "Wasseramsel",
+      "name_scientific": "Cinclus cinclus",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wasseramsel",
+      "image_filename": "Cinclus cinclus bronwen y dwr.jpg",
+      "audio_filename": "European Dipper (Cinclus cinclus) (W1CDR0001383 BD8).ogg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 5,
       "fur_feather_color": "bunt/gemustert"
     },
     {
@@ -3589,6 +3700,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seidenschwanz_(Art)",
       "image_filename": "Bombycilla garrulus, Novosibirsk 1.jpg",
+      "audio_filename": "Bombycilla garrulus - Bohemian Waxwing XC132884.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 4,
       "fur_feather_color": "bunt/gemustert"
@@ -3602,6 +3714,7 @@
       "conservation_status": "gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Papageitaucher",
       "image_filename": "Puffin (Fratercula arctica).jpg",
+      "audio_filename": "Atlantic Puffin (Fratercula arctica) (W1CDR0001416 BD3).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 20,
       "fur_feather_color": "bunt/gemustert"
@@ -3629,6 +3742,19 @@
       "lifespan_years": 15
     },
     {
+      "id": "Q178089",
+      "name_de": "Tüpfelhyäne",
+      "name_scientific": "Crocuta crocuta",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/T%C3%BCpfelhy%C3%A4ne",
+      "image_filename": "Hiena manchada (Crocuta crocuta), parque nacional Kruger, Sudáfrica, 2018-07-26, DD 22.jpg",
+      "audio_filename": "Giggling call of a spotted hyena (Crocuta crocuta) - 1472-6785-10-9-S3.oga",
+      "diet": "Fleischfresser",
+      "lifespan_years": 15,
+      "fur_feather_color": "bunt/gemustert"
+    },
+    {
       "id": "Q174296",
       "name_de": "Gaur",
       "name_scientific": "Bos gaurus",
@@ -3643,18 +3769,6 @@
       "diet": "Pflanzenfresser",
       "lifespan_years": 20,
       "fur_feather_color": "schwarz"
-    },
-    {
-      "id": "Q178089",
-      "name_de": "Tüpfelhyäne",
-      "name_scientific": "Crocuta crocuta",
-      "category": "Säugetier",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/T%C3%BCpfelhy%C3%A4ne",
-      "image_filename": "Hiena manchada (Crocuta crocuta), parque nacional Kruger, Sudáfrica, 2018-07-26, DD 22.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 15,
-      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q209067",
@@ -3691,6 +3805,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schwanzmeise",
       "image_filename": "Long-tailed tit (74940).jpg",
+      "audio_filename": "Aegithalos caudatus - Long-tailed Tit - XC114614.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
@@ -3716,9 +3831,23 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Streifengans",
       "image_filename": "Bar-headed Goose by Dr. Raju Kasambe DSCN7530 (23).jpg",
+      "audio_filename": "Bar-headed geese (Call).wav",
       "diet": "Pflanzenfresser",
       "lifespan_years": 15,
       "fur_feather_color": "bunt/gemustert"
+    },
+    {
+      "id": "Q18875",
+      "name_de": "Flussseeschwalbe",
+      "name_scientific": "Sterna hirundo",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Flussseeschwalbe",
+      "image_filename": "Common tern 2025 07 08 08.jpg",
+      "audio_filename": "Sterna-hirundo-002.ogg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 12,
+      "fur_feather_color": "weiß"
     },
     {
       "id": "Q26427",
@@ -3755,21 +3884,10 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gr%C3%BCnschenkel",
       "image_filename": "Greenshank (Tringa nebularia).jpg",
+      "audio_filename": "Common Greenshank (Tringa nebularia) (W TRINGA NEBULARIA R1 C4).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 10,
       "fur_feather_color": "braun"
-    },
-    {
-      "id": "Q18875",
-      "name_de": "Flussseeschwalbe",
-      "name_scientific": "Sterna hirundo",
-      "category": "Vogel",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Flussseeschwalbe",
-      "image_filename": "Common tern 2025 07 08 08.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 12,
-      "fur_feather_color": "weiß"
     },
     {
       "id": "Q170713",
@@ -3803,6 +3921,19 @@
       "image_filename": "Atlantischer Lachs.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 5
+    },
+    {
+      "id": "Q187704",
+      "name_de": "Nutria",
+      "name_scientific": "Myocastor coypus",
+      "category": "Säugetier",
+      "weight_kg": 6.36,
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nutria",
+      "image_filename": "Myocastor coypus - ragondin.jpg",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 4,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q146457",
@@ -3845,19 +3976,6 @@
       "fur_feather_color": "braun"
     },
     {
-      "id": "Q187704",
-      "name_de": "Nutria",
-      "name_scientific": "Myocastor coypus",
-      "category": "Säugetier",
-      "weight_kg": 6.36,
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Nutria",
-      "image_filename": "Myocastor coypus - ragondin.jpg",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 4,
-      "fur_feather_color": "braun"
-    },
-    {
       "id": "Q171563",
       "name_de": "Zwergohreule",
       "name_scientific": "Otus scops",
@@ -3865,6 +3983,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergohreule",
       "image_filename": "Scops Owl (Otus scops), Kalloni, Lesvos, Greece, 19.04.2015 (16773748434).jpg",
+      "audio_filename": "ZwergohreuleKroatienKatarineninsel2014.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 8,
       "fur_feather_color": "grau"
@@ -3877,6 +3996,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gerfalke",
       "image_filename": "Falco rusticolus white cropped.jpg",
+      "audio_filename": "Falco rusticolus.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 14,
       "fur_feather_color": "weiß"
@@ -3889,6 +4009,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Misteldrossel",
       "image_filename": "Turdus viscivorus Brych y coed.jpg",
+      "audio_filename": "Mistle Thrush (Turdus viscivorus) (W1CDR0000636 BD11).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 4,
       "fur_feather_color": "braun"
@@ -3940,6 +4061,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wasserralle",
       "image_filename": "Water rail 2022 04 30 01.jpg",
+      "audio_filename": "Rallus aquaticus - Water Rail XC387327.mp3",
       "diet": "Allesfresser",
       "lifespan_years": 6,
       "fur_feather_color": "braun"
@@ -3965,6 +4087,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steinschm%C3%A4tzer_(Art)",
       "image_filename": "Steinschmaetzer Northern wheatear male.jpg",
+      "audio_filename": "Northern Wheatear (Oenanthe oenanthe) (W1CDR0001421 BD16).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 3,
       "fur_feather_color": "braun"
@@ -3990,6 +4113,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sterntaucher",
       "image_filename": "Gavia stellata -Iceland -swimming-8.jpg",
+      "audio_filename": "Red-throated Diver (Gavia stellata) (W GAVIA STELLATA R3 C8).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 15,
       "fur_feather_color": "grau"
@@ -4015,6 +4139,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausrotschwanz",
       "image_filename": "Hausrotschwanz Brutpflege 2006-05-21-05.jpg",
+      "audio_filename": "Black Redstart (Phoenicurus ochruros) (W1CDR0000253 BD17).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 3,
       "fur_feather_color": "schwarz"
@@ -4028,6 +4153,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Uferschnepfe",
       "image_filename": "Black-tailed Godwit cropped.jpg",
+      "audio_filename": "Limosa limosa - Black-tailed Godwit XC129138.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 16,
       "fur_feather_color": "braun"
@@ -4053,21 +4179,6 @@
       "image_filename": "Scomber scombrus.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 17
-    },
-    {
-      "id": "Q170311",
-      "name_de": "Java-Nashorn",
-      "name_scientific": "Rhinoceros sondaicus",
-      "category": "Säugetier",
-      "habitat": [
-        "Wald"
-      ],
-      "conservation_status": "vom Aussterben bedroht",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Java-Nashorn",
-      "image_filename": "Rhinoceros sondaicus in London Zoo.jpg",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 35,
-      "fur_feather_color": "grau"
     },
     {
       "id": "Q183339",
@@ -4105,6 +4216,21 @@
       "fur_feather_color": "braun"
     },
     {
+      "id": "Q170311",
+      "name_de": "Java-Nashorn",
+      "name_scientific": "Rhinoceros sondaicus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald"
+      ],
+      "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Java-Nashorn",
+      "image_filename": "Rhinoceros sondaicus in London Zoo.jpg",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 35,
+      "fur_feather_color": "grau"
+    },
+    {
       "id": "Q213084",
       "name_de": "Springböcke",
       "name_scientific": "Antidorcas marsupialis",
@@ -4125,6 +4251,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bl%C3%A4ssgans",
       "image_filename": "Anser albifrons albifrons Swallow Pond 2.jpg",
+      "audio_filename": "Anser albifrons - Greater White-fronted Goose - XC96532.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 15,
       "fur_feather_color": "braun"
@@ -4138,6 +4265,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Haselhuhn",
       "image_filename": "Tetrastes bonasia.jpg",
+      "audio_filename": "CallHazelGrouseSlovakia.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 6,
       "fur_feather_color": "braun"
@@ -4151,6 +4279,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergadler",
       "image_filename": "Booted eagle, Hieraaetus pennatus, at Kgalagadi Transfrontier Pa (32334023348).jpg",
+      "audio_filename": "Booted Eagle.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 15,
       "fur_feather_color": "braun"
@@ -4176,6 +4305,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Regenbrachvogel",
       "image_filename": "Whimbrel Numenius phaeopus.jpg",
+      "audio_filename": "Numenius phaeopus - Whimbrel XC551246.mp3",
       "diet": "Fleischfresser",
       "lifespan_years": 12,
       "fur_feather_color": "braun"
@@ -4189,6 +4319,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Waldwasserl%C3%A4ufer",
       "image_filename": "Green Sandpiper ( Tringa ochropus ) ... Tophill Low , Yorkshire (53182606905).jpg",
+      "audio_filename": "Tringa ochropus - Green Sandpiper XC432903.mp3",
       "diet": "Fleischfresser",
       "lifespan_years": 6,
       "fur_feather_color": "braun"
@@ -4237,18 +4368,6 @@
       "fur_feather_color": "braun"
     },
     {
-      "id": "Q199758",
-      "name_de": "Blauhäher",
-      "name_scientific": "Cyanocitta cristata",
-      "category": "Vogel",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blauh%C3%A4her",
-      "image_filename": "Blue jay in PP (30960).jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 7,
-      "fur_feather_color": "bunt/gemustert"
-    },
-    {
       "id": "Q184751",
       "name_de": "Krauskopfpelikan",
       "name_scientific": "Pelecanus crispus",
@@ -4269,6 +4388,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/M%C3%B6nchsgrasm%C3%BCcke",
       "image_filename": "Sylvia atricapilla -Lullington Heath, East Sussex, England -male-8.jpg",
+      "audio_filename": "Blackcap (Sylvia atricapilla) (W1CDR0001532 BD2).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "grau"
@@ -4281,6 +4401,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hoatzin",
       "image_filename": "Hoatzin (Opisthocomus hoazin) Rio Napo.jpg",
+      "audio_filename": "Opisthocomus hoazin - Hoatzin XC251282.mp3",
       "diet": "Pflanzenfresser",
       "lifespan_years": 15,
       "fur_feather_color": "bunt/gemustert"
@@ -4307,8 +4428,21 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/T%C3%BCpfelsumpfhuhn",
       "image_filename": "Porzana porzana 3 (Marek Szczepanek).jpg",
+      "audio_filename": "Spotted Crake (Porzana porzana) (W1CDR0001382 BD3).ogg",
       "diet": "Allesfresser",
       "lifespan_years": 5,
+      "fur_feather_color": "bunt/gemustert"
+    },
+    {
+      "id": "Q199758",
+      "name_de": "Blauhäher",
+      "name_scientific": "Cyanocitta cristata",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Blauh%C3%A4her",
+      "image_filename": "Blue jay in PP (30960).jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 7,
       "fur_feather_color": "bunt/gemustert"
     },
     {
@@ -4320,6 +4454,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zwergdommel",
       "image_filename": "47-090506-little-bittern-at-upper-ford-near-Sigri-.jpg",
+      "audio_filename": "Ixobrychus minutus - Little Bittern XC431991.mp3",
       "diet": "Fleischfresser",
       "lifespan_years": 5,
       "fur_feather_color": "braun"
@@ -4333,6 +4468,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hohltaube",
       "image_filename": "2019-03-17 Columba oenas, Jesmond Dene 1.jpg",
+      "audio_filename": "Columba oenas - Stock Dove XC489891.mp3",
       "diet": "Pflanzenfresser",
       "lifespan_years": 6,
       "fur_feather_color": "grau"
@@ -4359,6 +4495,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wintergoldh%C3%A4hnchen",
       "image_filename": "Goldcrest 1.jpg",
+      "audio_filename": "Goldcrest (Regulus regulus) (W1CDR0001500 BD19).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 2,
       "fur_feather_color": "gelb"
@@ -4390,6 +4527,17 @@
       "fur_feather_color": "bunt/gemustert"
     },
     {
+      "id": "Q144700",
+      "name_de": "Quappe",
+      "name_scientific": "Lota lota",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Quappe",
+      "image_filename": "Trüsche Walchensee.jpg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 15
+    },
+    {
       "id": "Q199788",
       "name_de": "Atlantischer Kabeljau",
       "name_scientific": "Gadus morhua",
@@ -4411,30 +4559,6 @@
       "image_filename": "Electric-eel.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 12
-    },
-    {
-      "id": "Q144700",
-      "name_de": "Quappe",
-      "name_scientific": "Lota lota",
-      "category": "Fisch",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Quappe",
-      "image_filename": "Trüsche Walchensee.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 15
-    },
-    {
-      "id": "Q174199",
-      "name_de": "Großer Tümmler",
-      "name_scientific": "Tursiops truncatus",
-      "category": "Säugetier",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_T%C3%BCmmler",
-      "image_filename": "Tursiops truncatus 01-cropped.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 40,
-      "fun_fact": "Delfine schlafen mit nur einer Gehirnhälfte auf einmal, damit sie immer wach genug bleiben, um zum Atmen aufzutauchen.",
-      "fur_feather_color": "grau"
     },
     {
       "id": "Q180035",
@@ -4488,9 +4612,23 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Sikahirsch",
       "image_filename": "Cervus nippon 002.jpg",
+      "audio_filename": "Sika Deer (Cervus nippon) (W1CDR0001426 BD2).ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 15,
       "fur_feather_color": "bunt/gemustert"
+    },
+    {
+      "id": "Q174199",
+      "name_de": "Großer Tümmler",
+      "name_scientific": "Tursiops truncatus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gro%C3%9Fer_T%C3%BCmmler",
+      "image_filename": "Tursiops truncatus 01-cropped.jpg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 40,
+      "fun_fact": "Delfine schlafen mit nur einer Gehirnhälfte auf einmal, damit sie immer wach genug bleiben, um zum Atmen aufzutauchen.",
+      "fur_feather_color": "grau"
     },
     {
       "id": "Q26559",
@@ -4525,6 +4663,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hirtenmaina",
       "image_filename": "Common Myna in Rabindra Sarobar February 2025 by Tisha Mukherjee 01.jpg",
+      "audio_filename": "Common myna-Acridotheres tristis.wav",
       "diet": "Allesfresser",
       "lifespan_years": 6,
       "fur_feather_color": "bunt/gemustert"
@@ -4594,18 +4733,6 @@
       "fur_feather_color": "grau"
     },
     {
-      "id": "Q26698",
-      "name_de": "Heckenbraunelle",
-      "name_scientific": "Prunella modularis",
-      "category": "Vogel",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Heckenbraunelle",
-      "image_filename": "Järnsparv Dunnock (13329301154).jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 2,
-      "fur_feather_color": "braun"
-    },
-    {
       "id": "Q18864",
       "name_de": "Pfuhlschnepfe",
       "name_scientific": "Limosa lapponica",
@@ -4619,6 +4746,19 @@
       "fur_feather_color": "braun"
     },
     {
+      "id": "Q26698",
+      "name_de": "Heckenbraunelle",
+      "name_scientific": "Prunella modularis",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Heckenbraunelle",
+      "image_filename": "Järnsparv Dunnock (13329301154).jpg",
+      "audio_filename": "Dunnock (Prunella modularis) (W1CDR0001422 BD6).ogg",
+      "diet": "Allesfresser",
+      "lifespan_years": 2,
+      "fur_feather_color": "braun"
+    },
+    {
       "id": "Q26800",
       "name_de": "Küstenseeschwalbe",
       "name_scientific": "Sterna paradisaea",
@@ -4627,6 +4767,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/K%C3%BCstenseeschwalbe",
       "image_filename": "2009 07 02 - Arctic tern on Farne Islands - The blue rope demarcates the visitors' path.JPG",
+      "audio_filename": "Sterna paradisaea - Arctic Tern XC564600.mp3",
       "diet": "Fleischfresser",
       "lifespan_years": 25,
       "fur_feather_color": "weiß"
@@ -4651,6 +4792,7 @@
       "conservation_status": "gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Lederschildkr%C3%B6te",
       "image_filename": "Dermochelys coriacea - Julien Renoult - 12981952.jpeg",
+      "audio_filename": "Dermochelys coriacea 001.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 45
     },
@@ -4699,6 +4841,7 @@
       "conservation_status": "stark gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Katta",
       "image_filename": "Lemur catta 001.jpg",
+      "audio_filename": "Lemur catta--wails & moans & howls.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 18,
       "fur_feather_color": "bunt/gemustert"
@@ -4732,18 +4875,6 @@
       "fur_feather_color": "braun"
     },
     {
-      "id": "Q202478",
-      "name_de": "Gartengrasmücke",
-      "name_scientific": "Sylvia borin",
-      "category": "Vogel",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gartengrasm%C3%BCcke",
-      "image_filename": "Sylvia borin (Örebro County).jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 3,
-      "fur_feather_color": "braun"
-    },
-    {
       "id": "Q182209",
       "name_de": "Königspinguin",
       "name_scientific": "Aptenodytes patagonicus",
@@ -4752,6 +4883,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/K%C3%B6nigspinguin",
       "image_filename": "King Penguins on Saunders Island (5586254113).jpg",
+      "audio_filename": "King Penguin Rookery Audio.oga",
       "diet": "Fleischfresser",
       "lifespan_years": 18,
       "fur_feather_color": "bunt/gemustert"
@@ -4764,6 +4896,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Zilpzalp",
       "image_filename": "Common Chiffchaff 2025 04 04 01.jpg",
+      "audio_filename": "Chiffchaff (Phylloscopus collybita) (W1CDR0001497 BD9).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 2,
       "fur_feather_color": "braun"
@@ -4777,9 +4910,23 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Tannenmeise",
       "image_filename": "Svartmeis.JPG",
+      "audio_filename": "Periparus ater.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
+    },
+    {
+      "id": "Q202478",
+      "name_de": "Gartengrasmücke",
+      "name_scientific": "Sylvia borin",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gartengrasm%C3%BCcke",
+      "image_filename": "Sylvia borin (Örebro County).jpg",
+      "audio_filename": "Garden Warbler (Sylvia borin) (W1CDR0001463 BD12).ogg",
+      "diet": "Allesfresser",
+      "lifespan_years": 3,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q27074540",
@@ -4790,6 +4937,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneegans",
       "image_filename": "Snow Goose (24510697391).jpg",
+      "audio_filename": "Artis, blauwe en witte sneeuwgans - SoundCloud - Beeld en Geluid.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 15,
       "fur_feather_color": "weiß"
@@ -4805,19 +4953,6 @@
       "image_filename": "Greater spotted eagle.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 20,
-      "fur_feather_color": "braun"
-    },
-    {
-      "id": "Q18837",
-      "name_de": "Bruchwasserläufer",
-      "name_scientific": "Tringa glareola",
-      "category": "Vogel",
-      "weight_kg": 0.062,
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bruchwasserl%C3%A4ufer",
-      "image_filename": "Wood Sandpiper (50206067826), crop.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 6,
       "fur_feather_color": "braun"
     },
     {
@@ -4845,9 +4980,24 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Raubseeschwalbe",
       "image_filename": "Sterna-caspia-010.jpg",
+      "audio_filename": "Hydroprogne caspia - Caspian Tern XC432881.mp3",
       "diet": "Fleischfresser",
       "lifespan_years": 20,
       "fur_feather_color": "weiß"
+    },
+    {
+      "id": "Q18837",
+      "name_de": "Bruchwasserläufer",
+      "name_scientific": "Tringa glareola",
+      "category": "Vogel",
+      "weight_kg": 0.062,
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bruchwasserl%C3%A4ufer",
+      "image_filename": "Wood Sandpiper (50206067826), crop.jpg",
+      "audio_filename": "Tringa glareola - Wood Sandpiper XC128179.ogg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 6,
+      "fur_feather_color": "braun"
     },
     {
       "id": "Q26395",
@@ -4891,34 +5041,6 @@
       "image_filename": "(MHNT) Pieris brassicae - Foret de Bouconne, France - female.jpg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 0.1
-    },
-    {
-      "id": "Q145016",
-      "name_de": "Lippenbär",
-      "name_scientific": "Melursus ursinus",
-      "category": "Säugetier",
-      "habitat": [
-        "Wald",
-        "Savanne"
-      ],
-      "conservation_status": "gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Lippenb%C3%A4r",
-      "image_filename": "SlothBear.jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 25,
-      "fur_feather_color": "schwarz"
-    },
-    {
-      "id": "Q168327",
-      "name_de": "Alpensteinbock",
-      "name_scientific": "Capra ibex",
-      "category": "Säugetier",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Alpensteinbock",
-      "image_filename": "Bouquetin en Vanoise, été 2023 03.jpg",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 16,
-      "fur_feather_color": "braun"
     },
     {
       "id": "Q180960",
@@ -4974,6 +5096,34 @@
       "fur_feather_color": "grau"
     },
     {
+      "id": "Q145016",
+      "name_de": "Lippenbär",
+      "name_scientific": "Melursus ursinus",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald",
+        "Savanne"
+      ],
+      "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Lippenb%C3%A4r",
+      "image_filename": "SlothBear.jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 25,
+      "fur_feather_color": "schwarz"
+    },
+    {
+      "id": "Q168327",
+      "name_de": "Alpensteinbock",
+      "name_scientific": "Capra ibex",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Alpensteinbock",
+      "image_filename": "Bouquetin en Vanoise, été 2023 03.jpg",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 16,
+      "fur_feather_color": "braun"
+    },
+    {
       "id": "Q26913",
       "name_de": "Seehund",
       "name_scientific": "Phoca vitulina",
@@ -4981,8 +5131,21 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Seehund",
       "image_filename": "Common Seal Phoca vitulina.jpg",
+      "audio_filename": "Artis, keffen van een zeehond - SoundCloud - Beeld en Geluid.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 25,
+      "fur_feather_color": "grau"
+    },
+    {
+      "id": "Q191683",
+      "name_de": "Jungfernkranich",
+      "name_scientific": "Anthropoides virgo",
+      "category": "Vogel",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Jungfernkranich",
+      "image_filename": "Demoiselle Cranes at Tal Chappar.jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 20,
       "fur_feather_color": "grau"
     },
     {
@@ -4994,6 +5157,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gebirgsstelze",
       "image_filename": "Terîhejoka boçikzer.jpg",
+      "audio_filename": "Motacilla cinerea - Grey Wagtail XC128136.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
@@ -5011,15 +5175,16 @@
       "fur_feather_color": "gelb"
     },
     {
-      "id": "Q191683",
-      "name_de": "Jungfernkranich",
-      "name_scientific": "Anthropoides virgo",
+      "id": "Q230837",
+      "name_de": "Steppenweihe",
+      "name_scientific": "Circus macrourus",
       "category": "Vogel",
+      "weight_kg": 0.322,
       "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Jungfernkranich",
-      "image_filename": "Demoiselle Cranes at Tal Chappar.jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 20,
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steppenweihe",
+      "image_filename": "Pallid Harrier Adult Male (46333226825).jpg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 7,
       "fur_feather_color": "grau"
     },
     {
@@ -5038,19 +5203,6 @@
       "diet": "Pflanzenfresser",
       "lifespan_years": 18,
       "fur_feather_color": "bunt/gemustert"
-    },
-    {
-      "id": "Q230837",
-      "name_de": "Steppenweihe",
-      "name_scientific": "Circus macrourus",
-      "category": "Vogel",
-      "weight_kg": 0.322,
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steppenweihe",
-      "image_filename": "Pallid Harrier Adult Male (46333226825).jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 7,
-      "fur_feather_color": "grau"
     },
     {
       "id": "Q12267692",
@@ -5073,6 +5225,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneeammer",
       "image_filename": "Plectrophenax nivalis P3130099.jpg",
+      "audio_filename": "Plectrophenax nivalis song.ogg",
       "diet": "Allesfresser",
       "lifespan_years": 3,
       "fur_feather_color": "bunt/gemustert"
@@ -5085,6 +5238,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Erdkr%C3%B6te",
       "image_filename": "Bufo bufo 2 (2005 07 11).jpg",
+      "audio_filename": "Common Toad (Bufo bufo) (W BUFO BUFO R3 C2).ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 12
     },
@@ -5100,18 +5254,6 @@
       "lifespan_years": 0.5
     },
     {
-      "id": "Q147128",
-      "name_de": "Siebenschläfer",
-      "name_scientific": "Glis glis",
-      "category": "Säugetier",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Siebenschl%C3%A4fer",
-      "image_filename": "Glis glis 4058.JPG",
-      "diet": "Allesfresser",
-      "lifespan_years": 7,
-      "fur_feather_color": "grau"
-    },
-    {
       "id": "Q179020",
       "name_de": "Finnwal",
       "name_scientific": "Balaenoptera physalus",
@@ -5121,6 +5263,18 @@
       "image_filename": "LMazzuca Fin Whale.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 80,
+      "fur_feather_color": "grau"
+    },
+    {
+      "id": "Q147128",
+      "name_de": "Siebenschläfer",
+      "name_scientific": "Glis glis",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Siebenschl%C3%A4fer",
+      "image_filename": "Glis glis 4058.JPG",
+      "diet": "Allesfresser",
+      "lifespan_years": 7,
       "fur_feather_color": "grau"
     },
     {
@@ -5197,6 +5351,18 @@
       "lifespan_years": 0.1
     },
     {
+      "id": "Q106133",
+      "name_de": "Hausratte",
+      "name_scientific": "Rattus rattus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausratte",
+      "image_filename": "20191212 Szczury w Świątyni Karni Maty w Deśnok 1038 8111 DxO.jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 1.5,
+      "fur_feather_color": "schwarz"
+    },
+    {
       "id": "Q187024",
       "name_de": "Steppenfuchs",
       "name_scientific": "Vulpes corsac",
@@ -5225,16 +5391,17 @@
       "fur_feather_color": "braun"
     },
     {
-      "id": "Q106133",
-      "name_de": "Hausratte",
-      "name_scientific": "Rattus rattus",
+      "id": "Q245305",
+      "name_de": "Steppenzebra",
+      "name_scientific": "Equus quagga",
       "category": "Säugetier",
       "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Hausratte",
-      "image_filename": "20191212 Szczury w Świątyni Karni Maty w Deśnok 1038 8111 DxO.jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 1.5,
-      "fur_feather_color": "schwarz"
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steppenzebra",
+      "image_filename": "Plains Zebra Equus quagga.jpg",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 22,
+      "fun_fact": "Jedes Zebra hat sein ganz eigenes Streifenmuster – wie einen Fingerabdruck gibt es das kein zweites Mal.",
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q213141",
@@ -5265,19 +5432,6 @@
       "diet": "Allesfresser",
       "lifespan_years": 8,
       "fur_feather_color": "braun"
-    },
-    {
-      "id": "Q245305",
-      "name_de": "Steppenzebra",
-      "name_scientific": "Equus quagga",
-      "category": "Säugetier",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Steppenzebra",
-      "image_filename": "Plains Zebra Equus quagga.jpg",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 22,
-      "fun_fact": "Jedes Zebra hat sein ganz eigenes Streifenmuster – wie einen Fingerabdruck gibt es das kein zweites Mal.",
-      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q18764",
@@ -5411,6 +5565,22 @@
       "fur_feather_color": "schwarz"
     },
     {
+      "id": "Q80191",
+      "name_de": "Marmorkatze",
+      "name_scientific": "Pardofelis marmorata",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald",
+        "Buschland"
+      ],
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Marmorkatze",
+      "image_filename": "Marbled cat borneo.jpg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
+    },
+    {
       "id": "Q178973",
       "name_de": "Frettchen",
       "name_scientific": "Mustela furo",
@@ -5446,22 +5616,6 @@
       "image_filename": "Mandrill at san francisco zoo.jpg",
       "diet": "Allesfresser",
       "lifespan_years": 25,
-      "fur_feather_color": "bunt/gemustert"
-    },
-    {
-      "id": "Q80191",
-      "name_de": "Marmorkatze",
-      "name_scientific": "Pardofelis marmorata",
-      "category": "Säugetier",
-      "habitat": [
-        "Wald",
-        "Buschland"
-      ],
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Marmorkatze",
-      "image_filename": "Marbled cat borneo.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 12,
       "fur_feather_color": "bunt/gemustert"
     },
     {
@@ -5629,6 +5783,7 @@
       "conservation_status": "gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/N%C3%B6rdliche_Tigerkatze",
       "image_filename": "Snethlage's Tigrina imported from iNaturalist photo 354017009 on 2 August 2024 (cropped).jpg",
+      "audio_filename": "Artis, tijgerkat - SoundCloud - Beeld en Geluid.ogg",
       "diet": "Fleischfresser",
       "lifespan_years": 12,
       "fur_feather_color": "bunt/gemustert"
@@ -5667,6 +5822,26 @@
       "lifespan_years": 1
     },
     {
+      "id": "Q81056",
+      "name_de": "Kanadischer Biber",
+      "name_scientific": "Castor canadensis",
+      "category": "Säugetier",
+      "habitat": [
+        "Wald",
+        "Feuchtgebiet",
+        "See",
+        "Teich",
+        "Süßwasser",
+        "Sumpf"
+      ],
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kanadischer_Biber",
+      "image_filename": "North American Beaver, Humber River near Kleinburg, Ontario (39637607974).jpg",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 15,
+      "fur_feather_color": "braun"
+    },
+    {
       "id": "Q184389",
       "name_de": "Mähnenwolf",
       "name_scientific": "Chrysocyon brachyurus",
@@ -5695,38 +5870,6 @@
       "fur_feather_color": "grau"
     },
     {
-      "id": "Q207114",
-      "name_de": "Gemeiner Delfin",
-      "name_scientific": "Delphinus delphis",
-      "category": "Säugetier",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gemeiner_Delfin",
-      "image_filename": "Delphinus delphis 326708883.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 25,
-      "fur_feather_color": "bunt/gemustert"
-    },
-    {
-      "id": "Q81056",
-      "name_de": "Kanadischer Biber",
-      "name_scientific": "Castor canadensis",
-      "category": "Säugetier",
-      "habitat": [
-        "Wald",
-        "Feuchtgebiet",
-        "See",
-        "Teich",
-        "Süßwasser",
-        "Sumpf"
-      ],
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kanadischer_Biber",
-      "image_filename": "North American Beaver, Humber River near Kleinburg, Ontario (39637607974).jpg",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 15,
-      "fur_feather_color": "braun"
-    },
-    {
       "id": "Q193469",
       "name_de": "Takin",
       "name_scientific": "Budorcas taxicolor",
@@ -5742,6 +5885,30 @@
       "fur_feather_color": "braun"
     },
     {
+      "id": "Q241256",
+      "name_de": "Afrikanische Zibetkatze",
+      "name_scientific": "Civettictis civetta",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanische_Zibetkatze",
+      "image_filename": "Civettictis civetta 11.jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 17,
+      "fur_feather_color": "bunt/gemustert"
+    },
+    {
+      "id": "Q207114",
+      "name_de": "Gemeiner Delfin",
+      "name_scientific": "Delphinus delphis",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gemeiner_Delfin",
+      "image_filename": "Delphinus delphis 326708883.jpg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 25,
+      "fur_feather_color": "bunt/gemustert"
+    },
+    {
       "id": "Q219565",
       "name_de": "Grevyzebra",
       "name_scientific": "Equus grevyi",
@@ -5752,18 +5919,6 @@
       "image_filename": "Grevy's Zebra Stallion.jpg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 22,
-      "fur_feather_color": "bunt/gemustert"
-    },
-    {
-      "id": "Q241256",
-      "name_de": "Afrikanische Zibetkatze",
-      "name_scientific": "Civettictis civetta",
-      "category": "Säugetier",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanische_Zibetkatze",
-      "image_filename": "Civettictis civetta 11.jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 17,
       "fur_feather_color": "bunt/gemustert"
     },
     {
@@ -5797,6 +5952,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Monarchfalter",
       "image_filename": "Danaus plexippus MHNT femelle.jpg",
+      "audio_filename": "Monarch Butterfly G Barker 2023.ogg",
       "diet": "Pflanzenfresser",
       "lifespan_years": 0.5
     },
@@ -5811,6 +5967,21 @@
       "diet": "Fleischfresser",
       "lifespan_years": 55,
       "fur_feather_color": "grau"
+    },
+    {
+      "id": "Q243213",
+      "name_de": "Bergzebra",
+      "name_scientific": "Equus zebra",
+      "category": "Säugetier",
+      "habitat": [
+        "Savanne"
+      ],
+      "conservation_status": "gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bergzebra",
+      "image_filename": "Equus zebra - Disney's Animal Kingdom Lodge, Orlando, Florida, USA - 20100119.jpg",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 22,
+      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q200400",
@@ -5867,21 +6038,6 @@
       "diet": "Allesfresser",
       "lifespan_years": 4,
       "fur_feather_color": "rot/orange"
-    },
-    {
-      "id": "Q243213",
-      "name_de": "Bergzebra",
-      "name_scientific": "Equus zebra",
-      "category": "Säugetier",
-      "habitat": [
-        "Savanne"
-      ],
-      "conservation_status": "gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Bergzebra",
-      "image_filename": "Equus zebra - Disney's Animal Kingdom Lodge, Orlando, Florida, USA - 20100119.jpg",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 22,
-      "fur_feather_color": "bunt/gemustert"
     },
     {
       "id": "Q158699",
@@ -5981,6 +6137,7 @@
       "conservation_status": "nicht gefährdet",
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Grasfrosch",
       "image_filename": "European Common Frog Rana temporaria.jpg",
+      "audio_filename": "16 bruine kikker individu Rana temporaria individual.wav",
       "diet": "Fleischfresser",
       "lifespan_years": 7
     },
@@ -6018,6 +6175,30 @@
       "image_filename": "Seal by Christopher Michel.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 28,
+      "fur_feather_color": "braun"
+    },
+    {
+      "id": "Q242602",
+      "name_de": "Schneeziege",
+      "name_scientific": "Oreamnos americanus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneeziege",
+      "image_filename": "Mountain Goat Mount Massive.JPG",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 14,
+      "fur_feather_color": "weiß"
+    },
+    {
+      "id": "Q254630",
+      "name_de": "Wickelbär",
+      "name_scientific": "Potos flavus",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wickelb%C3%A4r",
+      "image_filename": "Potos flavus (8973438737).jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 23,
       "fur_feather_color": "braun"
     },
     {
@@ -6116,30 +6297,6 @@
       "fur_feather_color": "braun"
     },
     {
-      "id": "Q242602",
-      "name_de": "Schneeziege",
-      "name_scientific": "Oreamnos americanus",
-      "category": "Säugetier",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Schneeziege",
-      "image_filename": "Mountain Goat Mount Massive.JPG",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 14,
-      "fur_feather_color": "weiß"
-    },
-    {
-      "id": "Q254630",
-      "name_de": "Wickelbär",
-      "name_scientific": "Potos flavus",
-      "category": "Säugetier",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Wickelb%C3%A4r",
-      "image_filename": "Potos flavus (8973438737).jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 23,
-      "fur_feather_color": "braun"
-    },
-    {
       "id": "Q28157482",
       "name_de": "Schabrackenhyäne",
       "name_scientific": "Parahyaena brunnea",
@@ -6164,6 +6321,17 @@
       "fur_feather_color": "grau"
     },
     {
+      "id": "Q200594",
+      "name_de": "Rotfeder",
+      "name_scientific": "Scardinius erythrophthalmus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotfeder",
+      "image_filename": "Scardinius erythropthalmus 2009 G1.jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 10
+    },
+    {
       "id": "Q194031",
       "name_de": "Karausche",
       "name_scientific": "Carassius carassius",
@@ -6183,17 +6351,6 @@
       "wikipedia_url_de": "https://de.wikipedia.org/wiki/Echter_Bonito",
       "image_filename": "Katsuwonus pelamis.png",
       "diet": "Fleischfresser",
-      "lifespan_years": 10
-    },
-    {
-      "id": "Q200594",
-      "name_de": "Rotfeder",
-      "name_scientific": "Scardinius erythrophthalmus",
-      "category": "Fisch",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rotfeder",
-      "image_filename": "Scardinius erythropthalmus 2009 G1.jpg",
-      "diet": "Allesfresser",
       "lifespan_years": 10
     },
     {
@@ -6227,6 +6384,18 @@
       "fur_feather_color": "braun"
     },
     {
+      "id": "Q243339",
+      "name_de": "Europäisches Gleithörnchen",
+      "name_scientific": "Pteromys volans",
+      "category": "Säugetier",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4isches_Gleith%C3%B6rnchen",
+      "image_filename": "Pteromys volans.jpg",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 6,
+      "fur_feather_color": "grau"
+    },
+    {
       "id": "Q205329",
       "name_de": "Amazonasdelfin",
       "name_scientific": "Inia geoffrensis",
@@ -6251,33 +6420,6 @@
       "diet": "Fleischfresser",
       "lifespan_years": 11,
       "fur_feather_color": "rot/orange"
-    },
-    {
-      "id": "Q243339",
-      "name_de": "Europäisches Gleithörnchen",
-      "name_scientific": "Pteromys volans",
-      "category": "Säugetier",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Europ%C3%A4isches_Gleith%C3%B6rnchen",
-      "image_filename": "Pteromys volans.jpg",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 6,
-      "fur_feather_color": "grau"
-    },
-    {
-      "id": "Q208140",
-      "name_de": "Afrikanischer Esel",
-      "name_scientific": "Equus africanus",
-      "category": "Säugetier",
-      "continent": [
-        "Afrika"
-      ],
-      "conservation_status": "vom Aussterben bedroht",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanischer_Esel",
-      "image_filename": "African wild Ass.jpg",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 25,
-      "fur_feather_color": "grau"
     },
     {
       "id": "Q70529",
@@ -6305,44 +6447,6 @@
       "diet": "Pflanzenfresser",
       "lifespan_years": 19,
       "fur_feather_color": "bunt/gemustert"
-    },
-    {
-      "id": "Q309274",
-      "name_de": "Rostkatze",
-      "name_scientific": "Prionailurus rubiginosus",
-      "category": "Säugetier",
-      "weight_kg": 1.5,
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rostkatze",
-      "image_filename": "Rostkatze.JPG",
-      "diet": "Fleischfresser",
-      "lifespan_years": 12,
-      "fur_feather_color": "bunt/gemustert"
-    },
-    {
-      "id": "Q215250",
-      "name_de": "Graufuchs",
-      "name_scientific": "Urocyon cinereoargenteus",
-      "category": "Säugetier",
-      "weight_kg": 0.08600000000000001,
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graufuchs",
-      "image_filename": "Gray fox.jpg",
-      "diet": "Allesfresser",
-      "lifespan_years": 7,
-      "fur_feather_color": "grau"
-    },
-    {
-      "id": "Q737838",
-      "name_de": "Westlicher Gorilla",
-      "name_scientific": "Gorilla gorilla",
-      "category": "Säugetier",
-      "conservation_status": "vom Aussterben bedroht",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Westlicher_Gorilla",
-      "image_filename": "Gorille.jpg",
-      "diet": "Pflanzenfresser",
-      "lifespan_years": 35,
-      "fur_feather_color": "schwarz"
     },
     {
       "id": "Q271459",
@@ -6379,6 +6483,59 @@
       "fur_feather_color": "grau"
     },
     {
+      "id": "Q208140",
+      "name_de": "Afrikanischer Esel",
+      "name_scientific": "Equus africanus",
+      "category": "Säugetier",
+      "continent": [
+        "Afrika"
+      ],
+      "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Afrikanischer_Esel",
+      "image_filename": "African wild Ass.jpg",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 25,
+      "fur_feather_color": "grau"
+    },
+    {
+      "id": "Q215250",
+      "name_de": "Graufuchs",
+      "name_scientific": "Urocyon cinereoargenteus",
+      "category": "Säugetier",
+      "weight_kg": 0.08600000000000001,
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Graufuchs",
+      "image_filename": "Gray fox.jpg",
+      "diet": "Allesfresser",
+      "lifespan_years": 7,
+      "fur_feather_color": "grau"
+    },
+    {
+      "id": "Q737838",
+      "name_de": "Westlicher Gorilla",
+      "name_scientific": "Gorilla gorilla",
+      "category": "Säugetier",
+      "conservation_status": "vom Aussterben bedroht",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Westlicher_Gorilla",
+      "image_filename": "Gorille.jpg",
+      "diet": "Pflanzenfresser",
+      "lifespan_years": 35,
+      "fur_feather_color": "schwarz"
+    },
+    {
+      "id": "Q309274",
+      "name_de": "Rostkatze",
+      "name_scientific": "Prionailurus rubiginosus",
+      "category": "Säugetier",
+      "weight_kg": 1.5,
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Rostkatze",
+      "image_filename": "Rostkatze.JPG",
+      "diet": "Fleischfresser",
+      "lifespan_years": 12,
+      "fur_feather_color": "bunt/gemustert"
+    },
+    {
       "id": "Q14592562",
       "name_de": "Anden-Makibär",
       "name_scientific": "Bassaricyon neblina",
@@ -6389,39 +6546,6 @@
       "diet": "Allesfresser",
       "lifespan_years": 15,
       "fur_feather_color": "rot/orange"
-    },
-    {
-      "id": "Q187981",
-      "name_de": "Kaulbarsch",
-      "name_scientific": "Gymnocephalus cernua",
-      "category": "Fisch",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kaulbarsch",
-      "image_filename": "Gymnocephalus cernuus Pärnu River Estonia 2010-01-06.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 5
-    },
-    {
-      "id": "Q643373",
-      "name_de": "Gewöhnlicher Hornhecht",
-      "name_scientific": "Belone belone",
-      "category": "Fisch",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gew%C3%B6hnlicher_Hornhecht",
-      "image_filename": "Belone belone1.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 6
-    },
-    {
-      "id": "Q203572",
-      "name_de": "Dreistachliger Stichling",
-      "name_scientific": "Gasterosteus aculeatus",
-      "category": "Fisch",
-      "conservation_status": "nicht gefährdet",
-      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Dreistachliger_Stichling",
-      "image_filename": "Gasterosteus aculeatus - Epinoche - Three-spined stickleback.jpg",
-      "diet": "Fleischfresser",
-      "lifespan_years": 2
     },
     {
       "id": "Q146641",
@@ -6435,6 +6559,28 @@
       "lifespan_years": 12
     },
     {
+      "id": "Q203572",
+      "name_de": "Dreistachliger Stichling",
+      "name_scientific": "Gasterosteus aculeatus",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Dreistachliger_Stichling",
+      "image_filename": "Gasterosteus aculeatus - Epinoche - Three-spined stickleback.jpg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 2
+    },
+    {
+      "id": "Q187981",
+      "name_de": "Kaulbarsch",
+      "name_scientific": "Gymnocephalus cernua",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Kaulbarsch",
+      "image_filename": "Gymnocephalus cernuus Pärnu River Estonia 2010-01-06.jpg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 5
+    },
+    {
       "id": "Q269781",
       "name_de": "Gelbflossen-Thun",
       "name_scientific": "Thunnus albacares",
@@ -6444,6 +6590,17 @@
       "image_filename": "Yellowfin tuna nurp.jpg",
       "diet": "Fleischfresser",
       "lifespan_years": 7
+    },
+    {
+      "id": "Q643373",
+      "name_de": "Gewöhnlicher Hornhecht",
+      "name_scientific": "Belone belone",
+      "category": "Fisch",
+      "conservation_status": "nicht gefährdet",
+      "wikipedia_url_de": "https://de.wikipedia.org/wiki/Gew%C3%B6hnlicher_Hornhecht",
+      "image_filename": "Belone belone1.jpg",
+      "diet": "Fleischfresser",
+      "lifespan_years": 6
     },
     {
       "id": "Q337509",

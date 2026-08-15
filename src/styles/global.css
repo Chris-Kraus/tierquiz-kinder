@@ -739,6 +739,26 @@ button {
   }
 }
 
+/* Tiergeräusche-Modus (Issue #33): hält das echte 2×2-Raster auch auf
+   schmalen Telefonen bei, statt auf die 1-Spalten-Kaskade von .answer-grid
+   oben (@media max-width: 30rem) zurückzufallen — ohne diese Zusatzklasse
+   scrollt die Kernaufgabe (Player-Rahmen + Pflicht-Attribution + 4
+   Antwortkacheln) auf gängigen Telefongrößen (z. B. iPhone SE, 375px,
+   manuell mit Playwright nachgemessen), was die explizite Vorgabe "Kein
+   Scrollen bei der Kernaufgabe" (design.md, "Layout-Empfehlungen") verletzt.
+   `minmax(0, 1fr)` statt einfach `1fr`: ohne die `0`-Untergrenze bemisst sich
+   eine `1fr`-Spalte an der automatischen Mindestbreite ihres Inhalts (bei
+   Flex-Kindern wie .answer-tile ohne `min-width: 0` der komplette
+   unwrapped Inhalt), nicht am tatsächlich verfügbaren Platz. Tiernamen sind
+   zudem durchweg kurze Einzelwörter, daher bleibt 2×2 auch bei schmalen
+   Kachelbreiten gut lesbar. Gleiche Spezifität wie die Medienabfrage oben
+   (eine Klasse) — gewinnt hier nur, weil dieser Regelblock im Stylesheet
+   SPÄTER steht (Cascade-Reihenfolge bei gleicher Spezifität), nicht durch
+   höhere Spezifität. .answer-tile selbst bleibt unverändert. */
+.answer-grid--sound {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
 /* Verwechslungspaare-Fragetyp (Issue #21, design.md "Verwechslungspaare-
    Fragetyp"): nur 2 statt 4 Optionen -> 1×2- statt 2×2-Raster. Gleiche
    Kachel-Optik/-Größe wie oben (kein eigenes Kachel-Styling nötig), nur
@@ -1210,4 +1230,152 @@ button {
 
 .result-history__clear-all:hover {
   color: var(--color-primary-dark);
+}
+
+/* Tiergeräusche-Modus (Issue #33, design.md "Frage-/Feedback-Bildschirm
+   'Tiergeräusche'"): reservierter Player-Bereich, fester Rahmen (kein
+   Layout-Sprung beim Nachladen) — gleiches Grundprinzip wie .image-hint-
+   button/.image-hint oben (Ladezustand -> Inhalt -> Fehlerzustand als
+   Alternativen im selben Rahmen), hier aber deutlich kompakter, da der
+   Rahmen nur einen Play-Button statt eines Bildes enthält. */
+.sound-player-frame {
+  width: 100%;
+  max-width: 20rem;
+  height: clamp(8rem, 18vh, 9.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  border: 3px solid var(--color-secondary);
+  background: var(--color-disabled-bg);
+}
+
+.sound-player-frame__loading,
+.sound-player-frame__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: var(--space-md);
+  text-align: center;
+}
+
+/* CSS-Cascade-Falle wie bei .image-hint[hidden] weiter oben: die
+   `display: flex`-Regeln oben würden ohne diese Override-Regel das
+   `hidden`-Attribut wirkungslos machen. */
+.sound-player-frame__loading[hidden],
+.sound-player-frame__error[hidden] {
+  display: none;
+}
+
+.sound-player-frame__loading-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  /* Einfache, kindgerechte Ladeanimation statt technischem Spinner
+     (design.md: "dezente, kindgerechte Ladeanimation"), reduziert per
+     prefers-reduced-motion oben. */
+  animation: sound-player-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes sound-player-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.sound-player-frame__loading-text,
+.sound-player-frame__error-text {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-secondary-dark);
+}
+
+.sound-player-frame__error-icon {
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+/* Freundlicher, kleiner Retry-Button im Fehlerzustand (design.md:
+   "'Nochmal versuchen'-Button, der eine neue Frage anstößt") — dieselbe
+   Pill-Optik/Farbgebung wie .image-hint-button oben, damit keine neue
+   visuelle Sprache entsteht. */
+.sound-player-frame__retry-button {
+  min-height: 2.5rem;
+  padding: 0.4rem 1rem;
+  border: 2px solid var(--color-secondary);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-secondary-dark);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sound-player-frame__retry-button:active {
+  transform: scale(0.97);
+}
+
+/* Play-Button: großzügige, zentrale Touch-Fläche (design.md: "großer,
+   zentraler Play-Button ... gleiche Mindestgröße wie Antwortkacheln") —
+   bewusst rund/kompakt statt einer vollen .answer-tile-Kachel, damit er
+   optisch klar als "Ton abspielen" statt als weitere Antwortoption
+   erkennbar bleibt. Prominente Primärfarbe (statt der zurückhaltenden
+   Sekundärfarbe von .image-hint-button), da dieser Button hier die einzige
+   Möglichkeit ist, an die zur Beantwortung nötige Information zu kommen
+   (design.md, "Layout"). */
+.sound-play-button {
+  width: 5.5rem;
+  height: 5.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Gleiche Cascade-Falle wie bei .image-hint-button[hidden] weiter oben. */
+.sound-play-button[hidden] {
+  display: none;
+}
+
+.sound-play-button:active {
+  transform: scale(0.95);
+}
+
+.sound-play-button__icon {
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+/* Kurzer Pufferzustand beim (ersten) Abspielen (design.md: "dezenter
+   Indikator im Button selbst, kein Vollbild-Spinner", gleiches Muster wie
+   .image-hint-button__spinner oben) — wiederverwendet dieselbe
+   @keyframes image-hint-spin, nur mit weißer statt sekundärfarbener
+   Randfarbe (heller Spinner auf grünem statt weißem Button-Hintergrund). */
+.sound-play-button__spinner {
+  display: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 3px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: image-hint-spin 0.8s linear infinite;
+}
+
+.sound-play-button[aria-busy="true"] .sound-play-button__icon {
+  display: none;
+}
+
+.sound-play-button[aria-busy="true"] .sound-play-button__spinner {
+  display: inline-block;
 }

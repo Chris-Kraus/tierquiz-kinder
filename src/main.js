@@ -8,6 +8,7 @@ import { renderQuestionScreen } from "./screens/question.js";
 // nicht direkt (gleiches Kopplungsmuster wie bisher).
 import { renderReverseQuestionScreen } from "./screens/reverseQuestion.js";
 import { renderResultScreen } from "./screens/result.js";
+import { renderSoundQuestionScreen } from "./screens/soundQuestion.js";
 import { createQuizState } from "./quiz/state.js";
 import { GAME_MODE } from "./quiz/gameMode.js";
 
@@ -27,6 +28,10 @@ function showQuestionScreen(quizState) {
     renderReverseQuestionScreen(app, quizState, {
       onFinish: showResultScreen,
     });
+    return;
+  }
+  if (quizState.mode === GAME_MODE.SOUND) {
+    renderSoundQuestionScreen(app, quizState, { onFinish: showResultScreen });
     return;
   }
   renderQuestionScreen(app, quizState, { onFinish: showResultScreen });

@@ -100,6 +100,7 @@ const PROPS = {
   endemicTo: "P183", // endemic to (bester verfügbarer Proxy für "continent", siehe README.md)
   continentDirect: "P30", // continent (auf dem per P183 referenzierten Ort)
   image: "P18", // image (Issue #16, Option D′) — liefert den Commons-Dateinamen
+  audio: "P51", // audio (Tiergeräusche-Modus, Issue #32) — liefert den Commons-Dateinamen
 };
 
 const CONSERVATION_STATUS_MAP = {
@@ -146,12 +147,14 @@ const CATEGORY_ENUM = [
 // der VORHERIGEN data/animals.json übernommen (siehe mergeManuallyCuratedFields
 // weiter unten) — sonst würde ein Rerun die Kuration stillschweigend
 // verwerfen, da buildAnimal() die neuen Tier-Objekte komplett neu aufbaut.
-// WICHTIG (gefunden bei der Habitat/Kontinent-Bugfix-Regenerierung vom
-// 15.08.2026): `fur_feather_color` (#23) und `fun_fact` (#24/#25) wurden bei
-// Einführung nicht zu dieser Liste hinzugefügt — ein Rerun mit dem damaligen
-// Stand hätte diese Kuration für 434 bzw. 20 Tiere stillschweigend
-// verworfen, obwohl der Merge-Mechanismus selbst korrekt arbeitet. Jedes neu
-// eingeführte manuell kuratierte Feld MUSS hier ergänzt werden.
+// WICHTIG: `fur_feather_color` (#23) und `fun_fact` (#24/#25) fehlten hier
+// ursprünglich, obwohl sie laut architecture.md ebenfalls manuell kuratierte
+// Felder sind — ein Pipeline-Rerun hätte diese Kuration für 434 bzw. 20 Tiere
+// stillschweigend verworfen, obwohl der Merge-Mechanismus selbst korrekt
+// arbeitet. Unabhängig voneinander beim Habitat/Kontinent-Bugfix (Issue #34,
+// 15.08.2026) UND beim audio_filename-Rerun (Issue #32) entdeckt und
+// korrigiert. Jedes neu eingeführte manuell kuratierte Feld MUSS hier
+// ergänzt werden.
 // Reihenfolge entspricht der bisherigen Schlüsselreihenfolge in
 // data/animals.json (fun_fact vor fur_feather_color) – rein kosmetisch
 // relevant für die JSON-Objektschlüsselreihenfolge beim Merge unten
@@ -566,6 +569,18 @@ function buildAnimal(candidate, entity, labelMap, endemicToContinents) {
   // #16): Finale technische Leitplanken für Option D′").
   const image_filename = getStringClaim(claims, PROPS.image);
 
+  // Tiergeräusche-Modus (Issue #32): P51 ("audio") wie jede andere
+  // String-Property per getStringClaim() aus den bereits geladenen claims
+  // extrahiert (kein neuer Netzwerk-Call, exakt analog zu image_filename
+  // oben) — liefert ausschließlich den Commons-Dateinamen als reinen Text
+  // (z. B. "Corvus corax call.ogg"), OHNE "File:"-Präfix, ohne
+  // URL-Auflösung, ohne Lizenz-/Attributionsdaten. Die eigentliche
+  // Audiodatei wird nie heruntergeladen/gespeichert — die Auflösung zu einer
+  // abspielbaren URL sowie Lizenz/Autor passieren ausschließlich zur
+  // Laufzeit im Frontend (siehe architecture.md, Abschnitt "Tiergeräusche:
+  // Finale technische Leitplanken", Punkt 2).
+  const audio_filename = getStringClaim(claims, PROPS.audio);
+
   // name_scientific wurde bereits oben (vor pickAnimalNameDe) extrahiert.
 
   // `color` wurde nach dem ersten Testlauf komplett aus dem Schema entfernt
@@ -589,6 +604,7 @@ function buildAnimal(candidate, entity, labelMap, endemicToContinents) {
     ...(conservation_status ? { conservation_status } : {}),
     ...(wikipedia_url_de ? { wikipedia_url_de } : {}),
     ...(image_filename ? { image_filename } : {}),
+    ...(audio_filename ? { audio_filename } : {}),
     _sitelinks: candidate.sitelinks,
     _isExtinct: isExtinct,
   };
@@ -620,6 +636,7 @@ function computeOptionalFieldCoverage(animals) {
     "conservation_status",
     "wikipedia_url_de",
     "image_filename",
+    "audio_filename",
   ];
   const coverage = {};
   for (const f of fields) {
