@@ -9,7 +9,25 @@
 # Aktivierung: `git config core.hooksPath scripts/git-hooks` (repo-weit,
 # gilt auch für alle git-worktrees desselben Repos).
 #
+# Branch-Workflow (15.08.2026): jede Story wird auf einem eigenen
+# Branch/PR entwickelt (branch -> implementieren -> commit/push/PR ->
+# qa-engineer testet den PR -> erst danach Merge nach main). Commits AUF
+# dem Story-Branch passieren also zwangsläufig, WÄHREND das Issue noch
+# nicht status:done ist -- das ist kein Fehlverhalten, sondern der
+# normale Ablauf. Die QA-Pflicht greift deshalb nur noch beim Landen auf
+# `main` (direkter Commit auf main, oder ein lokaler `git merge`/
+# `--ff-only` eines Story-Branches nach main) -- nicht bei jedem Commit
+# auf einem Feature-/Story-Branch. Wichtig: `gh pr merge` mergt serverseitig
+# über die GitHub-API und ruft dabei KEINE lokalen Git-Hooks auf -- der
+# tatsächliche Merge nach main muss deshalb lokal passieren (`git merge`/
+# `git rebase` + Push), damit dieser Hook dabei greift, auch wenn vorher
+# regulär ein PR über `gh pr create` erstellt und für die QA-Prüfung
+# genutzt wurde.
+#
 # Verhalten:
+#   - Aktueller Branch ist NICHT `main`: übersprungen (Story-/Feature-
+#     Branches dürfen frei committet werden, QA prüft den PR vor dem
+#     Merge, nicht jeden Zwischen-Commit).
 #   - Merge-Commits: übersprungen (kein Blocker für Branch-Merges).
 #   - Reine docs/-Commits (kein src/, data/, scripts/-Change): übersprungen,
 #     da BA/UX/Architektur-Dokumentation keine QA-Prüfung durchläuft.
@@ -26,6 +44,13 @@ set -euo pipefail
 
 COMMIT_MSG_FILE="$1"
 COMMIT_MSG="$(cat "$COMMIT_MSG_FILE")"
+
+# Nur auf main erzwingen -- Story-/Feature-Branches committen frei, bevor
+# QA den PR geprüft hat (siehe Kommentar oben).
+CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
+if [ "$CURRENT_BRANCH" != "main" ]; then
+  exit 0
+fi
 
 # Merge-Commits überspringen.
 if [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ] 2>/dev/null; then
