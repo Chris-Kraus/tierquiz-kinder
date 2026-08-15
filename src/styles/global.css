@@ -114,6 +114,48 @@ button {
   font-size: 1.25rem;
 }
 
+/* Modus-Auswahl (Issue #26, design.md "Modus-Auswahl auf dem
+   Start-Bildschirm"): bewusst KEIN neues visuelles Vokabular — dieselbe
+   Kachel-Optik wie .difficulty-button unten, nur als eigene Klasse geführt,
+   damit beide Kachel-Gruppen unabhängig voneinander ihren Auswahlzustand
+   verwalten können. Steht im Markup ÜBER der Schwierigkeitsstufen-Auswahl
+   (grundlegendere Entscheidung zuerst, siehe design.md). */
+.mode-picker {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mode-picker__label {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-secondary-dark);
+}
+
+.mode-picker__group {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+/* Kindgerechter, nicht-technischer Hinweis bei fehlgeschlagenem Testabruf
+   (design.md, "Fehlerfall ohne Internet") — dezenter Text statt Fehlerbanner,
+   passend zum bestehenden freundlichen Ton aller Fehlerzustände im Projekt. */
+.mode-picker__hint {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-secondary-dark);
+}
+
+.mode-picker__hint[hidden] {
+  display: none;
+}
+
 .difficulty-picker {
   width: 100%;
   display: flex;
@@ -124,8 +166,10 @@ button {
 
 /* Große Touch-Zielflächen, deutlich über dem 44×44-px-Minimum (siehe design.md,
    "Layout-Empfehlungen"/"Barrierefreiheit"). Echtes <button>-Element, per
-   Tastatur bedienbar. */
-.difficulty-button {
+   Tastatur bedienbar. Gilt gleichermaßen für die Modus-Auswahl-Kacheln oben
+   (.mode-button, Issue #26) — identische Optik, siehe Kommentar dort. */
+.difficulty-button,
+.mode-button {
   flex: 1 1 12rem;
   min-height: 6.5rem;
   padding: var(--space-md);
@@ -143,11 +187,13 @@ button {
   cursor: pointer;
 }
 
-.difficulty-button:active {
+.difficulty-button:not(:disabled):active,
+.mode-button:not(:disabled):active {
   transform: scale(0.97);
 }
 
-.difficulty-button__check {
+.difficulty-button__check,
+.mode-button__check {
   font-size: 1.1rem;
   color: inherit;
   opacity: 0;
@@ -161,14 +207,52 @@ button {
 /* "Ausgewählt" wird nicht nur über Farbe kommuniziert, sondern zusätzlich über
    Häkchen-Symbol und aria-pressed (siehe design.md, "Barrierefreiheit",
    "Keine ausschließlich farbbasierte Codierung"). */
-.difficulty-button--selected {
+.difficulty-button--selected,
+.mode-button--selected {
   background: var(--color-primary);
   border-color: var(--color-primary-dark);
   color: #fff;
 }
 
-.difficulty-button--selected .difficulty-button__check {
+.difficulty-button--selected .difficulty-button__check,
+.mode-button--selected .mode-button__check {
   opacity: 1;
+}
+
+/* Online-Icon auf der "Wer bin ich?"-Kachel (Issue #26 Akzeptanzkriterium):
+   dezent statt Warntext, mit aria-label als Text-Alternative im Markup (siehe
+   start.js) statt reiner Farb-/Icon-Codierung. */
+.mode-button__online-icon {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+/* Ladezustand des Testabrufs (design.md, "Finale Leitplanken": "gleiches
+   Muster wie der bestehende 'Bild zeigen'-Button-Ladezustand", siehe
+   .image-hint-button unten) — Icon wird durch einen Spinner ersetzt, Kachel
+   währenddessen gegen Doppel-Tap deaktiviert, Label-Text macht den Zustand
+   zusätzlich für Screenreader wahrnehmbar. */
+.mode-button:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.mode-button__spinner {
+  display: none;
+  width: 1em;
+  height: 1em;
+  border: 2px solid var(--color-secondary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: image-hint-spin 0.8s linear infinite;
+}
+
+.mode-button[aria-busy="true"] .mode-button__icon {
+  display: none;
+}
+
+.mode-button[aria-busy="true"] .mode-button__spinner {
+  display: inline-block;
 }
 
 /* Fragenanzahl-Auswahl (Issue #13): bewusst deutlich kleiner/dezenter als
@@ -444,6 +528,127 @@ button {
   margin-left: 0.3em;
 }
 
+/* "Wer bin ich?"-Bildschirm (Issue #28, design.md "Frage-/Feedback-
+   Bildschirm 'Wer bin ich?'"): fester, moderat großer Bildrahmen -- als
+   PRIMÄRER Bildschirminhalt bewusst größer als der sekundäre Hint-Rahmen
+   oben (.image-hint__image, 11rem), aber weiterhin so bemessen, dass Bild +
+   Attribution + 4 Antwortkacheln ohne Scrollen auf einen Blick passen. Höhe
+   ist bewusst NICHT starr 14rem, sondern über clamp() an die verfügbare
+   Bildschirmhöhe gekoppelt (min 12rem -- bleibt dabei immer größer als der
+   11rem-Hint-Rahmen --, max 14rem): auf kurzen Viewports (z. B. iPhone SE,
+   667px hoch -- das ist bereits die vom bestehenden Frage-Bildschirm
+   etablierte untere Zielgrenze für "kein Scrollen", siehe question.js, der
+   bei kleineren Höhen ebenfalls schon knapp wird) schrumpft der Rahmen
+   automatisch mit, auf normal hohen/breiten Bildschirmen bleibt er bei den
+   vollen 14rem. Ohne dieses Zugeständnis würde Bild + Attribution + die 4
+   Kacheln unten (siehe .answer-grid--reverse) auf gängigen Telefongrößen
+   scrollen -- das war in einer früheren Fassung dieser Datei tatsächlich der
+   Fall (manuell mit Playwright auf 375×667/360×640 nachgemessen, siehe
+   Issue-#28-Testprotokoll) und verletzt die explizite Vorgabe
+   "Kein Scrollen bei der Kernaufgabe" (design.md, "Layout-Empfehlungen").
+   Innerhalb eines Ladeversuchs bleibt die Höhe dennoch stabil (kein
+   Layout-Sprung beim Nachladen), da sich clamp() nur mit der Viewport-Höhe
+   ändert, nicht mit dem Lade-/Bild-/Fehlerzustand. */
+.reverse-image-frame {
+  width: 100%;
+  max-width: 20rem;
+  height: clamp(12rem, 24vh, 14rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  border: 3px solid var(--color-secondary);
+  background: var(--color-disabled-bg);
+  overflow: hidden;
+}
+
+.reverse-image-frame__loading,
+.reverse-image-frame__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: var(--space-md);
+  text-align: center;
+}
+
+/* CSS-Cascade-Falle wie bei .image-hint[hidden] weiter oben: die
+   `display: flex`-Regeln oben würden ohne diese Override-Regel das
+   `hidden`-Attribut wirkungslos machen. */
+.reverse-image-frame__loading[hidden],
+.reverse-image-frame__error[hidden] {
+  display: none;
+}
+
+.reverse-image-frame__loading-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  /* Einfache, kindgerechte Ladeanimation statt technischem Spinner
+     (design.md: "z. B. dezent pulsierendes Icon", explizit KEIN
+     Spinner-Icon wie bei .image-hint-button__spinner oben). */
+  animation: reverse-image-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes reverse-image-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.reverse-image-frame__loading-text,
+.reverse-image-frame__error-text {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-secondary-dark);
+}
+
+.reverse-image-frame__error-icon {
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+/* Freundlicher, kleiner Retry-Button im Fehlerzustand (design.md:
+   "'Nochmal versuchen'-Button, der eine neue Frage anstößt") -- eigenständige
+   Klasse statt Wiederverwendung von .image-hint-button, da semantisch eine
+   andere Aktion (neuer Ladeversuch statt Bild aufdecken); bewusst dieselbe
+   Pill-Optik/Farbgebung wie dort, damit keine neue visuelle Sprache entsteht. */
+.reverse-image-frame__retry-button {
+  min-height: 2.5rem;
+  padding: 0.4rem 1rem;
+  border: 2px solid var(--color-secondary);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-secondary-dark);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reverse-image-frame__retry-button:active {
+  transform: scale(0.97);
+}
+
+.reverse-image-frame__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Gleiche Cascade-Falle wie oben: .reverse-image-frame__image hat kein
+   eigenes `display`, aber das umschließende <img> ist standardmäßig
+   `inline`, was den Rahmen bei sichtbarem Bild leicht sprengen kann -- hier
+   zur Sicherheit explizit geblockt. */
+.reverse-image-frame__image[hidden] {
+  display: none;
+}
+
 /* 2×2-Raster, untereinander gestapelt auf schmalen Bildschirmen (design.md,
    "Layout-Empfehlungen"). */
 .answer-grid {
@@ -456,6 +661,81 @@ button {
 @media (max-width: 30rem) {
   .answer-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* "Wer bin ich?"-Bildschirm (Issue #28): behält das echte 2×2-Raster auch auf
+   schmalen Telefon-Bildschirmen bei, statt wie oben unterhalb 30rem auf eine
+   Spalte umzuschalten. Zwei Gründe: (1) design.md verlangt für diesen
+   Bildschirm ausdrücklich "die 4 Namensoptionen im gewohnten 2×2-Raster",
+   nicht "1 Spalte auf schmalen Geräten"; (2) rein rechnerisch: vier
+   gestapelte Kacheln (je min-height 5.5rem + Zwischenräume) sind zusammen mit
+   dem neuen Bildrahmen + der Pflicht-Attribution deutlich zu hoch, um auf
+   gängigen Telefonen ohne Scrollen zu passen (siehe Datei-Kommentar bei
+   .reverse-image-frame oben) -- der bestehende Frage-Bildschirm (question.js)
+   verträgt die Ein-Spalten-Kaskade nur, weil er keinen Bildbereich hat.
+   Tiernamen sind zudem durchweg kurze Einzelwörter (anders als mögliche
+   längere Antwortsätze im bestehenden Modus), daher bleibt 2×2 auch bei
+   schmalen 150px-Kachelbreiten gut lesbar. Gleiche Spezifität wie die
+   Medienabfrage oben (.answer-grid, eine Klasse) -- gewinnt hier nur, weil
+   dieser Regelblock im Stylesheet SPÄTER steht (Cascade-Reihenfolge bei
+   gleicher Spezifität), nicht durch höhere Spezifität. .answer-tile selbst
+   bleibt unverändert (design.md: "gleiche Optik/Größe wie im bestehenden
+   Modus").
+
+   `minmax(0, 1fr)` statt einfach `1fr`: klassische Grid-Falle -- ohne die
+   `0`-Untergrenze bemisst sich eine `1fr`-Spalte an der automatischen
+   Mindestbreite ihres Inhalts (bei Flex-Kindern wie .answer-tile ohne
+   `min-width: 0` der komplette unwrapped Inhalt), nicht am tatsächlich
+   verfügbaren Platz -- bei einem langen Tiernamen (z. B. "Großer
+   Kohlweißling") sprengte das auf schmalen Telefonen sonst sichtbar die
+   Kachel über den Bildschirmrand hinaus (mit Playwright auf 375px Breite
+   nachgemessen: Spaltensumme 359px in einem 335px breiten Raster). */
+.answer-grid--reverse {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+/* Overflow-Fix (Issue #28, QA-Fund): bei sehr kurzen Viewports (<= 600px
+   Höhe -- z. B. iPhone SE 1. Gen./5/5s, 320×568, die kleinste gängige
+   Referenzbreite nach WCAG 2.1 SC 1.4.10 "Reflow") reichte der verfügbare
+   Platz trotz des bereits bestehenden clamp()-Bildrahmens (siehe
+   .reverse-image-frame oben) und des 2×2-Antwortrasters nicht für Bild +
+   Pflicht-Attribution + 4 Antwortkacheln ohne Scrollen -- gemessen mit
+   Playwright/Chromium: bis zu 97px vertikaler Overflow bei ungünstiger
+   Kombination aus kurzer Bildschirmhöhe UND längeren, auf der schmalen
+   320px-Breite zweizeilig umbrechenden Tiernamen (z. B. "Großer
+   Kohlweißling") bzw. langer Attributionszeile. Bewusst als eigene
+   `max-height`-Medienabfrage NUR für kurze Bildschirme (nicht generell),
+   damit die bereits von QA verifizierten, aktuell overflow-freien
+   Breakpoints (375×667, 360×640, 390×844, iPad-Querformat) unverändert
+   bleiben -- reine Höhen-Bedingung, weil die Ursache (zu wenig verfügbare
+   Höhe) unabhängig von der Viewport-Breite ist. Drei Stellschrauben, alle
+   moderat statt eine einzelne stark zusammengestrichen:
+   - Kleinere Lücken zwischen den Frage-Bildschirm-Bausteinen
+     (--space-sm statt --space-md).
+   - Bildrahmen darf bei sehr kurzen Screens weiter schrumpfen als das
+     bisherige 12rem-Minimum (auf 7.5rem) -- unterschreitet damit den
+     11rem-Hint-Rahmen aus Issue #16 in diesem Sonderfall, was in Kauf
+     genommen wird, da "kein Scrollen" (design.md) Vorrang vor der sonst
+     gewollten optischen Hierarchie zwischen beiden Rahmen hat.
+   - Antwortkacheln etwas kompakter (kleinere Mindesthöhe/Padding), zusätzlich
+     schmaleres horizontales Padding, das mehr Textbreite für die Tiernamen
+     lässt und damit tendenziell sogar seltener zweizeilig umbricht.
+   Bild+Attribution+Kacheln bleiben dabei weiterhin gut lesbar (keine der
+   Werte unterschreitet die 44×44px-Touch-Zielgröße, design.md
+   "Barrierefreiheit"). */
+@media (max-height: 600px) {
+  .question-screen {
+    gap: var(--space-sm);
+  }
+
+  .reverse-image-frame {
+    height: clamp(7.5rem, 18vh, 14rem);
+  }
+
+  .answer-grid--reverse .answer-tile {
+    min-height: 4rem;
+    padding: 0.6rem var(--space-sm);
   }
 }
 
@@ -475,6 +755,13 @@ button {
    "Barrierefreiheit"). Kein Hover-abhängiges UI: Hover ist rein additiv. */
 .answer-tile {
   min-height: 5.5rem;
+  /* min-width: 0 hebt die sonst übliche Flex-Kind-Mindestbreite (Breite des
+     unwrapped Inhalts) auf -- ohne das ignoriert ein Grid-Item mit
+     `display: flex` seine zugewiesene Spaltenbreite und sprengt die Spalte,
+     siehe Kommentar bei .answer-grid--reverse. Rein defensiv, ändert am
+     bisherigen Aussehen nichts (Kacheln waren nie so schmal, dass das
+     bisher sichtbar wurde). */
+  min-width: 0;
   padding: var(--space-md);
   display: flex;
   align-items: center;
@@ -511,6 +798,14 @@ button {
 .answer-tile__icon {
   font-size: 1.3rem;
   line-height: 1;
+}
+
+/* Zusätzliches Sicherheitsnetz zu min-width: 0 oben: erlaubt notfalls auch
+   einen Umbruch mitten in einem einzelnen sehr langen Wort (normales
+   `white-space` bricht nur zwischen Wörtern), damit eine Kachel auch bei
+   ungewöhnlich langen Tiernamen nie über ihre Spaltenbreite hinausragt. */
+.answer-tile__text {
+  overflow-wrap: break-word;
 }
 
 /* Richtig: grün/ermutigend, zusätzlich Häkchen-Icon (nicht nur Farbe, siehe

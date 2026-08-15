@@ -13,33 +13,52 @@
 // Start-Bildschirm gewählte Fragenanzahl (`roundLength`) — src/screens/
 // question.js nutzt sie statt der festen DEFAULT_ROUND_LENGTH beim Erzeugen
 // der Fragenliste.
+//
+// Seit Issue #28 hält der Zustand zusätzlich den gewählten Spielmodus
+// (`mode`, siehe quiz/gameMode.js) — src/main.js nutzt ihn, um zwischen dem
+// bestehenden Frage-Bildschirm (src/screens/question.js) und dem neuen
+// "Wer bin ich?"-Bildschirm (src/screens/reverseQuestion.js) zu wählen.
+// `questions` bleibt für den Umkehr-Quiz-Modus ebenfalls leer erzeugt und wird
+// dort aber ANDERS befüllt als im bestehenden Modus: nicht als kompletter
+// Batch vor der ersten Frage, sondern Frage für Frage on demand (siehe
+// reverseQuestion.js, Datei-Kommentar) — für `isQuizFinished` unten macht das
+// keinen Unterschied, solange `questions` am Ende genauso viele Einträge wie
+// `roundLength` enthält.
 
 import { DIFFICULTY_LEVELS } from "./difficulty.js";
 import { DEFAULT_ROUND_LENGTH } from "./questionGenerator.js";
+import { GAME_MODE } from "./gameMode.js";
 
 /**
  * Erzeugt den initialen Quiz-Zustand nach Auswahl einer Schwierigkeitsstufe
- * (und optional Fragenanzahl) am Start-Bildschirm. `questions` ist zu diesem
- * Zeitpunkt normalerweise noch leer und wird von src/screens/question.js beim
+ * (und optional Fragenanzahl/Modus) am Start-Bildschirm. `questions` ist zu
+ * diesem Zeitpunkt normalerweise noch leer und wird vom jeweiligen
+ * Frage-Bildschirm (question.js bzw. seit Issue #28 reverseQuestion.js) beim
  * ersten Rendern befüllt.
  * @param {string} difficulty einer der Werte aus DIFFICULTY_LEVELS
  * @param {object[]} [questions] optional vorab generierte Fragenliste (v. a. für Tests)
  * @param {number} [roundLength] gewünschte Rundenlänge (Anzahl Fragen), Standard DEFAULT_ROUND_LENGTH
+ * @param {string} [mode] einer der Werte aus GAME_MODE (quiz/gameMode.js), Standard GAME_MODE.QUIZ
  */
 export function createQuizState(
   difficulty,
   questions = [],
   roundLength = DEFAULT_ROUND_LENGTH,
+  mode = GAME_MODE.QUIZ,
 ) {
   if (!Object.values(DIFFICULTY_LEVELS).includes(difficulty)) {
     throw new Error(
       `createQuizState: unbekannte Schwierigkeitsstufe "${difficulty}"`,
     );
   }
+  if (!Object.values(GAME_MODE).includes(mode)) {
+    throw new Error(`createQuizState: unbekannter Spielmodus "${mode}"`);
+  }
 
   return {
     difficulty,
     roundLength,
+    mode,
     questions,
     currentIndex: 0,
     score: 0,
