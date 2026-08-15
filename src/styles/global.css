@@ -781,12 +781,24 @@ button {
    Ergebnis (design.md-Abstimmung, "durchgehend deskriptiv statt wertend"). */
 .result-history__item {
   display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
   padding: 0.6rem var(--space-sm);
   border: 2px solid var(--color-secondary);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
+}
+
+/* Ergebnistext/Metazeile eines Eintrags, gebündelt in einer eigenen Spalte
+   links – das Lösch-Icon rechts (siehe .result-history__delete) bleibt davon
+   optisch getrennt (Issue #36, "am rechten Rand jeder Zeile"). */
+.result-history__item-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
 }
 
 /* Der aktuelle Versuch steht als neuester Eintrag immer an erster Stelle und
@@ -813,4 +825,46 @@ button {
 .result-history__meta {
   font-size: 0.85rem;
   color: var(--color-secondary-dark);
+}
+
+/* Lösch-Steuerelement pro Eintrag (Issue #36): bewusst klein/unauffällig,
+   damit es nicht mit dem eigentlichen Ergebnistext konkurriert (design.md,
+   "Ergebnisliste: Löschen + Modus-Anzeige"). Kein eigener Fokus-Rahmen nötig
+   – der globale :focus-visible-Stil (siehe oben im Dokument) greift bereits
+   für alle interaktiven Elemente. */
+.result-history__delete {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.result-history__delete:hover {
+  background: var(--color-bg);
+}
+
+/* "Alle Ergebnisse löschen": bewusst als schlichter Text-Button, deutlich
+   weniger prominent als "Nochmal spielen"/"Zurück zum Start" sowie klar
+   unterscheidbar von den einzelnen Lösch-Icons (Issue #36). */
+.result-history__clear-all {
+  margin-top: var(--space-sm);
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 0.85rem;
+  color: var(--color-secondary-dark);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.result-history__clear-all:hover {
+  color: var(--color-primary-dark);
 }

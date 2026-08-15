@@ -1,16 +1,20 @@
 // Tests für src/quiz/history.js (Issue #14: lokale Verlaufsliste der letzten
-// Quiz-Ergebnisse). Nutzt eine In-Memory-Fake-Storage statt echtem
-// `localStorage`, damit die Tests ohne DOM-/Browser-Umgebung laufen — sowohl
-// für den Erfolgsfall als auch, um "blockiertes localStorage" (z. B. Safari
-// Private Mode) gezielt zu simulieren.
+// Quiz-Ergebnisse; erweitert um Modus-Feld, `id` sowie Lösch-Funktionen in
+// Issue #36). Nutzt eine In-Memory-Fake-Storage statt echtem `localStorage`,
+// damit die Tests ohne DOM-/Browser-Umgebung laufen — sowohl für den
+// Erfolgsfall als auch, um "blockiertes localStorage" (z. B. Safari Private
+// Mode) gezielt zu simulieren.
 
 import { describe, it, expect } from "vitest";
 import {
   saveResultToHistory,
   loadResultHistory,
+  deleteHistoryEntry,
+  clearResultHistory,
   MAX_HISTORY_ENTRIES,
 } from "./history.js";
 import { DIFFICULTY_LEVELS } from "./difficulty.js";
+import { QUIZ_MODES } from "./mode.js";
 
 function createFakeStorage() {
   const store = new Map();
@@ -135,5 +139,191 @@ describe("saveResultToHistory", () => {
     const history = loadResultHistory(storage);
     expect(history[0]).toMatchObject({ score: 18, total: 20 });
     expect(history[1]).toMatchObject({ score: 9, total: 10 });
+  });
+
+  it("speichert einen Eintrag mit eindeutiger id und dem übergebenen mode (Issue #36)", () => {
+    const storage = createFakeStorage();
+    const updated = saveResultToHistory(
+      {
+        score: 7,
+        total: 10,
+        difficulty: DIFFICULTY_LEVELS.EASY,
+        mode: QUIZ_MODES.REVERSE,
+      },
+      storage,
+    );
+
+    expect(typeof updated[0].id).toBe("string");
+    expect(updated[0].id.length).toBeGreaterThan(0);
+    expect(updated[0].mode).toBe(QUIZ_MODES.REVERSE);
+  });
+
+  it("vergibt unterschiedlichen Einträgen unterschiedliche IDs (Issue #36, Grundlage für gezieltes Löschen)", () => {
+    const storage = createFakeStorage();
+    saveResultToHistory(
+      { score: 1, total: 10, difficulty: DIFFICULTY_LEVELS.EASY },
+      storage,
+    );
+    saveResultToHistory(
+      { score: 2, total: 10, difficulty: DIFFICULTY_LEVELS.EASY },
+      storage,
+    );
+
+    const history = loadResultHistory(storage);
+    expect(history[0].id).not.toBe(history[1].id);
+  });
+});
+
+describe("loadResultHistory — Migration von Alt-Einträgen ohne id/mode (Issue #36)", () => {
+  it("ergänzt bei einem Alt-Eintrag ohne id-Feld beim Lesen eine id, ohne das mode-Feld zu schreiben", () => {
+    const storage = createFakeStorage();
+    // Alt-Eintrag simulieren: so, wie er vor Issue #36 (Issue #14-Stand)
+    // gespeichert worden wäre — ohne `id`, ohne `mode`.
+    storage.setItem(
+      "tierquiz-kinder:result-history",
+      JSON.stringify([
+        {
+          date: "2026-08-01T10:00:00.000Z",
+          score: 4,
+          total: 10,
+          difficulty: DIFFICULTY_LEVELS.EASY,
+        },
+      ]),
+    );
+
+    const history = loadResultHistory(storage);
+
+    expect(history).toHaveLength(1);
+    expect(typeof history[0].id).toBe("string");
+    expect(history[0].id.length).toBeGreaterThan(0);
+    expect(history[0].mode).toBeUndefined();
+    expect(history[0]).toMatchObject({ score: 4, total: 10 });
+  });
+
+  it("vergibt bei wiederholtem Lesen dieselbe (persistierte) id für einen migrierten Alt-Eintrag", () => {
+    const storage = createFakeStorage();
+    storage.setItem(
+      "tierquiz-kinder:result-history",
+      JSON.stringify([
+        {
+          date: "2026-08-01T10:00:00.000Z",
+          score: 4,
+          total: 10,
+          difficulty: DIFFICULTY_LEVELS.EASY,
+        },
+      ]),
+    );
+
+    const firstRead = loadResultHistory(storage);
+    const secondRead = loadResultHistory(storage);
+
+    expect(secondRead[0].id).toBe(firstRead[0].id);
+  });
+
+  it("lässt bereits vorhandene ids/mode-Werte unverändert", () => {
+    const storage = createFakeStorage();
+    storage.setItem(
+      "tierquiz-kinder:result-history",
+      JSON.stringify([
+        {
+          id: "bestehende-id",
+          date: "2026-08-14T10:00:00.000Z",
+          score: 6,
+          total: 10,
+          difficulty: DIFFICULTY_LEVELS.HARD,
+          mode: QUIZ_MODES.SOUND,
+        },
+      ]),
+    );
+
+    const history = loadResultHistory(storage);
+    expect(history[0]).toMatchObject({
+      id: "bestehende-id",
+      mode: QUIZ_MODES.SOUND,
+    });
+  });
+});
+
+describe("deleteHistoryEntry", () => {
+  it("entfernt genau den Eintrag mit der übergebenen id und persistiert das Ergebnis", () => {
+    const storage = createFakeStorage();
+    saveResultToHistory(
+      { score: 1, total: 10, difficulty: DIFFICULTY_LEVELS.EASY },
+      storage,
+    );
+    saveResultToHistory(
+      { score: 2, total: 10, difficulty: DIFFICULTY_LEVELS.EASY },
+      storage,
+    );
+    const [newest, oldest] = loadResultHistory(storage);
+
+    const updated = deleteHistoryEntry(newest.id, storage);
+
+    expect(updated).toHaveLength(1);
+    expect(updated[0].id).toBe(oldest.id);
+    expect(loadResultHistory(storage)).toHaveLength(1);
+  });
+
+  it("liefert die unveränderte Liste, wenn keine passende id existiert", () => {
+    const storage = createFakeStorage();
+    saveResultToHistory(
+      { score: 1, total: 10, difficulty: DIFFICULTY_LEVELS.EASY },
+      storage,
+    );
+
+    const updated = deleteHistoryEntry("unbekannte-id", storage);
+
+    expect(updated).toHaveLength(1);
+  });
+
+  it("liefert ein leeres Array, wenn der letzte Eintrag gelöscht wird", () => {
+    const storage = createFakeStorage();
+    saveResultToHistory(
+      { score: 1, total: 10, difficulty: DIFFICULTY_LEVELS.EASY },
+      storage,
+    );
+    const [entry] = loadResultHistory(storage);
+
+    const updated = deleteHistoryEntry(entry.id, storage);
+
+    expect(updated).toEqual([]);
+    expect(loadResultHistory(storage)).toEqual([]);
+  });
+
+  it("wirft nicht und liefert null, wenn die Storage blockiert ist", () => {
+    const storage = createThrowingStorage();
+    let result;
+    expect(() => {
+      result = deleteHistoryEntry("irgendeine-id", storage);
+    }).not.toThrow();
+    expect(result).toBeNull();
+  });
+});
+
+describe("clearResultHistory", () => {
+  it("entfernt alle Einträge und persistiert das", () => {
+    const storage = createFakeStorage();
+    saveResultToHistory(
+      { score: 1, total: 10, difficulty: DIFFICULTY_LEVELS.EASY },
+      storage,
+    );
+    saveResultToHistory(
+      { score: 2, total: 10, difficulty: DIFFICULTY_LEVELS.EASY },
+      storage,
+    );
+
+    const updated = clearResultHistory(storage);
+
+    expect(updated).toEqual([]);
+    expect(loadResultHistory(storage)).toEqual([]);
+  });
+
+  it("wirft nicht und liefert null, wenn die Storage blockiert ist", () => {
+    const storage = createThrowingStorage();
+    let result;
+    expect(() => {
+      result = clearResultHistory(storage);
+    }).not.toThrow();
+    expect(result).toBeNull();
   });
 });

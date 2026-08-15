@@ -21,9 +21,28 @@
 // Ist `localStorage` nicht verfügbar/blockiert, liefert history.js ein leeres
 // Ergebnis und der gesamte Bereich wird einfach nicht gerendert (kein
 // Absturz, keine technische Fehlermeldung im Kind-UI).
+//
+// Seit Issue #36 (Abstimmung mit `software-architect`/`ux-design`,
+// 15.08.2026) zusätzlich: Jeder Eintrag zeigt den gespielten Spielmodus in
+// der Metazeile und hat ein dezentes Lösch-Steuerelement (sofort, ohne
+// Bestätigung); unterhalb der Liste gibt es "Alle Ergebnisse löschen" (mit
+// `window.confirm()`-Bestätigung). Beide Lösch-Optionen liegen bewusst
+// innerhalb des bestehenden `<details>`-Elements und sind dadurch automatisch
+// unsichtbar/nicht fokussierbar, solange die Liste eingeklappt ist – wie
+// schon beim Grundmechanismus aus #14 kein zusätzlicher Sichtbarkeits-Code
+// nötig, das übernimmt der native Browser-Mechanismus. Da Löschen die
+// Liste verändert, wird nach jeder Löschaktion nur der Verlaufsbereich selbst
+// neu gerendert (nicht der komplette Ergebnis-Bildschirm) – ein erneuter
+// voller renderResultScreen()-Aufruf würde sonst über saveResultToHistory()
+// fälschlich einen weiteren "aktuelle Runde"-Eintrag anlegen.
 
-import { saveResultToHistory } from "../quiz/history.js";
+import {
+  saveResultToHistory,
+  deleteHistoryEntry,
+  clearResultHistory,
+} from "../quiz/history.js";
 import { DIFFICULTY_LABELS } from "../quiz/difficulty.js";
+import { QUIZ_MODES, getModeLabel } from "../quiz/mode.js";
 
 /**
  * Formatiert einen ISO-Datums-String für die Verlaufsliste, z. B.
@@ -49,10 +68,13 @@ function formatHistoryDate(isoDate) {
 }
 
 /**
- * Rendert das Markup für die eingeklappte Verlaufsliste (Issue #14), oder
- * einen leeren String, wenn keine Historie vorliegt (z. B. `localStorage`
- * blockiert) – dann wird der ganze Bereich nicht angeboten.
- * @param {{date: string, score: number, total: number, difficulty: string}[]} history
+ * Rendert das Markup für die eingeklappte Verlaufsliste (Issue #14, Modus-
+ * Anzeige + Lösch-Steuerelemente seit Issue #36), oder einen leeren String,
+ * wenn keine Historie (mehr) vorliegt (z. B. `localStorage` blockiert oder
+ * der letzte Eintrag wurde gelöscht) – dann wird der ganze Bereich nicht
+ * angeboten (identisches Verhalten für "nie Historie vorhanden" und "Historie
+ * gerade geleert", Akzeptanzkriterium Issue #36).
+ * @param {{id: string, date: string, score: number, total: number, difficulty: string, mode?: string}[]} history
  *   neueste zuerst (siehe src/quiz/history.js)
  * @returns {string}
  */
@@ -62,18 +84,27 @@ function renderHistorySection(history) {
   const items = history
     .map((entry, index) => {
       const isCurrent = index === 0;
+      const modeLabel = getModeLabel(entry.mode);
       const difficultyLabel = DIFFICULTY_LABELS[entry.difficulty] ?? entry.difficulty;
       return `
         <li class="result-history__item${
           isCurrent ? " result-history__item--current" : ""
         }">
-          ${
-            isCurrent
-              ? '<span class="result-history__current-badge">Diese Runde</span>'
-              : ""
-          }
-          <span class="result-history__result">${entry.score} von ${entry.total} richtig</span>
-          <span class="result-history__meta">${difficultyLabel} · ${formatHistoryDate(entry.date)}</span>
+          <div class="result-history__item-main">
+            ${
+              isCurrent
+                ? '<span class="result-history__current-badge">Diese Runde</span>'
+                : ""
+            }
+            <span class="result-history__result">${entry.score} von ${entry.total} richtig</span>
+            <span class="result-history__meta">${modeLabel} · ${difficultyLabel} · ${formatHistoryDate(entry.date)}</span>
+          </div>
+          <button
+            type="button"
+            class="result-history__delete"
+            data-entry-id="${entry.id ?? ""}"
+            aria-label="Eintrag löschen"
+          >🗑️</button>
         </li>
       `;
     })
@@ -86,8 +117,63 @@ function renderHistorySection(history) {
       <ul class="result-history__list">
         ${items}
       </ul>
+      <button type="button" class="result-history__clear-all">
+        Alle Ergebnisse löschen
+      </button>
     </details>
   `;
+}
+
+/**
+ * Ersetzt den Inhalt des Verlaufsbereich-Wrappers nach einer Löschaktion
+ * (Issue #36) mit dem neuen Zustand und verdrahtet die dabei frisch erzeugten
+ * Steuerelemente erneut (das vorherige `<details>`-Element wird komplett
+ * ersetzt, alte Event-Listener sind damit ohnehin hinfällig). Bleibt die
+ * Liste nicht leer, wird das neue `<details>`-Element direkt aufgeklappt
+ * belassen – Löschen ist nur möglich, während die Liste bereits aufgeklappt
+ * ist (Design-Vorgabe), ein Wiederzuklappen nach dem Klick wäre unerwartet.
+ * @param {HTMLElement} historyWrapper
+ * @param {object[]} history
+ */
+function refreshHistorySection(historyWrapper, history) {
+  historyWrapper.innerHTML = renderHistorySection(history);
+  const detailsEl = historyWrapper.querySelector(".result-history");
+  if (detailsEl) {
+    detailsEl.open = true;
+  }
+  wireHistoryControls(historyWrapper);
+}
+
+/**
+ * Verdrahtet die Lösch-Steuerelemente innerhalb des Verlaufsbereichs (Issue
+ * #36): einzelne Einträge sofort ohne Bestätigung, die gesamte Liste nur nach
+ * Bestätigung per `window.confirm()`. Wird sowohl beim ersten Rendern als
+ * auch nach jeder Löschaktion (über refreshHistorySection) erneut aufgerufen.
+ * @param {HTMLElement} historyWrapper
+ */
+function wireHistoryControls(historyWrapper) {
+  const deleteButtons = historyWrapper.querySelectorAll(
+    ".result-history__delete",
+  );
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const updated = deleteHistoryEntry(button.dataset.entryId);
+      refreshHistorySection(historyWrapper, updated ?? []);
+    });
+  });
+
+  const clearAllButton = historyWrapper.querySelector(
+    ".result-history__clear-all",
+  );
+  clearAllButton?.addEventListener("click", () => {
+    const confirmed = window.confirm(
+      "Wirklich alle gespeicherten Ergebnisse löschen?",
+    );
+    if (!confirmed) return;
+
+    const updated = clearResultHistory();
+    refreshHistorySection(historyWrapper, updated ?? []);
+  });
 }
 
 /**
@@ -136,11 +222,19 @@ export function renderResultScreen(
 
   // Rundenergebnis lokal protokollieren (Issue #14) – fehlertolerant: bei
   // blockiertem/fehlendem localStorage liefert saveResultToHistory `null`
-  // und renderHistorySection blendet den Bereich dann einfach aus.
+  // und renderHistorySection blendet den Bereich dann einfach aus. Seit
+  // Issue #36 wird zusätzlich der gespielte Modus mitgespeichert – aktuell
+  // ist im Hauptzweig nur der Quizfragen-Modus tatsächlich spielbar (die
+  // anderen Modi stecken noch in unfertigen Feature-Branches, siehe
+  // #26–#28/#31–#33), `quizState.mode` existiert dort also noch nicht; der
+  // Fallback auf QUIZ_MODES.QUIZ hält result.js trotzdem schon
+  // zukunftskompatibel, sobald ein Feature-Branch `mode` in den Zustand
+  // einträgt.
   const history = saveResultToHistory({
     score,
     total,
     difficulty: quizState.difficulty,
+    mode: quizState.mode ?? QUIZ_MODES.QUIZ,
   });
 
   container.innerHTML = `
@@ -161,7 +255,7 @@ export function renderResultScreen(
         </button>
       </div>
 
-      ${renderHistorySection(history)}
+      <div class="result-history-container">${renderHistorySection(history)}</div>
     </section>
   `;
 
@@ -171,6 +265,7 @@ export function renderResultScreen(
   const backToStartButton = container.querySelector(
     ".result-screen__back-to-start",
   );
+  const historyWrapper = container.querySelector(".result-history-container");
 
   playAgainButton.addEventListener("click", () => {
     onPlayAgain?.();
@@ -179,6 +274,10 @@ export function renderResultScreen(
   backToStartButton.addEventListener("click", () => {
     onBackToStart?.();
   });
+
+  if (historyWrapper) {
+    wireHistoryControls(historyWrapper);
+  }
 
   playAgainButton.focus();
 }
