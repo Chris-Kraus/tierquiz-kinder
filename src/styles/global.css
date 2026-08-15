@@ -945,6 +945,54 @@ button {
   transform: scale(0.97);
 }
 
+/* Issue #37 (Nebenbefund aus #28): "Kein Scrollen bei der Kernaufgabe"
+   (design.md, "Layout-Empfehlungen") bezieht sich laut der Klarstellung im
+   Abschnitt "Infosatz + Wikipedia-Link im 'Wer bin ich?'-Modus" ausdrücklich
+   NUR auf den Bereich VOR der Antwort (Fortschrittsanzeige + Fragetext +
+   optionaler "Bild zeigen"-Button + 4 Antwortkacheln) -- der Feedback-Bereich
+   danach (Infosatz/Fun Fact/automatisches Bild/Wikipedia-Link) darf wie im
+   Quizfragen-Modus bereits etabliert bei Bedarf scrollen. Diese Regel zielt
+   deshalb bewusst NUR auf die Vor-Antwort-Bausteine, nicht auf die
+   Feedback-Elemente weiter unten.
+   Eigene Analyse (Playwright, 320x568 und 360x640, deterministischer
+   Worst-Case sowie 200+ Zufallsstichproben): der schlimmste Fall ist eine
+   3-zeilige Frage (z. B. "Welche Farbe hat das Fell/Gefieder von
+   Nordafrikanische Kuhantilope?") kombiniert mit dem vollen, einspaltigen
+   4-Kachel-Raster -- 153px Overflow bei 320x568, 81px bei 360x640. Bewusst
+   `max-height: 660px` statt der 600px aus der #28-Analogie: 360x640 muss
+   ausdrücklich mit erfasst werden (Playwright liefert dort exakt 640px
+   Layout-Viewport ohne Browser-Chrome-Abzug), während 375x667 (laut AC
+   bereits korrekt) unterhalb der Schwelle bleibt und unverändert bleibt.
+   Drei moderate Stellschrauben statt einer einzelnen starken Kürzung,
+   analog zur #28-Methodik:
+   - Kleinere Lücken zwischen den Bausteinen (--space-sm statt --space-md).
+   - Fragetext etwas kleiner/kompakter (kleinere Mindest-Schriftgröße im
+     clamp() sowie engere Zeilenhöhe) -- bleibt mit min. 1.15rem weiterhin
+     deutlich größer als der übrige Fließtext (design.md, "klare
+     Schriftgrößenhierarchie").
+   - Antwortkacheln kompakter (kleinere Mindesthöhe/Padding, engere Lücken
+     im Raster), bleibt mit 4rem (64px) weiterhin klar über der
+     44x44px-Touch-Zielgröße (design.md, "Barrierefreiheit"). */
+@media (max-height: 660px) {
+  .question-screen {
+    gap: var(--space-sm);
+  }
+
+  .question-screen__text {
+    font-size: clamp(1.15rem, 4vw, 2.1rem);
+    line-height: 1.2;
+  }
+
+  .answer-grid {
+    gap: var(--space-sm);
+  }
+
+  .answer-tile {
+    min-height: 4rem;
+    padding: 0.6rem var(--space-sm);
+  }
+}
+
 /* Ergebnis-Bildschirm (siehe design.md, "Nutzerfluss" Punkt 6). Wie beim
    Frage-Bildschirm bewusst keine neuen Farbpaare eingeführt, sondern
    ausschließlich bereits gegen WCAG-AA geprüfte Kombinationen von oben
