@@ -7,13 +7,37 @@
 // Konstruktion/Netzwerk-Verhalten selbst ist bereits in
 // reverseQuestionGenerator.test.js abgedeckt), hier wird nur geprüft, wie der
 // Bildschirm auf Erfolg/Fehlschlag/vorab aufgelöste erste Frage reagiert.
+//
+// Seit Issue #35: `../../data/animals.json` wird bewusst mit zwei
+// vollständigen Tier-Objekten (statt eines leeren Arrays) gemockt, damit der
+// neue animalById-Lookup (für Infosatz/Wikipedia-Link) ein Tier findet —
+// LION (mit wikipedia_url_de) und TIGER (ohne, deckt den "kein Link"-Fall
+// ab), IDs passend zu den animalId-Werten in buildQuestion()/den
+// bestehenden Tests unten.
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { DIFFICULTY_LEVELS } from "../quiz/difficulty.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
 
+const LION = {
+  id: "Q1",
+  name_de: "Löwe",
+  category: "Säugetier",
+  habitat: ["Savanne"],
+  continent: ["Afrika"],
+  diet: "Fleischfresser",
+  wikipedia_url_de: "https://de.wikipedia.org/wiki/L%C3%B6we",
+};
+
+const TIGER = {
+  id: "Q2",
+  name_de: "Tiger",
+  category: "Säugetier",
+  // Bewusst ohne wikipedia_url_de -- deckt den "kein Link"-Fall ab.
+};
+
 vi.mock("../../data/animals.json", () => ({
-  default: { animals: [] },
+  default: { animals: [LION, TIGER] },
 }));
 
 const generateNextReverseQuestion = vi.fn();
@@ -339,5 +363,172 @@ describe("renderReverseQuestionScreen (Issue #28)", () => {
     expect(quizState.score).toBe(1);
     expect(quizState.questions).toHaveLength(2);
     expect(quizState.answers).toHaveLength(2);
+  });
+});
+
+describe("Infosatz + Wikipedia-Link im 'Wer bin ich?'-Modus (Issue #35)", () => {
+  it("zeigt nach der Antwort den Infosatz UND den Wikipedia-Link unterhalb des Richtig/Falsch-Feedbacks, wenn wikipedia_url_de vorhanden ist", async () => {
+    generateNextReverseQuestion.mockResolvedValue(buildQuestion()); // animalId Q1 -> LION
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.REVERSE,
+    );
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".answer-tile")).toHaveLength(4),
+    );
+
+    container.querySelector(".answer-tile").click(); // "Löwe" (richtig)
+
+    const feedbackEl = container.querySelector(".question-screen__feedback");
+    const infoSentenceEl = container.querySelector(
+      ".question-screen__info-sentence",
+    );
+    const infoSentenceTextEl = container.querySelector(
+      ".question-screen__info-sentence-text",
+    );
+    const wikipediaLinkEl = container.querySelector(
+      ".question-screen__info-sentence-wikipedia-link",
+    );
+
+    expect(feedbackEl.hidden).toBe(false);
+    expect(infoSentenceEl.hidden).toBe(false);
+    // Infosatz startet mit dem Tiernamen als Stichwort (infoSentence.js) --
+    // deterministisch prüfbar trotz zufällig gewähltem Zusatzfakt.
+    expect(infoSentenceTextEl.textContent).toMatch(/^Löwe:/);
+
+    expect(wikipediaLinkEl.hidden).toBe(false);
+    expect(wikipediaLinkEl.href).toBe(LION.wikipedia_url_de);
+    expect(
+      container.querySelector(
+        ".question-screen__info-sentence-wikipedia-link-text",
+      ).textContent,
+    ).toBe("Mehr über Löwe auf Wikipedia lesen");
+
+    // Reihenfolge im DOM: Feedback -> Infosatz -> "Weiter"-Button
+    // (design.md, "Infosatz + Wikipedia-Link im 'Wer bin ich?'-Modus").
+    const positions = [
+      feedbackEl,
+      infoSentenceEl,
+      container.querySelector(".next-button"),
+    ].map((el) =>
+      Array.from(el.parentElement.children).indexOf(el),
+    );
+    expect(positions[0]).toBeLessThan(positions[1]);
+    expect(positions[1]).toBeLessThan(positions[2]);
+
+    // Kein automatisches Feedback-Bild (#30-Mechanismus) -- bewusst nicht
+    // Teil dieses Modus (design.md, Redundanz-Begründung).
+    expect(
+      container.querySelector(".question-screen__feedback-image"),
+    ).toBeNull();
+  });
+
+  it("zeigt den Infosatz auch bei falscher Antwort, aber blendet den Wikipedia-Link ohne Platzhalter aus, wenn wikipedia_url_de fehlt", async () => {
+    generateNextReverseQuestion.mockResolvedValue(
+      buildQuestion({
+        animalId: "Q2", // TIGER, kein wikipedia_url_de
+        animalName: "Tiger",
+        options: [
+          { text: "Tiger", correct: true },
+          { text: "Löwe", correct: false },
+          { text: "Puma", correct: false },
+          { text: "Gepard", correct: false },
+        ],
+      }),
+    );
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.REVERSE,
+    );
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".answer-tile")).toHaveLength(4),
+    );
+
+    container.querySelectorAll(".answer-tile")[1].click(); // "Löwe" (falsch)
+
+    const infoSentenceEl = container.querySelector(
+      ".question-screen__info-sentence",
+    );
+    const infoSentenceTextEl = container.querySelector(
+      ".question-screen__info-sentence-text",
+    );
+    const wikipediaLinkEl = container.querySelector(
+      ".question-screen__info-sentence-wikipedia-link",
+    );
+
+    // Infosatz wird IMMER angezeigt, unabhängig von richtig/falsch (Issue #12).
+    expect(infoSentenceEl.hidden).toBe(false);
+    expect(infoSentenceTextEl.textContent).toMatch(/^Tiger:/);
+    // Kein Platzhalter/Hinweis, der Link bleibt schlicht ausgeblendet.
+    expect(wikipediaLinkEl.hidden).toBe(true);
+    expect(infoSentenceEl.textContent).not.toMatch(/Wikipedia/);
+  });
+
+  it("setzt Infosatz und Wikipedia-Link bei jeder neuen Frage vollständig zurück", async () => {
+    generateNextReverseQuestion
+      .mockResolvedValueOnce(buildQuestion()) // Q1 -> LION, hat Link
+      .mockResolvedValueOnce(
+        buildQuestion({
+          animalId: "Q2", // TIGER, kein Link
+          animalName: "Tiger",
+          options: [
+            { text: "Tiger", correct: true },
+            { text: "Löwe", correct: false },
+            { text: "Puma", correct: false },
+            { text: "Gepard", correct: false },
+          ],
+        }),
+      );
+
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.REVERSE,
+    );
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".answer-tile")).toHaveLength(4),
+    );
+
+    container.querySelector(".answer-tile").click();
+    const wikipediaLinkEl = container.querySelector(
+      ".question-screen__info-sentence-wikipedia-link",
+    );
+    expect(wikipediaLinkEl.hidden).toBe(false);
+
+    container.querySelector(".next-button").click();
+
+    // Direkt nach dem Klick (noch vor Auflösung der 2. Frage): Reset sichtbar.
+    expect(
+      container.querySelector(".question-screen__info-sentence").hidden,
+    ).toBe(true);
+    expect(
+      container.querySelector(".question-screen__info-sentence-text")
+        .textContent,
+    ).toBe("");
+    expect(wikipediaLinkEl.hidden).toBe(true);
+    expect(wikipediaLinkEl.getAttribute("href")).toBe("#");
+
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".answer-tile")).toHaveLength(4),
+    );
+    container.querySelector(".answer-tile").click(); // "Tiger" (richtig)
+
+    expect(
+      container.querySelector(".question-screen__info-sentence").hidden,
+    ).toBe(false);
+    expect(
+      container.querySelector(".question-screen__info-sentence-text")
+        .textContent,
+    ).toMatch(/^Tiger:/);
+    // TIGER hat kein wikipedia_url_de -> Link bleibt ausgeblendet.
+    expect(wikipediaLinkEl.hidden).toBe(true);
   });
 });

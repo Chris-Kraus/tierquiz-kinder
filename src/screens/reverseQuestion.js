@@ -18,12 +18,15 @@
 // dupliziert statt aus question.js re-exportiert — gleiches Vorgehen wie bei
 // dedupeAnimalsByName in reverseQuestionGenerator.js.
 //
-// WICHTIGE, bewusste Abweichung von question.js (design.md, AC von Issue
-// #28): kein Infosatz (Issue #12), kein Wikipedia-Link (Issue #15), kein Fun
-// Fact (Issue #24) nach der Antwort — design.md scopt die Wiederverwendung
-// für diesen Bildschirm explizit nur auf "Sofort-Feedback, 'Weiter'-Button,
-// Punktestand, Ergebnis-Bildschirm", diese drei Zusatzbausteine sind dort
-// nicht erwähnt. Kein Scope-Creep über die Story hinaus.
+// Seit Issue #35: Infosatz (Issue #12) inkl. Wikipedia-Link (Issue #15) NACH
+// der Antwort, analog zu question.js (siehe dortiger Datei-Kommentar beim
+// buildInfoSentence-Import sowie design.md, Abschnitt "Infosatz +
+// Wikipedia-Link im 'Wer bin ich?'-Modus"). Bewusst weiterhin NICHT
+// übernommen: Fun Fact (Issue #24, nicht Teil des #35-Scopes, siehe dortiges
+// "Explizit außerhalb des Scopes") sowie das automatische Feedback-Bild aus
+// Issue #30 (mit ux-design abgestimmte Redundanz-Entscheidung: das Bild
+// dieses Modus ist bereits durchgehend sichtbar, ein zusätzliches
+// Feedback-Bild wäre eine reine Dopplung, siehe design.md).
 //
 // Fragengenerierung: anders als question.js (ein synchroner Batch-Aufruf für
 // die komplette Runde vor Frage 1) wird hier PRO Frage asynchron
@@ -43,6 +46,11 @@ import {
   advanceToNextQuestion,
 } from "../quiz/state.js";
 import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
+// Issue #35: Infosatz-Mechanismus 1:1 aus question.js wiederverwendet (siehe
+// architecture.md, "Infosatz + Wikipedia-Link im 'Wer bin ich?'-Modus:
+// Wiederverwendbarkeit" — buildInfoSentence ist vollständig entkoppelt von
+// Fragetyp/Spielmodus, nur die Rendering-Verdrahtung unten ist neu).
+import { buildInfoSentence } from "../quiz/infoSentence.js";
 
 /**
  * Rendert den "Wer bin ich?"-Frage-Bildschirm in den übergebenen Container
@@ -78,6 +86,16 @@ export function renderReverseQuestionScreen(
   // globales State-Feld nötig (architecture.md: "kein neues globales
   // State-Feld nötig").
   const usedAnimalIds = new Set();
+
+  // Issue #35: Lookup fürs schnelle Auffinden des vollen Tier-Objekts
+  // (category/habitat/diet/wikipedia_url_de/…) zu einer Frage
+  // (question.animalId) — identisches Muster wie animalById in question.js.
+  // Das Fragen-Objekt aus generateNextReverseQuestion trägt selbst nur die
+  // fürs Raten nötigen Felder (image/attribution/options/animalId), nicht das
+  // komplette Tier-Objekt.
+  const animalById = new Map(
+    animalsData.animals.map((animal) => [animal.id, animal]),
+  );
 
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="reverse-question-heading">
@@ -160,6 +178,26 @@ export function renderReverseQuestionScreen(
         hidden
       ></p>
 
+      <!-- Issue #35: Infosatz inkl. Wikipedia-Link, unterhalb des
+           Richtig/Falsch-Feedbacks (design.md, "Infosatz + Wikipedia-Link im
+           'Wer bin ich?'-Modus") — identisches Markup/identische Klassen wie
+           question.js, damit Optik/Verhalten (inkl. bestehendem CSS)
+           unverändert übernommen werden. Bewusst kein Fun-Fact-Block hier
+           (siehe Datei-Kommentar oben, außerhalb des #35-Scopes). -->
+      <p class="question-screen__info-sentence" hidden>
+        <span class="question-screen__info-sentence-text"></span>
+        <a
+          class="question-screen__info-sentence-wikipedia-link"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          hidden
+        >
+          <span aria-hidden="true">📖</span>
+          <span class="question-screen__info-sentence-wikipedia-link-text"></span>
+        </a>
+      </p>
+
       <button type="button" class="next-button" hidden>Weiter</button>
     </section>
   `;
@@ -182,6 +220,20 @@ export function renderReverseQuestionScreen(
   const answerGridEl = container.querySelector(".answer-grid");
   let tileButtons = [];
   const feedbackEl = container.querySelector(".question-screen__feedback");
+  // Issue #35: Infosatz-/Wikipedia-Link-Elemente — identische Referenz-Namen
+  // wie in question.js für einfache Vergleichbarkeit der beiden Bildschirme.
+  const infoSentenceEl = container.querySelector(
+    ".question-screen__info-sentence",
+  );
+  const infoSentenceTextEl = container.querySelector(
+    ".question-screen__info-sentence-text",
+  );
+  const wikipediaLinkEl = container.querySelector(
+    ".question-screen__info-sentence-wikipedia-link",
+  );
+  const wikipediaLinkTextEl = container.querySelector(
+    ".question-screen__info-sentence-wikipedia-link-text",
+  );
   const nextButton = container.querySelector(".next-button");
 
   // Bewacht gegen veraltete Antworten (gleiches Muster wie
@@ -223,6 +275,15 @@ export function renderReverseQuestionScreen(
       "question-screen__feedback--correct",
       "question-screen__feedback--incorrect",
     );
+    // Issue #35: bei jeder neuen Frage vollständig zurücksetzen, damit
+    // Infosatz/Wikipedia-Link des vorherigen Tieres nie kurz sichtbar/
+    // erreichbar bleiben (identisches Muster wie showQuestion() in
+    // question.js).
+    infoSentenceEl.hidden = true;
+    infoSentenceTextEl.textContent = "";
+    wikipediaLinkEl.hidden = true;
+    wikipediaLinkEl.href = "#";
+    wikipediaLinkTextEl.textContent = "";
     nextButton.hidden = true;
   }
 
@@ -357,6 +418,27 @@ export function renderReverseQuestionScreen(
     }
 
     feedbackEl.hidden = false;
+
+    // Issue #35: Infosatz IMMER anzeigen, unabhängig davon, ob richtig oder
+    // falsch geantwortet wurde (identische Regel wie in question.js/Issue
+    // #12) — daher bewusst außerhalb des if/else oben, direkt nach dem
+    // Feedback. `question.animalId` ist hier bereits das aufgelöste Zieltier
+    // (nicht die ausgewählte Antwort), animalById liefert das volle
+    // Tier-Objekt mit den für buildInfoSentence nötigen Feldern.
+    const answeredAnimal = animalById.get(question.animalId);
+    if (answeredAnimal) {
+      infoSentenceTextEl.textContent = buildInfoSentence(answeredAnimal);
+      infoSentenceEl.hidden = false;
+    }
+
+    // Issue #35/#15: Wikipedia-Link nur anzeigen, wenn wikipedia_url_de für
+    // das Tier vorhanden ist (kein generischer Such-Link-Fallback, identisch
+    // zu question.js).
+    if (answeredAnimal?.wikipedia_url_de) {
+      wikipediaLinkEl.href = answeredAnimal.wikipedia_url_de;
+      wikipediaLinkTextEl.textContent = `Mehr über ${answeredAnimal.name_de} auf Wikipedia lesen`;
+      wikipediaLinkEl.hidden = false;
+    }
 
     recordAnswer(quizState, {
       question,
