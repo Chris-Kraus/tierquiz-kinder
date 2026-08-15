@@ -331,6 +331,48 @@ Wiederverwendet den bestehenden Frage-/Feedback-Mechanismus (Fortschrittsanzeige
 - **Bekannte, bewusst dokumentierte Einschränkung: Dieser Modus ist für hörbeeinträchtigte/gehörlose Kinder strukturell nicht spielbar.** Es gibt keine gleichwertige visuelle/textliche Alternative zur Kernaufgabe (Ton erkennen), ohne den Modus selbst funktionslos zu machen. **Entscheidung (`business-analyst` + `ux-design`, 14.08.2026): kein Blocker für die Umsetzung** — der bestehende Quizfragen-Modus und der Umkehr-Quiz-Modus bleiben für diese Zielgruppe unverändert vollständig spielbar, nur dieser eine zusätzliche, optionale Modus ist betroffen. Wichtig ist Transparenz statt stillschweigendem Hinnehmen: siehe `requirements.md` für die formale Dokumentation dieser Einschränkung. Zum Vergleich: Der Umkehr-Quiz-Modus (#28) hat eine strukturell ähnliche, aber bislang nicht ebenso explizit als "bekannte Einschränkung" dokumentierte Lücke für sehbeeinträchtigte/blinde Kinder (Bild als Kernaufgabe ohne Audio-Alternative) — nicht Teil dieser Story, aber als Beobachtung für eine mögliche spätere Nachdokumentation vermerkt.
 - Ansonsten identische Anforderungen wie bestehende Antwortkacheln (Tastaturbedienbarkeit, Tab-Reihenfolge, Kontrast, keine reine Farbcodierung).
 
+## Infosatz + Wikipedia-Link im "Wer bin ich?"-Modus (Issue #35, 15.08.2026, `ux-design`)
+
+Ergänzt den Abschnitt "Frage-/Feedback-Bildschirm 'Wer bin ich?'" (Issue #28) oben, der Feedback/Antwortmechanik bisher pauschal als "unverändert" beschrieb — ohne die seit #12/#15/#24/#30 im Quizfragen-Modus hinzugekommenen Zusatzinfos (Infosatz, Wikipedia-Link, Fun Fact, automatisches Bild) explizit mitzudenken. Diese Ergänzung schließt die Lücke gezielt für Infosatz + Wikipedia-Link (Fun Fact bleibt unangetastet, falls ohnehin vorhanden; automatisches Bild wird bewusst ausgeschlossen, siehe unten).
+
+**Automatisches Feedback-Bild (#30) bewusst NICHT Teil dieses Modus:** Im "Wer bin ich?"-Modus ist das Tierbild bereits der durchgehend sichtbare primäre Bildschirminhalt — anders als im Quizfragen-Modus, wo vor der Antwort meist kein Bild sichtbar ist (außer bei manuellem Aufdecken über #16), sodass das automatische Feedback-Bild dort echten Mehrwert liefert. Im "Wer bin ich?"-Modus wäre derselbe Mechanismus eine reine Bild-Dopplung auf ein und demselben Screen. Der automatische Bild-Mechanismus (`imageHint.js`) wird für diesen Modus daher schlicht nicht aufgerufen — kein bedingtes Ausblenden nötig, da der Fall "bereits sichtbares Bild" hier nicht die Ausnahme, sondern immer zutreffend ist.
+
+**Platzierung/Reihenfolge im Feedback-Bereich** (unterhalb der 4 Antwortkacheln, an der bestehenden Position des Sofort-Feedbacks):
+
+```
+Richtig/Falsch-Feedback
+   ▼
+Infosatz (inkl. Wikipedia-Link)
+   ▼
+Fun Fact (falls vorhanden)
+   ▼
+"Weiter"-Button
+```
+
+Identisch zur bestehenden Reihenfolge des Quizfragen-Modus, nur ohne den hier redundanten Bild-Schritt aus #30 — der Feedback-Bereich bleibt dadurch sogar kompakter.
+
+**Kein Scrollen-Risiko durch diese Ergänzung:** Die Vorgabe "Kein Scrollen bei der Kernaufgabe" bezieht sich auf den Bereich *vor* der Antwort (Bild + Attribution + 4 Kacheln, siehe #28). Der Feedback-Bereich danach darf – wie im Quizfragen-Modus bereits akzeptiert – bei Bedarf zu Scrollen führen; das ist kein neues Zugeständnis, sondern folgt demselben bereits etablierten Muster.
+
+**Barrierefreiheit:** Der Infosatz nennt den Tiernamen (`{name_de}: Ein/e {category}...`). Das ist an dieser Stelle unproblematisch, da die richtige Antwort nach der Antwortabgabe bereits aufgelöst ist — gleiche Begründung wie bereits im Abschnitt "Bild-Rateshilfe: Automatische Anzeige nach der Antwort" für den dortigen `alt`-Text festgehalten. Keine neue Einschränkung gegenüber dem bestehenden Quizfragen-Modus. Gleiche Kontrast-/Lesbarkeits- und Tastaturanforderungen wie der übrige Feedback-Bereich.
+
+**Beide Altersstufen:** Gleiche Darstellung, kein Unterschied.
+
+## Ergebnisliste: Löschen + Modus-Anzeige (Issue #36, 15.08.2026, `ux-design`)
+
+Ergänzt den bestehenden, bewusst zurückhaltenden Ton der Verlaufsliste aus Issue #14 ("keine wertende Rangfolge", chronologisch, eingeklappt by default, natives `<details>/<summary>`) um zwei neue Fähigkeiten, ohne diesen Grundton zu verändern.
+
+**Löschen einzelner Einträge:** Kleines, dezentes Steuerelement pro Eintrag (z. B. "🗑️" oder "×" als echtes `<button>`, `aria-label="Eintrag löschen"`), am rechten Rand jeder Zeile — deutlich kleiner/unauffälliger als der Ergebnistext, damit es nicht mit dem eigentlichen Inhalt konkurriert. **Kein Bestätigungsdialog** — geringe Tragweite (ein historischer Eintrag, keine laufende Spielrunde), passend zum bestehenden Grundsatz "wenig Klickschritte".
+
+**Ganze Liste leeren:** Zusätzlicher, klar unterscheidbarer Text-Button/Link unterhalb der Liste ("Alle Ergebnisse löschen"), bewusst weniger prominent als "Nochmal spielen"/"Zurück zum Start". **Mit Bestätigung** (z. B. natives `confirm()` oder ein zweistufiger Button-Zustand "Wirklich alle löschen?") — größere Tragweite als ein Einzeleintrag. Ein technisches `confirm()` ist hier anders als im übrigen, bewusst kindgerecht/technikarm gehaltenen Quiz-Flow vertretbar, da die Zielgruppe dieses Bereichs laut Issue #14 explizit "Spieler:in bzw. Elternteil" ist, nicht das jüngere Kind selbst.
+
+**Sichtbarkeit:** Beide Lösch-Optionen bleiben unsichtbar, bis die Liste aktiv aufgeklappt wird (innerhalb des bestehenden `<details>`-Elements) — konsistent mit "eingeklappt by default", keine zusätzliche Ablenkung auf dem Ergebnis-Bildschirm.
+
+**Leere Liste nach Löschen:** Wird der letzte Eintrag gelöscht (einzeln oder komplett), verschwindet der gesamte Verlaufsbereich (inkl. "Meine bisherigen Ergebnisse ansehen"-Link) wieder vollständig — identisches Verhalten zum bestehenden Fall "keine Historie vorhanden", kein Sonderfall.
+
+**Modus-Anzeige:** Neuer, kurzer Textbestandteil in der bestehenden Metazeile pro Eintrag (bisher `"{difficultyLabel} · {date}"`), erweitert zu `"{modeLabel} · {difficultyLabel} · {date}"`. Modus-Labels identisch zu den bereits auf dem Start-Bildschirm verwendeten kindgerechten Bezeichnungen ("Quizfragen" / "Wer bin ich?" / "Tiergeräusche", siehe Abschnitt "Modus-Auswahl auf dem Start-Bildschirm"). **Keine Farbcodierung, kein modusabhängiger visueller Unterschied** — reiner Text, konsistent mit dem Grundsatz "keine wertende Optik", nur zusätzliche Information. Alt-Einträge ohne gespeicherten Modus werden mit dem Default-Label "Quizfragen" angezeigt, ohne erkennbaren Unterschied zu "echten" Quizfragen-Einträgen (kein "geschätzt"/"unbekannt"-Hinweis) — konsistent mit der bestehenden Projekt-Philosophie, fehlende/nachträglich ergänzte Daten transparent, aber ohne sichtbaren Sonderstatus zu behandeln.
+
+**Barrierefreiheit:** Lösch-Buttons als echte `<button>`-Elemente, per Tastatur erreichbar/auslösbar (Tab-Reihenfolge nach dem jeweiligen Listeneintrag), mit aussagekräftigen `aria-label`s statt reinem Icon ohne Text-Alternative — konsistent mit bestehenden Anforderungen.
+
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
 
 Alle vorherigen offenen Fragen sind geklärt: Zielalter → zwei Stufen 6–10/10–12 (siehe "Zielgruppe"), Sound-Effekte → nein, Fragenanzahl → 10 pro Runde (fest), Weiter-Mechanik → manueller Button, Sprache → Deutsch. Details jeweils in den Abschnitten oben eingearbeitet.
