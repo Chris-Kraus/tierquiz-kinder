@@ -1379,3 +1379,11 @@ button {
 .sound-play-button[aria-busy="true"] .sound-play-button__spinner {
   display: inline-block;
 }
+
+/* Issue #43: leicht abgedunkelter Hintergrund während der Wiedergabe, damit
+   der Play/Stop-Zustandswechsel zusätzlich zum Icon-/aria-label-Wechsel
+   (soundQuestion.js, setPlayButtonPlaying) auch rein visuell erkennbar ist
+   (design.md, "Play/Pause-Toggle beim Tierlaut-Button"). */
+.sound-play-button--playing {
+  background: var(--color-primary-dark);
+}

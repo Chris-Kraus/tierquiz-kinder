@@ -357,6 +357,129 @@ describe("renderSoundQuestionScreen (Issue #33)", () => {
     expect(generateNextSoundQuestion).toHaveBeenCalledTimes(2);
   });
 
+  // Issue #43: Play/Stop-Toggle — ein erneuter Tap auf den Play-Button
+  // während laufender Wiedergabe stoppt den Ton statt ihn neu zu starten
+  // (design.md, "Play/Pause-Toggle beim Tierlaut-Button"). `audioEl.paused`
+  // ist in jsdom standardmäßig `true` (play()/pause() sind oben komplett
+  // gestubbt, verändern das native Flag also nicht) — die "läuft
+  // gerade"-Fälle stubben die `paused`-Getter-Property daher gezielt auf
+  // `false`, um den tatsächlichen Laufzeitzustand zu simulieren (architecture.md,
+  // Issue #43: Zustandsabfrage über `audioEl.paused`).
+  describe("Play/Stop-Toggle des Tierlaut-Buttons (Issue #43)", () => {
+    it("wechselt Icon und aria-label zu 'Tierlaut stoppen', sobald die Wiedergabe läuft (playing-Event)", async () => {
+      generateNextSoundQuestion.mockResolvedValue(buildQuestion());
+      const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);
+      const { container } = render(quizState);
+      await vi.waitFor(() =>
+        expect(container.querySelector(".sound-play-button").hidden).toBe(
+          false,
+        ),
+      );
+
+      const playButton = container.querySelector(".sound-play-button");
+      const audioEl = container.querySelector(".sound-question__audio");
+
+      playButton.click();
+      audioEl.dispatchEvent(new Event("playing"));
+
+      expect(playButton.getAttribute("aria-label")).toBe("Tierlaut stoppen");
+      expect(
+        playButton.querySelector(".sound-play-button__icon").textContent,
+      ).toBe("⏹️");
+      expect(
+        playButton.classList.contains("sound-play-button--playing"),
+      ).toBe(true);
+    });
+
+    it("stoppt den Ton bei erneutem Klick während laufender Wiedergabe (Pause + Zurücksetzen auf Anfang), statt ihn neu zu starten", async () => {
+      generateNextSoundQuestion.mockResolvedValue(buildQuestion());
+      const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);
+      const { container } = render(quizState);
+      await vi.waitFor(() =>
+        expect(container.querySelector(".sound-play-button").hidden).toBe(
+          false,
+        ),
+      );
+
+      const playButton = container.querySelector(".sound-play-button");
+      const audioEl = container.querySelector(".sound-question__audio");
+
+      playButton.click(); // startet die Wiedergabe
+      expect(window.HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(1);
+
+      // Simuliert laufende Wiedergabe (natives Flag, siehe Datei-Kommentar
+      // oben).
+      vi.spyOn(window.HTMLMediaElement.prototype, "paused", "get")
+        .mockReturnValue(false);
+      const pauseCallsBefore =
+        window.HTMLMediaElement.prototype.pause.mock.calls.length;
+      audioEl.currentTime = 5;
+
+      playButton.click(); // zweiter Klick WÄHREND der Wiedergabe
+
+      expect(
+        window.HTMLMediaElement.prototype.pause.mock.calls.length,
+      ).toBeGreaterThan(pauseCallsBefore);
+      expect(audioEl.currentTime).toBe(0);
+      // Kein zweiter play()-Aufruf -- der Ton wird gestoppt, nicht neu
+      // gestartet.
+      expect(window.HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(1);
+    });
+
+    it("kehrt nach dem pause-Event zuverlässig in den abspielbereiten Zustand zurück (natürliches Ende oder manueller Stopp)", async () => {
+      generateNextSoundQuestion.mockResolvedValue(buildQuestion());
+      const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);
+      const { container } = render(quizState);
+      await vi.waitFor(() =>
+        expect(container.querySelector(".sound-play-button").hidden).toBe(
+          false,
+        ),
+      );
+
+      const playButton = container.querySelector(".sound-play-button");
+      const audioEl = container.querySelector(".sound-question__audio");
+
+      playButton.click();
+      audioEl.dispatchEvent(new Event("playing"));
+      // `pause` feuert zuverlässig sowohl bei manuellem Stopp als auch beim
+      // natürlichen Ende der Wiedergabe (architecture.md, Issue #43) — ein
+      // einziger Listener deckt beide Fälle ab, hier direkt simuliert.
+      audioEl.dispatchEvent(new Event("pause"));
+
+      expect(playButton.getAttribute("aria-label")).toBe(
+        "Tierlaut noch einmal abspielen",
+      );
+      expect(
+        playButton.querySelector(".sound-play-button__icon").textContent,
+      ).toBe("🔊");
+      expect(
+        playButton.classList.contains("sound-play-button--playing"),
+      ).toBe(false);
+    });
+
+    it("startet die Wiedergabe wie bisher von vorne, wenn der Ton gerade NICHT läuft", async () => {
+      generateNextSoundQuestion.mockResolvedValue(buildQuestion());
+      const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);
+      const { container } = render(quizState);
+      await vi.waitFor(() =>
+        expect(container.querySelector(".sound-play-button").hidden).toBe(
+          false,
+        ),
+      );
+
+      const playButton = container.querySelector(".sound-play-button");
+      const audioEl = container.querySelector(".sound-question__audio");
+      audioEl.currentTime = 5;
+
+      // audioEl.paused ist im Ausgangszustand true (noch nie/nicht mehr
+      // abgespielt) -- ein Klick startet unverändert von vorne.
+      playButton.click();
+
+      expect(audioEl.currentTime).toBe(0);
+      expect(window.HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(1);
+    });
+  });
+
   it("ruft onFinish nach der letzten Frage mit korrektem Punktestand und vollständiger Fragenliste auf", async () => {
     generateNextSoundQuestion
       .mockResolvedValueOnce(buildQuestion({ animalId: "Q1" }))

@@ -373,6 +373,61 @@ Ergänzt den bestehenden, bewusst zurückhaltenden Ton der Verlaufsliste aus Iss
 
 **Barrierefreiheit:** Lösch-Buttons als echte `<button>`-Elemente, per Tastatur erreichbar/auslösbar (Tab-Reihenfolge nach dem jeweiligen Listeneintrag), mit aussagekräftigen `aria-label`s statt reinem Icon ohne Text-Alternative — konsistent mit bestehenden Anforderungen.
 
+## Infosatz + Wikipedia-Link + Fun Fact im "Tiergeräusche"-Modus (Issue #41, 16.08.2026, `ux-design`)
+
+Ergänzt den Abschnitt "Frage-/Feedback-Bildschirm 'Tiergeräusche'" (Issue #33) oben um dieselbe Lücke, die bereits für den "Wer bin ich?"-Modus über Issue #35 geschlossen wurde: Der bestehende Feedback-Bereich zeigte bisher bewusst keinen Infosatz/Wikipedia-Link/Fun Fact ("kein Scope-Creep über #33 hinaus").
+
+**Platzierung/Reihenfolge im Feedback-Bereich** (unterhalb der 4 Antwortkacheln, an der bestehenden Position des Sofort-Feedbacks):
+
+```
+Richtig/Falsch-Feedback
+   ▼
+Bild (falls Issue #42 bereits umgesetzt, siehe eigener Abschnitt unten)
+   ▼
+Infosatz (inkl. Wikipedia-Link)
+   ▼
+Fun Fact (falls vorhanden)
+   ▼
+"Weiter"-Button
+```
+
+Identisch zur bestehenden Reihenfolge im Quizfragen-Modus (Feedback → Bild → Infosatz → Fun Fact → Weiter, siehe Abschnitt "Bild-Rateshilfe: Automatische Anzeige nach der Antwort" oben) — dasselbe Muster wird hier 1:1 übertragen, unabhängig davon, in welcher Reihenfolge #41/#42 tatsächlich umgesetzt werden.
+
+**Formulierung/Format:** identisch zum Quizfragen-Modus — Infosatz "{name_de}: Ein/e {category}, ...", Wikipedia-Link "📖 Mehr über {name_de} auf Wikipedia lesen", Fun Fact "💡 Wusstest du schon? ...". Kein neuer Formulierungsstil, nur eine neue Platzierung in einem anderen Bildschirm.
+
+**Barrierefreiheit:** Der Infosatz nennt den Tiernamen — unproblematisch, da die richtige Antwort nach Antwortabgabe bereits aufgelöst ist (gleiche Begründung wie bereits bei #30/#35 dokumentiert). Keine neue Einschränkung gegenüber den bestehenden Modi.
+
+**Beide Altersstufen:** Gleiche Darstellung, kein Unterschied.
+
+## Automatische Bildanzeige im Feedback des "Tiergeräusche"-Modus (Issue #42, 16.08.2026, `ux-design` + `business-analyst`)
+
+**Entscheidung: automatische Anzeige NACH der Antwort (analog Issue #30), bewusst KEIN "Bild zeigen"-Button VOR der Antwort (anders als Issue #16 im Quizfragen-Modus).**
+
+Begründung: Die Kernaufgabe des Tiergeräusche-Modus ist "das Tier am Laut erkennen". Ein vor der Antwort abrufbares Bild würde diese Aufgabe direkt vorwegnehmen — die 4 Antwortoptionen ließen sich dann rein visuell statt akustisch lösen, der Modus wäre für ein Kind, das den Button nutzt, faktisch funktionslos. Das ist dieselbe Logik, die bereits im Abschnitt "Frage-/Feedback-Bildschirm 'Tiergeräusche'" oben zur bewussten Ablehnung eines Text-Transkripts geführt hat ("eine Textbeschreibung würde die Antwort vorwegnehmen und den Modus unspielbar machen") — ein Bild ist ein noch direkterer Antwort-Verrat als ein Transkript, die Ablehnung gilt also erst recht. Nach der Antwort ist die richtige Lösung dagegen bereits bekannt; ein Bild dort ist reine, unproblematische Bestätigung/Illustration — exakt der bereits im Quizfragen-Modus etablierte Anwendungsfall (Issue #30).
+
+**Platzierung/Reihenfolge:** direkt unterhalb des Richtig/Falsch-Feedbacktexts, oberhalb des Infosatz-Blocks (siehe Reihenfolge-Diagramm im Abschnitt oben) — identisch zur Platzierung im Quizfragen-Modus.
+
+**Visuelle Gestaltung/Attribution/Reset/Fehlerbehandlung:** identisch zum bestehenden Abschnitt "Bild-Rateshilfe: Automatische Anzeige nach der Antwort" oben (fester Bildrahmen mit abgerundeten Ecken, "Foto: {Artist} · Wikimedia Commons"-Attributionszeile mit optionalem "(Lizenz)"-Link, stilles Einpoppen ohne Ladeindikator, stilles Ausblenden bei Fehlschlag/fehlendem Bild, `alt="{name_de}"`) — keine abweichende Gestaltung nötig, nur ein neuer Bildschirm mit demselben Muster.
+
+**Kein Duplikat-Problem wie beim Quizfragen-Modus:** Da es in diesem Modus (bewusst, siehe oben) keinen Pre-Answer-Bild-Button gibt, entfällt die dortige Sonderbehandlung "nicht anzeigen, falls bereits manuell aufgedeckt" — das Bild erscheint im Tiergeräusche-Modus schlicht bei jeder Antwort (sofern `image_filename` vorhanden), ohne Sonderfall.
+
+**Beide Altersstufen:** Gleiche Darstellung, kein Unterschied.
+
+## Ergänzung: Play/Pause-Toggle beim Tierlaut-Button (Issue #43, 16.08.2026, `ux-design`)
+
+Ergänzt den Abschnitt "Frage-/Feedback-Bildschirm 'Tiergeräusche'" oben, Unterabschnitt "Abspiel-/Wiederholungs-Interaktion" — der dort bereits als Detail erwähnte optische Wiedergabe-Indikator ("Während der Wiedergabe kann der Button optisch leicht abweichen") wird hier zu einer echten Interaktion konkretisiert: **erneutes Antippen während der Wiedergabe stoppt den Ton**, statt ihn (wie bisher) einfach von vorne neu zu starten.
+
+**Entscheidung: Stop-und-Zurücksetzen, kein Pause-mit-Fortsetzen.** Tierlaute sind kurze Clips; ein Wiederaufnehmen mitten im Clip bringt für die Kernaufgabe "am ganzen Laut erkennen" keinen Mehrwert und wäre potenziell verwirrender als ein einfaches Ein/Aus. Nach dem Stoppen setzt ein erneuter Tap den Ton wieder ganz von vorne fort (unverändert zum bestehenden "beliebig oft wiederholbar").
+
+**Zustands-/Label-Wechsel:**
+- Abspielbereit, noch nie gespielt: Icon 🔊, `aria-label="Tierlaut abspielen"`.
+- Abspielbereit, bereits mind. einmal gespielt (inkl. nach Stoppen oder natürlichem Ende): Icon 🔊, `aria-label="Tierlaut noch einmal abspielen"` (unverändert zum bestehenden Verhalten).
+- Spielt gerade: Icon wechselt zu einem klar erkennbaren "Stopp"-Symbol (z. B. ⏹️), `aria-label="Tierlaut stoppen"`.
+
+**Kein neuer Ladezustand:** Der bestehende, dezente Puffer-Indikator (`waiting`/`playing`-Events, aria-busy) bleibt unverändert bestehen und ist von diesem Toggle-Verhalten unabhängig.
+
+**Barrierefreiheit:** Der Zustandswechsel muss über das `aria-label` erkennbar sein (siehe oben) — kein zusätzlicher `aria-live`-Hinweis nötig, da der Button selbst fokussiert bleibt und der Label-Wechsel beim erneuten Fokussieren/Vorlesen erkennbar ist, analog zum bestehenden Muster bei anderen zustandsabhängigen Buttons im Projekt (z. B. `image-hint-button`).
+
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
 
 Alle vorherigen offenen Fragen sind geklärt: Zielalter → zwei Stufen 6–10/10–12 (siehe "Zielgruppe"), Sound-Effekte → nein, Fragenanzahl → 10 pro Runde (fest), Weiter-Mechanik → manueller Button, Sprache → Deutsch. Details jeweils in den Abschnitten oben eingearbeitet.

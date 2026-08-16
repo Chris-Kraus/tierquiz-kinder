@@ -715,6 +715,66 @@ Der Nutzer hat drei neue Spielmodi vorgeschlagen (Umkehr-Quiz, Fehlerbild, Tierg
 
 **Kein Einfluss auf bestehende Kappungslogik** (`MAX_HISTORY_ENTRIES = 5`) — unverändert.
 
+## Infosatz/Wikipedia-Link/Fun Fact + automatisches Bild im "Tiergeräusche"-Modus: Wiederverwendbarkeit (Issues #41/#42, 16.08.2026, `software-architect`)
+
+**Frage von `business-analyst`:** Können `buildInfoSentence()`/die Wikipedia-Link-Anzeige (bereits für Issue #35 im "Wer bin ich?"-Modus geprüft) sowie der automatische Feedback-Bild-Mechanismus aus `imageHint.js` (Issue #30) auch für den Tiergeräusche-Bildschirm (`src/screens/soundQuestion.js`) wiederverwendet werden?
+
+**Antwort: Ja für beide, ein kleiner, aber notwendiger Vorbereitungsschritt fehlt aktuell.**
+
+- **`buildInfoSentence(animal, rng)` und die Wikipedia-Link-Prüfung (`animal?.wikipedia_url_de`) sind unverändert übertragbar** — identische Begründung wie bereits für Issue #35 dokumentiert (siehe Abschnitt "Infosatz + Wikipedia-Link im 'Wer bin ich?'-Modus: Wiederverwendbarkeit" oben): beide Bausteine kennen nur ein Tier-Objekt, keinen Fragetyp/Modus.
+- **`fun_fact` ist ebenfalls ein reines Tier-Feld** (`animal?.fun_fact`), keine Modus-Abhängigkeit — identisch übertragbar.
+- **Wichtiger Unterschied zu #35, der vor der Umsetzung behoben werden muss:** `src/screens/soundQuestion.js` baut aktuell **keinen** `animalById`-Lookup auf (anders als `question.js`, das ihn direkt zu Beginn von `renderQuestionScreen()` aus `animalsData.animals` erzeugt). Die Frage-Objekte aus `generateNextSoundQuestion()` tragen zwar bereits `animalId` und `animalName` (siehe `soundQuestionGenerator.js`), aber **nicht** das volle Tier-Objekt (kein `wikipedia_url_de`, `fun_fact`, `category`, `habitat` etc. — diese Felder werden für die Fragegenerierung selbst nicht gebraucht und daher dort nicht mitgeführt). `handleAnswer()` in `soundQuestion.js` braucht daher zusätzlich einen `animalById`-Lookup (identisches Ein-Zeiler-Muster wie in `question.js`: `new Map(animalsData.animals.map((animal) => [animal.id, animal]))`, aus dem bereits importierten `animalsData`) und muss `answeredAnimal = animalById.get(question.animalId)` vor dem Aufruf von `buildInfoSentence()`/den übrigen Checks auflösen. Kein Datenschema-Risiko: `animalId` ist bereits Teil jedes Sound-Fragenobjekts (`buildSoundQuestion()` in `soundQuestionGenerator.js`), der Lookup ist ein reiner Laufzeit-Convenience-Schritt, kein neues Feld.
+- **`imageHint.js`-Hilfsfunktionen (`buildCommonsImageInfoUrl`, `extractImageInfo`, `buildAttribution`) sind unverändert wiederverwendbar** für das automatische Feedback-Bild (#42) — identischer Mechanismus wie bei #30, ebenfalls abhängig vom oben beschriebenen `animalById`-Lookup, um an `animal.image_filename` zu kommen. **Anders als #30 im Quizfragen-Modus entfällt der dortige Duplikat-Check** (`!imageHintEl.hidden`) komplett, da es im Tiergeräusche-Modus laut `ux-design`-Entscheidung (siehe `design.md`) bewusst **keinen** Pre-Answer-Bild-Button gibt — die Implementierung ist dadurch sogar etwas einfacher als bei #30 (kein Sichtbarkeits-Check gegen einen zweiten DOM-Bereich nötig, das Bild wird bei jeder Antwort schlicht immer versucht).
+- **Datenlage:** `image_filename` ist für 500/500 Tiere vorhanden (Issue #16), also zwangsläufig auch für alle 157 Tiere mit `audio_filename` — kein Abdeckungsrisiko für #42.
+- **Kein neues globales State-Feld** in `src/quiz/state.js` nötig für beide Stories — identisches Prinzip wie bei #30/#35 (rein UI-lokaler Zustand des jeweiligen Bildschirms, Stale-Response-Schutz per lokaler Request-ID/AbortController wie bereits in `soundQuestion.js` für den Audio-Ladezustand etabliert).
+
+**Reihenfolge #41 vs. #42:** Technisch unabhängig voneinander umsetzbar (unterschiedliche DOM-Bereiche, kein geteilter Zustand) — die in `design.md` festgelegte finale Anzeige-Reihenfolge (Feedback → Bild → Infosatz → Fun Fact → Weiter) lässt sich unabhängig von der Umsetzungsreihenfolge der beiden Stories per CSS/Markup-Position erreichen, kein Merge-Konfliktrisiko zwischen beiden.
+
+**Aufwand:** Klein für beide Stories — kein neuer Netzwerk-Mechanismus, keine Schema-Änderung, nur DOM-Verdrahtung + der eine ergänzende `animalById`-Lookup, identisches Muster wie #15/#24/#30/#35.
+
+## Play/Pause-Toggle beim Tierlaut-Button (Issue #43, 16.08.2026, `software-architect`)
+
+**Frage von `business-analyst`:** Ist ein echtes Play/Stop-Toggle im bestehenden `handlePlayClick()` (`src/screens/soundQuestion.js`) risikoarm umsetzbar?
+
+**Antwort: Ja, kleine, lokal begrenzte Änderung, kein neuer Mechanismus nötig.**
+
+Aktuell:
+```js
+function handlePlayClick() {
+  if (!audioEl.src) return;
+  hasPlayedOnce = true;
+  updatePlayButtonLabel();
+  audioEl.currentTime = 0;
+  audioEl.play().catch(() => {});
+}
+```
+
+**Empfohlene Umsetzung:** Zustandsabfrage über `audioEl.paused` (natives, immer korrektes Flag des `<audio>`-Elements, kein eigener Tracking-State nötig, kein Risiko eines aus der Reihe laufenden manuellen Zustands):
+
+```js
+function handlePlayClick() {
+  if (!audioEl.src) return;
+  if (!audioEl.paused) {
+    audioEl.pause();
+    audioEl.currentTime = 0;
+    return;
+  }
+  hasPlayedOnce = true;
+  audioEl.currentTime = 0;
+  audioEl.play().catch(() => {});
+}
+```
+
+**Icon-/Label-Synchronisation über bestehende Audio-Events, nicht über den Klick-Handler allein:** Die bereits vorhandenen `waiting`/`playing`-Listener (aria-busy-Steuerung, siehe bestehender Code) werden um einen `pause`-Listener ergänzt, der Icon/`aria-label` zurück in den abspielbereiten Zustand setzt. Wichtig: Das `<audio>`-Element feuert `pause` zuverlässig sowohl bei manuellem `audioEl.pause()` **als auch** beim natürlichen Ende der Wiedergabe (Browser setzen `paused = true` und feuern `pause`, bevor `ended` feuert) — ein einziger `pause`-Listener deckt daher beide Fälle ab ("manuell gestoppt" und "von selbst zu Ende"), kein separater `ended`-Listener nötig, kein Risiko eines im "spielt gerade"-Zustand hängenbleibenden Buttons.
+- `playing`-Listener (bereits vorhanden): setzt Icon/Label auf "spielt gerade" ("Tierlaut stoppen").
+- `pause`-Listener (neu): setzt Icon/Label zurück auf "abspielbereit" (Label abhängig von `hasPlayedOnce`, wie bisher).
+
+**Kein neuer globaler/geteilter Zustand:** Icon-/Label-Wechsel ist reine DOM-/CSS-Angelegenheit (z. B. eine Modifier-Klasse `sound-play-button--playing`, umgeschaltet in denselben zwei Listenern), keine Änderung an `quizState`/`state.js`.
+
+**Kein Einfluss auf bestehende Ladezustands-/Fehlerlogik** (`showLoadingState()`, `showErrorState()`, Stale-Response-Schutz über `loadRequestId`) — der Toggle betrifft ausschließlich das Verhalten innerhalb einer bereits erfolgreich geladenen Frage, nicht den Ladevorgang selbst. `showLoadingState()` ruft bereits `audioEl.pause()` beim Frage-Wechsel auf (bestehender Reset) — das setzt automatisch auch den neuen `pause`-Listener aus, der bereits laufende Reset-Pfad muss nicht angepasst werden.
+
+**Aufwand:** Sehr klein — lokale Änderung an einer bestehenden Funktion plus ein neuer Event-Listener, keine neue Architektur-Entscheidung.
+
 ## Bugfix-Historie
 
 ### Englischer Fallback bei Habitat-/Kontinent-Labels ("coastal margin" beim Seeotter, 15.08.2026, `software-architect`)
