@@ -547,6 +547,135 @@ describe("renderSoundQuestionScreen (Issue #33)", () => {
       expect(audioEl.currentTime).toBe(0);
       expect(window.HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(1);
     });
+
+    // QA-Bug-Report Zyklus 2 (Issue #43): sofortiger Stop-Klick, BEVOR die
+    // Wiedergabe tatsächlich begonnen hat -- der Browser puffert noch (nur
+    // `waiting` bereits gefeuert), `playing` steht zu diesem Zeitpunkt noch
+    // aus und wird durch den Stop auch nie mehr eintreffen. Vor dem Fix blieb
+    // aria-busy am Play-Button dauerhaft "true" hängen (5/5 reproduziert laut
+    // QA), da es ausschließlich im `playing`-Handler zurückgesetzt wurde.
+    it("setzt aria-busy am Play-Button zurück, wenn der Nutzer stoppt, BEVOR die Wiedergabe tatsächlich begonnen hat (nur waiting, kein playing)", async () => {
+      generateNextSoundQuestion.mockResolvedValue(buildQuestion());
+      const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);
+      const { container } = render(quizState);
+      await vi.waitFor(() =>
+        expect(container.querySelector(".sound-play-button").hidden).toBe(
+          false,
+        ),
+      );
+
+      const playButton = container.querySelector(".sound-play-button");
+      const audioEl = container.querySelector(".sound-question__audio");
+
+      // Erster Klick startet die Wiedergabe -- audioEl.paused ist zu diesem
+      // Zeitpunkt noch im jsdom-Default (`true`, play() ist oben No-Op-
+      // gestubbt), löst also unverändert den Start-Zweig aus (identisches
+      // Muster wie die übrigen Tests in diesem describe-Block).
+      playButton.click();
+      expect(window.HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(1);
+
+      // `paused` wird beim play()-Aufruf im echten Browser synchron auf
+      // `false` gesetzt (Spec), lange bevor `playing` feuert (Datei-Kommentar
+      // oben) -- hier über die gemockte Getter-Property nachgebildet, damit
+      // der zweite Klick unten den "läuft bereits"/Stop-Zweig auslöst.
+      const pausedSpy = vi
+        .spyOn(window.HTMLMediaElement.prototype, "paused", "get")
+        .mockReturnValue(false);
+
+      audioEl.dispatchEvent(new Event("waiting")); // Browser puffert noch
+      expect(playButton.getAttribute("aria-busy")).toBe("true");
+
+      // Sofortiger Stop-Klick, bevor `playing` je gefeuert hat.
+      playButton.click();
+      pausedSpy.mockReturnValue(true);
+
+      // Kein `playing`-Event trifft je ein -- der Fix darf sich also NICHT
+      // ausschließlich auf den `playing`-Handler verlassen.
+      expect(playButton.getAttribute("aria-busy")).toBe("false");
+      // hasPlayedOnce wurde bereits beim ersten Klick synchron gesetzt
+      // (bestehendes Verhalten, unabhängig vom Fix hier) -- das Label bleibt
+      // daher auf "noch einmal abspielen", nur aria-busy/Icon/--playing sind
+      // hier relevant.
+      expect(playButton.getAttribute("aria-label")).toBe(
+        "Tierlaut noch einmal abspielen",
+      );
+      expect(
+        playButton.querySelector(".sound-play-button__icon").textContent,
+      ).toBe("🔊");
+      expect(
+        playButton.classList.contains("sound-play-button--playing"),
+      ).toBe(false);
+    });
+
+    // Ergänzt den obigen Test um die zweite, event-basierte Absicherung
+    // (`pause`-Listener) -- deckt den Fall ab, dass der reale Browser das
+    // `pause`-Event asynchron erst nach dem Klick zustellt.
+    it("setzt aria-busy auch über das nachträglich eintreffende pause-Event zurück, falls es noch nicht busy war", async () => {
+      generateNextSoundQuestion.mockResolvedValue(buildQuestion());
+      const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);
+      const { container } = render(quizState);
+      await vi.waitFor(() =>
+        expect(container.querySelector(".sound-play-button").hidden).toBe(
+          false,
+        ),
+      );
+
+      const playButton = container.querySelector(".sound-play-button");
+      const audioEl = container.querySelector(".sound-question__audio");
+
+      // Erster Klick startet die Wiedergabe (Default-`paused`, siehe Test
+      // oben).
+      playButton.click();
+      vi.spyOn(window.HTMLMediaElement.prototype, "paused", "get").mockReturnValue(
+        false,
+      );
+      audioEl.dispatchEvent(new Event("waiting"));
+      expect(playButton.getAttribute("aria-busy")).toBe("true");
+
+      // `pause` feuert (z. B. asynchron nach einem `audioEl.pause()`-Aufruf)
+      // -- unabhängig vom synchronen Reset im Klick-Handler muss auch dieser
+      // Pfad allein aria-busy zuverlässig zurücksetzen.
+      audioEl.dispatchEvent(new Event("pause"));
+
+      expect(playButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    // QA-Bug-Report Zyklus 2 (Issue #43): ein `waiting`-Event, das erst NACH
+    // einem bereits erfolgten manuellen Stop eintrifft (spät zugestelltes
+    // Event aus dem inzwischen abgebrochenen Puffervorgang), darf den Button
+    // nicht erneut in den Busy-Zustand versetzen.
+    it("ignoriert ein verspätet eintreffendes waiting-Event NACH manuellem Stopp (Button bleibt nicht busy)", async () => {
+      generateNextSoundQuestion.mockResolvedValue(buildQuestion());
+      const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);
+      const { container } = render(quizState);
+      await vi.waitFor(() =>
+        expect(container.querySelector(".sound-play-button").hidden).toBe(
+          false,
+        ),
+      );
+
+      const playButton = container.querySelector(".sound-play-button");
+      const audioEl = container.querySelector(".sound-question__audio");
+
+      // Erster Klick startet die Wiedergabe (Default-`paused`, siehe Test
+      // oben).
+      playButton.click();
+
+      const pausedSpy = vi
+        .spyOn(window.HTMLMediaElement.prototype, "paused", "get")
+        .mockReturnValue(false);
+
+      // Stop, bevor der Browser das erste `waiting` überhaupt zugestellt hat.
+      playButton.click();
+      pausedSpy.mockReturnValue(true);
+      expect(playButton.getAttribute("aria-busy")).toBe("false");
+
+      // Jetzt trifft das veraltete `waiting`-Event aus dem bereits
+      // abgebrochenen Puffervorgang ein.
+      audioEl.dispatchEvent(new Event("waiting"));
+
+      expect(playButton.getAttribute("aria-busy")).toBe("false");
+    });
   });
 
   it("ruft onFinish nach der letzten Frage mit korrektem Punktestand und vollständiger Fragenliste auf", async () => {

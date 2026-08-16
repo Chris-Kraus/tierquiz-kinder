@@ -644,6 +644,23 @@ export function renderSoundQuestionScreen(
     if (!audioEl.paused) {
       audioEl.pause();
       audioEl.currentTime = 0;
+      // QA-Bug-Report Zyklus 2 (Issue #43): bei einem sofortigen Stop-Klick,
+      // BEVOR die Wiedergabe tatsächlich begonnen hat (nur `waiting` bereits
+      // gefeuert, `playing` steht noch aus, da der Browser noch puffert),
+      // blieb aria-busy sonst dauerhaft "true" hängen — es wurde bislang
+      // AUSSCHLIESSLICH im `playing`-Handler unten zurückgesetzt, der in
+      // diesem Fall nie mehr feuert (der Ton wird ja gerade gestoppt statt
+      // gestartet). Direkter, synchroner Reset hier im Stop-Pfad ist
+      // deterministisch unabhängig davon, ob/wann ein `pause`-Event eintrifft
+      // (siehe zusätzlicher Reset im `pause`-Listener unten als zweite
+      // Absicherung) — kein Warten auf einen Event-Rundlauf nötig, der
+      // Screenreader-Nutzer sonst kurz (oder im Bug-Fall dauerhaft) im
+      // Lade-Spinner-Zustand hängen ließe. Ein `abort`-Event wäre hier keine
+      // verlässliche Alternative: `audioEl.pause()` bricht laut Spec nicht
+      // zwangsläufig den laufenden Ressourcen-Ladevorgang ab (das täte erst
+      // `load()`/ein neuer `src`), `abort` feuert in diesem Szenario daher
+      // nicht zuverlässig.
+      playButtonEl.setAttribute("aria-busy", "false");
       return;
     }
 
@@ -664,6 +681,14 @@ export function renderSoundQuestionScreen(
   // question.js) — `waiting` feuert, sobald der Browser für die Wiedergabe
   // puffern muss; `playing` sobald die Wiedergabe tatsächlich läuft.
   audioEl.addEventListener("waiting", () => {
+    // QA-Bug-Report Zyklus 2 (Issue #43): analog zum bestehenden
+    // audioEl.paused-Guard im `playing`-Handler unten (Zyklus 1) — ein
+    // `waiting`-Event, das erst NACH einem bereits erfolgten manuellen Stop
+    // eintrifft (spät zugestelltes Event aus dem inzwischen abgebrochenen
+    // Puffervorgang), darf den Button nicht erneut in den Busy-Zustand
+    // versetzen, obwohl der Stop-Klick ihn synchron bereits zurückgesetzt hat
+    // (siehe handlePlayClick oben).
+    if (audioEl.paused) return;
     playButtonEl.setAttribute("aria-busy", "true");
   });
   audioEl.addEventListener("playing", () => {
@@ -694,6 +719,13 @@ export function renderSoundQuestionScreen(
   // bleibenden Buttons (architecture.md, Issue #43).
   audioEl.addEventListener("pause", () => {
     setPlayButtonPlaying(false);
+    // QA-Bug-Report Zyklus 2 (Issue #43): zweite, event-basierte Absicherung
+    // zusätzlich zum synchronen Reset im Stop-Pfad von handlePlayClick oben —
+    // `pause` feuert laut Spec zuverlässig bei JEDEM Übergang von "läuft"/
+    // "puffert" zu "gestoppt" (siehe Kommentar unten), unabhängig davon, ob
+    // zu diesem Zeitpunkt bereits `playing` gefeuert hat. Deckt damit auch
+    // Fälle ab, die (noch) nicht über den Klick-Handler laufen.
+    playButtonEl.setAttribute("aria-busy", "false");
   });
 
   function handleAnswer(selectedButton, question) {
