@@ -775,6 +775,91 @@ function handlePlayClick() {
 
 **Aufwand:** Sehr klein — lokale Änderung an einer bestehenden Funktion plus ein neuer Event-Listener, keine neue Architektur-Entscheidung.
 
+## Neuer Spielmodus "Tier-Memory": Finale technische Leitplanken (Issue #45, 16.08.2026, `software-architect`, umsetzungsreif)
+
+**Grundprinzip:** Wiederverwendung des vollständigen, bereits zweimal produktiv bewährten Live-Bild-Mechanismus aus Issue #16/#28 (`imageHint.js`: `buildCommonsImageInfoUrl`, `extractImageInfo`, `buildAttribution`, alle **unverändert** wiederverwendbar) — kein neuer Netzwerk-Mechanismus, kein neues Datenfeld. Der einzige echte Neubau ist die **Batch-Vorab-Auflösung mehrerer Bilder gleichzeitig** (statt eines einzelnen Bildes pro Frage wie bei #28/#33) sowie die reine Spiellogik (Kartenzustand, Paarvergleich).
+
+**1. Modus-Konstante (`src/quiz/gameMode.js`):** Neuer Wert `MEMORY: "memory"` in `GAME_MODE`, analog zu `REVERSE`/`SOUND`. Kein Bezug zu `state.questions`/`roundLength` in der bisherigen Bedeutung nötig (siehe Punkt 4).
+
+**2. Kartenpaar-Auswahl und Bild-Vorab-Auflösung — eigene, neue Funktion (Arbeitsname `buildMemoryDeck(animals, difficulty, rng)`):**
+- Kandidatenpool: alle Tiere mit befülltem `image_filename` (100 % Abdeckung, siehe Issue #16). Zieht `getMemoryPairCount(difficulty)` (neue kleine Funktion in `difficulty.js`, liefert 6 bzw. 12, siehe `design.md`-Tabelle) eindeutige Tiere per Zufall (dedupe nach `name_de`, analog `dedupeAnimalsByName`, um z. B. nicht zwei sehr ähnlich benannte Einträge zu ziehen).
+- **Batch-Auflösung, nicht Pro-Frage-Auflösung wie bei #27/#32:** Anders als bei "Wer bin ich?"/"Tiergeräusche" (dort wird pro Einzelfrage on demand nachgeladen) müssen bei Memory **alle** Kartenbilder bereits feststehen, bevor das Brett überhaupt angezeigt wird — ein Kind kann jede Karte in beliebiger Reihenfolge aufdecken, ein Nachladen "on demand beim ersten Aufdecken" würde zu inkonsistenten Wartezeiten mitten im Spiel führen (design.md verlangt zudem einen einheitlichen Ladebildschirm vor Rundenstart, keinen Pro-Karte-Ladezustand). Empfehlung: `Promise.all()` über alle gezogenen Tiere (jeweils ein `imageinfo`-Call, identische URL-Konstruktion wie bisher), mit demselben Timeout (`REQUEST_TIMEOUT_MS`, 3500 ms) pro Einzelabruf wie bei der bestehenden Bild-Rateshilfe.
+- **Retry mit Ersatztier bei Einzelfehlschlag, kein Rundenabbruch:** Schlägt die Auflösung für ein gezogenes Tier fehl, wird (wie bei #27/#32) bis zu 3-mal ein anderes, noch nicht gezogenes Tier nachgezogen und erneut versucht, bevor die gesamte Funktion einen Fehler an den Aufrufer liefert. Bei 100 % P18-Abdeckung ist ein Fehlschlag ausschließlich netzwerkbedingt (Timeout/kein Netz), nicht datenbedingt — ein einzelner Fehlschlag ist ein Einzelfall, kein systematischer Ausfall (identische Einschätzung wie bei #27/#32).
+- **Vollständiger Fehlschlag (z. B. kein Netz von Anfang an):** Wie bei #26/#31 wird das beim **Versuch, den Modus zu betreten** (Tap auf die "Tier-Memory"-Kachel) abgefangen — der Deck-Aufbau ist der Testabruf, identisches Prinzip wie bei den bestehenden Modi. Auswahl verbleibt bei "Quizfragen", freundlicher Hinweis (siehe `design.md`/bestehende Zustandstabelle).
+- **Kartenobjekt-Struktur:** Aus jedem aufgelösten Tier werden **zwei** Karten-Einträge erzeugt (`{ cardId, animalId, thumbUrl, artist, licenseUrl }`, `cardId` z. B. `` `${animalId}-a` ``/`` `${animalId}-b` ``), danach das gesamte Karten-Array gemischt (Fisher-Yates mit derselben `rng`-Konvention wie der bestehende Fragegenerator) — Kartenposition ist damit unabhängig von der Ziehreihenfolge der Tiere.
+
+**3. Spiellogik — reiner UI-lokaler Zustand, kein neues globales State-Feld:**
+- Analog zu #27/#32/#28/#33: Kartenzustand (aufgedeckt/gelöst/verdeckt je `cardId`, aktuell aufgedeckte Karte(n), Versuchszähler) lebt vollständig lokal im neuen Bildschirm-Modul (`src/screens/memory.js`), nicht in `src/quiz/state.js`. Einziger Touchpunkt zu `state.js`: `state.mode = GAME_MODE.MEMORY` (Auswahl am Start) und optional ein einfacher Abschluss-Callback für den Ergebnis-Bildschirm (siehe Punkt 4).
+- Paarvergleich ist eine reine, leicht testbare Funktion ohne DOM-Bezug (Arbeitsname `checkMatch(cardA, cardB)` → vergleicht `animalId`), auslagerbar in `src/quiz/memory.js` (Logik) getrennt von `src/screens/memory.js` (Darstellung) — konsistent mit der bestehenden Projekt-Trennung `quiz/` (Logik) vs. `screens/` (Darstellung).
+
+**4. Rundenstruktur/Ergebnis — bewusste Abweichung vom bestehenden `state.questions`/`isQuizFinished()`-Muster:**
+- Da es keine Einzelfragen gibt, wird `state.questions`/`roundLength` für den Memory-Modus **nicht** im bisherigen Sinn befüllt (kein Fragen-Array, keine `currentIndex`-Iteration). `src/main.js` verzweigt bei `mode === GAME_MODE.MEMORY` auf den neuen `memory.js`-Bildschirm, der eigenständig weiß, wann das Brett vollständig gelöst ist (alle Karten `solved`), und dann direkt den bestehenden Ergebnis-Bildschirm mit angepasstem Text aufruft (siehe `design.md`) — kein Versuch, das bestehende `isQuizFinished()`/`recordAnswer()`-Muster künstlich auf ein strukturell anderes Spiel zu pressen (Overengineering-Vermeidung).
+- **Explizit kein Eintrag in der Ergebnis-Verlaufsliste (#14/#36) in dieser Version** — technisch begründet: `score`/`total` (Issue #14) modellieren "richtig von N Fragen", nicht "Versuche bis zur Lösung eines Memory-Bretts". Eine spätere Erweiterung (z. B. neues optionales Feld `attempts` statt `score`/`total`) wäre möglich, ist aber eine eigene, spätere Entscheidung (`business-analyst`) mit eigenem Story-Zuschnitt — kein Blocker für #45 selbst.
+
+**5. `difficulty.js`-Erweiterung:** Neue, kleine, von `getFieldsForDifficulty()` unabhängige Funktion:
+```js
+const MEMORY_PAIR_COUNTS = Object.freeze({
+  [DIFFICULTY_LEVELS.EASY]: 6,
+  [DIFFICULTY_LEVELS.HARD]: 12,
+});
+export function getMemoryPairCountForDifficulty(difficulty) {
+  assertKnownDifficulty(difficulty, "getMemoryPairCountForDifficulty");
+  return MEMORY_PAIR_COUNTS[difficulty];
+}
+```
+Bewusst **nicht** über `getFieldsForDifficulty()`/`EASY_FIELDS`/`HARD_FIELDS` modelliert — Memory nutzt keine Tierdatenbank-Felder für die Fragestellung selbst (nur `image_filename`), die Schwierigkeit steuert hier eine reine Zahl, kein Feld-Set. Eigene, parallele Funktion ist klarer als ein künstliches Pseudofeld wie `heaviest_animal`/`confusion_pair`.
+
+**NFR-1-Hinweis (Rückmeldung an `business-analyst`, kein rein technischer Punkt):** Wie bei Umkehr-Quiz/Tiergeräusche ist der **gesamte Modus** ohne Internetverbindung nicht spielbar, da das Bild kein optionaler Zusatz, sondern die Karten selbst sind. Anders als bei jenen beiden Modi ist diese Ausweitung laut `requirements.md` ("Entscheidungen zu den offenen Fragen", Punkt 1) **nicht** automatisch durch die bestehende Nutzer-Entscheidung gedeckt ("kein pauschaler Freibrief für künftige Online-Abhängigkeiten") — technisch gibt es aber keine sinnvolle Alternative, die weiterhin "Basis sind die Bilder, die aktuell schon vorhanden sind" (Issue-Text) erfüllt, ohne Bilder neu lokal zu bündeln (was der bestehenden, bindenden Entscheidung gegen lokales Bild-Bundling widerspräche). Empfehlung: gleiche Behandlung wie #26/#31 (Vorab-Check beim Moduseinstieg, freundliches Abfangen ohne Internet), aber die formale Bestätigung dieser NFR-1-Erweiterung sollte laut eigener Projekt-Vorgabe explizit eingeholt werden, siehe Rückfrage in `requirements.md`.
+
+**Aufwand:** Klein-mittel — kein neuer Netzwerk-Mechanismus (vollständige Wiederverwendung von `imageHint.js`), aber ein neues Bildschirm-Modul mit eigener, in dieser Form neuer Spiellogik (Kartenzustand, Batch-Auflösung mit `Promise.all()`, Mischen). Vergleichbar mit dem Aufwand von #27+#28 zusammen, da Fragegenerierung und Bildschirm hier nicht sinnvoll auf zwei Stories aufteilbar sind (die Batch-Logik und die Kartendarstellung sind eng gekoppelt, anders als bei #27/#28, wo die Pro-Frage-Generierung unabhängig vom Bildschirm-Rendering testbar war).
+
+## Neuer Spielmodus "Buchstabensuche": Finale technische Leitplanken (Issue #46, 16.08.2026, `software-architect`, umsetzungsreif)
+
+**Grundprinzip:** Strukturell am nächsten zu "Wer bin ich?" (#26/#27/#28) — Pro-Frage-Vorab-Auflösung eines einzelnen Bildes, reguläre Rundenstruktur mit `state.questions`/`roundLength`/Fortschrittsanzeige. Der eigentliche Unterschied liegt ausschließlich in der **Antwortmechanik** (Buchstaben-Eingabe statt 4 Antwortkacheln) — kein neuer Netzwerk- oder Bildauflösungs-Mechanismus nötig, volle Wiederverwendung von `imageHint.js` wie bei #27.
+
+**1. Modus-Konstante:** Neuer Wert `LETTER_SEARCH: "letterSearch"` in `GAME_MODE`.
+
+**2. Fragegenerierung — eigene, asynchrone Pro-Frage-Funktion (Arbeitsname `generateNextLetterSearchQuestion(animals, usedAnimalIds, rng)`):**
+- Strukturell identisch zu `generateNextReverseQuestion()` (#27): Zieltier-Pool = Tiere mit `image_filename` (100 %), Bildauflösung vorab mit bis zu 3 Retry-Versuchen, `usedAnimalIds`-Ausschluss.
+- **Kein Falschantworten-Ziehen nötig** (Unterschied zu #27/#32) — es gibt keine 4 Antwortoptionen, nur den einen Zielnamen (`name_de`), der Buchstabe für Buchstabe eingegeben wird. Das vereinfacht die Funktion gegenüber `generateNextReverseQuestion()`: kein `category`-basiertes Distraktor-Ziehen, kein Dedupe-nach-Name für Distraktoren nötig (nur für das Zieltier selbst, gegen `usedAnimalIds`).
+- **Kein neues Datenfeld:** `image_filename` (bestehend) reicht als Basis, `name_de` (bestehend, Pflichtfeld) ist der zu erratende Text.
+
+**3. Lücken-Berechnung — reine, DOM-freie, gut testbare Funktion (Arbeitsname `buildLetterPuzzle(name, difficulty)` in einem neuen, kleinen Modul `src/quiz/letterPuzzle.js`):**
+- Nimmt `name_de` (z. B. `"Großer Panda"`) und die Schwierigkeitsstufe entgegen, liefert eine Struktur wie:
+  ```js
+  [
+    { char: "G", type: "given" },
+    { char: "r", type: "blank" },
+    // ...
+    { char: " ", type: "separator" },
+    { char: "P", type: "given" },
+    // ...
+  ]
+  ```
+- **Positionsregel je Namensteil** (siehe `design.md`-Tabelle): Zählung startet bei jedem durch Leerzeichen/Bindestrich getrennten Namensteil neu bei 1 (nicht über den Gesamtnamen hinweg durchgezählt) — verhindert, dass die Regel bei einem zweiten Namensteil "zufällig" mitten in einem Wort beginnt. Erster/letzter Buchstabe jedes Teils ist laut `design.md` immer `given` (Einfach: zusätzlich erster+letzter; Knifflig: nur erster) — das wird als Override **nach** der Modulo-Regel angewendet (Override hat Vorrang vor "type: blank" aus der Modulo-Berechnung).
+- **Umlaute/ß:** werden wie normale Buchstaben behandelt (jeweils **ein** `char`-Eintrag pro Unicode-Zeichen, kein Sonderfall) — `String.prototype.length`/Iteration über deutsche Umlaute ist in JavaScript unproblematisch (kein Surrogate-Pair-Risiko wie bei Emoji), keine Sonderbehandlung nötig.
+- Reine Funktion, kein Zufall/kein `rng`-Parameter nötig (die Lücken-Positionen sind deterministisch aus Name + Schwierigkeit, nicht zufällig) — vollständig unit-testbar ohne Mocking, analog zu `difficulty.js`/`infoSentence.js`.
+
+**4. Eingabe-Validierung — case-insensitive, pro Zeichen:**
+- Vergleich erfolgt über `char.toLocaleLowerCase("de-DE") === expected.toLocaleLowerCase("de-DE")` (nicht das einfachere `toLowerCase()`, da `toLocaleLowerCase("de-DE")` das deutsche Gebietsschema korrekt anwendet, u. a. für ß-relevante Randfälle) — reine `screens/letterSearch.js`-lokale Prüfung pro Eingabefeld, kein Bezug zu `state.js`.
+- Bei korrekter Eingabe: Feld wird `readonly`/gesperrt (zeigt fortan `char` aus `buildLetterPuzzle()` in korrekter Schreibweise, nicht die rohe Kind-Eingabe — vermeidet z. B. sichtbare Kleinschreibung am Namensanfang), Fokus wandert zum nächsten `blank`-Feld.
+- Bei falscher Eingabe: Feld wird geleert, kurze Fehlermeldung eingeblendet (siehe `design.md`), Fokus bleibt auf demselben Feld für den nächsten Versuch.
+- **Kein neues State-Feld für Fehlversuche** — laut `design.md` bewusst nicht gezählt/angezeigt, daher auch technisch nicht nötig, sie zu tracken.
+
+**5. Abschluss einer Frage/Übergang zur nächsten:** Sobald alle `blank`-Felder korrekt gefüllt sind, wird intern derselbe `recordAnswer()`-Aufruf wie im bestehenden Quizfragen-Modus genutzt (`correct: true` — es gibt hier strukturell kein "falsch beantwortet", das Kind löst durch Wiederholung immer richtig, siehe `design.md`), damit `state.score`/`state.answers` und die bestehende Fortschritts-/Rundenlogik (`advanceToNextQuestion`, `isQuizFinished`) **unverändert** weiterlaufen — kein Sonderfall in `state.js` nötig. Der anschließende Infosatz-/Wikipedia-Link-/Fun-Fact-Block sowie der "Weiter"-Button funktionieren identisch zum bestehenden Feedback-Bereich.
+- **Konsequenz für den Ergebnis-Bildschirm:** Da `correct` strukturell immer `true` ist, zeigt der bestehende Ergebnis-Bildschirm automatisch "10 von 10 richtig" o. ä. — das ist **beabsichtigt und keine Sonderbehandlung wert** (siehe `design.md`: kein Wettbewerbs-/Bewertungscharakter in diesem Modus, das Ergebnis bestätigt lediglich "alle Namen erfolgreich zusammengesetzt"). **Empfehlung an `business-analyst`:** falls das im Ergebnis-Text missverständlich wirkt (z. B. "10 von 10 richtig beantwortet" passt semantisch nicht ganz zu "10 Namen zusammengesetzt"), wäre eine kleine Textanpassung im Ergebnis-Bildschirm für diesen Modus sinnvoll (analog zur bereits modusabhängigen Ergebnistext-Anpassung bei #45) — UX-Frage, kein technischer Blocker, siehe Rückfrage an `ux-design`/`business-analyst`.
+- **Ergebnis-Verlaufsliste (#14/#36):** Anders als bei #45 passt das bestehende `score`/`total`-Modell hier strukturell (auch wenn `score === total` triviert ist) — technisch spricht nichts dagegen, Einträge zu speichern (`mode: "letterSearch"`). Ob das inhaltlich sinnvoll ist (siehe Trivialitäts-Hinweis oben), ist eine `business-analyst`/`ux-design`-Abwägung, kein technisches Hindernis — Empfehlung: für den ersten Umsetzungsschritt **einbeziehen** (kein Mehraufwand, konsistent mit den übrigen Modi), Trivialitäts-Frage separat klären.
+
+**6. Kein neues globales State-Feld über `mode` hinaus** — `state.questions`/`currentIndex`/`score`/`answers` funktionieren unverändert, wie oben begründet.
+
+**NFR-1-Hinweis:** identische Einschätzung wie bei #45 (Bild ist Pflichtbestandteil jeder Frage, kein optionaler Zusatz) — dieselbe offene Bestätigungsfrage an `business-analyst`/Nutzer, siehe dortigen Hinweis und `requirements.md`.
+
+**Aufwand:** Klein-mittel, spürbar kleiner als #45 — die Fragegenerierung ist eine Vereinfachung von `generateNextReverseQuestion()` (kein Distraktoren-Ziehen), die Lücken-Berechnung ist eine kleine, reine Funktion, und die Rundenstruktur wird **vollständig** unverändert übernommen (kein neuer State-Mechanismus wie bei #45 nötig). Der einzige spürbar neue UI-Baustein ist die Buchstaben-Eingabefeld-Reihe selbst.
+
+## Branch-Strategie-Bestätigung für #45/#46 (16.08.2026, `software-architect`)
+
+Beide Stories fallen unter die bereits bestehende Leitplanke "Branch-Strategie für neue Spielmodi" (siehe oben): jeweils ein eigener Feature-Branch (`feature/tier-memory`, `feature/buchstabensuche`), Merge erst wenn der jeweilige Modus Ende-zu-Ende spielbar ist. Da beide Modi unterschiedliche neue Dateien betreffen (`src/screens/memory.js`+`src/quiz/memory.js` vs. `src/screens/letterSearch.js`+`src/quiz/letterPuzzle.js`) und beide dieselben, aber additiv erweiterbaren gemeinsamen Dateien anfassen (`gameMode.js`, `difficulty.js`, `start.js`/`main.js` für Modus-Auswahl/-Weiche), ist ein Merge-Konflikt bei paralleler Bearbeitung möglich, aber gut auflösbar (rein additive Änderungen an denselben Stellen, kein widersprüchlicher Umbau) — kein Grund, die beiden Branches voneinander abhängig zu machen oder eine feste Reihenfolge vorzuschreiben.
+
 ## Bugfix-Historie
 
 ### Englischer Fallback bei Habitat-/Kontinent-Labels ("coastal margin" beim Seeotter, 15.08.2026, `software-architect`)

@@ -428,6 +428,102 @@ Ergänzt den Abschnitt "Frage-/Feedback-Bildschirm 'Tiergeräusche'" oben, Unter
 
 **Barrierefreiheit:** Der Zustandswechsel muss über das `aria-label` erkennbar sein (siehe oben) — kein zusätzlicher `aria-live`-Hinweis nötig, da der Button selbst fokussiert bleibt und der Label-Wechsel beim erneuten Fokussieren/Vorlesen erkennbar ist, analog zum bestehenden Muster bei anderen zustandsabhängigen Buttons im Projekt (z. B. `image-hint-button`).
 
+## Modus-Auswahl auf dem Start-Bildschirm: Fünfter/sechster Modus — Skalierungsentscheidung (16.08.2026, `ux-design`, Vorbereitung #45/#46)
+
+Mit den beiden neuen Modi "Tier-Memory" (#45) und "Buchstabensuche" (#46) wächst die Zahl der Modus-Kacheln von 3 auf 5. Der bestehende Abschnitt "Modus-Auswahl auf dem Start-Bildschirm" hatte dafür bereits eine Leitplanke vorgesehen: *"Sollten deutlich mehr Modi hinzukommen, sollte die Modus-Auswahl in einen eigenen, vorgeschalteten Bildschirm ausgelagert werden."*
+
+**Entscheidung: Noch kein eigener Vorschaltbildschirm — Kachel-Grid bricht stattdessen responsive auf zwei Zeilen um (z. B. 3+2), bleibt aber ein einziger Start-Bildschirm.** Begründung: "Deutlich mehr" (ursprünglicher Text) bezog sich auf ein starkes Wachstum über die genannte Grenze von 3–4 hinaus, nicht auf eine einzelne zusätzliche Kachel. 5 Kacheln plus die bestehende Schwierigkeitsstufen-Auswahl plus Start-Button lassen sich noch in einem vertretbaren, wenn auch etwas höheren Bildschirm unterbringen, ohne die Kernprinzipien (kein Hover-Zwang, große Touch-Flächen, klare Gruppierung) zu verletzen — ein zusätzlicher Navigationsschritt vor jedem Rundenstart wäre für Kinder eher ein Mehraufwand als ein Gewinn. **Ab einem sechsten Modus sollte die vorgeschaltete Bildschirm-Lösung erneut geprüft werden** — dieser Abschnitt macht die Grenze damit expliziter als zuvor ("3–4 komfortabel, 5 noch auf einem Bildschirm vertretbar, 6 = harte Grenze zur Neubewertung").
+
+- **Layout:** Gleiches Kachel-Grid-Prinzip wie bisher (`design.md`, "Modus-Auswahl auf dem Start-Bildschirm"), nur mit `flex-wrap`/CSS-Grid-Umbruch statt fester Ein-Zeilen-Anordnung — identische Kachel-Größe/-Optik, keine Verkleinerung einzelner Kacheln, um die Touch-Zielgrößen-Vorgabe nicht zu unterlaufen.
+- **Reihenfolge:** Bestehende drei Modi zuerst (Quizfragen → Wer bin ich? → Tiergeräusche, wie bisher), danach die beiden neuen in der Reihenfolge ihrer Priorisierung (siehe `requirements.md`): Tier-Memory (#45) vor Buchstabensuche (#46) — reine Konvention, keine funktionale Bedeutung.
+- **Zuständigkeit für den Umbau:** Da #45 und #46 unabhängig voneinander und in beliebiger Reihenfolge umgesetzt werden können (siehe Branch-Strategie), führt **die jeweils zuerst umgesetzte Story** den Umbau auf das umbrechende Grid durch; die zweite Story ergänzt lediglich ihre eigene Kachel im bereits umgebauten Grid. Beide Story-Beschreibungen verweisen auf diesen Abschnitt, keine der beiden setzt den Umbau als bereits erledigt voraus.
+- **Online-Icon (🌐):** Beide neuen Kacheln bekommen das bestehende Online-Icon (siehe unten, "NFR-1-Frage") nach demselben Muster wie "Wer bin ich?"/"Tiergeräusche" — vorbehaltlich der in `requirements.md` offen dokumentierten Bestätigung, dass die NFR-1-Ausnahme auf diese beiden neuen Modi ausgeweitet wird.
+
+## Neuer Spielmodus "Tier-Memory" (Issue #45, 16.08.2026, `ux-design` + `business-analyst`)
+
+**Grundprinzip:** Klassisches Memory-/Concentration-Spiel mit **verdeckten Kartenpaaren, die jeweils dasselbe Live-Thumbnail desselben Tieres zeigen** (zwei identische Bild-Karten pro Tier) — nicht Bild+Name-Paare. Begründung: Der Issue-Text nennt ausdrücklich "Basis sind die Bilder, die aktuell schon vorhanden sind" (der bestehende `image_filename`-Mechanismus aus Issue #16/#28), und ein klassisches "zwei identische Karten"-Memory ist die für die Zielgruppe (6–12 Jahre) unmittelbar verständliche, keine Zusatzerklärung nötige Spielform — kein neues Datenfeld, keine neue Paarungslogik zwischen unterschiedlichen Inhaltstypen nötig.
+
+**Schwierigkeitsgrad = Kartenanzahl (Entscheidung `business-analyst`, 16.08.2026, wie im Issue gefordert):**
+
+| Stufe | Tierpaare | Kartenanzahl gesamt | Begründung |
+|---|---|---|---|
+| Einfach (6–10) | 6 | 12 | Passt zur alterstypischen Merkspanne jüngerer Kinder bei klassischen Memory-Spielen; überschaubar, schnell lösbar (wichtig bei geringer Frustrationstoleranz, siehe Zielgruppen-Konsequenzen oben). |
+| Knifflig (10–12) | 12 | 24 | Deutlich spürbar schwerer (doppelte Kartenzahl), bleibt aber noch in einer für ein Kinderspiel angemessenen Größenordnung (kein 50+-Karten-Brett). |
+
+Kein neues Enum nötig — nutzt die bestehenden `DIFFICULTY_LEVELS` (`6-10`/`10-12`) aus `difficulty.js`, hier aber als Kartenanzahl statt als Feld-Zuordnung interpretiert (siehe `architecture.md` für die technische Einordnung dieses Unterschieds).
+
+**Bildschirmaufbau:**
+- Kein Fragetext, keine Fortschrittsanzeige "Frage X von N" (es gibt keine Einzelfragen) — stattdessen eine schlichte Kopfzeile "Tier-Memory" plus optional ein kleiner Fortschritts-Hinweis "{gefundene Paare} von {Gesamtpaare} Paaren gefunden".
+- Karten-Grid darunter, responsive (z. B. 3×4 bei 12 Karten, 4×6 bei 24 Karten je nach Bildschirmbreite, analog zum bereits etablierten responsiven Umbruchmuster der Antwortkacheln). **Scrollen ist hier ausdrücklich zulässig**, anders als bei der strikten "Kein Scrollen bei der Kernaufgabe"-Vorgabe für den Quizfragen-/Wer-bin-ich?-Bildschirm — ein Memory-Brett mit bis zu 24 Karten ist ein strukturell anderer Inhaltstyp (Überblick verschaffen ist Teil des Spiels), kein Zugeständnis an die übrigen Modi.
+- **Kartenrückseite (verdeckt):** Einheitliches, einfaches Rückseiten-Design für alle Karten (z. B. dezentes Pfoten-/Tier-Silhouetten-Muster passend zum bestehenden Maskottchen-Gedanken aus "Visuelle Grundlinie") — bewusst identisch für alle Karten, das ist das Wesen von Memory.
+- **Kartenvorderseite (aufgedeckt):** Live-Thumbnail (330px, identischer Mechanismus wie Issue #16/#28) in festem Kartenrahmen, kein Tiername sichtbar auf der Karte selbst (sonst wäre Merken trivial über Text statt Bild).
+
+**Interaktion:**
+- Tap auf eine verdeckte Karte deckt sie auf. Ist bereits eine andere Karte aufgedeckt (aber noch nicht als Paar bestätigt), wird die zweite Karte ebenfalls aufgedeckt und sofort verglichen.
+- **Treffer (gleiches Tier):** Beide Karten bleiben dauerhaft aufgedeckt (kein erneutes Verdecken), leichtes positives visuelles Feedback (analog zum bestehenden "richtig"-Grünton, aber dezenter als beim Quizfragen-Feedback, da kein vollständiger Bildschirmwechsel). **Direkt danach erscheint der Infotext-Bereich** (siehe unten).
+- **Kein Treffer:** Nach einer kurzen, festen Pause (Empfehlung: **ca. 1 Sekunde** — lang genug zum Erkennen, kurz genug um keine Wartezeit-Frustration zu erzeugen) drehen sich beide Karten automatisch wieder verdeckt um. **Bewusst automatisch statt über einen manuellen "Weiter"-Button**, anders als beim übrigen Quiz-Feedback: Hier gibt es keinen Lesetext, der Zeit zum Verarbeiten braucht (reiner visueller Soforteindruck "gleich oder nicht"), ein Extra-Tap pro Fehlversuch wäre bei einem 24-Karten-Brett unnötig ermüdend. Während der Pause sind alle übrigen Karten kurz gesperrt (kein drittes Aufdecken), identisches Sperr-Prinzip wie bei den Quiz-Antwortkacheln.
+- **Kein Zeitdruck/keine Zugbegrenzung:** Beliebig viele Versuche, kein Timer, kein Punktabzug — konsistent mit dem bestehenden Grundsatz "kein Scheitern-Framing".
+
+**Infotext nach einem Treffer (Kernanforderung aus dem Issue-Text):**
+- Direkt nach einem gefundenen Paar erscheint unterhalb des Karten-Grids ein Textblock mit dem bestehenden Infosatz-Baustein (`buildInfoSentence()`, Issue #12) **plus** Wikipedia-Link (Issue #15) für das soeben gefundene Tier — identisches Format/Ton wie im Quizfragen-Modus ("{name_de}: Ein/e {category}, …" + "📖 Mehr über {name_de} auf Wikipedia lesen"). Kein neuer Textstil.
+- **Sichtbar bis zur nächsten Kartenauswahl:** Tippt das Kind eine neue (dritte) Karte an, verschwindet der Infotext-Block und das neue Aufdecken/Vergleichen beginnt — exakt wie im Issue-Text gefordert ("bis zur Auswahl/dem Aufdecken der nächsten Karte"). Kein manueller Schließen-Button nötig.
+- **Layout:** Fester, reservierter Bereich unterhalb des Grids (kein Sprung des Karten-Grids selbst, wenn der Text erscheint/verschwindet) — leer, wenn kein Paar gerade gefunden wurde, analog zum bestehenden "kein Platzhalter bei fehlendem Wert"-Prinzip.
+- **Fun Fact (falls vorhanden):** Optional zusätzlich unterhalb des Infosatzes, identisches Muster wie im Quizfragen-Modus (fehlt meist, da nur 20 Tiere aktuell kuratiert — kein Problem, gleiches "kein Platzhalter"-Prinzip).
+
+**Rundenende:** Sobald alle Paare gefunden sind, wechselt der Bildschirm zum bestehenden Ergebnis-Bildschirm-Rahmen (siehe "6. Ergebnis-/Abschluss-Bildschirm" oben), aber mit angepasstem Text statt "X von Y richtig beantwortet": z. B. "Super gemacht! Du hast alle {Anzahl} Tierpaare gefunden!" plus die Anzahl benötigter Versuche als motivierender Zusatz ("Das hast du in {Versuche} Versuchen geschafft!") — **keine wertende Einordnung** (kein "das war schlecht/gut"), rein informativ, konsistent mit dem bestehenden, durchweg wertschätzenden Ton. "Nochmal spielen"/"Zurück zum Start" bleiben unverändert.
+
+**Bewusst außerhalb des Scope von #45 (spätere Folge-Story, analog zu #30/#35/#41-#43):**
+- Keine Aufnahme in die Ergebnis-Verlaufsliste (#14/#36) in dieser ersten Version — das dortige Datenmodell (`score`/`total` als "richtig von N") passt konzeptionell nicht 1:1 auf ein Memory-Ergebnis (Versuche statt Richtig/Falsch-Quote), eine saubere Erweiterung ist eine eigene, spätere Entscheidung.
+- Keine Fragenanzahl-Auswahl (bereits im Issue-Text ausgeschlossen) — die Kartenanzahl ist stattdessen an die Schwierigkeitsstufe gekoppelt (siehe Tabelle oben), kein zusätzlicher dritter Auswahl-Schritt am Start-Bildschirm.
+
+**Barrierefreiheit:**
+- Karten als echte `<button>`-Elemente, tastaturbedienbar (Tab-Reihenfolge durchs Grid, Enter/Space zum Aufdecken), mit `aria-label` je nach Zustand (z. B. "Verdeckte Karte" / bei aufgedeckter Karte ein nicht-verratender Alt-Text wie bei #28, da das Ziel ja gerade das Erkennen/Merken ist — Empfehlung: `alt="Tierbild, Karte {Position}"`, kein Tiername im Alt-Text, sonst wäre das Spiel für Screenreader-Nutzer:innen trivial statt eine Merkaufgabe).
+- Gefundene Paare: Zustandswechsel (aufgedeckt/dauerhaft gelöst) muss für Screenreader erkennbar sein (`aria-pressed`/Status-Text), gleiches Prinzip wie bei anderen zustandsabhängigen Buttons im Projekt.
+- **Bekannte, bewusst dokumentierte Einschränkung (analog zur bereits für Tiergeräusche dokumentierten Lücke):** Ein reines Bild-Memory ist für sehbeeinträchtigte/blinde Kinder strukturell nicht spielbar (die Kernaufgabe ist visuelles Wiedererkennen). Keine gleichwertige Alternative vorgesehen, da eine Textbeschreibung das Erkennungsmerkmal vorwegnehmen würde. Wird analog zur bestehenden Tiergeräusche-Dokumentation in `requirements.md` festgehalten, kein Blocker (siehe dort).
+- Gleiche Kontrast-/Touch-Zielgrößen-Anforderungen wie übrige Kacheln — bei 24 Karten (Stufe Knifflig) besonders wichtig, da die Karten bei fester Bildschirmbreite kleiner ausfallen als bei den bestehenden 4 Antwortkacheln; Mindest-Tapfläche (siehe "Layout-Empfehlungen" oben) darf dabei nicht unterschritten werden — notfalls zusätzliches Scrollen statt Unterschreitung der Mindestgröße.
+
+## Neuer Spielmodus "Buchstabensuche" (Issue #46, 16.08.2026, `ux-design` + `business-analyst`)
+
+**Grundprinzip:** Tierbild wird gezeigt, der Tiername (`name_de`) erscheint darunter als Reihe von Buchstaben-Kästchen im Stil eines klassischen Lückenworträtsels — ein Teil der Buchstaben ist bereits sichtbar vorgegeben, die fehlenden Kästchen sind leere Eingabefelder, die das Kind Buchstabe für Buchstabe ausfüllt, bis der komplette Name sichtbar ist.
+
+**Eingabemechanik (Entscheidung `ux-design`, 16.08.2026 — Abweichung vom sonst reinen Tap-only-Interaktionsmuster des Projekts, bewusst begründet):**
+- Jedes fehlende Kästchen ist ein echtes `<input type="text" maxlength="1">`-Feld, groß genug für die bestehenden Touch-Zielgrößen-Vorgaben, mit großer, gut lesbarer Schrift (gleiche Typografie-Linie wie übriger Frage-Text). Bereits vorgegebene Buchstaben werden als optisch gleich große, aber nicht editierbare Kästchen im selben Raster dargestellt — das Kind sieht die komplette "Wortform" auf einen Blick, ähnlich einem Kreuzworträtsel-Wort.
+- **Warum Tippen statt Auswahl-Kacheln (Abweichung vom sonstigen Muster):** Die Kernaufgabe dieses Modus ist wörtlich "fehlende Buchstaben ergänzen" (Issue-Text) — das ist inhaltlich eine Schreib-/Rechtschreibübung, keine Mehrfachauswahl-Frage. Eine Buchstaben-Auswahl aus Kacheln (analog zu den bestehenden 4 Antwortkacheln) würde die eigentliche Übung (sich an die Schreibweise erinnern) verwässern. Auf Touch-Geräten (auch dem perspektivischen iPad) öffnet ein Tap auf ein `<input>`-Feld automatisch die native Bildschirmtastatur — kein Zusatzaufwand für `web-developer`.
+- **Auto-Fokus-Wanderung:** Nach korrekter Eingabe eines Buchstabens springt der Fokus automatisch zum nächsten leeren Kästchen (kein manueller Tap nötig zwischen den Buchstaben) — reduziert Klickschritte, passend zum bestehenden Grundsatz "wenig Klickschritte für Kinder".
+- **Groß-/Kleinschreibung:** Eingabe wird **case-insensitive** geprüft (Kind kann Groß- oder Kleinbuchstaben tippen, beides gilt als richtig) — vermeidet unnötige Frustration durch reine Formalie, passend zum bestehenden Grundsatz "fehlertolerante Bedienung". Angezeigt wird nach korrekter Eingabe stets die tatsächlich korrekte Schreibweise aus `name_de` (i. d. R. Großbuchstabe am Namensanfang, Rest klein).
+- **Leerzeichen/Bindestriche in mehrteiligen Namen** (z. B. "Großer Panda", "Rotkehlchen" einteilig, aber z. B. "Asiatischer Elefant" zweiteilig): werden **nie** als Lücke behandelt, erscheinen immer direkt als sichtbares Leerzeichen/Trennzeichen zwischen den Kästchen-Gruppen — nur tatsächliche Buchstaben (inkl. Umlaute ä/ö/ü und ß) können Lücken sein.
+
+**Schwierigkeitsgrad = Anteil verdeckter Buchstaben (Entscheidung `business-analyst`, 16.08.2026, analog zur Kartenanzahl-Regel bei #45):**
+
+| Stufe | Regel | Effekt |
+|---|---|---|
+| Einfach (6–10) | Jeder 3. Buchstabe ist eine Lücke (Positionen 3, 6, 9, …), erster und letzter Buchstabe jedes Namensteils immer sichtbar vorgegeben | ca. 25–30 % der Buchstaben fehlen — viel sichtbarer Kontext erleichtert das Erraten/Erinnern |
+| Knifflig (10–12) | Jeder 2. Buchstabe ist eine Lücke (Positionen 2, 4, 6, …), nur der erste Buchstabe jedes Namensteils ist immer sichtbar vorgegeben | ca. 45–50 % der Buchstaben fehlen — spürbar anspruchsvoller |
+
+Bei sehr kurzen Namen (z. B. 3–4 Buchstaben) sorgt die Regel "erster/letzter Buchstabe sichtbar" (Einfach) bzw. "erster Buchstabe sichtbar" (Knifflig) automatisch für mindestens einen sinnvollen Anker — kein Sonderfall nötig, die Positionsregel greift unverändert.
+
+**Fehlerfall pro Buchstabe (Kernanforderung aus dem Issue-Text):**
+- Tippt das Kind den falschen Buchstaben in ein Kästchen, erscheint **sofort** (nicht erst am Namensende) eine kurze, freundliche Fehlermeldung mit Aufforderung zum erneuten Versuch — Ton konsistent mit dem bestehenden "falsch"-Feedback im Quizfragen-Modus (kein "Falsch!", kein Rot/Buzzer-Ton, stattdessen z. B. "Fast! Versuch's nochmal 🙂"). Das Kästchen selbst leert sich wieder für einen neuen Versuch.
+- **Unbegrenzte Versuche pro Buchstabe, keine Auswirkung auf ein Punktesystem** — konsistent mit dem bestehenden Grundsatz "kein Scheitern-Framing"; Fehlversuche werden nicht gezählt/angezeigt (kein "3. Versuch"-Countdown, das würde Druck erzeugen).
+
+**Nach vollständigem Namen (Kernanforderung aus dem Issue-Text):**
+- Sobald alle Kästchen korrekt gefüllt sind, erscheint unterhalb des Namens der bestehende Infosatz-Baustein (Issue #12) plus Wikipedia-Link (Issue #15), identisches Format wie in den übrigen Modi. Fun Fact ergänzend, falls vorhanden (gleiches "kein Platzhalter"-Prinzip).
+- Danach der bestehende manuelle "Weiter"-Button zur nächsten Runde-Position — **dieser Modus behält die reguläre Rundenstruktur mit Fortschrittsanzeige und wählbarer Fragenanzahl** (5/10/15/20, Issue #13), anders als #45: Der Issue-Text für #46 enthält **keinen** Ausschluss der Fragenanzahl-Auswahl (im Unterschied zu #45, wo das explizit gefordert wird) — Buchstabensuche verhält sich daher strukturell wie "Wer bin ich?"/"Tiergeräusche": eine Abfolge von N Tieren mit Fortschrittsanzeige "Tier X von N" statt "Frage X von N".
+
+**Bildschirmaufbau (Layout, analog zu "Wer bin ich?"):**
+- Fortschrittsanzeige oben ("Tier 3 von 10").
+- Feste Kopfzeile "Wie heißt dieses Tier?".
+- Tierbild darunter (gleiche Bildrahmen-Optik/Größe wie beim "Wer bin ich?"-Modus, live geladenes 330px-Thumbnail, Attributionszeile direkt darunter — identisches Pflicht-Attributions-Muster wie bei #28, da das Bild auch hier zentraler, nicht optionaler Bestandteil jeder Aufgabe ist).
+- Darunter die Buchstaben-Kästchen-Reihe(n) (siehe Eingabemechanik oben), bei langen Namen zeilenumbrechend.
+- Darunter (erst nach vollständiger Lösung) der Feedback-/Infotext-Bereich wie oben beschrieben.
+- **Kein Scrollen-Risiko bei der Kernaufgabe:** Bild + Attribution + Buchstabenreihe(n) sollten ohne Scrollen sichtbar sein (wie bei #28); der nachgelagerte Infotext-Bereich darf wie im Quizfragen-Modus bei Bedarf zu Scrollen führen (gleiches bereits etablierte Muster).
+
+**Barrierefreiheit:**
+- Bild-`alt`-Text **bewusst nicht verratend** (analog zu #28: `alt="Foto eines Tieres – errate, wie es heißt"`), da der Tiername hier die gesuchte Antwort ist.
+- Eingabefelder mit aussagekräftigem `aria-label` je Position (z. B. "Buchstabe 3 von 8"), Tab-Reihenfolge folgt der Lese-/Eingabereihenfolge, Fehlermeldung wird per `aria-live` angekündigt (nicht komplett stumm für Screenreader-Nutzer:innen).
+- Vorgegebene (nicht editierbare) Buchstaben-Kästchen sind für Screenreader klar als "bereits vorhanden" erkennbar (kein editierbares Feld, reiner Text/`aria-readonly`), damit der Unterschied zu den Lücken eindeutig ist.
+- Gleiche Kontrast-/Touch-Zielgrößen-Anforderungen wie übrige Elemente.
+
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
 
 Alle vorherigen offenen Fragen sind geklärt: Zielalter → zwei Stufen 6–10/10–12 (siehe "Zielgruppe"), Sound-Effekte → nein, Fragenanzahl → 10 pro Runde (fest), Weiter-Mechanik → manueller Button, Sprache → Deutsch. Details jeweils in den Abschnitten oben eingearbeitet.
