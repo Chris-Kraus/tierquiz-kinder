@@ -157,6 +157,29 @@ describe("renderSoundQuestionScreen (Issue #33)", () => {
     ).toBe(true);
   });
 
+  // Analog zum entsprechenden Test in reverseQuestion.test.js
+  // (`pendingReverseQuestion`) -- deckt den beim Rebase-Merge-Konflikt (siehe
+  // start.js-Historie) neu verdrahteten `pendingSoundQuestion`-Wiederver-
+  // wendungspfad ab, der bislang ungetestet war.
+  it("nutzt eine bereits am Start-Bildschirm aufgelöste erste Frage ohne erneuten Abruf", () => {
+    const pending = buildQuestion();
+    const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);
+    quizState.pendingSoundQuestion = pending;
+    const { container } = render(quizState);
+
+    // Kein zusätzlicher Ladezustand nach dem Moduswechsel (design.md, analog
+    // zu reverseQuestion.js/#28).
+    expect(generateNextSoundQuestion).not.toHaveBeenCalled();
+    expect(
+      container.querySelector(".sound-player-frame").getAttribute(
+        "aria-busy",
+      ),
+    ).toBe("false");
+    expect(container.querySelector(".sound-play-button").hidden).toBe(false);
+    // Transientes Feld wird konsumiert, nicht dauerhaft im Zustand belassen.
+    expect(quizState.pendingSoundQuestion).toBeUndefined();
+  });
+
   it("spielt den Ton NICHT automatisch ab — erst ein Tap auf den Play-Button startet die Wiedergabe", async () => {
     generateNextSoundQuestion.mockResolvedValue(buildQuestion());
     const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);

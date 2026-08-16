@@ -371,4 +371,54 @@ describe("Start-Button — Moduswahl an den Quiz-Zustand weiterreichen (Issue #2
     expect(quizState.mode).toBe("quiz");
     expect(quizState.pendingReverseQuestion).toBeUndefined();
   });
+
+  // Analog zu den drei "Wer bin ich?"-Tests oben, aber für Issue #33
+  // ('Tiergeräusche') -- deckt den beim Rebase-Merge-Konflikt (siehe main.js/
+  // start.js-Historie) neu verdrahteten `pendingSoundQuestion`-Pfad ab, der
+  // bislang ungetestet war.
+  it("erzeugt nach erfolgreichem Testabruf einen Quiz-Zustand mit mode 'sound' und der bereits aufgelösten ersten Frage", async () => {
+    const resolvedQuestion = { text: "Tiergeräusch" };
+    generateNextSoundQuestion.mockResolvedValue(resolvedQuestion);
+    const { container, onStart } = render();
+
+    container
+      .querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.EASY}"]`)
+      .click();
+    const soundButton = container.querySelector('[data-mode="sound"]');
+    soundButton.click();
+    await vi.waitFor(() => {
+      expect(soundButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    container.querySelector(".start-button").click();
+
+    expect(onStart).toHaveBeenCalledTimes(1);
+    const quizState = onStart.mock.calls[0][0];
+    expect(quizState.mode).toBe("sound");
+    expect(quizState.pendingSoundQuestion).toBe(resolvedQuestion);
+    // Der Testabruf selbst darf für den eigentlichen Rundenstart nicht noch
+    // einmal ausgelöst werden (kein zweiter Aufruf durch den Start-Klick).
+    expect(generateNextSoundQuestion).toHaveBeenCalledTimes(1);
+  });
+
+  it("verwirft ein zwischenzeitlich vorhandenes Tiergeräusche-Testabruf-Ergebnis, wenn zurück zu 'Quizfragen' gewechselt wird", async () => {
+    generateNextSoundQuestion.mockResolvedValue({ text: "Tiergeräusch" });
+    const { container, onStart } = render();
+
+    container
+      .querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.EASY}"]`)
+      .click();
+    const soundButton = container.querySelector('[data-mode="sound"]');
+    soundButton.click();
+    await vi.waitFor(() => {
+      expect(soundButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    container.querySelector('[data-mode="quiz"]').click();
+    container.querySelector(".start-button").click();
+
+    const quizState = onStart.mock.calls[0][0];
+    expect(quizState.mode).toBe("quiz");
+    expect(quizState.pendingSoundQuestion).toBeUndefined();
+  });
 });
