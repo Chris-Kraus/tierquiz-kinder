@@ -668,6 +668,20 @@ export function renderSoundQuestionScreen(
   });
   audioEl.addEventListener("playing", () => {
     playButtonEl.setAttribute("aria-busy", "false");
+    // QA-Bug-Report Zyklus 1 (Issue #43): `playing` kann verzögert eintreffen
+    // (Zwischen-Puffervorgang, sichtbar an einem vorherigen `waiting`) — hat
+    // der Nutzer den Ton zwischenzeitlich per handlePlayClick() bereits
+    // wieder gestoppt (audioEl.pause() setzt audioEl.paused synchron auf
+    // true), würde ein danach eintreffendes, jetzt veraltetes `playing`-
+    // Event den Button sonst fälschlich zurück auf "spielt gerade" schalten,
+    // obwohl der Ton nachweislich nicht mehr läuft. Guard analog zum
+    // loadRequestId-/feedbackImageRequestId-Stale-Response-Schutz oben,
+    // hier aber ohne zusätzlichen Zähler: audioEl.paused ist bereits das
+    // native, immer aktuelle Flag für "wurde inzwischen wieder gestoppt" und
+    // damit ausreichend, um das veraltete Event zu erkennen und zu
+    // ignorieren. Icon/aria-label bleiben dann auf dem vom `pause`-Listener
+    // bereits gesetzten "abspielbereit"-Zustand.
+    if (audioEl.paused) return;
     // Issue #43: Icon/aria-label auf "spielt gerade" umschalten, sobald die
     // Wiedergabe tatsächlich läuft.
     setPlayButtonPlaying(true);

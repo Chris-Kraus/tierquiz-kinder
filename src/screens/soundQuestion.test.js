@@ -379,6 +379,18 @@ describe("renderSoundQuestionScreen (Issue #33)", () => {
       const playButton = container.querySelector(".sound-play-button");
       const audioEl = container.querySelector(".sound-question__audio");
 
+      // QA-Bug-Report Zyklus 1 (Issue #43): der `playing`-Handler prüft jetzt
+      // audioEl.paused, bevor er den Button auf "spielt gerade" schaltet
+      // (Guard gegen verspätete/veraltete playing-Events, siehe Test unten).
+      // Der reale Browser setzt `paused` bereits synchron beim play()-Aufruf
+      // auf `false` (spec), lange bevor `playing` feuert -- hier über die
+      // gemockte Getter-Property nachgebildet (Datei-Kommentar oben), damit
+      // dieser Test weiterhin den tatsächlichen "läuft gerade"-Laufzeitzustand
+      // simuliert statt sich auf den jsdom-Default (`true`, da play() oben
+      // No-Op-gestubbt ist) zu verlassen.
+      vi.spyOn(window.HTMLMediaElement.prototype, "paused", "get").mockReturnValue(
+        false,
+      );
       playButton.click();
       audioEl.dispatchEvent(new Event("playing"));
 
@@ -445,6 +457,63 @@ describe("renderSoundQuestionScreen (Issue #33)", () => {
       // natürlichen Ende der Wiedergabe (architecture.md, Issue #43) — ein
       // einziger Listener deckt beide Fälle ab, hier direkt simuliert.
       audioEl.dispatchEvent(new Event("pause"));
+
+      expect(playButton.getAttribute("aria-label")).toBe(
+        "Tierlaut noch einmal abspielen",
+      );
+      expect(
+        playButton.querySelector(".sound-play-button__icon").textContent,
+      ).toBe("🔊");
+      expect(
+        playButton.classList.contains("sound-play-button--playing"),
+      ).toBe(false);
+    });
+
+    it("QA-Bug-Report Zyklus 1: ein verspätet eintreffendes playing-Event NACH manuellem Stopp setzt den Button nicht wieder auf 'spielt gerade' zurück", async () => {
+      generateNextSoundQuestion.mockResolvedValue(buildQuestion());
+      const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);
+      const { container } = render(quizState);
+      await vi.waitFor(() =>
+        expect(container.querySelector(".sound-play-button").hidden).toBe(
+          false,
+        ),
+      );
+
+      const playButton = container.querySelector(".sound-play-button");
+      const audioEl = container.querySelector(".sound-question__audio");
+
+      // Läuft bereits (Puffervorgang abgeschlossen, echtes `playing`-Event
+      // bereits verarbeitet).
+      const pausedSpy = vi
+        .spyOn(window.HTMLMediaElement.prototype, "paused", "get")
+        .mockReturnValue(false);
+      playButton.click();
+      audioEl.dispatchEvent(new Event("playing"));
+      expect(playButton.getAttribute("aria-label")).toBe("Tierlaut stoppen");
+
+      // Nutzer stoppt manuell (zweiter Klick während laufender Wiedergabe) —
+      // audioEl.pause() setzt audioEl.paused im echten Browser synchron auf
+      // true, hier über die gemockte Getter-Property nachgebildet, bevor der
+      // reale `pause`-Handler (unten simuliert) dasselbe tut.
+      pausedSpy.mockReturnValue(true);
+      playButton.click();
+      audioEl.dispatchEvent(new Event("pause"));
+
+      expect(playButton.getAttribute("aria-label")).toBe(
+        "Tierlaut noch einmal abspielen",
+      );
+      expect(
+        playButton.classList.contains("sound-play-button--playing"),
+      ).toBe(false);
+
+      // Reproduziert exakt den QA-Bug-Report (Issue #43, Zyklus 1): ein
+      // `playing`-Event, das bereits VOR dem Stop-Klick des Nutzers
+      // unterwegs war (z. B. wegen eines Zwischen-Puffervorgangs) und erst
+      // jetzt -- NACH dem Stopp -- eintrifft. audioEl.paused ist zu diesem
+      // Zeitpunkt bereits true (s. o.), der Handler muss das veraltete
+      // Event daher ignorieren, statt den Button fälschlich wieder auf
+      // "spielt gerade" zu schalten.
+      audioEl.dispatchEvent(new Event("playing"));
 
       expect(playButton.getAttribute("aria-label")).toBe(
         "Tierlaut noch einmal abspielen",
