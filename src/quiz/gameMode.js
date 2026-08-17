@@ -21,8 +21,15 @@
 // #26 auswählbar, aber erst ab #28 tatsächlich bis zum Frage-Bildschirm
 // durchverdrahtet war.
 
+// Seit Issue #45: vierter Wert `MEMORY` für den "Tier-Memory"-Modus ergänzt
+// (architecture.md, "Neuer Spielmodus 'Tier-Memory': Finale technische
+// Leitplanken", Punkt 1) — anders als REVERSE/SOUND hat dieser Modus KEINEN
+// Bezug zu state.questions/roundLength im bisherigen Sinn (siehe
+// src/quiz/memory.js/src/screens/memory.js: reiner UI-lokaler Kartenzustand).
+
 export const GAME_MODE = Object.freeze({
   QUIZ: "quiz",
   REVERSE: "reverse",
   SOUND: "sound",
+  MEMORY: "memory",
 });

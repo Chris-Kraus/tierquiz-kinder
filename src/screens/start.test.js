@@ -28,6 +28,13 @@ vi.mock("../quiz/soundQuestionGenerator.js", () => ({
   generateNextSoundQuestion: (...args) => generateNextSoundQuestion(...args),
 }));
 
+// Issue #45: Testabruf für "Tier-Memory" ist buildMemoryDeck() — gleiches
+// Mock-Prinzip wie die beiden Fragegeneratoren oben.
+const buildMemoryDeck = vi.fn();
+vi.mock("../quiz/memory.js", () => ({
+  buildMemoryDeck: (...args) => buildMemoryDeck(...args),
+}));
+
 const { renderStartScreen } = await import("./start.js");
 
 function render() {
@@ -42,6 +49,7 @@ beforeEach(() => {
   document.body.innerHTML = "";
   generateNextReverseQuestion.mockReset();
   generateNextSoundQuestion.mockReset();
+  buildMemoryDeck.mockReset();
 });
 
 describe("Modus-Auswahl (Issue #26)", () => {
@@ -306,6 +314,122 @@ describe("Modus-Auswahl: dritte Kachel 'Tiergeräusche' (Issue #31)", () => {
   });
 });
 
+describe("Modus-Auswahl: fünfte Kachel 'Tier-Memory' (Issue #45)", () => {
+  it("zeigt 'Tier-Memory' mit eigenem Icon und Online-Hinweis, ohne die bestehenden drei Kacheln zu verändern", () => {
+    const { container } = render();
+
+    const quizButton = container.querySelector('[data-mode="quiz"]');
+    const memoryButton = container.querySelector('[data-mode="memory"]');
+
+    expect(memoryButton).not.toBeNull();
+    expect(
+      memoryButton.querySelector(".mode-button__label").textContent,
+    ).toBe("Tier-Memory");
+    const onlineIcon = memoryButton.querySelector(".mode-button__online-icon");
+    expect(onlineIcon).not.toBeNull();
+    expect(onlineIcon.getAttribute("aria-label")).toMatch(/Internet/);
+    expect(memoryButton.classList.contains("mode-button--selected")).toBe(
+      false,
+    );
+    expect(quizButton.classList.contains("mode-button--selected")).toBe(true);
+  });
+
+  it("zeigt beim Rendern die Fragenanzahl-Auswahl (gilt erst nach Auswahl von Tier-Memory nicht mehr)", () => {
+    const { container } = render();
+    expect(container.querySelector(".round-length-picker").hidden).toBe(
+      false,
+    );
+  });
+
+  it("bleibt bei 'Quizfragen', wenn der Testabruf (Deck-Aufbau) fehlschlägt, mit freundlichem Hinweis statt Fehlertext", async () => {
+    buildMemoryDeck.mockRejectedValue(new Error("Netzwerkfehler"));
+    const { container } = render();
+
+    const memoryButton = container.querySelector('[data-mode="memory"]');
+    memoryButton.click();
+
+    expect(memoryButton.getAttribute("aria-busy")).toBe("true");
+    expect(memoryButton.disabled).toBe(true);
+
+    await vi.waitFor(() => {
+      expect(memoryButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    const quizButton = container.querySelector('[data-mode="quiz"]');
+    expect(quizButton.classList.contains("mode-button--selected")).toBe(true);
+    expect(memoryButton.classList.contains("mode-button--selected")).toBe(
+      false,
+    );
+
+    const hintEl = container.querySelector(".mode-picker__hint");
+    expect(hintEl.hidden).toBe(false);
+    expect(hintEl.textContent).toBe("Dafür brauchst du gerade Internet 🌐");
+    expect(container.textContent).not.toMatch(/Netzwerkfehler|Error/);
+    // Fragenanzahl-Auswahl bleibt bei einem Fehlschlag/Verbleib bei
+    // "Quizfragen" weiterhin sichtbar.
+    expect(container.querySelector(".round-length-picker").hidden).toBe(
+      false,
+    );
+  });
+
+  it("wählt 'Tier-Memory' aus und blendet die Fragenanzahl-Auswahl aus, wenn der Testabruf gelingt", async () => {
+    buildMemoryDeck.mockResolvedValue([{ cardId: "a" }]);
+    const { container } = render();
+
+    const memoryButton = container.querySelector('[data-mode="memory"]');
+    memoryButton.click();
+
+    await vi.waitFor(() => {
+      expect(memoryButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    expect(memoryButton.classList.contains("mode-button--selected")).toBe(
+      true,
+    );
+    expect(memoryButton.getAttribute("aria-pressed")).toBe("true");
+    expect(container.querySelector(".mode-picker__hint").hidden).toBe(true);
+    // Issue #45 Akzeptanzkriterium: kein Fragenanzahl-Auswahlschritt für
+    // diesen Modus.
+    expect(container.querySelector(".round-length-picker").hidden).toBe(
+      true,
+    );
+  });
+
+  it("blendet die Fragenanzahl-Auswahl wieder ein, wenn nach Tier-Memory zu einem anderen Modus gewechselt wird", async () => {
+    buildMemoryDeck.mockResolvedValue([{ cardId: "a" }]);
+    const { container } = render();
+
+    const memoryButton = container.querySelector('[data-mode="memory"]');
+    memoryButton.click();
+    await vi.waitFor(() => {
+      expect(memoryButton.getAttribute("aria-busy")).toBe("false");
+    });
+    expect(container.querySelector(".round-length-picker").hidden).toBe(
+      true,
+    );
+
+    container.querySelector('[data-mode="quiz"]').click();
+    expect(container.querySelector(".round-length-picker").hidden).toBe(
+      false,
+    );
+  });
+
+  it("ruft den Testabruf (Deck-Aufbau) mit der aktuell gewählten Schwierigkeitsstufe auf", async () => {
+    buildMemoryDeck.mockResolvedValue([{ cardId: "a" }]);
+    const { container } = render();
+
+    container
+      .querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.HARD}"]`)
+      .click();
+    container.querySelector('[data-mode="memory"]').click();
+
+    await vi.waitFor(() => {
+      expect(buildMemoryDeck).toHaveBeenCalled();
+    });
+    expect(buildMemoryDeck.mock.calls[0][1]).toBe(DIFFICULTY_LEVELS.HARD);
+  });
+});
+
 // Issue #28: der Modus ist jetzt tatsächlich spielbar -- der Start-Button
 // muss den gewählten Modus sowie (im Erfolgsfall des Testabrufs) die bereits
 // aufgelöste erste Frage an den neu erzeugten Quiz-Zustand weiterreichen
@@ -420,5 +544,53 @@ describe("Start-Button — Moduswahl an den Quiz-Zustand weiterreichen (Issue #2
     const quizState = onStart.mock.calls[0][0];
     expect(quizState.mode).toBe("quiz");
     expect(quizState.pendingSoundQuestion).toBeUndefined();
+  });
+
+  // Analog zu den "Wer bin ich?"/"Tiergeräusche"-Tests oben, für Issue #45.
+  it("erzeugt nach erfolgreichem Testabruf einen Quiz-Zustand mit mode 'memory' und dem bereits aufgebauten Deck", async () => {
+    const resolvedDeck = [{ cardId: "a" }, { cardId: "b" }];
+    buildMemoryDeck.mockResolvedValue(resolvedDeck);
+    const { container, onStart } = render();
+
+    container
+      .querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.EASY}"]`)
+      .click();
+    const memoryButton = container.querySelector('[data-mode="memory"]');
+    memoryButton.click();
+    await vi.waitFor(() => {
+      expect(memoryButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    container.querySelector(".start-button").click();
+
+    expect(onStart).toHaveBeenCalledTimes(1);
+    const quizState = onStart.mock.calls[0][0];
+    expect(quizState.mode).toBe("memory");
+    expect(quizState.pendingMemoryDeck).toBe(resolvedDeck);
+    expect(quizState.pendingMemoryDeckDifficulty).toBe(DIFFICULTY_LEVELS.EASY);
+    // Der Testabruf selbst darf für den eigentlichen Rundenstart nicht noch
+    // einmal ausgelöst werden (kein zweiter Aufruf durch den Start-Klick).
+    expect(buildMemoryDeck).toHaveBeenCalledTimes(1);
+  });
+
+  it("verwirft ein zwischenzeitlich vorhandenes Tier-Memory-Testabruf-Ergebnis, wenn zurück zu 'Quizfragen' gewechselt wird", async () => {
+    buildMemoryDeck.mockResolvedValue([{ cardId: "a" }]);
+    const { container, onStart } = render();
+
+    container
+      .querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.EASY}"]`)
+      .click();
+    const memoryButton = container.querySelector('[data-mode="memory"]');
+    memoryButton.click();
+    await vi.waitFor(() => {
+      expect(memoryButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    container.querySelector('[data-mode="quiz"]').click();
+    container.querySelector(".start-button").click();
+
+    const quizState = onStart.mock.calls[0][0];
+    expect(quizState.mode).toBe("quiz");
+    expect(quizState.pendingMemoryDeck).toBeUndefined();
   });
 });

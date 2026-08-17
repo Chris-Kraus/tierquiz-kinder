@@ -9,6 +9,10 @@ import { renderQuestionScreen } from "./screens/question.js";
 import { renderReverseQuestionScreen } from "./screens/reverseQuestion.js";
 import { renderResultScreen } from "./screens/result.js";
 import { renderSoundQuestionScreen } from "./screens/soundQuestion.js";
+// Issue #45: neuer Spielbildschirm für den "Tier-Memory"-Modus — main.js
+// entscheidet anhand von quizState.mode auch hierfür, welcher Bildschirm
+// gerendert wird (gleiches Kopplungsmuster wie bei REVERSE/SOUND oben).
+import { renderMemoryScreen } from "./screens/memory.js";
 import { createQuizState } from "./quiz/state.js";
 import { GAME_MODE } from "./quiz/gameMode.js";
 
@@ -32,6 +36,10 @@ function showQuestionScreen(quizState) {
   }
   if (quizState.mode === GAME_MODE.SOUND) {
     renderSoundQuestionScreen(app, quizState, { onFinish: showResultScreen });
+    return;
+  }
+  if (quizState.mode === GAME_MODE.MEMORY) {
+    renderMemoryScreen(app, quizState, { onFinish: showResultScreen });
     return;
   }
   renderQuestionScreen(app, quizState, { onFinish: showResultScreen });

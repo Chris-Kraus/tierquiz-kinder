@@ -1013,6 +1013,171 @@ button {
   }
 }
 
+/* Tier-Memory-Bildschirm (Issue #45, design.md "Neuer Spielmodus
+   'Tier-Memory'"). Anders als .question-screen/.reverse-image-frame oben ist
+   Scrollen hier ausdrücklich zulässig (kein max-width/Höhen-Zwang für das
+   Karten-Grid) — ein Memory-Brett mit bis zu 24 Karten ist ein strukturell
+   anderer Inhaltstyp, "Überblick verschaffen" ist Teil des Spiels. */
+.memory-screen {
+  width: 100%;
+  max-width: 44rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-md);
+}
+
+.memory-screen__title {
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  color: var(--color-primary-dark);
+}
+
+.memory-screen__progress {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-secondary-dark);
+}
+
+/* Ladezustand vor Rundenstart: visueller Zwilling von .reverse-image-frame
+   (gleiches Icon-/Text-/Retry-Button-Muster), hier aber als Platzhalter für
+   das GESAMTE Brett statt eines einzelnen Bildes (architecture.md:
+   "einheitlicher Ladebildschirm vor Rundenstart, keinen
+   Pro-Karte-Ladezustand"). */
+.memory-board-status {
+  width: 100%;
+  min-height: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.memory-board-status[hidden] {
+  display: none;
+}
+
+.memory-board-status__loading,
+.memory-board-status__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.memory-board-status__loading[hidden],
+.memory-board-status__error[hidden] {
+  display: none;
+}
+
+.memory-board-status__icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.memory-board-status__text {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-secondary-dark);
+}
+
+.memory-board-status__retry-button {
+  min-height: 3rem;
+  padding: 0.6rem var(--space-md);
+  border: 3px solid var(--color-secondary);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-secondary-dark);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.memory-board-status__retry-button:active {
+  transform: scale(0.97);
+}
+
+/* Karten-Grid: `auto-fill`/`minmax` statt fester Spaltenzahl je
+   Schwierigkeitsstufe — passt sich responsiv an verfügbare Breite UND
+   Kartenanzahl an (design.md-Beispiel: "z. B. 3×4 bei 12 Karten, 4×6 bei 24
+   Karten je nach Bildschirmbreite"), ohne zwei separate Grid-Varianten
+   pflegen zu müssen. `minmax(0, ...)` verhindert, dass eine Spalte breiter
+   wird als der verfügbare Platz (gleiche Grid-Falle wie bei
+   .answer-grid--reverse oben). */
+.memory-board {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: var(--space-sm);
+}
+
+.memory-board[hidden] {
+  display: none;
+}
+
+/* Einheitliches Rückseiten-Design für alle Karten (design.md: "bewusst
+   identisch für alle Karten, das ist das Wesen von Memory") — echtes
+   <button>-Element, große Touch-Zielfläche, per Tastatur bedienbar
+   (design.md, "Barrierefreiheit"). */
+.memory-card {
+  aspect-ratio: 1;
+  min-height: 4.5rem;
+  min-width: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--color-secondary);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.memory-card:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+.memory-card:disabled {
+  cursor: default;
+}
+
+.memory-card__back {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.memory-card__back[hidden] {
+  display: none;
+}
+
+.memory-card__front {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.memory-card__front[hidden] {
+  display: none;
+}
+
+/* Aufgedeckt, noch unbestätigt: dezente blaue Umrandung (dieselbe Farbe wie
+   .question-screen__info-sentence), unterscheidet sich klar von der
+   grünen "gelöst"-Markierung unten (design.md, "Barrierefreiheit": "keine
+   ausschließlich farbbasierte Codierung" — der Zustandsunterschied ist
+   zusätzlich über aria-pressed/aria-label vermittelt, siehe memory.js). */
+.memory-card--revealed {
+  border-color: var(--color-secondary-dark);
+}
+
+/* Dauerhaft gelöstes Paar: grüne Umrandung wie .answer-tile--correct, bleibt
+   sichtbar/disabled für den Rest der Runde. */
+.memory-card--solved {
+  border-color: var(--color-primary);
+  background: rgba(31, 122, 76, 0.08);
+}
+
 /* Ergebnis-Bildschirm (siehe design.md, "Nutzerfluss" Punkt 6). Wie beim
    Frage-Bildschirm bewusst keine neuen Farbpaare eingeführt, sondern
    ausschließlich bereits gegen WCAG-AA geprüfte Kombinationen von oben

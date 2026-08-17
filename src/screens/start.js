@@ -64,6 +64,24 @@
 // Testabruf-Ergebnis genau wie bei `pendingReverseQuestion` oben
 // zwischengespeichert (`pendingSoundQuestion`) und beim Rundenstart an
 // `soundQuestion.js` weitergereicht statt es ein zweites Mal abzurufen.
+//
+// Seit Issue #45: fünfte Kachel "Tier-Memory" — strukturell dasselbe
+// Testabruf-/Ladezustand-/Fehlerfallback-Muster wie oben, mit zwei
+// Besonderheiten (siehe design.md/architecture.md, "Neuer Spielmodus
+// 'Tier-Memory'"): (1) kein Bezug zur Fragenanzahl-Auswahl — die
+// Kartenanzahl hängt direkt an der Schwierigkeitsstufe, daher wird die
+// `.round-length-picker`-Sektion ausgeblendet, solange dieser Modus gewählt
+// ist (kein dritter Auswahlschritt, Akzeptanzkriterium Issue #45). (2) Der
+// Testabruf (`buildMemoryDeck`) baut das GESAMTE Kartenset für die aktuell
+// gewählte (oder mangels Auswahl per EASY-Platzhalter angenommene)
+// Schwierigkeitsstufe — ändert das Kind die Stufe NACH dem Antippen dieser
+// Kachel, würde das zwischengespeicherte Deck die falsche Kartenanzahl
+// haben. Deshalb wird zusätzlich zum Deck selbst (`pendingMemoryDeck`) die
+// Schwierigkeitsstufe gespeichert, für die es aufgebaut wurde
+// (`pendingMemoryDeckDifficulty`) — src/screens/memory.js vergleicht diese
+// beim Rundenstart gegen die tatsächlich gewählte Stufe und baut bei einer
+// Abweichung selbst ein frisches Deck (sichtbar über denselben Ladezustand
+// wie beim Moduseinstieg, kein Sonderfall/Bug).
 
 import animalsData from "../../data/animals.json";
 import { DIFFICULTY_LEVELS, DIFFICULTY_LABELS } from "../quiz/difficulty.js";
@@ -71,6 +89,12 @@ import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 import { createQuizState } from "../quiz/state.js";
 import { generateNextReverseQuestion } from "../quiz/reverseQuestionGenerator.js";
 import { generateNextSoundQuestion } from "../quiz/soundQuestionGenerator.js";
+// Issue #45: Testabruf für die neue "Tier-Memory"-Kachel ist der erste
+// Aufruf von buildMemoryDeck() — gleiches Prinzip wie
+// generateNextReverseQuestion/generateNextSoundQuestion oben (architecture.md,
+// "Vollständiger Fehlschlag ... wird beim Versuch, den Modus zu betreten
+// abgefangen — der Deck-Aufbau ist der Testabruf").
+import { buildMemoryDeck } from "../quiz/memory.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
 
 // Werte laut UX-Abstimmung zu Issue #13: 4 Chips, gleichermaßen für beide
@@ -115,6 +139,11 @@ export function renderStartScreen(container, { onStart } = {}) {
   // Analoges Wiederverwendungsfeld für GAME_MODE.SOUND (Issue #33), gleiches
   // Prinzip wie pendingReverseQuestion oben.
   let pendingSoundQuestion = null;
+  // Analoges Wiederverwendungsfeld für GAME_MODE.MEMORY (Issue #45) — hier
+  // zusätzlich die Schwierigkeitsstufe, für die das Deck aufgebaut wurde
+  // (siehe Datei-Kommentar oben, "Besonderheit (2)").
+  let pendingMemoryDeck = null;
+  let pendingMemoryDeckDifficulty = null;
 
   container.innerHTML = `
     <section class="start-screen" aria-labelledby="start-title">
@@ -169,6 +198,24 @@ export function renderStartScreen(container, { onStart } = {}) {
             <span class="mode-button__icon" aria-hidden="true">🔊</span>
             <span class="mode-button__spinner" aria-hidden="true"></span>
             <span class="mode-button__label">Tiergeräusche</span>
+            <span
+              class="mode-button__online-icon"
+              role="img"
+              aria-label="Benötigt Internetverbindung"
+              >🌐</span
+            >
+          </button>
+          <button
+            type="button"
+            class="mode-button"
+            data-mode="${GAME_MODE.MEMORY}"
+            aria-pressed="false"
+            aria-busy="false"
+          >
+            <span class="mode-button__check" aria-hidden="true">✓</span>
+            <span class="mode-button__icon" aria-hidden="true">🧠</span>
+            <span class="mode-button__spinner" aria-hidden="true"></span>
+            <span class="mode-button__label">Tier-Memory</span>
             <span
               class="mode-button__online-icon"
               role="img"
@@ -252,11 +299,18 @@ export function renderStartScreen(container, { onStart } = {}) {
   const soundModeLabelEl = soundModeButton.querySelector(
     ".mode-button__label",
   );
+  const memoryModeButton = container.querySelector(
+    `[data-mode="${GAME_MODE.MEMORY}"]`,
+  );
+  const memoryModeLabelEl = memoryModeButton.querySelector(
+    ".mode-button__label",
+  );
   const modeHintEl = container.querySelector(".mode-picker__hint");
 
   const difficultyButtons = Array.from(
     container.querySelectorAll(".difficulty-button"),
   );
+  const roundLengthPickerEl = container.querySelector(".round-length-picker");
   const roundLengthChips = Array.from(
     container.querySelectorAll(".round-length-chip"),
   );
@@ -305,6 +359,22 @@ export function renderStartScreen(container, { onStart } = {}) {
       : "Tiergeräusche";
   }
 
+  // Identisches Ladezustand-Muster wie oben (Issue #45).
+  function setMemoryModeBusy(isBusy) {
+    memoryModeButton.disabled = isBusy;
+    memoryModeButton.setAttribute("aria-busy", String(isBusy));
+    memoryModeLabelEl.textContent = isBusy ? "Wird geprüft …" : "Tier-Memory";
+  }
+
+  // Issue #45: Fragenanzahl-Auswahl gilt nicht für Tier-Memory (kein dritter
+  // Auswahlschritt, siehe Datei-Kommentar oben) — Sichtbarkeit wird bei jedem
+  // Moduswechsel neu gesetzt statt nur einmalig, damit ein Zurückwechseln zu
+  // "Quizfragen"/"Wer bin ich?"/"Tiergeräusche" die Sektion zuverlässig
+  // wieder einblendet.
+  function setRoundLengthPickerVisible(visible) {
+    roundLengthPickerEl.hidden = !visible;
+  }
+
   quizModeButton.addEventListener("click", () => {
     hideModeHint();
     selectedMode = GAME_MODE.QUIZ;
@@ -314,7 +384,10 @@ export function renderStartScreen(container, { onStart } = {}) {
     // wiederverwendet wird (dort läuft ohnehin ein frischer Testabruf).
     pendingReverseQuestion = null;
     pendingSoundQuestion = null;
+    pendingMemoryDeck = null;
+    pendingMemoryDeckDifficulty = null;
     setSelectedMode(GAME_MODE.QUIZ);
+    setRoundLengthPickerVisible(true);
   });
 
   // requestId-Muster gegen veraltete Antworten bei schnellem Doppel-Tap,
@@ -350,6 +423,12 @@ export function renderStartScreen(container, { onStart } = {}) {
       pendingReverseQuestion = question;
       selectedMode = GAME_MODE.REVERSE;
       setSelectedMode(GAME_MODE.REVERSE);
+      // Falls zuvor Tier-Memory gewählt war (Issue #45): dessen Deck gehört
+      // nicht mehr zum jetzt gewählten Modus, und die Fragenanzahl-Auswahl
+      // gilt für diesen Modus wieder normal.
+      pendingMemoryDeck = null;
+      pendingMemoryDeckDifficulty = null;
+      setRoundLengthPickerVisible(true);
     } catch {
       if (requestId !== reverseModeRequestId) return;
       // Kindgerechtes, nicht-technisches Abfangen (design.md/Issue #26
@@ -359,6 +438,7 @@ export function renderStartScreen(container, { onStart } = {}) {
       pendingReverseQuestion = null;
       selectedMode = GAME_MODE.QUIZ;
       setSelectedMode(GAME_MODE.QUIZ);
+      setRoundLengthPickerVisible(true);
       showModeHint("Dafür brauchst du gerade Internet 🌐");
     } finally {
       if (requestId === reverseModeRequestId) {
@@ -397,6 +477,12 @@ export function renderStartScreen(container, { onStart } = {}) {
       pendingSoundQuestion = question;
       selectedMode = GAME_MODE.SOUND;
       setSelectedMode(GAME_MODE.SOUND);
+      // Siehe reverseModeButton-Handler oben: Modus gewechselt weg von
+      // Tier-Memory -> dessen Deck verwerfen, Fragenanzahl-Auswahl wieder
+      // einblenden.
+      pendingMemoryDeck = null;
+      pendingMemoryDeckDifficulty = null;
+      setRoundLengthPickerVisible(true);
     } catch {
       if (requestId !== soundModeRequestId) return;
       // Kindgerechtes, nicht-technisches Abfangen, identisch zum "Wer bin
@@ -405,10 +491,57 @@ export function renderStartScreen(container, { onStart } = {}) {
       pendingSoundQuestion = null;
       selectedMode = GAME_MODE.QUIZ;
       setSelectedMode(GAME_MODE.QUIZ);
+      setRoundLengthPickerVisible(true);
       showModeHint("Dafür brauchst du gerade Internet 🌐");
     } finally {
       if (requestId === soundModeRequestId) {
         setSoundModeBusy(false);
+      }
+    }
+  });
+
+  // requestId-Muster wie bei den beiden Handlern oben (Issue #45).
+  let memoryModeRequestId = 0;
+
+  memoryModeButton.addEventListener("click", async () => {
+    hideModeHint();
+    const requestId = ++memoryModeRequestId;
+    setMemoryModeBusy(true);
+
+    try {
+      // Testabruf = Aufbau des kompletten Kartensets für die aktuell
+      // gewählte (oder mangels Auswahl per EASY-Platzhalter angenommene)
+      // Schwierigkeitsstufe (architecture.md: "der Deck-Aufbau ist der
+      // Testabruf"). Wird beim Rundenstart wiederverwendet, sofern die
+      // Schwierigkeitsstufe bis dahin unverändert bleibt (siehe
+      // pendingMemoryDeckDifficulty-Vergleich in memory.js).
+      const difficultyForTestFetch = selectedDifficulty ?? DIFFICULTY_LEVELS.EASY;
+      const deck = await buildMemoryDeck(
+        animalsData.animals,
+        difficultyForTestFetch,
+      );
+
+      if (requestId !== memoryModeRequestId) return;
+      pendingMemoryDeck = deck;
+      pendingMemoryDeckDifficulty = difficultyForTestFetch;
+      selectedMode = GAME_MODE.MEMORY;
+      setSelectedMode(GAME_MODE.MEMORY);
+      // Issue #45 Akzeptanzkriterium: kein Fragenanzahl-Auswahlschritt für
+      // diesen Modus.
+      setRoundLengthPickerVisible(false);
+    } catch {
+      if (requestId !== memoryModeRequestId) return;
+      // Kindgerechtes, nicht-technisches Abfangen, identisch zu den beiden
+      // Fehlerfällen oben: Auswahl bleibt bei "Quizfragen".
+      pendingMemoryDeck = null;
+      pendingMemoryDeckDifficulty = null;
+      selectedMode = GAME_MODE.QUIZ;
+      setSelectedMode(GAME_MODE.QUIZ);
+      setRoundLengthPickerVisible(true);
+      showModeHint("Dafür brauchst du gerade Internet 🌐");
+    } finally {
+      if (requestId === memoryModeRequestId) {
+        setMemoryModeBusy(false);
       }
     }
   });
@@ -470,6 +603,14 @@ export function renderStartScreen(container, { onStart } = {}) {
     }
     if (selectedMode === GAME_MODE.SOUND && pendingSoundQuestion) {
       quizState.pendingSoundQuestion = pendingSoundQuestion;
+    }
+    // Issue #45: analoges Wiederverwendungsfeld für Tier-Memory — memory.js
+    // prüft beim Rendern zusätzlich, ob pendingMemoryDeckDifficulty noch zur
+    // tatsächlich gewählten Schwierigkeitsstufe passt (siehe Datei-Kommentar
+    // oben), baut sonst selbst ein frisches Deck.
+    if (selectedMode === GAME_MODE.MEMORY && pendingMemoryDeck) {
+      quizState.pendingMemoryDeck = pendingMemoryDeck;
+      quizState.pendingMemoryDeckDifficulty = pendingMemoryDeckDifficulty;
     }
 
     onStart?.(quizState);

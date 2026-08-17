@@ -43,6 +43,7 @@ import {
 } from "../quiz/history.js";
 import { DIFFICULTY_LABELS } from "../quiz/difficulty.js";
 import { QUIZ_MODES, getModeLabel } from "../quiz/mode.js";
+import { GAME_MODE } from "../quiz/gameMode.js";
 
 /**
  * Formatiert einen ISO-Datums-String für die Verlaufsliste, z. B.
@@ -203,7 +204,11 @@ function getEncouragement(score, total) {
  * Rendert den Ergebnis-Bildschirm in den übergebenen Container.
  * @param {HTMLElement} container
  * @param {object} quizState Quiz-Zustand aus createQuizState nach Rundenende
- *   (siehe src/quiz/state.js) – erwartet `score` und `questions`.
+ *   (siehe src/quiz/state.js) – erwartet `score` und `questions`. Für den
+ *   Tier-Memory-Modus (Issue #45) übergibt src/screens/memory.js stattdessen
+ *   ein schlankes Ergebnis-Objekt ({ mode: GAME_MODE.MEMORY, difficulty,
+ *   memoryPairCount, memoryAttempts }) statt eines echten quizState — siehe
+ *   dortiger Datei-Kommentar sowie den `isMemoryResult`-Zweig unten.
  * @param {object} [callbacks]
  * @param {() => void} [callbacks.onPlayAgain] wird bei Klick auf "Nochmal
  *   spielen" aufgerufen; der Aufrufer ist dafür zuständig, eine neue Runde
@@ -216,33 +221,53 @@ export function renderResultScreen(
   quizState,
   { onPlayAgain, onBackToStart } = {},
 ) {
-  const score = quizState.score;
-  const total = quizState.questions.length;
-  const encouragement = getEncouragement(score, total);
+  // Issue #45, design.md ("Rundenende"): Tier-Memory hat kein "richtig von N
+  // Fragen"-Ergebnis (score/questions passen konzeptionell nicht, siehe
+  // architecture.md Punkt 4) — eigener, durchweg wertschätzender Text statt
+  // getEncouragement()/Score-Satz, UND bewusst KEIN Eintrag in der
+  // Ergebnis-Verlaufsliste (#14/#36, explizites Akzeptanzkriterium).
+  const isMemoryResult = quizState.mode === GAME_MODE.MEMORY;
 
-  // Rundenergebnis lokal protokollieren (Issue #14) – fehlertolerant: bei
-  // blockiertem/fehlendem localStorage liefert saveResultToHistory `null`
-  // und renderHistorySection blendet den Bereich dann einfach aus. Seit
-  // Issue #36 wird zusätzlich der gespielte Modus mitgespeichert – aktuell
-  // ist im Hauptzweig nur der Quizfragen-Modus tatsächlich spielbar (die
-  // anderen Modi stecken noch in unfertigen Feature-Branches, siehe
-  // #26–#28/#31–#33), `quizState.mode` existiert dort also noch nicht; der
-  // Fallback auf QUIZ_MODES.QUIZ hält result.js trotzdem schon
-  // zukunftskompatibel, sobald ein Feature-Branch `mode` in den Zustand
-  // einträgt.
-  const history = saveResultToHistory({
-    score,
-    total,
-    difficulty: quizState.difficulty,
-    mode: quizState.mode ?? QUIZ_MODES.QUIZ,
-  });
+  let scoreText;
+  let encouragement;
+  let history;
+
+  if (isMemoryResult) {
+    const attemptsLabel =
+      quizState.memoryAttempts === 1 ? "Versuch" : "Versuchen";
+    scoreText = `Super gemacht! Du hast alle ${quizState.memoryPairCount} Tierpaare gefunden!`;
+    encouragement = `Das hast du in ${quizState.memoryAttempts} ${attemptsLabel} geschafft!`;
+    history = []; // kein saveResultToHistory-Aufruf -> renderHistorySection blendet den Bereich unten automatisch aus
+  } else {
+    const score = quizState.score;
+    const total = quizState.questions.length;
+    scoreText = `Du hast ${score} von ${total} Fragen richtig beantwortet!`;
+    encouragement = getEncouragement(score, total);
+
+    // Rundenergebnis lokal protokollieren (Issue #14) – fehlertolerant: bei
+    // blockiertem/fehlendem localStorage liefert saveResultToHistory `null`
+    // und renderHistorySection blendet den Bereich dann einfach aus. Seit
+    // Issue #36 wird zusätzlich der gespielte Modus mitgespeichert – aktuell
+    // ist im Hauptzweig nur der Quizfragen-Modus tatsächlich spielbar (die
+    // anderen Modi stecken noch in unfertigen Feature-Branches, siehe
+    // #26–#28/#31–#33), `quizState.mode` existiert dort also noch nicht; der
+    // Fallback auf QUIZ_MODES.QUIZ hält result.js trotzdem schon
+    // zukunftskompatibel, sobald ein Feature-Branch `mode` in den Zustand
+    // einträgt.
+    history = saveResultToHistory({
+      score,
+      total,
+      difficulty: quizState.difficulty,
+      mode: quizState.mode ?? QUIZ_MODES.QUIZ,
+    });
+  }
 
   container.innerHTML = `
     <section class="result-screen" aria-labelledby="result-title">
       <p class="result-screen__mascot" aria-hidden="true">🎉</p>
       <h2 id="result-title" class="result-screen__title">Runde geschafft!</h2>
       <p class="result-screen__score">
-        Du hast ${score} von ${total} Fragen richtig beantwortet!
+        ${scoreText}
       </p>
       <p class="result-screen__encouragement">${encouragement}</p>
 
