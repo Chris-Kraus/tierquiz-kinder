@@ -152,6 +152,24 @@ P18-Abdeckung ist mit 100 % überraschend hoch (deutlich höher als bei `habitat
 
 **Skript-Verbleib:** `measure-image-coverage.js` bleibt im Repo unter `scripts/fetch-animals/` (als Referenz/Wiederholbarkeit, z. B. falls sich die Commons-Datenlage ändert), ist aber klar im Datei-Header als reines Analyse-Tool ohne Pipeline-Anbindung gekennzeichnet — kein Aufräumbedarf, da es weder Abhängigkeiten noch Wartungslast für die produktive Pipeline erzeugt.
 
+## Issue #48: Cleanup lokaler/Git-Dateien (17.08.2026)
+
+**Scan-Ergebnis:** `git status`, `du -sh` auf bekannte Cache-/Build-Ordner, `git ls-files` gegen Log-/Temp-/`.DS_Store`-Muster geprüft. Ein einziger konkreter Kandidat gefunden:
+
+- `scripts/fetch-animals/.cache/hydration-cache.json` — 97 MB (101.860.051 Byte), rein lokal, war nie in Git (bereits vor dieser Story korrekt in `.gitignore` erfasst). Reiner Zwischenspeicher der Wikidata-Hydration für `fetch-animals.js --use-cache`-Re-Runs, keine Quelle der Wahrheit für `data/animals.json`.
+
+Keine weiteren Kandidaten: keine verwaisten Branches (Feature-Branch aus PR #44 bereits automatisch entfernt), keine `.log`/`.DS_Store`/Backup-Dateien in Git, `.gitignore` deckt `node_modules/`, `dist/`, `.DS_Store`, `*.log`, den Cache-Ordner und `.claude/` bereits vollständig ab.
+
+**Nutzerentscheidung:** Löschen, kein Backup (Datei jederzeit über einen erneuten vollen `fetch-animals.js`-Lauf ohne `--use-cache` neu erzeugbar).
+
+**Durchgeführt:** `scripts/fetch-animals/.cache/hydration-cache.json` gelöscht, leerer `.cache`-Ordner mitentfernt.
+
+**Verifikation danach:**
+- `npm run build`: erfolgreich (`dist/` unverändert erzeugt).
+- `npm run dev`: Server startet, `http://localhost:5173/` antwortet mit HTTP 200.
+
+**Status:** Issue #48 aus Sicht `devops-engineer` erledigt. Committen/Pushen bleibt bei PM/`web-developer` (hier ohnehin nichts zu committen, da die gelöschte Datei nie in Git war).
+
 ## Offene Infrastruktur-Fragen
 
 - Follow-up-Empfehlung an `web-developer`: totes `color`-Feld aus `src/quiz/difficulty.js` (`EASY_FIELDS`) und `src/quiz/questionGenerator.js` (`FIELD_DEFINITIONS.color`) entfernen (siehe oben) — keine funktionale Dringlichkeit, nur Code-Hygiene.
