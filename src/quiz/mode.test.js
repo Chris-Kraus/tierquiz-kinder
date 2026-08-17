@@ -12,6 +12,10 @@ describe("getModeLabel", () => {
     expect(getModeLabel(QUIZ_MODES.QUIZ)).toBe("Quizfragen");
     expect(getModeLabel(QUIZ_MODES.REVERSE)).toBe("Wer bin ich?");
     expect(getModeLabel(QUIZ_MODES.SOUND)).toBe("Tiergeräusche");
+    // Issue #46: neuer "Buchstabensuche"-Modus, Ergebnis-Verlaufsliste
+    // (architecture.md: "mode: 'letterSearch'") übernimmt das Label
+    // automatisch über MODE_LABELS.
+    expect(getModeLabel(QUIZ_MODES.LETTER_SEARCH)).toBe("Buchstabensuche");
   });
 
   it("fällt bei fehlendem mode (Alt-Eintrag ohne mode-Feld, Issue #36-Migration) auf 'Quizfragen' zurück", () => {
@@ -33,11 +37,12 @@ describe("QUIZ_MODES / DEFAULT_MODE", () => {
     expect(DEFAULT_MODE).toBe(QUIZ_MODES.QUIZ);
   });
 
-  it("definiert die drei laut architecture.md vereinbarten Modus-Werte", () => {
+  it("definiert die laut architecture.md vereinbarten Modus-Werte (seit Issue #46 vier: quiz/reverse/sound/letterSearch)", () => {
     expect(QUIZ_MODES).toEqual({
       QUIZ: "quiz",
       REVERSE: "reverse",
       SOUND: "sound",
+      LETTER_SEARCH: "letterSearch",
     });
   });
 });

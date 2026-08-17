@@ -64,6 +64,23 @@
 // Testabruf-Ergebnis genau wie bei `pendingReverseQuestion` oben
 // zwischengespeichert (`pendingSoundQuestion`) und beim Rundenstart an
 // `soundQuestion.js` weitergereicht statt es ein zweites Mal abzurufen.
+//
+// Seit Issue #46: vierte Kachel "Buchstabensuche" (design.md, "Neuer
+// Spielmodus 'Buchstabensuche'": "Neue fünfte/sechste Modus-Kachel
+// 'Buchstabensuche' auf dem Start-Bildschirm"). Testabruf/Ladezustand/
+// Fehlerfallback sind wieder 1:1 dasselbe Muster wie bei "Wer bin ich?"/
+// "Tiergeräusche" oben — einziger technischer Unterschied:
+// `generateNextLetterSearchQuestion` braucht (anders als die beiden anderen
+// Testabrufe) KEINE Schwierigkeitsstufe als Parameter (siehe
+// letterSearchQuestionGenerator.js, Datei-Kommentar: die Schwierigkeitsstufe
+// beeinflusst hier ausschließlich die Lücken-Berechnung, die erst
+// letterSearch.js beim Anzeigen der Frage aufruft). Das bereits bestehende
+// `.mode-picker__group` (flex-wrap: wrap, siehe global.css) bricht mit einer
+// vierten Kachel bereits automatisch auf mehrere Zeilen um (auf der
+// bestehenden max-width des Start-Bildschirms passen ohnehin nur 2 Kacheln
+// pro Zeile) — kein zusätzlicher Grid-Umbau nötig (anders als ursprünglich in
+// architecture.md für den Fall erwogen, dass noch kein umbrechendes Layout
+// existiert).
 
 import animalsData from "../../data/animals.json";
 import { DIFFICULTY_LEVELS, DIFFICULTY_LABELS } from "../quiz/difficulty.js";
@@ -71,6 +88,7 @@ import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 import { createQuizState } from "../quiz/state.js";
 import { generateNextReverseQuestion } from "../quiz/reverseQuestionGenerator.js";
 import { generateNextSoundQuestion } from "../quiz/soundQuestionGenerator.js";
+import { generateNextLetterSearchQuestion } from "../quiz/letterSearchQuestionGenerator.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
 
 // Werte laut UX-Abstimmung zu Issue #13: 4 Chips, gleichermaßen für beide
@@ -115,6 +133,9 @@ export function renderStartScreen(container, { onStart } = {}) {
   // Analoges Wiederverwendungsfeld für GAME_MODE.SOUND (Issue #33), gleiches
   // Prinzip wie pendingReverseQuestion oben.
   let pendingSoundQuestion = null;
+  // Analoges Wiederverwendungsfeld für GAME_MODE.LETTER_SEARCH (Issue #46),
+  // gleiches Prinzip wie pendingReverseQuestion/pendingSoundQuestion oben.
+  let pendingLetterSearchQuestion = null;
 
   container.innerHTML = `
     <section class="start-screen" aria-labelledby="start-title">
@@ -169,6 +190,24 @@ export function renderStartScreen(container, { onStart } = {}) {
             <span class="mode-button__icon" aria-hidden="true">🔊</span>
             <span class="mode-button__spinner" aria-hidden="true"></span>
             <span class="mode-button__label">Tiergeräusche</span>
+            <span
+              class="mode-button__online-icon"
+              role="img"
+              aria-label="Benötigt Internetverbindung"
+              >🌐</span
+            >
+          </button>
+          <button
+            type="button"
+            class="mode-button"
+            data-mode="${GAME_MODE.LETTER_SEARCH}"
+            aria-pressed="false"
+            aria-busy="false"
+          >
+            <span class="mode-button__check" aria-hidden="true">✓</span>
+            <span class="mode-button__icon" aria-hidden="true">🔤</span>
+            <span class="mode-button__spinner" aria-hidden="true"></span>
+            <span class="mode-button__label">Buchstabensuche</span>
             <span
               class="mode-button__online-icon"
               role="img"
@@ -249,7 +288,11 @@ export function renderStartScreen(container, { onStart } = {}) {
   const soundModeButton = container.querySelector(
     `[data-mode="${GAME_MODE.SOUND}"]`,
   );
-  const soundModeLabelEl = soundModeButton.querySelector(
+  const soundModeLabelEl = soundModeButton.querySelector(".mode-button__label");
+  const letterSearchModeButton = container.querySelector(
+    `[data-mode="${GAME_MODE.LETTER_SEARCH}"]`,
+  );
+  const letterSearchModeLabelEl = letterSearchModeButton.querySelector(
     ".mode-button__label",
   );
   const modeHintEl = container.querySelector(".mode-picker__hint");
@@ -290,9 +333,7 @@ export function renderStartScreen(container, { onStart } = {}) {
   function setReverseModeBusy(isBusy) {
     reverseModeButton.disabled = isBusy;
     reverseModeButton.setAttribute("aria-busy", String(isBusy));
-    reverseModeLabelEl.textContent = isBusy
-      ? "Wird geprüft …"
-      : "Wer bin ich?";
+    reverseModeLabelEl.textContent = isBusy ? "Wird geprüft …" : "Wer bin ich?";
   }
 
   // Identisches Ladezustand-Muster wie setReverseModeBusy oben (Issue #31,
@@ -300,9 +341,17 @@ export function renderStartScreen(container, { onStart } = {}) {
   function setSoundModeBusy(isBusy) {
     soundModeButton.disabled = isBusy;
     soundModeButton.setAttribute("aria-busy", String(isBusy));
-    soundModeLabelEl.textContent = isBusy
+    soundModeLabelEl.textContent = isBusy ? "Wird geprüft …" : "Tiergeräusche";
+  }
+
+  // Identisches Ladezustand-Muster wie oben (Issue #46, gleiches Muster wie
+  // "Wer bin ich?"/"Tiergeräusche").
+  function setLetterSearchModeBusy(isBusy) {
+    letterSearchModeButton.disabled = isBusy;
+    letterSearchModeButton.setAttribute("aria-busy", String(isBusy));
+    letterSearchModeLabelEl.textContent = isBusy
       ? "Wird geprüft …"
-      : "Tiergeräusche";
+      : "Buchstabensuche";
   }
 
   quizModeButton.addEventListener("click", () => {
@@ -314,6 +363,7 @@ export function renderStartScreen(container, { onStart } = {}) {
     // wiederverwendet wird (dort läuft ohnehin ein frischer Testabruf).
     pendingReverseQuestion = null;
     pendingSoundQuestion = null;
+    pendingLetterSearchQuestion = null;
     setSelectedMode(GAME_MODE.QUIZ);
   });
 
@@ -413,6 +463,45 @@ export function renderStartScreen(container, { onStart } = {}) {
     }
   });
 
+  // requestId-Muster wie bei den beiden Kacheln oben, eigener Zähler (Issue
+  // #46).
+  let letterSearchModeRequestId = 0;
+
+  letterSearchModeButton.addEventListener("click", async () => {
+    hideModeHint();
+    const requestId = ++letterSearchModeRequestId;
+    setLetterSearchModeBusy(true);
+
+    try {
+      // Testabruf = erster Aufruf von generateNextLetterSearchQuestion für
+      // Frage 1 der Runde (architecture.md, Punkt 2). Anders als bei "Wer bin
+      // ich?"/"Tiergeräusche" braucht dieser Aufruf keine Schwierigkeitsstufe
+      // (siehe letterSearchQuestionGenerator.js, Datei-Kommentar).
+      const question = await generateNextLetterSearchQuestion(
+        animalsData.animals,
+        new Set(),
+      );
+
+      if (requestId !== letterSearchModeRequestId) return;
+      pendingLetterSearchQuestion = question;
+      selectedMode = GAME_MODE.LETTER_SEARCH;
+      setSelectedMode(GAME_MODE.LETTER_SEARCH);
+    } catch {
+      if (requestId !== letterSearchModeRequestId) return;
+      // Kindgerechtes, nicht-technisches Abfangen, identisch zu den beiden
+      // Fehlerfällen oben (design.md/Akzeptanzkriterium): Auswahl bleibt bei
+      // "Quizfragen".
+      pendingLetterSearchQuestion = null;
+      selectedMode = GAME_MODE.QUIZ;
+      setSelectedMode(GAME_MODE.QUIZ);
+      showModeHint("Dafür brauchst du gerade Internet 🌐");
+    } finally {
+      if (requestId === letterSearchModeRequestId) {
+        setLetterSearchModeBusy(false);
+      }
+    }
+  });
+
   difficultyButtons.forEach((button) => {
     button.addEventListener("click", () => {
       selectedDifficulty = button.dataset.difficulty;
@@ -436,10 +525,7 @@ export function renderStartScreen(container, { onStart } = {}) {
 
       roundLengthChips.forEach((otherChip) => {
         const isSelected = otherChip === chip;
-        otherChip.classList.toggle(
-          "round-length-chip--selected",
-          isSelected,
-        );
+        otherChip.classList.toggle("round-length-chip--selected", isSelected);
         otherChip.setAttribute("aria-pressed", String(isSelected));
       });
     });
@@ -470,6 +556,12 @@ export function renderStartScreen(container, { onStart } = {}) {
     }
     if (selectedMode === GAME_MODE.SOUND && pendingSoundQuestion) {
       quizState.pendingSoundQuestion = pendingSoundQuestion;
+    }
+    if (
+      selectedMode === GAME_MODE.LETTER_SEARCH &&
+      pendingLetterSearchQuestion
+    ) {
+      quizState.pendingLetterSearchQuestion = pendingLetterSearchQuestion;
     }
 
     onStart?.(quizState);

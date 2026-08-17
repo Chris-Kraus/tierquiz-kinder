@@ -9,6 +9,10 @@ import { renderQuestionScreen } from "./screens/question.js";
 import { renderReverseQuestionScreen } from "./screens/reverseQuestion.js";
 import { renderResultScreen } from "./screens/result.js";
 import { renderSoundQuestionScreen } from "./screens/soundQuestion.js";
+// Issue #46: neuer Frage-Bildschirm für den "Buchstabensuche"-Modus --
+// gleiches Weiche-Prinzip wie bei REVERSE/SOUND oben, main.js bleibt die
+// einzige Stelle, die alle Frage-Bildschirme kennt.
+import { renderLetterSearchScreen } from "./screens/letterSearch.js";
 import { createQuizState } from "./quiz/state.js";
 import { GAME_MODE } from "./quiz/gameMode.js";
 
@@ -32,6 +36,10 @@ function showQuestionScreen(quizState) {
   }
   if (quizState.mode === GAME_MODE.SOUND) {
     renderSoundQuestionScreen(app, quizState, { onFinish: showResultScreen });
+    return;
+  }
+  if (quizState.mode === GAME_MODE.LETTER_SEARCH) {
+    renderLetterSearchScreen(app, quizState, { onFinish: showResultScreen });
     return;
   }
   renderQuestionScreen(app, quizState, { onFinish: showResultScreen });
