@@ -35,6 +35,14 @@
 // neu gerendert (nicht der komplette Ergebnis-Bildschirm) – ein erneuter
 // voller renderResultScreen()-Aufruf würde sonst über saveResultToHistory()
 // fälschlich einen weiteren "aktuelle Runde"-Eintrag anlegen.
+//
+// Seit Issue #52 (Buchstabensuche, "Lösung zeigen", Abstimmung mit
+// `software-architect`/Nutzer, 20.08.2026) zusätzlich: der Hauptsatz sowie
+// die Verlaufsliste zeigen bei mindestens 1 per Button aufgelöster Frage
+// zusätzlich deren Anzahl ("... davon X aufgelöst!"), abgeleitet aus
+// `quizState.answers.filter(a => a.resolved).length` (siehe
+// formatScoreText/renderHistorySection unten) — Score/Total selbst bleiben
+// dabei unverändert "N von N richtig" (bestehende Prämisse aus Issue #46).
 
 import {
   saveResultToHistory,
@@ -69,13 +77,30 @@ function formatHistoryDate(isoDate) {
 }
 
 /**
+ * Formatiert den kurzen Ergebnis-Text ("N von N richtig[, davon X
+ * aufgelöst]") für einen Verlaufseintrag. Der "davon X aufgelöst"-Zusatz
+ * erscheint nur bei mindestens 1 per "Lösung zeigen"-Button aufgelöster
+ * Frage (Issue #52) -- Einträge ohne `resolvedCount`-Feld (Alt-Einträge vor
+ * diesem Feature) oder mit `resolvedCount === 0`/`undefined` zeigen
+ * unverändert nur "N von N richtig" (Anzeige-Fallback, siehe history.js).
+ * @param {number} score
+ * @param {number} total
+ * @param {number} [resolvedCount]
+ * @returns {string}
+ */
+function formatScoreText(score, total, resolvedCount) {
+  const base = `${score} von ${total} richtig`;
+  return resolvedCount > 0 ? `${base}, davon ${resolvedCount} aufgelöst` : base;
+}
+
+/**
  * Rendert das Markup für die eingeklappte Verlaufsliste (Issue #14, Modus-
  * Anzeige + Lösch-Steuerelemente seit Issue #36), oder einen leeren String,
  * wenn keine Historie (mehr) vorliegt (z. B. `localStorage` blockiert oder
  * der letzte Eintrag wurde gelöscht) – dann wird der ganze Bereich nicht
  * angeboten (identisches Verhalten für "nie Historie vorhanden" und "Historie
  * gerade geleert", Akzeptanzkriterium Issue #36).
- * @param {{id: string, date: string, score: number, total: number, difficulty: string, mode?: string}[]} history
+ * @param {{id: string, date: string, score: number, total: number, difficulty: string, mode?: string, resolvedCount?: number}[]} history
  *   neueste zuerst (siehe src/quiz/history.js)
  * @returns {string}
  */
@@ -97,7 +122,7 @@ function renderHistorySection(history) {
                 ? '<span class="result-history__current-badge">Diese Runde</span>'
                 : ""
             }
-            <span class="result-history__result">${entry.score} von ${entry.total} richtig</span>
+            <span class="result-history__result">${formatScoreText(entry.score, entry.total, entry.resolvedCount)}</span>
             <span class="result-history__meta">${modeLabel} · ${difficultyLabel} · ${formatHistoryDate(entry.date)}</span>
           </div>
           <button
@@ -204,7 +229,9 @@ function getEncouragement(score, total) {
  * Rendert den Ergebnis-Bildschirm in den übergebenen Container.
  * @param {HTMLElement} container
  * @param {object} quizState Quiz-Zustand aus createQuizState nach Rundenende
- *   (siehe src/quiz/state.js) – erwartet `score` und `questions`. Für den
+ *   (siehe src/quiz/state.js) – erwartet `score`, `questions` sowie `answers`
+ *   (für die aus `answers.filter(a => a.resolved).length` abgeleitete Anzahl
+ *   aufgelöster Fragen, Issue #52). Für den
  *   Tier-Memory-Modus (Issue #45) übergibt src/screens/memory.js stattdessen
  *   ein schlankes Ergebnis-Objekt ({ mode: GAME_MODE.MEMORY, difficulty,
  *   memoryPairCount, memoryAttempts }) statt eines echten quizState — siehe
@@ -241,7 +268,20 @@ export function renderResultScreen(
   } else {
     const score = quizState.score;
     const total = quizState.questions.length;
-    scoreText = `Du hast ${score} von ${total} Fragen richtig beantwortet!`;
+    // Issue #52 (Buchstabensuche, "Lösung zeigen"): Anzahl der per Button
+    // aufgelösten statt eigenständig gelösten Fragen dieser Runde -- keine
+    // separate Zählvariable, sondern aus der Antworten-Historie abgeleitet
+    // (Single Source of Truth, wie bereits bei `score`, siehe state.js). Für
+    // Modi ohne `resolved`-Unterstützung (`answers` bleibt dort `undefined`
+    // oder ohne `resolved`-Feld) liefert das schlicht 0.
+    const resolvedCount = (quizState.answers ?? []).filter(
+      (answer) => answer.resolved,
+    ).length;
+
+    scoreText =
+      resolvedCount > 0
+        ? `Du hast ${score} von ${total} Fragen richtig beantwortet, davon ${resolvedCount} aufgelöst!`
+        : `Du hast ${score} von ${total} Fragen richtig beantwortet!`;
     encouragement = getEncouragement(score, total);
 
     // Rundenergebnis lokal protokollieren (Issue #14) – fehlertolerant: bei
@@ -253,12 +293,15 @@ export function renderResultScreen(
     // #26–#28/#31–#33), `quizState.mode` existiert dort also noch nicht; der
     // Fallback auf QUIZ_MODES.QUIZ hält result.js trotzdem schon
     // zukunftskompatibel, sobald ein Feature-Branch `mode` in den Zustand
-    // einträgt.
+    // einträgt. Seit Issue #52 zusätzlich `resolvedCount` (optionales Feld,
+    // siehe history.js) -- kein Backfill für Alt-Einträge, für Modi ohne
+    // Auflösen-Option (aktuell nur Buchstabensuche) einfach 0.
     history = saveResultToHistory({
       score,
       total,
       difficulty: quizState.difficulty,
       mode: quizState.mode ?? QUIZ_MODES.QUIZ,
+      resolvedCount,
     });
   }
 
