@@ -53,6 +53,8 @@ import {
   buildAttribution,
   REQUEST_TIMEOUT_MS,
 } from "../quiz/imageHint.js";
+import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
+import { triggerConfetti } from "../quiz/confetti.js";
 
 /**
  * Rendert den Frage-Bildschirm in den übergebenen Container und steuert den
@@ -89,118 +91,150 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="question-heading">
       <p class="question-screen__progress"></p>
-      <h2 id="question-heading" class="question-screen__text"></h2>
 
-      <!-- Issue #16 (Option D′): Bild-Rateshilfe. Kleiner, sekundärer Button
-           oberhalb der Antwortkacheln (design.md, "Bild-Rateshilfe (Issue
-           #16)"), nur sichtbar, wenn image_filename für das aktuelle Tier
-           vorhanden ist (siehe showQuestion/resetImageHint unten). Reserviert
-           bewusst keinen festen Platz, wenn kein Bild ermittelbar ist — kein
-           Leerraum-Rätsel fürs Kind. -->
-      <button
-        type="button"
-        class="image-hint-button"
-        hidden
-        aria-busy="false"
-      >
-        <span class="image-hint-button__icon" aria-hidden="true">🔍</span>
-        <span class="image-hint-button__spinner" aria-hidden="true"></span>
-        <span class="image-hint-button__label">Bild zeigen</span>
-      </button>
+      <!-- Redesign (Issue #72, design.md "Medien-Karte"): reine Layout-
+           Gruppierung, kein Verhaltens-/Klassen-Unterschied an den bereits
+           bestehenden Elementen (Issue #16/#30) darin. -->
+      <div class="question-screen__media">
+        <!-- Issue #16 (Option D′): Bild-Rateshilfe. Kleiner, sekundärer Button
+             oberhalb der Antwortkacheln (design.md, "Bild-Rateshilfe (Issue
+             #16)"), nur sichtbar, wenn image_filename für das aktuelle Tier
+             vorhanden ist (siehe showQuestion/resetImageHint unten). Reserviert
+             bewusst keinen festen Platz, wenn kein Bild ermittelbar ist — kein
+             Leerraum-Rätsel fürs Kind. -->
+        <button
+          type="button"
+          class="image-hint-button k-btn"
+          hidden
+          aria-busy="false"
+        >
+          <span class="image-hint-button__icon" aria-hidden="true">🔍</span>
+          <span class="image-hint-button__spinner" aria-hidden="true"></span>
+          <span class="image-hint-button__label">Bild zeigen</span>
+        </button>
 
-      <div class="image-hint" hidden>
-        <img class="image-hint__image" alt="" />
-        <p class="image-hint__attribution">
-          <span class="image-hint__attribution-text"></span>
-          <a
-            class="image-hint__attribution-link"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            hidden
-            >(Lizenz)</a
-          >
-        </p>
+        <div class="image-hint" hidden>
+          <img class="image-hint__image" alt="" />
+          <p class="image-hint__attribution">
+            <span class="image-hint__attribution-text"></span>
+            <a
+              class="image-hint__attribution-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              hidden
+              >(Lizenz)</a
+            >
+          </p>
+        </div>
       </div>
+
+      <div class="question-screen__body">
+      <h2 id="question-heading" class="question-screen__text"></h2>
 
       <div
         class="answer-grid"
         role="group"
         aria-label="Antwortmöglichkeiten"
       ></div>
-
-      <p
-        class="question-screen__feedback"
-        role="status"
-        aria-live="polite"
-        hidden
-      ></p>
-
-      <!-- Issue #30: automatische Bild-Anzeige NACH der Antwort — eigenständige
-           DOM-Instanz neben dem unveränderten Pre-Answer-Bereich oben (Issue
-           #16), analog zum Fun-Fact-Block als eigenständigem Block statt
-           geteiltem Zustand (siehe architecture.md, "Bild-Rateshilfe:
-           Automatische Anzeige nach der Antwort"). Kein Button/Icon/Klick-
-           Ladezustand (design.md: "poppt still ein, sobald geladen") — bleibt
-           per hidden-Attribut versteckt, bis startFeedbackImageFetch() unten
-           einen Treffer liefert. Wird übersprungen, wenn das Bild bereits vor
-           der Antwort manuell
-           aufgedeckt wurde (Duplikat-Vermeidung, siehe dort). -->
-      <div class="question-screen__feedback-image" hidden>
-        <img class="question-screen__feedback-image-img" alt="" />
-        <p class="question-screen__feedback-image-attribution">
-          <span class="question-screen__feedback-image-attribution-text"></span>
-          <a
-            class="question-screen__feedback-image-attribution-link"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            hidden
-            >(Lizenz)</a
-          >
-        </p>
       </div>
 
-      <p class="question-screen__info-sentence" hidden>
-        <!-- Issue #24 QA-Bugfix (14.08.2026): Icon + "Wusstest du schon?"-
-             Einleitung entfernt, die hier fälschlich dupliziert waren (siehe
-             design.md, "Klarstellung 14.08.2026 (Rückfrage aus Issue #24)").
-             Icon+Wording sind laut Klarstellung das exklusive Erkennungs-
-             merkmal des Fun-Fact-Blocks unten; der Infosatz-Block behält sein
-             ursprüngliches Überschrift-/Doppelpunkt-Format ("{name_de}:
-             Ein/e {category}...", siehe infoSentence.js) ohne Icon/Lead. -->
-        <span class="question-screen__info-sentence-text"></span>
-        <!-- Issue #15: Wikipedia-Link, seit dem Zusammenführungs-Wunsch als
-             letztes Element INNERHALB des Infosatz-Blocks statt als eigener,
-             danebenstehender Block (siehe Datei-Kommentar unten bei
-             wikipediaLinkEl). Eigenes hidden-Attribut unabhängig vom
-             umschließenden p-Element -- der Infosatz bleibt unverändert
-             sichtbar, wenn das Tier keinen wikipedia_url_de-Eintrag hat. -->
-        <a
-          class="question-screen__info-sentence-wikipedia-link"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          hidden
-        >
-          <span aria-hidden="true">📖</span>
-          <span class="question-screen__info-sentence-wikipedia-link-text"></span>
-        </a>
-      </p>
+      <!-- Redesign (Issue #72, design.md "Feedback-Panel"): gemeinsamer
+           Wrapper um die bereits bestehenden Feedback-Elemente (Issue #12/
+           #15/#24/#30) — reine visuelle Gruppierung per CSS-Grid, keine
+           Änderung an deren einzelner hidden/Text-Logik unten. Sichtbarkeit
+           des Wrappers folgt exakt feedbackEl.hidden (siehe showQuestion/
+           handleAnswer), damit vor der ersten Antwort kein leerer Rahmen
+           erscheint. Bewusst als eigenes Grid-Item AUSSERHALB von
+           .question-screen__body (nicht darin verschachtelt), damit
+           grid-column: 1 / -1 gegen das echte 2-Spalten-Grid von
+           .question-screen wirkt statt gegen die schmale rechte Spalte —
+           sonst Overflow, siehe PR-Beschreibung/Commit-Historie. -->
+      <div class="feedback-panel" hidden>
+        <div class="feedback-panel__mascot" aria-hidden="true"></div>
+        <div class="feedback-panel__body">
+          <p
+            class="question-screen__feedback"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></p>
 
-      <!-- Issue #24: Fun Fact — eigenständiger Block unterhalb des Infosatz-
-           Blocks oben, oberhalb des "Weiter"-Buttons (design.md, "Fun Fact im
-           Feedback-Schritt"). Nur sichtbar, wenn animal.fun_fact vorhanden
-           ist (siehe showQuestion/handleAnswer unten) — kein Platzhalter/
-           Hinweis bei fehlendem Wert, damit sich das Layout nicht abhängig
-           vom Vorhandensein verschiebt. -->
-      <p class="question-screen__fun-fact" hidden>
-        <span class="question-screen__fun-fact-icon" aria-hidden="true">💡</span>
-        <span class="question-screen__fun-fact-lead">Wusstest du schon?</span>
-        <span class="question-screen__fun-fact-text"></span>
-      </p>
+          <p class="question-screen__info-sentence" hidden>
+            <!-- Issue #24 QA-Bugfix (14.08.2026): Icon + "Wusstest du schon?"-
+                 Einleitung entfernt, die hier fälschlich dupliziert waren (siehe
+                 design.md, "Klarstellung 14.08.2026 (Rückfrage aus Issue #24)").
+                 Icon+Wording sind laut Klarstellung das exklusive Erkennungs-
+                 merkmal des Fun-Fact-Blocks unten; der Infosatz-Block behält sein
+                 ursprüngliches Überschrift-/Doppelpunkt-Format ("{name_de}:
+                 Ein/e {category}...", siehe infoSentence.js) ohne Icon/Lead. -->
+            <span class="question-screen__info-sentence-text"></span>
+            <!-- Issue #15: Wikipedia-Link, seit dem Zusammenführungs-Wunsch als
+                 letztes Element INNERHALB des Infosatz-Blocks statt als eigener,
+                 danebenstehender Block (siehe Datei-Kommentar unten bei
+                 wikipediaLinkEl). Eigenes hidden-Attribut unabhängig vom
+                 umschließenden p-Element -- der Infosatz bleibt unverändert
+                 sichtbar, wenn das Tier keinen wikipedia_url_de-Eintrag hat. -->
+            <a
+              class="question-screen__info-sentence-wikipedia-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              hidden
+            >
+              <span aria-hidden="true">📖</span>
+              <span class="question-screen__info-sentence-wikipedia-link-text"></span>
+            </a>
+          </p>
 
-      <button type="button" class="next-button" hidden>Weiter</button>
+          <!-- Issue #24: Fun Fact — eigenständiger Block unterhalb des Infosatz-
+               Blocks oben (design.md, "Fun Fact im Feedback-Schritt"). Nur
+               sichtbar, wenn animal.fun_fact vorhanden ist (siehe
+               showQuestion/handleAnswer unten) — kein Platzhalter/Hinweis bei
+               fehlendem Wert, damit sich das Layout nicht abhängig vom
+               Vorhandensein verschiebt. -->
+          <p class="question-screen__fun-fact" hidden>
+            <span class="question-screen__fun-fact-icon" aria-hidden="true">💡</span>
+            <span class="question-screen__fun-fact-lead">Wusstest du schon?</span>
+            <span class="question-screen__fun-fact-text"></span>
+          </p>
+        </div>
+
+        <div class="feedback-panel__sticker">
+          <!-- Issue #30: automatische Bild-Anzeige NACH der Antwort —
+               eigenständige DOM-Instanz neben dem unveränderten Pre-Answer-
+               Bereich oben (Issue #16), analog zum Fun-Fact-Block als
+               eigenständigem Block statt geteiltem Zustand (siehe
+               architecture.md, "Bild-Rateshilfe: Automatische Anzeige nach der
+               Antwort"). Kein Button/Icon/Klick-Ladezustand (design.md: "poppt
+               still ein, sobald geladen") — bleibt per hidden-Attribut
+               versteckt, bis startFeedbackImageFetch() unten einen Treffer
+               liefert. Wird übersprungen, wenn das Bild bereits vor der
+               Antwort manuell aufgedeckt wurde (Duplikat-Vermeidung, siehe
+               dort). Redesign (Issue #72): bildet jetzt visuell die
+               "Sticker-Karte" — Name + NEU!/SCHAU MAL-Pill sind neu
+               (feedback-panel__sticker-name/-badge unten), das Bild selbst
+               und sein Lade-/Fehlerverhalten bleiben unverändert. -->
+          <div class="question-screen__feedback-image" hidden>
+            <img class="question-screen__feedback-image-img" alt="" />
+            <p class="question-screen__feedback-image-attribution">
+              <span class="question-screen__feedback-image-attribution-text"></span>
+              <a
+                class="question-screen__feedback-image-attribution-link"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                hidden
+                >(Lizenz)</a
+              >
+            </p>
+            <p class="feedback-panel__sticker-name"></p>
+            <span class="feedback-panel__sticker-badge"></span>
+          </div>
+          <div class="feedback-panel__confetti" aria-hidden="true"></div>
+          <button type="button" class="next-button k-btn" hidden>Weiter</button>
+        </div>
+      </div>
     </section>
   `;
 
@@ -215,6 +249,18 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   // pro Frage neu zugewiesen statt einmalig mit `const` aus dem initialen
   // Markup gelesen.
   let tileButtons = [];
+  // Redesign (Issue #72): gemeinsamer Feedback-Panel-Wrapper, siehe
+  // Template-Kommentar oben — Sichtbarkeit folgt `feedbackEl.hidden`.
+  const feedbackPanelEl = container.querySelector(".feedback-panel");
+  const confettiContainerEl = container.querySelector(
+    ".feedback-panel__confetti",
+  );
+  const stickerNameEl = container.querySelector(
+    ".feedback-panel__sticker-name",
+  );
+  const stickerBadgeEl = container.querySelector(
+    ".feedback-panel__sticker-badge",
+  );
   const feedbackEl = container.querySelector(".question-screen__feedback");
   const infoSentenceEl = container.querySelector(
     ".question-screen__info-sentence",
@@ -486,7 +532,7 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     answerGridEl.innerHTML = question.options
       .map(
         (_, i) => `
-          <button type="button" class="answer-tile" data-option-index="${i}" aria-pressed="false">
+          <button type="button" class="answer-tile k-btn" data-option-index="${i}" aria-pressed="false">
             <span class="answer-tile__icon" aria-hidden="true"></span>
             <span class="answer-tile__text"></span>
           </button>
@@ -506,12 +552,15 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     progressEl.textContent = `Frage ${index + 1} von ${totalQuestions}`;
     headingEl.textContent = question.text;
 
+    feedbackPanelEl.hidden = true;
     feedbackEl.hidden = true;
     feedbackEl.textContent = "";
-    feedbackEl.classList.remove(
-      "question-screen__feedback--correct",
-      "question-screen__feedback--incorrect",
+    feedbackPanelEl.classList.remove(
+      "feedback-panel--correct",
+      "feedback-panel--incorrect",
     );
+    stickerNameEl.textContent = "";
+    stickerBadgeEl.textContent = "";
     infoSentenceEl.hidden = true;
     infoSentenceTextEl.textContent = "";
     // Issue #15: bei jeder neuen Frage vollständig zurücksetzen, damit der
@@ -573,7 +622,11 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
       selectedButton.querySelector(".answer-tile__icon").textContent = "✓";
 
       feedbackEl.textContent = "✓ Super gemacht! Das ist richtig!";
-      feedbackEl.classList.add("question-screen__feedback--correct");
+      feedbackPanelEl.classList.add("feedback-panel--correct");
+
+      // Redesign (Issue #69/#72, design.md "Feedback-Panel"): Konfetti nur
+      // bei richtiger Antwort, nicht bei falscher/aufgelöster.
+      triggerConfetti(confettiContainerEl);
     } else {
       selectedButton.classList.add("answer-tile--selected-wrong");
       selectedButton.querySelector(".answer-tile__icon").textContent = "●";
@@ -584,10 +637,25 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
       // Bewusst kein "Falsch!"/rotes X (design.md, "Feedback richtig/falsch"):
       // neutral-freundlicher Text, richtige Antwort wird zusätzlich benannt.
       feedbackEl.textContent = `Fast! Die richtige Antwort ist: ${question.options[correctIndex].text}`;
-      feedbackEl.classList.add("question-screen__feedback--incorrect");
+      feedbackPanelEl.classList.add("feedback-panel--incorrect");
     }
 
+    feedbackPanelEl.hidden = false;
     feedbackEl.hidden = false;
+
+    // Redesign (Issue #68/#72, design.md "Sticker-Karte"): jede beantwortete
+    // Frage sammelt das Tier ins Album — unabhängig davon, ob richtig oder
+    // falsch geantwortet wurde (gleiches "richtig wie falsch"-Prinzip wie
+    // beim Infosatz/Fun Fact oben, kein Straf-Framing). "NEU!" nur beim
+    // ersten Sammeln dieses Tieres, sonst "SCHAU MAL".
+    if (answeredAnimal) {
+      const wasAlreadyCollected = loadCollectedAnimals().includes(
+        answeredAnimal.id,
+      );
+      addCollectedAnimal(answeredAnimal.id);
+      stickerNameEl.textContent = answeredAnimal.name_de;
+      stickerBadgeEl.textContent = wasAlreadyCollected ? "SCHAU MAL" : "NEU!";
+    }
 
     // Issue #30: automatischer Bildabruf startet in dem Moment, in dem der
     // Feedback-Bereich sichtbar wird — kein Klick nötig. Nicht-blockierend:

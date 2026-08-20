@@ -766,50 +766,80 @@ button {
    --color-accent-text, Disabled-Grau) – bewusst keine neuen Farbpaare
    eingeführt, um die geprüfte Kontrastbasis nicht zu verlassen. */
 
+/* Frage-Bildschirm (Redesign, Issue #72; design.md, "Kindgerechtes Redesign"
+   -> Screens -> Frage/Feedback-Panel). Grid 460px 1fr: Medienkarte links
+   (.image-hint-button/.image-hint, unverändertes Verhalten aus #16/#30, nur
+   neu gestylt), Frage+Antworten rechts. Unter 760px fällt die Medienspalte
+   über die Frage (kein horizontales Scrollen auf Telefonen). */
 .question-screen {
   width: 100%;
-  max-width: 38rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--space-md);
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: var(--k-space-5);
+  text-align: left;
+}
+
+@media (max-width: 760px) {
+  .question-screen {
+    grid-template-columns: 1fr;
+  }
 }
 
 .question-screen__progress {
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-secondary-dark);
+  grid-column: 1 / -1;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--muted);
 }
 
 .question-screen__text {
   margin: 0;
-  font-size: clamp(1.4rem, 4vw, 2.1rem);
-  line-height: 1.3;
-  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 4vw, 44px);
+  line-height: 1.2;
+  color: var(--ink);
 }
 
-/* Bild-Rateshilfe (Issue #16, Option D′; design.md, Abschnitt "Bild-
-   Rateshilfe (Issue #16)"): kleiner, dezenter sekundärer Button oberhalb der
-   Antwortkacheln — deutlich zurückhaltender als .answer-tile (kleinere
-   Fläche, gedeckteres Farbschema wie .round-length-chip), damit die
-   eigentliche Aufgabe (Frage beantworten) klar im Vordergrund bleibt. Nur im
-   Markup sichtbar, wenn image_filename für das aktuelle Tier vorhanden ist
-   (siehe question.js, resetImageHint). */
+.question-screen__media {
+  background: var(--sand-soft);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  padding: var(--k-space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--k-space-2);
+}
+
+.question-screen__body {
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  padding: var(--k-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-4);
+}
+
+/* Bild-Rateshilfe (Issue #16, Option D′; design.md, "Medien-Karte"): Karte
+   links, `--sand-soft`-Fläche. Button/Bild-Verhalten aus #16/#30 unverändert,
+   hier nur die Kartenoptik + der Button selbst neu gestylt. */
 .image-hint-button {
   display: inline-flex;
   align-items: center;
   gap: 0.4em;
-  padding: 0.45rem 0.9rem;
-  min-height: 2.75rem;
-  border: 2px solid var(--color-secondary);
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-secondary-dark);
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
+  padding: 0.6rem 1.1rem;
+  min-height: 84px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 800;
+  border-radius: var(--k-radius-btn);
 }
 
 /* CSS-Cascade-Falle: Ein `display`-Wert im Author-Stylesheet gewinnt gegen
@@ -1345,7 +1375,7 @@ button {
    echtes <button>-Element, per Tastatur bedienbar (design.md,
    "Barrierefreiheit"). Kein Hover-abhängiges UI: Hover ist rein additiv. */
 .answer-tile {
-  min-height: 5.5rem;
+  min-height: 128px;
   /* min-width: 0 hebt die sonst übliche Flex-Kind-Mindestbreite (Breite des
      unwrapped Inhalts) auf -- ohne das ignoriert ein Grid-Item mit
      `display: flex` seine zugewiesene Spaltenbreite und sprengt die Spalte,
@@ -1353,22 +1383,16 @@ button {
      bisherigen Aussehen nichts (Kacheln waren nie so schmal, dass das
      bisher sichtbar wurde). */
   min-width: 0;
-  padding: var(--space-md);
+  padding: var(--k-space-3);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  border: 3px solid var(--color-secondary);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  color: var(--color-secondary-dark);
-  font-size: 1.15rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.answer-tile:not(:disabled):active {
-  transform: scale(0.97);
+  gap: var(--k-space-2);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 32px;
+  font-weight: 800;
 }
 
 .answer-tile:disabled {
@@ -1376,19 +1400,27 @@ button {
 }
 
 /* Kacheln, die nach der Auswahl weder die gewählte noch die richtige Antwort
-   sind: schlicht gedimmt (Farbe ist hier nie die einzige Information, siehe
-   Icon/Text bei den beiden relevanten Zuständen unten). */
+   sind: gedimmt per Opazität statt Umfärbung (design.md: "Übrige:
+   opacity:.55, deaktiviert" — Farbe ist hier nie die einzige Information,
+   siehe Icon/Text bei den beiden relevanten Zuständen unten). */
 .answer-tile:disabled:not(.answer-tile--correct):not(
     .answer-tile--selected-wrong
   ) {
-  background: var(--color-disabled-bg);
-  color: var(--color-disabled-text);
-  border-color: var(--color-disabled-bg);
+  opacity: 0.55;
 }
 
 .answer-tile__icon {
-  font-size: 1.3rem;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--k-radius-sm);
+  background: var(--card);
+  border: var(--k-border-sm) solid var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 /* Zusätzliches Sicherheitsnetz zu min-width: 0 oben: erlaubt notfalls auch
@@ -1399,78 +1431,119 @@ button {
   overflow-wrap: break-word;
 }
 
-/* Richtig: grün/ermutigend, zusätzlich Häkchen-Icon (nicht nur Farbe, siehe
-   design.md "Barrierefreiheit"). */
+/* Richtig (nach Antwort): Fläche --sky, Badge weiß mit Häkchen, k-pop-Pop-
+   Animation (design.md) — nicht nur Farbe, siehe Icon/Text. */
 .answer-tile--correct {
-  background: var(--color-primary);
-  border-color: var(--color-primary-dark);
-  color: #fff;
+  background: var(--sky);
 }
 
-/* Falsch: bewusst kein Signalrot, sondern dieselbe gedeckte Akzentfarbe
-   (Gelb/Orange) wie der Start-Button, plus neutrales Icon statt X (design.md
-   "Feedback richtig/falsch"). */
+.answer-tile--correct .answer-tile__icon {
+  animation: k-pop 0.4s ease-out;
+}
+
+/* Gewählt & falsch: Fläche --blush, Text --muted (design.md) — bewusst kein
+   Signalrot, neutrales Icon statt X. */
 .answer-tile--selected-wrong {
-  background: var(--color-accent);
-  border-color: var(--color-accent-text);
-  color: var(--color-accent-text);
+  background: var(--blush);
+  color: var(--muted);
 }
 
 .question-screen__feedback {
   margin: 0;
   width: 100%;
-  padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-lg);
-  font-size: 1.15rem;
-  font-weight: 700;
-  background: var(--color-surface);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--ink);
 }
 
-.question-screen__feedback--correct {
-  color: var(--color-primary-dark);
-  border: 3px solid var(--color-primary);
+/* Feedback-Panel (Redesign, Issue #72, design.md "Feedback-Panel"): Grid
+   130px/1fr/320px — Maskottchen | Text-Spalte (Feedback/Infosatz/Fun-Fact,
+   Issue #12/#15/#24 unverändert) | Sticker-Karte (Foto/Name/Badge, Issue #30
+   + neu) + Weiter-Button. Fläche folgt richtig/falsch (--sky/--blush) über
+   `.feedback-panel--correct`/`--incorrect` (siehe question.js, ersetzt die
+   vorherigen `.question-screen__feedback--*`-Klassen auf dem inneren Text). */
+.feedback-panel {
+  width: 100%;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 130px 1fr 320px;
+  gap: var(--k-space-5);
+  margin-top: var(--k-space-4);
+  padding: var(--k-space-5);
+  border-radius: var(--k-radius-card);
+  border: var(--k-border-lg) solid var(--ink);
+  animation: k-pop 0.35s ease-out;
 }
 
-.question-screen__feedback--incorrect {
-  color: var(--color-accent-text);
-  border: 3px solid var(--color-accent);
+/* CSS-Cascade-Falle wie bei .image-hint[hidden]/.mode-picker__hint[hidden]
+   etc. andernorts in dieser Datei: `display: grid` im Author-Stylesheet
+   gewinnt gegen die UA-Regel `[hidden] { display: none }` unabhängig von der
+   Spezifität (Origin sticht Spezifität) — ohne diese Regel bliebe das Panel
+   trotz `hidden`-Attribut sichtbar (per echtem Browser-Screenshot gefunden:
+   leere weiße Box unterhalb der Antwortkacheln vor der ersten Antwort). */
+.feedback-panel[hidden] {
+  display: none;
 }
 
-/* Infosatz zum Tier (Issue #12): eigener, visuell abgesetzter Block
-   unterhalb des Richtig/Falsch-Feedbacks, oberhalb des "Weiter"-Buttons
-   (design.md, "Fun Fact im Feedback-Schritt" — dieselbe Platzierung/Optik
-   wird hier für den verwandten Infosatz-Baustein wiederverwendet). Dezente,
-   blaue Tönung (--color-secondary) statt der Grün/Gelb-Feedbackfarben, damit
-   der Block klar als "zusätzliche Info" statt als weiteres Richtig/Falsch-
-   Signal erkennbar ist. Wird IMMER angezeigt (PM-Entscheidung), daher kein
+@media (max-width: 760px) {
+  .feedback-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feedback-panel--correct {
+  background: var(--sky);
+}
+
+.feedback-panel--incorrect {
+  background: var(--blush);
+}
+
+.feedback-panel__mascot {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--k-radius-sm);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.feedback-panel__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-2);
+}
+
+.feedback-panel__sticker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-3);
+}
+
+/* Infosatz zum Tier (Issue #12): reiner Text unterhalb des Fun-Fact-Blocks,
+   reduzierte Opazität statt eigener Farbfläche (design.md: "Infosatz 16px,
+   opacity:.75"). Wird IMMER angezeigt (PM-Entscheidung), daher kein
    Sonderfall für "kein Infosatz vorhanden" nötig. */
 .question-screen__info-sentence {
   margin: 0;
-  width: 100%;
-  padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-lg);
-  background: rgba(47, 128, 196, 0.1);
-  border: 3px solid var(--color-secondary);
-  color: var(--color-text);
-  font-size: 1rem;
+  font-family: var(--font-body);
+  color: var(--ink);
+  opacity: 0.75;
+  font-size: 16px;
   line-height: 1.4;
-  text-align: left;
 }
 
 /* Wikipedia-Link (Issue #15): seit der Zusammenführungs-Anfrage (14.08.2026)
    kein eigener, danebenstehender Block mehr, sondern letztes Element
-   INNERHALB des Infosatz-Blocks oben (gleicher Rahmen/Hintergrund, kein
-   zweiter Kasten). `display: flex` sorgt dafür, dass der Link auf einer
-   eigenen Zeile unterhalb des Infosatz-Texts erscheint, statt sich mitten in
-   den Fließtext einzureihen. Nur im Markup sichtbar (siehe question.js),
-   wenn animal.wikipedia_url_de vorhanden ist — der Infosatz selbst bleibt
-   unverändert, wenn der Link fehlt (kein erzwungener Leerraum). */
+   INNERHALB des Infosatz-Blocks oben. `display: flex` sorgt dafür, dass der
+   Link auf einer eigenen Zeile unterhalb des Infosatz-Texts erscheint, statt
+   sich mitten in den Fließtext einzureihen. Nur im Markup sichtbar (siehe
+   question.js), wenn animal.wikipedia_url_de vorhanden ist. */
 .question-screen__info-sentence-wikipedia-link {
   display: flex;
   align-items: center;
   gap: 0.4em;
   margin-top: 0.5em;
-  color: var(--color-secondary-dark);
+  color: var(--link);
   font-size: 1rem;
   font-weight: 700;
   text-decoration: underline;
@@ -1483,57 +1556,106 @@ button {
   display: none;
 }
 
-/* Fun Fact (Issue #24, design.md "Fun Fact im Feedback-Schritt"): eigener,
-   visuell abgesetzter Block direkt unterhalb des Infosatz-Blocks oben,
-   oberhalb des "Weiter"-Buttons — konzeptionell EIGENSTÄNDIG neben dem
-   Infosatz (architecture.md: "kein Baustein-Fallback-System wie
-   infoSentence.js", roher kuratierter Freitext). Bewusst die Akzent-
-   Gelb/Orange-Tönung statt der blauen Infosatz-Farbe, damit beide Blöcke bei
-   gleichzeitiger Anzeige klar als zwei unterschiedliche Bausteine erkennbar
-   bleiben, statt wie ein einzelner, zusammenhängender Block zu wirken.
-   Wiederverwendet dieselbe bereits gegen WCAG-AA geprüfte Akzentfarb-
-   Kombination wie .question-screen__feedback--incorrect/.answer-tile--
-   selected-wrong, kein neues Farbpaar. `hidden` per Default (siehe
-   question.js) -> reserviert keinen Platz, solange kein fun_fact vorhanden
-   ist (kein Layout-Sprung). */
+/* Fun Fact (Issue #24, design.md "Fun Fact im Feedback-Schritt"): weiße Box
+   oberhalb des Infosatz-Texts (design.md: "weiße Box, Radius 22, 3px Rahmen
+   mit '💡 Wusstest du schon?'"). `hidden` per Default (siehe question.js) ->
+   reserviert keinen Platz, solange kein fun_fact vorhanden ist. */
 .question-screen__fun-fact {
   margin: 0;
   width: 100%;
-  padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-lg);
-  background: rgba(245, 184, 51, 0.18);
-  border: 3px solid var(--color-accent);
-  color: var(--color-text);
-  font-size: 1rem;
+  padding: var(--k-space-3);
+  border-radius: var(--k-radius-sm);
+  background: var(--card);
+  border: var(--k-border-sm) solid var(--ink);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 19px;
   line-height: 1.4;
-  text-align: left;
-}
-
-.question-screen__fun-fact-icon {
-  margin-right: 0.4em;
 }
 
 .question-screen__fun-fact-lead {
-  font-weight: 700;
-  color: var(--color-accent-text);
+  font-weight: 800;
   margin-right: 0.4em;
 }
 
-.next-button {
-  min-width: 12rem;
-  min-height: 4rem;
-  padding: var(--space-md) var(--space-lg);
-  border: none;
-  border-radius: var(--radius-lg);
-  background: var(--color-accent);
-  color: var(--color-accent-text);
-  font-size: 1.35rem;
-  font-weight: 700;
-  cursor: pointer;
+/* Sticker-Karte: Foto + Name + Badge (design.md, "Sticker-Karte"). Das Bild
+   selbst (.question-screen__feedback-image-img) und sein Lade-/
+   Fehlerverhalten bleiben unverändert (Issue #30) — hier nur die Karten-
+   optik + die neuen Name-/Badge-Elemente. */
+.question-screen__feedback-image {
+  width: 100%;
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-btn);
+  box-shadow: var(--k-shadow-btn);
+  padding: var(--k-space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
-.next-button:active {
-  transform: scale(0.97);
+.question-screen__feedback-image-img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: var(--k-radius-sm);
+  border: var(--k-border-sm) solid var(--ink);
+  background: var(--sand-soft);
+}
+
+.question-screen__feedback-image-attribution {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.question-screen__feedback-image-attribution-link {
+  color: inherit;
+  text-decoration: underline;
+  margin-left: 0.3em;
+}
+
+.feedback-panel__sticker-name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.feedback-panel__sticker-badge {
+  background: var(--sand);
+  border: var(--k-border-sm) solid var(--ink);
+  border-radius: var(--k-radius-pill);
+  padding: 2px 14px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.feedback-panel__confetti {
+  position: relative;
+  height: 0;
+}
+
+.next-button {
+  width: 100%;
+  min-height: 96px;
+  padding: var(--k-space-3) var(--k-space-5);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 800;
+  border-radius: var(--k-radius-btn);
+}
+
+.feedback-panel--incorrect .next-button {
+  background: var(--blush);
 }
 
 /* Issue #37 (Nebenbefund aus #28): "Kein Scrollen bei der Kernaufgabe"
