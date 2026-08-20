@@ -543,6 +543,9 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     tileButtons.forEach((button, i) => {
       button.querySelector(".answer-tile__text").textContent =
         question.options[i].text;
+      // Redesign (Issue #72, design.md "Antwortkacheln"): Ziffern-Badge 1-4
+      // vor der Antwort, wird in handleAnswer auf ✓/✗ überschrieben.
+      button.querySelector(".answer-tile__icon").textContent = String(i + 1);
     });
   }
 

@@ -51,6 +51,8 @@ import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 // Wiederverwendbarkeit" — buildInfoSentence ist vollständig entkoppelt von
 // Fragetyp/Spielmodus, nur die Rendering-Verdrahtung unten ist neu).
 import { buildInfoSentence } from "../quiz/infoSentence.js";
+import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
+import { triggerConfetti } from "../quiz/confetti.js";
 
 /**
  * Rendert den "Wer bin ich?"-Frage-Bildschirm in den übergebenen Container
@@ -100,63 +102,70 @@ export function renderReverseQuestionScreen(
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="reverse-question-heading">
       <p class="question-screen__progress"></p>
+
+      <!-- Redesign (Issue #73): Medienkarte, gleiche Gruppierung wie
+           question.js (Issue #72) — reine Layout-Ergänzung, kein
+           Verhaltens-/Klassen-Unterschied an den bestehenden Elementen. -->
+      <div class="question-screen__media">
+        <!-- Fester, moderat großer Bildrahmen (design.md: "reserviert den
+             späteren Bildrahmen bereits während des Ladens, kein Layout-
+             Sprung") — enthält je nach Zustand genau EINEN der drei Bereiche
+             darunter. aria-live/aria-busy kündigen Lade-/Fehlerzustands-
+             Wechsel für Screenreader an (wichtige Abweichung von Issue #16,
+             siehe design.md "Barrierefreiheit"). -->
+        <div class="reverse-image-frame" aria-live="polite" aria-busy="true">
+          <div class="reverse-image-frame__loading">
+            <span class="reverse-image-frame__loading-icon" aria-hidden="true"
+              >🐾</span
+            >
+            <p class="reverse-image-frame__loading-text">Bild wird geladen …</p>
+          </div>
+          <img
+            class="reverse-image-frame__image"
+            alt=""
+            hidden
+          />
+          <div class="reverse-image-frame__error" hidden>
+            <span class="reverse-image-frame__error-icon" aria-hidden="true"
+              >🙈</span
+            >
+            <p class="reverse-image-frame__error-text">
+              Dieses Bild will gerade nicht laden.
+            </p>
+            <button
+              type="button"
+              class="reverse-image-frame__retry-button"
+            >
+              Nochmal versuchen
+            </button>
+          </div>
+        </div>
+
+        <!-- Pflicht-Attributionszeile auf jeder Frage (design.md: "gleiches
+             Format wie Issue #16", hier fest statt optional) — bewusst
+             dieselben Klassen wie image-hint__attribution* in question.js/
+             global.css (identische Optik/Formulierung gefordert, keine
+             Geschmacksfrage). Standardmäßig hidden, da beim ersten Rendern
+             noch kein Bild aufgelöst ist (Reset-Prinzip analog zu #16). -->
+        <p class="image-hint__attribution" hidden>
+          <span class="reverse-question__attribution-text"></span>
+          <a
+            class="image-hint__attribution-link"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+            >(Lizenz)</a
+          >
+        </p>
+      </div>
+
+      <div class="question-screen__body">
       <!-- design.md: feste Überschrift statt wechselndem Fragetext, da die
            eigentliche "Frage" das Bild selbst ist. -->
       <h2 id="reverse-question-heading" class="question-screen__text">
         Wer bin ich?
       </h2>
-
-      <!-- Fester, moderat großer Bildrahmen (design.md: "reserviert den
-           späteren Bildrahmen bereits während des Ladens, kein Layout-
-           Sprung") — enthält je nach Zustand genau EINEN der drei Bereiche
-           darunter. aria-live/aria-busy kündigen Lade-/Fehlerzustands-
-           Wechsel für Screenreader an (wichtige Abweichung von Issue #16,
-           siehe design.md "Barrierefreiheit"). -->
-      <div class="reverse-image-frame" aria-live="polite" aria-busy="true">
-        <div class="reverse-image-frame__loading">
-          <span class="reverse-image-frame__loading-icon" aria-hidden="true"
-            >🐾</span
-          >
-          <p class="reverse-image-frame__loading-text">Bild wird geladen …</p>
-        </div>
-        <img
-          class="reverse-image-frame__image"
-          alt=""
-          hidden
-        />
-        <div class="reverse-image-frame__error" hidden>
-          <span class="reverse-image-frame__error-icon" aria-hidden="true"
-            >🙈</span
-          >
-          <p class="reverse-image-frame__error-text">
-            Dieses Bild will gerade nicht laden.
-          </p>
-          <button
-            type="button"
-            class="reverse-image-frame__retry-button"
-          >
-            Nochmal versuchen
-          </button>
-        </div>
-      </div>
-
-      <!-- Pflicht-Attributionszeile auf jeder Frage (design.md: "gleiches
-           Format wie Issue #16", hier fest statt optional) — bewusst
-           dieselben Klassen wie image-hint__attribution* in question.js/
-           global.css (identische Optik/Formulierung gefordert, keine
-           Geschmacksfrage). Standardmäßig hidden, da beim ersten Rendern
-           noch kein Bild aufgelöst ist (Reset-Prinzip analog zu #16). -->
-      <p class="image-hint__attribution" hidden>
-        <span class="reverse-question__attribution-text"></span>
-        <a
-          class="image-hint__attribution-link"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          hidden
-          >(Lizenz)</a
-        >
-      </p>
 
       <!-- answer-grid--reverse (global.css): hält das echte 2×2-Raster auch
            auf schmalen Telefonen bei (anders als der bestehende
@@ -170,35 +179,54 @@ export function renderReverseQuestionScreen(
         role="group"
         aria-label="Antwortmöglichkeiten"
       ></div>
+      </div>
 
-      <p
-        class="question-screen__feedback"
-        role="status"
-        aria-live="polite"
-        hidden
-      ></p>
+      <!-- Redesign (Issue #73): dasselbe Feedback-Panel wie question.js
+           (Issue #72) — bewusst außerhalb von .question-screen__body als
+           eigenes Grid-Item (siehe dortiger Kommentar zum Overflow-Fund).
+           Kein Fun-Fact-Block (bleibt außerhalb des #35-Scopes, siehe
+           Datei-Kommentar oben) und kein separater Bild-Refetch für die
+           Sticker-Karte — das bereits geladene reverse-image-frame-Bild wird
+           direkt wiederverwendet (keine zweite Netzwerkanfrage nötig). -->
+      <div class="feedback-panel" hidden>
+        <div class="feedback-panel__mascot" aria-hidden="true"></div>
+        <div class="feedback-panel__body">
+          <p
+            class="question-screen__feedback"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></p>
 
-      <!-- Issue #35: Infosatz inkl. Wikipedia-Link, unterhalb des
-           Richtig/Falsch-Feedbacks (design.md, "Infosatz + Wikipedia-Link im
-           'Wer bin ich?'-Modus") — identisches Markup/identische Klassen wie
-           question.js, damit Optik/Verhalten (inkl. bestehendem CSS)
-           unverändert übernommen werden. Bewusst kein Fun-Fact-Block hier
-           (siehe Datei-Kommentar oben, außerhalb des #35-Scopes). -->
-      <p class="question-screen__info-sentence" hidden>
-        <span class="question-screen__info-sentence-text"></span>
-        <a
-          class="question-screen__info-sentence-wikipedia-link"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          hidden
-        >
-          <span aria-hidden="true">📖</span>
-          <span class="question-screen__info-sentence-wikipedia-link-text"></span>
-        </a>
-      </p>
+          <!-- Issue #35: Infosatz inkl. Wikipedia-Link, unterhalb des
+               Richtig/Falsch-Feedbacks (design.md, "Infosatz + Wikipedia-Link
+               im 'Wer bin ich?'-Modus") — identisches Markup/identische
+               Klassen wie question.js. -->
+          <p class="question-screen__info-sentence" hidden>
+            <span class="question-screen__info-sentence-text"></span>
+            <a
+              class="question-screen__info-sentence-wikipedia-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              hidden
+            >
+              <span aria-hidden="true">📖</span>
+              <span class="question-screen__info-sentence-wikipedia-link-text"></span>
+            </a>
+          </p>
+        </div>
 
-      <button type="button" class="next-button" hidden>Weiter</button>
+        <div class="feedback-panel__sticker">
+          <div class="reverse-question__sticker-frame">
+            <img class="reverse-question__sticker-img" alt="" />
+            <p class="feedback-panel__sticker-name"></p>
+            <span class="feedback-panel__sticker-badge"></span>
+          </div>
+          <div class="feedback-panel__confetti" aria-hidden="true"></div>
+          <button type="button" class="next-button k-btn" hidden>Weiter</button>
+        </div>
+      </div>
     </section>
   `;
 
@@ -219,6 +247,21 @@ export function renderReverseQuestionScreen(
   );
   const answerGridEl = container.querySelector(".answer-grid");
   let tileButtons = [];
+  // Redesign (Issue #73): gemeinsamer Feedback-Panel-Wrapper wie question.js
+  // (Issue #72) — Sichtbarkeit folgt feedbackEl.hidden.
+  const feedbackPanelEl = container.querySelector(".feedback-panel");
+  const confettiContainerEl = container.querySelector(
+    ".feedback-panel__confetti",
+  );
+  const stickerImgEl = container.querySelector(
+    ".reverse-question__sticker-img",
+  );
+  const stickerNameEl = container.querySelector(
+    ".feedback-panel__sticker-name",
+  );
+  const stickerBadgeEl = container.querySelector(
+    ".feedback-panel__sticker-badge",
+  );
   const feedbackEl = container.querySelector(".question-screen__feedback");
   // Issue #35: Infosatz-/Wikipedia-Link-Elemente — identische Referenz-Namen
   // wie in question.js für einfache Vergleichbarkeit der beiden Bildschirme.
@@ -254,7 +297,7 @@ export function renderReverseQuestionScreen(
     answerGridEl.innerHTML = question.options
       .map(
         (_, i) => `
-          <button type="button" class="answer-tile" data-option-index="${i}" aria-pressed="false">
+          <button type="button" class="answer-tile k-btn" data-option-index="${i}" aria-pressed="false">
             <span class="answer-tile__icon" aria-hidden="true"></span>
             <span class="answer-tile__text"></span>
           </button>
@@ -265,16 +308,24 @@ export function renderReverseQuestionScreen(
     tileButtons.forEach((button, i) => {
       button.querySelector(".answer-tile__text").textContent =
         question.options[i].text;
+      // Redesign (Issue #73, design.md "Antwortkacheln"): Ziffern-Badge 1-4
+      // vor der Antwort, wird in handleAnswer auf ✓/✗ überschrieben.
+      button.querySelector(".answer-tile__icon").textContent = String(i + 1);
     });
   }
 
   function resetFeedback() {
+    feedbackPanelEl.hidden = true;
     feedbackEl.hidden = true;
     feedbackEl.textContent = "";
-    feedbackEl.classList.remove(
-      "question-screen__feedback--correct",
-      "question-screen__feedback--incorrect",
+    feedbackPanelEl.classList.remove(
+      "feedback-panel--correct",
+      "feedback-panel--incorrect",
     );
+    stickerImgEl.src = "";
+    stickerImgEl.alt = "";
+    stickerNameEl.textContent = "";
+    stickerBadgeEl.textContent = "";
     // Issue #35: bei jeder neuen Frage vollständig zurücksetzen, damit
     // Infosatz/Wikipedia-Link des vorherigen Tieres nie kurz sichtbar/
     // erreichbar bleiben (identisches Muster wie showQuestion() in
@@ -405,7 +456,10 @@ export function renderReverseQuestionScreen(
       selectedButton.querySelector(".answer-tile__icon").textContent = "✓";
 
       feedbackEl.textContent = "✓ Super gemacht! Das ist richtig!";
-      feedbackEl.classList.add("question-screen__feedback--correct");
+      feedbackPanelEl.classList.add("feedback-panel--correct");
+
+      // Redesign (Issue #69/#73): Konfetti nur bei richtiger Antwort.
+      triggerConfetti(confettiContainerEl);
     } else {
       selectedButton.classList.add("answer-tile--selected-wrong");
       selectedButton.querySelector(".answer-tile__icon").textContent = "●";
@@ -414,10 +468,27 @@ export function renderReverseQuestionScreen(
       correctButton.querySelector(".answer-tile__icon").textContent = "✓";
 
       feedbackEl.textContent = `Fast! Die richtige Antwort ist: ${question.options[correctIndex].text}`;
-      feedbackEl.classList.add("question-screen__feedback--incorrect");
+      feedbackPanelEl.classList.add("feedback-panel--incorrect");
     }
 
+    feedbackPanelEl.hidden = false;
     feedbackEl.hidden = false;
+
+    // Redesign (Issue #68/#73, design.md "Sticker-Karte"): Sticker-Bild wird
+    // aus dem bereits geladenen reverse-image-frame-Bild übernommen (keine
+    // zweite Netzwerkanfrage, siehe Template-Kommentar oben). Album-Sammeln
+    // unabhängig von richtig/falsch, gleiches Prinzip wie question.js.
+    const answeredAnimalForSticker = animalById.get(question.animalId);
+    if (answeredAnimalForSticker) {
+      const wasAlreadyCollected = loadCollectedAnimals().includes(
+        answeredAnimalForSticker.id,
+      );
+      addCollectedAnimal(answeredAnimalForSticker.id);
+      stickerImgEl.src = imageEl.src;
+      stickerImgEl.alt = "";
+      stickerNameEl.textContent = answeredAnimalForSticker.name_de;
+      stickerBadgeEl.textContent = wasAlreadyCollected ? "SCHAU MAL" : "NEU!";
+    }
 
     // Issue #35: Infosatz IMMER anzeigen, unabhängig davon, ob richtig oder
     // falsch geantwortet wurde (identische Regel wie in question.js/Issue

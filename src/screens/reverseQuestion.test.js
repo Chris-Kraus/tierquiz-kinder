@@ -158,8 +158,13 @@ describe("renderReverseQuestionScreen (Issue #28)", () => {
 
     const tiles = container.querySelectorAll(".answer-tile");
     expect(tiles).toHaveLength(4);
+    // Prüft gezielt .answer-tile__text statt des gesamten Kachel-Textinhalts:
+    // seit dem Redesign (Issue #73, design.md "Antwortkacheln") zeigt
+    // .answer-tile__icon zusätzlich ein Ziffern-Badge (1-4) vor der Antwort.
     expect(
-      Array.from(tiles).map((tile) => tile.textContent.trim()),
+      Array.from(tiles).map((tile) =>
+        tile.querySelector(".answer-tile__text").textContent.trim(),
+      ),
     ).toEqual(["Löwe", "Tiger", "Elefant", "Zebra"]);
   });
 
