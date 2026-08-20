@@ -826,9 +826,11 @@ button {
 
 /* Gemeinsame Basis für vorgegebene (given) UND editierbare (blank) Kästchen
    -- beide gleich groß, damit das Kind die komplette "Wortform" auf einen
-   Blick sieht (design.md: "ähnlich einem Kreuzworträtsel-Wort"). Größe
-   deutlich über dem 44×44-px-Touch-Zielgrößen-Minimum (design.md,
-   "Layout-Empfehlungen").
+   Blick sieht (design.md: "ähnlich einem Kreuzworträtsel-Wort"). Exakt am
+   44×44-px-Touch-Zielgrößen-Minimum (design.md, "Layout-Empfehlungen") --
+   quadratisch, kein Sicherheitspuffer bei der Höhe mehr (Issue #51: vorher
+   44×52px, der Puffer wurde bewusst abgebaut, ohne die Mindestgröße zu
+   unterschreiten).
    QA-Bugfix (Issue #46, Zyklus 1): vorher stand hier nur `min-width`/
    `min-height` -- für die vorgegebenen Buchstaben (<span>, richtet sich ohne
    width/height am Inhalt aus) reichte das zufällig aus, für die Lücken
@@ -843,7 +845,7 @@ button {
    der Zeilenumbruch greift. */
 .letter-box {
   width: 2.75rem;
-  height: 3.25rem;
+  height: 2.75rem;
   flex-shrink: 0;
   padding: 0.2rem;
   display: inline-flex;
