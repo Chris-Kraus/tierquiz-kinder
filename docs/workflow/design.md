@@ -524,6 +524,38 @@ Bei sehr kurzen Namen (z. B. 3–4 Buchstaben) sorgt die Regel "erster/letzter B
 - Vorgegebene (nicht editierbare) Buchstaben-Kästchen sind für Screenreader klar als "bereits vorhanden" erkennbar (kein editierbares Feld, reiner Text/`aria-readonly`), damit der Unterschied zu den Lücken eindeutig ist.
 - Gleiche Kontrast-/Touch-Zielgrößen-Anforderungen wie übrige Elemente.
 
+## Buchstabensuche: Kästchen verkleinern (Issue #51, 20.08.2026, `ux-design` + `business-analyst`)
+
+**Anlass:** Nutzer-Wunsch, die Buchstaben-Kästchen (`.letter-box`, `src/styles/global.css`) zu verkleinern. Ausgangslage per Chrome-DevTools-Messung gegen `npm run dev` verifiziert: aktuell fest **44×52px** (Breite × Höhe) — dieser Wert stammt aus dem QA-Bugfix in PR #62 (Issue #46, Zyklus 1), der zuvor eine ungewollte Browser-UA-Standardbreite von ~289px bei den `<input>`-Lücken behoben hatte, dabei aber bewusst "deutlich über dem 44×44-px-Touch-Zielgrößen-Minimum" dimensioniert wurde (Breite exakt am Minimum, Höhe mit Puffer darüber).
+
+**Entscheidung: Zielgröße 44×44px (quadratisch), Breite unverändert, Höhe von 52px auf 44px reduziert (–15 % Fläche).**
+
+Begründung:
+- Die Breite (44px) entspricht bereits exakt der im Projekt etablierten Mindest-Touchfläche (`design.md`, "Layout-Empfehlungen": "mindestens ca. 44×44 px als absolutes Minimum (Apple HIG)") und darf nicht weiter sinken, ohne diese Vorgabe zu verletzen.
+- Die Höhe hatte bisher einen Puffer über dem Minimum (52px statt 44px) — dieser Puffer kann abgebaut werden, ohne die Mindestgröße zu unterschreiten. Das Kästchen wird dadurch spürbar kompakter und quadratisch statt leicht hochrechteckig — eine klar wahrnehmbare, aber begründet begrenzte Verkleinerung.
+- 44×44px ist kein neuer, separat zu rechtfertigender Wert, sondern exakt die bereits im Projekt dokumentierte, etablierte Zahl — leicht nachvollziehbar und testbar, kein Interpretationsspielraum für einen willkürlichen Zwischenwert.
+- Für ein Buchstaben-Rätsel-Raster ist eine quadratische Kästchenform zudem die naheliegendere, an ein Kreuzworträtsel angelehnte Optik (passt zum bereits dokumentierten Vergleich "ähnlich einem Kreuzworträtsel-Wort").
+
+**Verhalten bei langen Tiernamen:** Das bestehende `flex-wrap: wrap` auf `.letter-puzzle`/`.letter-puzzle__word` (bereits als QA-Bugfix aus Zyklus 1 vorhanden, verifiziert u. a. mit "Fichtenkreuzschnabel", 20 Buchstaben, einteilig) bleibt unverändert ausreichend — bei kleineren statt größeren Kästchen sinkt das Overflow-Risiko tendenziell, es steigt nicht. Kein zusätzlicher Anpassungsbedarf.
+
+**Betroffene CSS-Regel:** `.letter-box` in `src/styles/global.css` (aktuell `width: 2.75rem; height: 3.25rem;`) → `height` auf `2.75rem` (= 44px bei 16px Root-Schriftgröße) ändern, `width` unverändert lassen. Gilt einheitlich für `.letter-box--given`, `--blank`, `--filled` (gemeinsame Basisklasse).
+
+## Buchstabensuche: Lösung anzeigen (Issue #52, 20.08.2026, `ux-design` + `business-analyst`)
+
+**Anlass:** Nutzer-Wunsch nach einer Möglichkeit, sich im Buchstabensuche-Modus die Lösung anzeigen/auflösen zu lassen, statt weiter raten zu müssen.
+
+**Button-Platzierung/-Gestaltung:** Neuer Button unterhalb der Buchstaben-Kästchen-Reihe, an der Stelle, an der auch die Fehlermeldung erscheint (`.letter-puzzle__error`-Bereich) — durchgehend sichtbar, sobald die Frage geladen ist (kein Freischalten erst nach X Fehlversuchen, keine zusätzliche Hürde). **Visuell zurückhaltend** (Text-/Sekundär-Button-Stil, nicht in der kräftigen Primärfarbe der übrigen Aktions-Buttons) — bewusst so gestaltet, dass er nicht zum vorschnellen Überspringen verlockt, aber jederzeit verfügbar bleibt, wenn ein Kind wirklich nicht weiterkommt. Label "Lösung zeigen", `aria-label="Lösung anzeigen und Namen auflösen"`. Nach Anzeige der Lösung verschwindet der Button (Frage ist damit für dieses Tier abgeschlossen, analog zum Zustand nach korrektem Lösen).
+
+**Verhalten danach:** Wiederverwendet denselben Rendering-Pfad wie beim regulären Lösen (`handlePuzzleSolved`) — alle verbleibenden Lücken werden mit dem korrekten Namen aufgefüllt, danach der bestehende Infosatz + Wikipedia-Link + Fun Fact (falls vorhanden), danach der reguläre "Weiter"-Button. **Bewusst kein Direktsprung zur nächsten Frage** — das Kind soll den aufgelösten Namen und die Zusatzinfos noch sehen können, konsistent mit dem bestehenden Ablauf, keine Sonderlogik nötig.
+
+**Wichtige visuelle Unterscheidung zum echten Lösen (UX-Entscheidung):** Eine unveränderte Anzeige wie beim selbstständigen Lösen (grünes "✓ Super gemacht!"-Feedback, grün gefüllte Kästchen) wäre irreführend — sie würde ein falsches "alles selbst richtig erkannt"-Signal geben. Stattdessen:
+- Aufgelöste Buchstaben-Kästchen nutzen einen **neutralen** Darstellungs-Zustand (analog zu `.letter-box--given`, nicht das grüne `.letter-box--filled`/"richtig"-Grün).
+- Der Feedback-Text wechselt von "✓ Super gemacht! Richtig ergänzt!" zu einer neutralen Formulierung, z. B. **"Hier ist die Lösung: {Name}"** (kein Häkchen-Icon, keine grüne Erfolgsfarbe).
+
+**Offene, nicht selbst entscheidbare Frage — Zählung im Ergebnis:** Ob eine aufgelöste Frage im Rundenergebnis unverändert als "richtig" mitzählt (bestehende "N von N richtig"-Logik, technisch bereits so angelegt, siehe Issue #46, "das Kind löst durch Wiederholung immer richtig"), separat ausgewiesen wird (z. B. "X davon aufgelöst"), oder anders behandelt wird, ändert eine bewusst dokumentierte Produktentscheidung aus Issue #46 und ist **keine UX-Entscheidung**, sondern eine Nutzerentscheidung — siehe `requirements.md` für die entsprechende offene Rückfrage. Aus UX-Sicht ist lediglich klar: mindestens die *visuelle* Unterscheidung (siehe oben) ist unabhängig vom Ausgang dieser Frage geboten, da sie ehrliches Feedback in einer Lern-App unterstützt, ohne die Zählweise selbst zu präjudizieren.
+
+**Barrierefreiheit:** Button als echtes `<button>`-Element, per Tastatur erreichbar/auslösbar (Tab-Reihenfolge nach den Buchstaben-Kästchen, vor dem "Weiter"-Button), mit `aria-label` (siehe oben) statt reinem Icon-Button. Der Zustandswechsel (Kästchen gefüllt, Feedback-Text erscheint) läuft über den bestehenden `aria-live="polite"`-Bereich (`.question-screen__feedback`), keine neue Ankündigungslogik nötig.
+
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
 
 Alle vorherigen offenen Fragen sind geklärt: Zielalter → zwei Stufen 6–10/10–12 (siehe "Zielgruppe"), Sound-Effekte → nein, Fragenanzahl → 10 pro Runde (fest), Weiter-Mechanik → manueller Button, Sprache → Deutsch. Details jeweils in den Abschnitten oben eingearbeitet.
