@@ -20,9 +20,17 @@
 // dortiger Umsetzungsstand — ganz analog dazu, wie auch REVERSE hier erst ab
 // #26 auswählbar, aber erst ab #28 tatsächlich bis zum Frage-Bildschirm
 // durchverdrahtet war.
+//
+// Seit Issue #46: vierter Wert `LETTER_SEARCH` für den "Buchstabensuche"-
+// Modus (Name laut architecture.md, "Neuer Spielmodus 'Buchstabensuche':
+// Finale technische Leitplanken", Punkt 1: "Neuer Wert LETTER_SEARCH:
+// 'letterSearch' in GAME_MODE"). Gleiches Vorgehen wie bei SOUND oben: der
+// Wert ist ab sofort am Start-Bildschirm wählbar, main.js/state.js kennen ihn
+// durchgehend.
 
 export const GAME_MODE = Object.freeze({
   QUIZ: "quiz",
   REVERSE: "reverse",
   SOUND: "sound",
+  LETTER_SEARCH: "letterSearch",
 });
