@@ -138,12 +138,14 @@ describe("renderSoundQuestionScreen (Issue #33)", () => {
 
     const tiles = container.querySelectorAll(".answer-tile");
     expect(tiles).toHaveLength(4);
-    expect(Array.from(tiles).map((tile) => tile.textContent.trim())).toEqual([
-      "Rabe",
-      "Eule",
-      "Adler",
-      "Spatz",
-    ]);
+    // Prüft gezielt .answer-tile__text statt des gesamten Kachel-Textinhalts:
+    // seit dem Redesign (Issue #74, design.md "Antwortkacheln") zeigt
+    // .answer-tile__icon zusätzlich ein Ziffern-Badge (1-4) vor der Antwort.
+    expect(
+      Array.from(tiles).map((tile) =>
+        tile.querySelector(".answer-tile__text").textContent.trim(),
+      ),
+    ).toEqual(["Rabe", "Eule", "Adler", "Spatz"]);
 
     // Regressionsschutz für den manuell (Playwright, 375px/iPhone SE)
     // gefundenen Scroll-Bug: ohne diese Modifier-Klasse fällt .answer-grid

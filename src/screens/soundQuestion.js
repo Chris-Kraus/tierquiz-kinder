@@ -65,6 +65,8 @@ import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 // wiederverwendet (architecture.md, Issues #41/#42: "buildInfoSentence() ...
 // unverändert übertragbar").
 import { buildInfoSentence } from "../quiz/infoSentence.js";
+import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
+import { triggerConfetti } from "../quiz/confetti.js";
 // Issue #42: automatisches Feedback-Bild — dieselben reinen, DOM-/fetch-
 // freien Hilfsfunktionen wie question.js (Issue #30), keine eigene Kopie
 // nötig (architecture.md, Issues #41/#42: "imageHint.js-Hilfsfunktionen ...
@@ -120,89 +122,102 @@ export function renderSoundQuestionScreen(
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="sound-question-heading">
       <p class="question-screen__progress"></p>
+
+      <!-- Redesign (Issue #74): Medienkarte, gleiche Gruppierung wie
+           question.js/reverseQuestion.js (Issue #72/#73) — reine
+           Layout-Ergänzung, kein Verhaltens-/Klassen-Unterschied an den
+           bestehenden Elementen. -->
+      <div class="question-screen__media">
+        <!-- Fester, moderat großer Player-Rahmen (design.md: "reservierter
+             Player-Bereich", analog zum Bildrahmen bei #28, kein Layout-Sprung)
+             — enthält je nach Zustand genau EINEN der drei Bereiche darunter.
+             aria-live/aria-busy kündigen Lade-/Fehlerzustands-Wechsel für
+             Screenreader an (design.md, "Barrierefreiheit"). -->
+        <div class="sound-player-frame" aria-live="polite" aria-busy="true">
+          <div class="sound-player-frame__loading">
+            <span class="sound-player-frame__loading-icon" aria-hidden="true"
+              >🎵</span
+            >
+            <p class="sound-player-frame__loading-text">Ton wird geladen …</p>
+          </div>
+
+          <!-- Play-Button: echtes <button>-Element, per Tastatur fokussierbar
+               und auslösbar (Enter/Space), aussagekräftiges aria-label (design.md,
+               "Barrierefreiheit") — Label wechselt nach dem ersten Abspielen von
+               "Tierlaut abspielen" zu "Tierlaut noch einmal abspielen"
+               (updatePlayButtonLabel unten). Derselbe Button kann beliebig oft
+               erneut angetippt werden (kein separater "Nochmal"-Button, kein
+               Limit). aria-busy kennzeichnet den kurzen Pufferzustand beim
+               (ersten) Abspielen — dezenter Indikator IM Button selbst statt
+               Vollbild-Spinner, gleiches Muster wie image-hint-button in
+               question.js. -->
+          <button
+            type="button"
+            class="sound-play-button k-btn"
+            hidden
+            aria-busy="false"
+            aria-label="Tierlaut abspielen"
+          >
+            <span class="sound-play-button__icon" aria-hidden="true">🔊</span>
+            <span class="sound-play-button__spinner" aria-hidden="true"></span>
+          </button>
+          <!-- Redesign (Issue #74, design.md "weiße Play-Karte"): rein
+               dekorativer Hinweistext, folgt demselben hidden-Zustand wie
+               playButtonEl (siehe Aufrufstellen von playButtonEl.hidden in
+               dieser Datei). -->
+          <p class="sound-player-frame__hint" hidden>Tippe und hör genau hin!</p>
+
+          <div class="sound-player-frame__error" hidden>
+            <span class="sound-player-frame__error-icon" aria-hidden="true"
+              >🙈</span
+            >
+            <p class="sound-player-frame__error-text">
+              Dieser Ton will gerade nicht laden.
+            </p>
+            <button
+              type="button"
+              class="sound-player-frame__retry-button"
+            >
+              Nochmal versuchen
+            </button>
+          </div>
+        </div>
+
+        <!-- Das eigentliche Audio-Element bleibt unsichtbar (keine nativen
+             Browser-Bedienelemente) — die Bedienung läuft ausschließlich über
+             den Play-Button oben (design.md: "Abspielen startet ausschließlich
+             durch expliziten Tap auf den Play-Button"). preload=none, da die
+             URL laut #32 zwar bereits vorab aufgelöst (Metadaten-Check), die
+             eigentliche Audiodatei aber bewusst erst beim ersten Play-Tap
+             geladen wird (progressive Wiedergabe, siehe architecture.md,
+             "Tiergeräusche: Finale technische Leitplanken", Punkt 2). -->
+        <audio class="sound-question__audio" preload="none" hidden></audio>
+
+        <!-- Pflicht-Attributionszeile auf jeder Frage (design.md: "gleiches
+             Format wie #16/#28", hier fest statt optional) — bewusst dieselben
+             Klassen wie image-hint__attribution* in question.js/global.css
+             (identisches Optik-/Formulierungs-Muster gefordert, keine
+             Geschmacksfrage). Standardmäßig hidden, da beim ersten Rendern noch
+             kein Ton aufgelöst ist (Reset-Prinzip analog zu #16/#28). -->
+        <p class="image-hint__attribution" hidden>
+          <span class="sound-question__attribution-text"></span>
+          <a
+            class="image-hint__attribution-link"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+            >(Lizenz)</a
+          >
+        </p>
+      </div>
+
+      <div class="question-screen__body">
       <!-- design.md: feste Überschrift statt wechselndem Fragetext, da die
            eigentliche "Frage" der Ton selbst ist. -->
       <h2 id="sound-question-heading" class="question-screen__text">
         Welches Tier ist das?
       </h2>
-
-      <!-- Fester, moderat großer Player-Rahmen (design.md: "reservierter
-           Player-Bereich", analog zum Bildrahmen bei #28, kein Layout-Sprung)
-           — enthält je nach Zustand genau EINEN der drei Bereiche darunter.
-           aria-live/aria-busy kündigen Lade-/Fehlerzustands-Wechsel für
-           Screenreader an (design.md, "Barrierefreiheit"). -->
-      <div class="sound-player-frame" aria-live="polite" aria-busy="true">
-        <div class="sound-player-frame__loading">
-          <span class="sound-player-frame__loading-icon" aria-hidden="true"
-            >🎵</span
-          >
-          <p class="sound-player-frame__loading-text">Ton wird geladen …</p>
-        </div>
-
-        <!-- Play-Button: echtes <button>-Element, per Tastatur fokussierbar
-             und auslösbar (Enter/Space), aussagekräftiges aria-label (design.md,
-             "Barrierefreiheit") — Label wechselt nach dem ersten Abspielen von
-             "Tierlaut abspielen" zu "Tierlaut noch einmal abspielen"
-             (updatePlayButtonLabel unten). Derselbe Button kann beliebig oft
-             erneut angetippt werden (kein separater "Nochmal"-Button, kein
-             Limit). aria-busy kennzeichnet den kurzen Pufferzustand beim
-             (ersten) Abspielen — dezenter Indikator IM Button selbst statt
-             Vollbild-Spinner, gleiches Muster wie image-hint-button in
-             question.js. -->
-        <button
-          type="button"
-          class="sound-play-button"
-          hidden
-          aria-busy="false"
-          aria-label="Tierlaut abspielen"
-        >
-          <span class="sound-play-button__icon" aria-hidden="true">🔊</span>
-          <span class="sound-play-button__spinner" aria-hidden="true"></span>
-        </button>
-
-        <div class="sound-player-frame__error" hidden>
-          <span class="sound-player-frame__error-icon" aria-hidden="true"
-            >🙈</span
-          >
-          <p class="sound-player-frame__error-text">
-            Dieser Ton will gerade nicht laden.
-          </p>
-          <button
-            type="button"
-            class="sound-player-frame__retry-button"
-          >
-            Nochmal versuchen
-          </button>
-        </div>
-      </div>
-
-      <!-- Das eigentliche Audio-Element bleibt unsichtbar (keine nativen
-           Browser-Bedienelemente) — die Bedienung läuft ausschließlich über
-           den Play-Button oben (design.md: "Abspielen startet ausschließlich
-           durch expliziten Tap auf den Play-Button"). preload=none, da die
-           URL laut #32 zwar bereits vorab aufgelöst (Metadaten-Check), die
-           eigentliche Audiodatei aber bewusst erst beim ersten Play-Tap
-           geladen wird (progressive Wiedergabe, siehe architecture.md,
-           "Tiergeräusche: Finale technische Leitplanken", Punkt 2). -->
-      <audio class="sound-question__audio" preload="none" hidden></audio>
-
-      <!-- Pflicht-Attributionszeile auf jeder Frage (design.md: "gleiches
-           Format wie #16/#28", hier fest statt optional) — bewusst dieselben
-           Klassen wie image-hint__attribution* in question.js/global.css
-           (identisches Optik-/Formulierungs-Muster gefordert, keine
-           Geschmacksfrage). Standardmäßig hidden, da beim ersten Rendern noch
-           kein Ton aufgelöst ist (Reset-Prinzip analog zu #16/#28). -->
-      <p class="image-hint__attribution" hidden>
-        <span class="sound-question__attribution-text"></span>
-        <a
-          class="image-hint__attribution-link"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          hidden
-          >(Lizenz)</a
-        >
-      </p>
 
       <!-- answer-grid--sound (global.css): manuell auf 375px (iPhone SE)
            gegengeprüft (npm run dev, Playwright-Screenshot) — ohne diese
@@ -221,67 +236,66 @@ export function renderSoundQuestionScreen(
         role="group"
         aria-label="Antwortmöglichkeiten"
       ></div>
-
-      <p
-        class="question-screen__feedback"
-        role="status"
-        aria-live="polite"
-        hidden
-      ></p>
-
-      <!-- Issue #42: automatische Bild-Anzeige NACH der Antwort — identisches
-           Markup/dieselben Klassen wie question.js (Issue #30), damit Optik/
-           Verhalten (inkl. bestehendem CSS) unverändert übernommen werden.
-           Anders als question.js gibt es hier keinen Pre-Answer-Bild-Button,
-           daher entfällt der dortige Duplikat-Check (architecture.md, Issues
-           #41/#42). Bleibt per hidden-Attribut versteckt, bis
-           startFeedbackImageFetch() unten einen Treffer liefert. -->
-      <div class="question-screen__feedback-image" hidden>
-        <img class="question-screen__feedback-image-img" alt="" />
-        <p class="question-screen__feedback-image-attribution">
-          <span class="question-screen__feedback-image-attribution-text"></span>
-          <a
-            class="question-screen__feedback-image-attribution-link"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            hidden
-            >(Lizenz)</a
-          >
-        </p>
       </div>
 
-      <!-- Issue #41: Infosatz inkl. Wikipedia-Link, unterhalb des
-           Richtig/Falsch-Feedbacks und des automatischen Feedback-Bilds
-           (design.md, "Infosatz + Wikipedia-Link + Fun Fact im
-           'Tiergeräusche'-Modus": Reihenfolge Feedback -> Bild -> Infosatz ->
-           Fun Fact -> Weiter) — identisches Markup/identische Klassen wie
-           question.js/reverseQuestion.js. -->
-      <p class="question-screen__info-sentence" hidden>
-        <span class="question-screen__info-sentence-text"></span>
-        <a
-          class="question-screen__info-sentence-wikipedia-link"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          hidden
-        >
-          <span aria-hidden="true">📖</span>
-          <span class="question-screen__info-sentence-wikipedia-link-text"></span>
-        </a>
-      </p>
+      <!-- Redesign (Issue #74): dasselbe Feedback-Panel wie question.js
+           (Issue #72) — bewusst außerhalb von .question-screen__body als
+           eigenes Grid-Item (siehe dortiger Kommentar zum Overflow-Fund in
+           #72). Dieser Modus behält Fun Fact + automatisches Feedback-Bild
+           (anders als "Wer bin ich?"/#73 — hier ist ein Foto nach der
+           Antwort keine Dopplung, da vorher nur Ton zu hören war). -->
+      <div class="feedback-panel" hidden>
+        <div class="feedback-panel__mascot" aria-hidden="true"></div>
+        <div class="feedback-panel__body">
+          <p
+            class="question-screen__feedback"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></p>
 
-      <!-- Issue #41: Fun Fact — eigenständiger Block unterhalb des
-           Infosatz-Blocks, oberhalb des "Weiter"-Buttons (design.md, selber
-           Abschnitt). Nur sichtbar, wenn animal.fun_fact vorhanden ist
-           (identisches Markup wie question.js, Issue #24). -->
-      <p class="question-screen__fun-fact" hidden>
-        <span class="question-screen__fun-fact-icon" aria-hidden="true">💡</span>
-        <span class="question-screen__fun-fact-lead">Wusstest du schon?</span>
-        <span class="question-screen__fun-fact-text"></span>
-      </p>
+          <p class="question-screen__info-sentence" hidden>
+            <span class="question-screen__info-sentence-text"></span>
+            <a
+              class="question-screen__info-sentence-wikipedia-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              hidden
+            >
+              <span aria-hidden="true">📖</span>
+              <span class="question-screen__info-sentence-wikipedia-link-text"></span>
+            </a>
+          </p>
 
-      <button type="button" class="next-button" hidden>Weiter</button>
+          <p class="question-screen__fun-fact" hidden>
+            <span class="question-screen__fun-fact-icon" aria-hidden="true">💡</span>
+            <span class="question-screen__fun-fact-lead">Wusstest du schon?</span>
+            <span class="question-screen__fun-fact-text"></span>
+          </p>
+        </div>
+
+        <div class="feedback-panel__sticker">
+          <div class="question-screen__feedback-image" hidden>
+            <img class="question-screen__feedback-image-img" alt="" />
+            <p class="question-screen__feedback-image-attribution">
+              <span class="question-screen__feedback-image-attribution-text"></span>
+              <a
+                class="question-screen__feedback-image-attribution-link"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                hidden
+                >(Lizenz)</a
+              >
+            </p>
+            <p class="feedback-panel__sticker-name"></p>
+            <span class="feedback-panel__sticker-badge"></span>
+          </div>
+          <div class="feedback-panel__confetti" aria-hidden="true"></div>
+          <button type="button" class="next-button k-btn" hidden>Weiter</button>
+        </div>
+      </div>
     </section>
   `;
 
@@ -289,6 +303,9 @@ export function renderSoundQuestionScreen(
   const playerFrameEl = container.querySelector(".sound-player-frame");
   const loadingEl = container.querySelector(".sound-player-frame__loading");
   const playButtonEl = container.querySelector(".sound-play-button");
+  const playButtonHintEl = container.querySelector(
+    ".sound-player-frame__hint",
+  );
   // Issue #43: Icon-Element wird zwischen 🔊 (abspielbereit) und ⏹️ (spielt
   // gerade) umgeschaltet (design.md, "Play/Pause-Toggle beim
   // Tierlaut-Button").
@@ -307,6 +324,18 @@ export function renderSoundQuestionScreen(
   );
   const answerGridEl = container.querySelector(".answer-grid");
   let tileButtons = [];
+  // Redesign (Issue #74): gemeinsamer Feedback-Panel-Wrapper wie question.js
+  // (Issue #72) — Sichtbarkeit folgt feedbackEl.hidden.
+  const feedbackPanelEl = container.querySelector(".feedback-panel");
+  const confettiContainerEl = container.querySelector(
+    ".feedback-panel__confetti",
+  );
+  const stickerNameEl = container.querySelector(
+    ".feedback-panel__sticker-name",
+  );
+  const stickerBadgeEl = container.querySelector(
+    ".feedback-panel__sticker-badge",
+  );
   const feedbackEl = container.querySelector(".question-screen__feedback");
 
   // Issue #42: Elemente des automatischen Feedback-Bild-Blocks — eigene
@@ -395,7 +424,7 @@ export function renderSoundQuestionScreen(
     answerGridEl.innerHTML = question.options
       .map(
         (_, i) => `
-          <button type="button" class="answer-tile" data-option-index="${i}" aria-pressed="false">
+          <button type="button" class="answer-tile k-btn" data-option-index="${i}" aria-pressed="false">
             <span class="answer-tile__icon" aria-hidden="true"></span>
             <span class="answer-tile__text"></span>
           </button>
@@ -406,16 +435,22 @@ export function renderSoundQuestionScreen(
     tileButtons.forEach((button, i) => {
       button.querySelector(".answer-tile__text").textContent =
         question.options[i].text;
+      // Redesign (Issue #74, design.md "Antwortkacheln"): Ziffern-Badge 1-4
+      // vor der Antwort, wird in handleAnswer auf ✓/✗ überschrieben.
+      button.querySelector(".answer-tile__icon").textContent = String(i + 1);
     });
   }
 
   function resetFeedback() {
+    feedbackPanelEl.hidden = true;
     feedbackEl.hidden = true;
     feedbackEl.textContent = "";
-    feedbackEl.classList.remove(
-      "question-screen__feedback--correct",
-      "question-screen__feedback--incorrect",
+    feedbackPanelEl.classList.remove(
+      "feedback-panel--correct",
+      "feedback-panel--incorrect",
     );
+    stickerNameEl.textContent = "";
+    stickerBadgeEl.textContent = "";
     // Issue #41: bei jeder neuen Frage vollständig zurücksetzen, damit
     // Infosatz/Wikipedia-Link/Fun Fact des vorherigen Tieres nie kurz
     // sichtbar/erreichbar bleiben (identisches Muster wie in question.js/
@@ -527,6 +562,7 @@ export function renderSoundQuestionScreen(
     playerFrameEl.setAttribute("aria-busy", "true");
     loadingEl.hidden = false;
     playButtonEl.hidden = true;
+    playButtonHintEl.hidden = true;
     playButtonEl.disabled = false;
     playButtonEl.setAttribute("aria-busy", "false");
     errorEl.hidden = true;
@@ -565,6 +601,7 @@ export function renderSoundQuestionScreen(
     playerFrameEl.setAttribute("aria-busy", "false");
     loadingEl.hidden = true;
     playButtonEl.hidden = true;
+    playButtonHintEl.hidden = true;
     errorEl.hidden = false;
   }
 
@@ -578,6 +615,7 @@ export function renderSoundQuestionScreen(
     // Play-Tap (preload="none" oben).
     audioEl.src = question.audio.url;
     playButtonEl.hidden = false;
+    playButtonHintEl.hidden = false;
     updatePlayButtonLabel();
 
     attributionTextEl.textContent = question.attribution.text;
@@ -752,7 +790,10 @@ export function renderSoundQuestionScreen(
       selectedButton.querySelector(".answer-tile__icon").textContent = "✓";
 
       feedbackEl.textContent = "✓ Super gemacht! Das ist richtig!";
-      feedbackEl.classList.add("question-screen__feedback--correct");
+      feedbackPanelEl.classList.add("feedback-panel--correct");
+
+      // Redesign (Issue #69/#74): Konfetti nur bei richtiger Antwort.
+      triggerConfetti(confettiContainerEl);
     } else {
       selectedButton.classList.add("answer-tile--selected-wrong");
       selectedButton.querySelector(".answer-tile__icon").textContent = "●";
@@ -761,10 +802,23 @@ export function renderSoundQuestionScreen(
       correctButton.querySelector(".answer-tile__icon").textContent = "✓";
 
       feedbackEl.textContent = `Fast! Die richtige Antwort ist: ${question.options[correctIndex].text}`;
-      feedbackEl.classList.add("question-screen__feedback--incorrect");
+      feedbackPanelEl.classList.add("feedback-panel--incorrect");
     }
 
+    feedbackPanelEl.hidden = false;
     feedbackEl.hidden = false;
+
+    // Redesign (Issue #68/#74, design.md "Sticker-Karte"): jede beantwortete
+    // Frage sammelt das Tier ins Album, unabhängig von richtig/falsch
+    // (gleiches Prinzip wie question.js/reverseQuestion.js).
+    if (answeredAnimal) {
+      const wasAlreadyCollected = loadCollectedAnimals().includes(
+        answeredAnimal.id,
+      );
+      addCollectedAnimal(answeredAnimal.id);
+      stickerNameEl.textContent = answeredAnimal.name_de;
+      stickerBadgeEl.textContent = wasAlreadyCollected ? "SCHAU MAL" : "NEU!";
+    }
 
     // Issue #42: automatischer Bildabruf startet in dem Moment, in dem der
     // Feedback-Bereich sichtbar wird — kein Klick nötig, nicht-blockierend

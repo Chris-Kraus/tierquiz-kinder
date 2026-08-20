@@ -2071,14 +2071,26 @@ button {
    Rahmen nur einen Play-Button statt eines Bildes enthält. */
 .sound-player-frame {
   width: 100%;
-  max-width: 20rem;
-  height: clamp(8rem, 18vh, 9.5rem);
+  min-height: 240px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-lg);
-  border: 3px solid var(--color-secondary);
-  background: var(--color-disabled-bg);
+  gap: var(--k-space-3);
+  border-radius: var(--k-radius-btn);
+  background: var(--card);
+}
+
+.sound-player-frame__hint {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.sound-player-frame__hint[hidden] {
+  display: none;
 }
 
 .sound-player-frame__loading,
@@ -2162,15 +2174,13 @@ button {
    Möglichkeit ist, an die zur Beantwortung nötige Information zu kommen
    (design.md, "Layout"). */
 .sound-play-button {
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 130px;
+  height: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
   border-radius: 50%;
-  background: var(--color-primary);
-  color: #fff;
+  background: var(--sky);
   cursor: pointer;
 }
 
@@ -2184,7 +2194,7 @@ button {
 }
 
 .sound-play-button__icon {
-  font-size: 2.25rem;
+  font-size: 60px;
   line-height: 1;
 }
 
@@ -2216,5 +2226,5 @@ button {
    (soundQuestion.js, setPlayButtonPlaying) auch rein visuell erkennbar ist
    (design.md, "Play/Pause-Toggle beim Tierlaut-Button"). */
 .sound-play-button--playing {
-  background: var(--color-primary-dark);
+  background: var(--sand);
 }
