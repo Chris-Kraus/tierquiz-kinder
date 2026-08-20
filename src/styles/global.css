@@ -220,11 +220,19 @@ button {
 
 /* #app ist das einzige Flex-Kind von body; ohne explizite Breite würde es sich
    am Inhalt orientieren (shrink-to-fit) statt den verfügbaren Platz zu nutzen,
-   wodurch .start-screen schmaler würde als sein eigentliches max-width erlaubt. */
+   wodurch .start-screen schmaler würde als sein eigentliches max-width erlaubt.
+   Seit dem Redesign (Issue #70) hat #app zwei Kinder (#app-header,
+   #app-content statt nur einem Screen-Container) — `flex-direction: column`
+   ist deshalb zwingend nötig, sonst landen Kopfzeile und Bildschirminhalt
+   nebeneinander in einer Flex-Reihe statt übereinander (per echtem
+   Screenshot gefunden, nicht nur vermutet: die Kopfzeile erschien dadurch
+   mittig auf der Seite statt oben, gestreckt auf die volle Höhe des viel
+   höheren #app-content-Nachbarn). */
 #app {
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Sichtbarer Fokusring für Tastaturbedienung (siehe design.md,
@@ -344,60 +352,82 @@ button {
 
 /* Start-Bildschirm (siehe design.md, "Nutzerfluss" Punkt 1). */
 
+/* Start-Bildschirm (Redesign, Issue #71; siehe design.md, "Kindgerechtes
+   Redesign" -> Screens -> Start). Grid 1fr 400px: links Titel/Auswahl-Schritte
+   (.start-screen__main), rechts Maskottchen-Karte + Album-Vorschau
+   (.start-screen__side, beide neu in dieser Story). Unter 860px Breite fällt
+   die Seitenspalte unter die Hauptspalte (kein horizontales Scrollen auf
+   kleinen Bildschirmen, siehe Issue #37). */
 .start-screen {
   width: 100%;
-  max-width: 32rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--space-md);
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: var(--k-space-6);
+  text-align: left;
 }
 
-.start-screen__mascot {
-  margin: 0;
-  font-size: 4.5rem;
-  line-height: 1;
+@media (max-width: 860px) {
+  .start-screen {
+    grid-template-columns: 1fr;
+  }
+}
+
+.start-screen__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-4);
+}
+
+.start-screen__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-4);
 }
 
 .start-screen__title {
   margin: 0;
-  font-size: clamp(2.5rem, 6vw, 3.5rem);
-  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 6vw, 76px);
+  color: var(--ink);
 }
 
 .start-screen__intro {
   margin: 0;
-  font-size: 1.25rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--ink);
 }
 
-/* Modus-Auswahl (Issue #26, design.md "Modus-Auswahl auf dem
-   Start-Bildschirm"): bewusst KEIN neues visuelles Vokabular — dieselbe
-   Kachel-Optik wie .difficulty-button unten, nur als eigene Klasse geführt,
-   damit beide Kachel-Gruppen unabhängig voneinander ihren Auswahlzustand
-   verwalten können. Steht im Markup ÜBER der Schwierigkeitsstufen-Auswahl
-   (grundlegendere Entscheidung zuerst, siehe design.md). */
+/* Gemeinsamer Schritt-Label-Stil ("1 · Welches Spiel?" usw., siehe design.md,
+   "Layout-Empfehlungen"). */
+.mode-picker__label,
+.difficulty-picker__label,
+.round-length-picker__label {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
 .mode-picker {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.mode-picker__label {
-  margin: 0;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--color-secondary-dark);
+  align-items: stretch;
+  gap: var(--k-space-1);
 }
 
 .mode-picker__group {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-md);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: var(--k-space-3);
 }
 
 /* Kindgerechter, nicht-technischer Hinweis bei fehlgeschlagenem Testabruf
@@ -405,8 +435,9 @@ button {
    passend zum bestehenden freundlichen Ton aller Fehlerzustände im Projekt. */
 .mode-picker__hint {
   margin: 0;
-  font-size: 0.9rem;
-  color: var(--color-secondary-dark);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--muted);
 }
 
 .mode-picker__hint[hidden] {
@@ -417,36 +448,34 @@ button {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-md);
+  gap: var(--k-space-3);
 }
 
 /* Große Touch-Zielflächen, deutlich über dem 44×44-px-Minimum (siehe design.md,
-   "Layout-Empfehlungen"/"Barrierefreiheit"). Echtes <button>-Element, per
-   Tastatur bedienbar. Gilt gleichermaßen für die Modus-Auswahl-Kacheln oben
-   (.mode-button, Issue #26) — identische Optik, siehe Kommentar dort. */
+   "Barrierefreiheit"). Echtes <button>-Element, per Tastatur bedienbar.
+   min-height 104px (Modus-Kacheln)/92px (Schwierigkeit) laut design.md — die
+   haptische Druck-Mechanik selbst kommt von der zusätzlichen `.k-btn`-Klasse
+   (siehe start.js, Issue #67), hier nur Größe/Fläche/Layout. */
 .difficulty-button,
 .mode-button {
   flex: 1 1 12rem;
-  min-height: 6.5rem;
-  padding: var(--space-md);
+  min-height: 92px;
+  padding: var(--k-space-3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
-  border: 3px solid var(--color-secondary);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  color: var(--color-secondary-dark);
-  font-size: 1.25rem;
-  font-weight: 700;
-  cursor: pointer;
+  gap: 6px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 800;
 }
 
-.difficulty-button:not(:disabled):active,
-.mode-button:not(:disabled):active {
-  transform: scale(0.97);
+.mode-button {
+  min-height: 104px;
+  border-radius: 26px;
 }
 
 .difficulty-button__check,
@@ -457,8 +486,27 @@ button {
 }
 
 .difficulty-button__hint {
-  font-size: 0.95rem;
-  font-weight: 400;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.mode-button__icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  border: var(--k-border-sm) solid var(--ink);
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  position: relative;
+}
+
+.mode-button__label {
+  font-size: 24px;
 }
 
 /* "Ausgewählt" wird nicht nur über Farbe kommuniziert, sondern zusätzlich über
@@ -466,9 +514,11 @@ button {
    "Keine ausschließlich farbbasierte Codierung"). */
 .difficulty-button--selected,
 .mode-button--selected {
-  background: var(--color-primary);
-  border-color: var(--color-primary-dark);
-  color: #fff;
+  background: var(--sky);
+}
+
+.mode-button--selected .mode-button__icon-box {
+  background: var(--card);
 }
 
 .difficulty-button--selected .difficulty-button__check,
@@ -498,7 +548,7 @@ button {
   display: none;
   width: 1em;
   height: 1em;
-  border: 2px solid var(--color-secondary);
+  border: 2px solid var(--ink);
   border-top-color: transparent;
   border-radius: 50%;
   animation: image-hint-spin 0.8s linear infinite;
@@ -520,8 +570,8 @@ button {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: stretch;
+  gap: var(--k-space-1);
 }
 
 /* CSS-Cascade-Falle wie bei .image-hint[hidden]/.mode-picker__hint[hidden]
@@ -534,72 +584,179 @@ button {
   display: none;
 }
 
-.round-length-picker__label {
-  margin: 0;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--color-secondary-dark);
-}
-
 .round-length-chip-group {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
+  gap: var(--k-space-2);
 }
 
 /* Kleiner als .difficulty-button, aber weiterhin deutlich über dem
-   44×44-px-Touch-Zielgrößen-Minimum (design.md, "Layout-Empfehlungen"). Echtes
+   44×44-px-Touch-Zielgrößen-Minimum (design.md, "Barrierefreiheit"). Echtes
    <button>-Element, per Tastatur bedienbar. */
 .round-length-chip {
   min-width: 2.75rem;
   min-height: 2.75rem;
   padding: 0.4rem 0.9rem;
-  border: 2px solid var(--color-secondary);
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-secondary-dark);
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.round-length-chip:active {
-  transform: scale(0.97);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 800;
+  border-radius: var(--k-radius-pill);
 }
 
 /* "Ausgewählt" wird wie beim Schwierigkeitsstufen-Picker nicht nur über Farbe
    kommuniziert, sondern zusätzlich über aria-pressed (design.md,
-   "Barrierefreiheit", "Keine ausschließlich farbbasierte Codierung"). Bewusst
-   dieselbe bereits gegen WCAG-AA geprüfte Primär-Grün/Weiß-Kombination wie
-   .difficulty-button--selected statt eines neuen, ungeprüften Farbpaars. */
+   "Barrierefreiheit", "Keine ausschließlich farbbasierte Codierung"). */
 .round-length-chip--selected {
-  background: var(--color-primary);
-  border-color: var(--color-primary-dark);
-  color: #fff;
+  background: var(--sky);
 }
 
 .start-button {
-  min-width: 14rem;
-  min-height: 4rem;
-  padding: var(--space-md) var(--space-lg);
-  border: none;
-  border-radius: var(--radius-lg);
-  background: var(--color-accent);
-  color: var(--color-accent-text);
-  font-size: 1.5rem;
-  font-weight: 700;
-  cursor: pointer;
+  width: 100%;
+  min-height: 108px;
+  padding: var(--k-space-3) var(--k-space-5);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 800;
+  border-radius: var(--k-radius-card);
+  border-color: var(--ink);
+  box-shadow: var(--k-shadow-card);
 }
 
 .start-button:disabled {
   background: var(--color-disabled-bg);
   color: var(--color-disabled-text);
+  border-color: var(--color-disabled-bg);
+  box-shadow: none;
   cursor: not-allowed;
 }
 
-.start-button:not(:disabled):active {
-  transform: scale(0.97);
+/* Maskottchen-Karte (design.md: --sand Fläche, Platzhalter 200px + k-float,
+   darunter weiße Sprechblase). Echte Illustration fehlt noch (siehe
+   architecture.md, "Kindgerechtes Redesign" -> Maskottchen "Fine") — die
+   Platzhalter-Textur unten ist bewusst über eine einzige Regel referenziert,
+   damit ein späterer Austausch keine Markup-Änderung braucht. */
+.start-mascot-card {
+  background: var(--sand);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  box-shadow: var(--k-shadow-card);
+  padding: var(--k-space-4);
+}
+
+.start-mascot-card__placeholder {
+  height: 200px;
+  border-radius: var(--k-radius-btn);
+  background: repeating-linear-gradient(
+    135deg,
+    #ffe3b8 0 14px,
+    #ffefd6 14px 28px
+  );
+  animation: k-float 3s ease-in-out infinite;
+}
+
+.start-mascot-card__bubble {
+  margin-top: var(--k-space-3);
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-sm);
+  padding: var(--k-space-3);
+}
+
+.start-mascot-card__label {
+  margin: 0 0 4px;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--link);
+}
+
+.start-mascot-card__quote {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--ink);
+}
+
+/* Album-Vorschau (design.md: Grid 4x3, 68px-Felder; gesammelt = Platzhalter-
+   Textur + Tiername, offen = #FFF8EC-Fläche mit "?"). Dieselbe Komponente
+   wird auf dem Ergebnis-Bildschirm mit 3 Spalten/118px wiederverwendet
+   (Issue #77) — hier die Start-Bildschirm-Variante (4 Spalten/68px). */
+.start-album-preview {
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  padding: var(--k-space-4);
+}
+
+.start-album-preview__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--k-space-3);
+}
+
+.start-album-preview__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.start-album-preview__badge {
+  background: var(--sand);
+  border: var(--k-border-sm) solid var(--ink);
+  border-radius: var(--k-radius-pill);
+  padding: 2px 14px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.start-album-preview__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.start-album-preview__slot {
+  aspect-ratio: 1;
+  min-height: 68px;
+  border-radius: 14px;
+  background: #fff8ec;
+  border: 2px solid #e4d6be;
+  color: #cbb795;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.start-album-preview__slot--collected {
+  background: repeating-linear-gradient(
+    135deg,
+    #ffe3b8 0 14px,
+    #ffefd6 14px 28px
+  );
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  padding: 4px;
+}
+
+.start-album-preview__slot-name {
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.1;
 }
 
 /* Frage-Bildschirm (siehe design.md, "Nutzerfluss" Punkte 2–5,
