@@ -2,9 +2,32 @@
    ("Visuelle Grundlinie", "Barrierefreiheit"). Alle Farbpaarungen unten sind gegen
    WCAG-AA geprüft (≥ 4,5:1 Fließtext, ≥ 3:1 große Schrift/UI-Elemente). */
 
+/* Selbst gehostete Variable Fonts (Baloo 2, Nunito) statt Google-Fonts-CDN, siehe
+   docs/workflow/architecture.md, Abschnitt "Kindgerechtes Redesign: Technische
+   Leitplanken" — vermeidet eine neue NFR-1-Ausnahme (Kernfunktion bleibt 100%
+   offline-lauffähig, da Fonts lokal mit der App ausgeliefert werden). Beide
+   Dateien sind Variable Fonts (ein einziges .woff2 pro Familie deckt die
+   benötigten Schnitte 600–800 über die wght-Achse ab). */
+@font-face {
+  font-family: "Baloo 2";
+  src: url("/fonts/baloo2-variable.woff2") format("woff2-variations"), url("/fonts/baloo2-variable.woff2") format("woff2");
+  font-weight: 600 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url("/fonts/nunito-variable.woff2") format("woff2-variations"), url("/fonts/nunito-variable.woff2") format("woff2");
+  font-weight: 600 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light;
   font-family:
+    "Nunito",
     "Comic Sans MS",
     "Comic Neue",
     system-ui,
@@ -38,6 +61,123 @@
   --space-lg: 2rem;
 
   --radius-lg: 1.25rem;
+
+  /* Redesign-Tokens (Claude-Design-Handoff, siehe docs/workflow/design.md,
+     Abschnitt "Kindgerechtes Redesign: Visuelle Spezifikation"). Bewusst
+     zusätzlich zu den obigen --color-*-Tokens eingeführt, nicht als Ersatz:
+     die einzelnen Screen-Redesign-Stories (#71-77) verdrahten die bestehenden
+     Klassen schrittweise auf diese neuen Tokens um, statt hier blind alle
+     --color-*-Referenzen im Bestand zu ersetzen (Risiko unklarer Seiteneffekte
+     über 1700+ Zeilen ohne Einzelprüfung jeder Verwendungsstelle). */
+  --ink: #231a45;
+  --paper: #fff3e2;
+  --card: #ffffff;
+  --sky: #9cd5f2;
+  --sand: #f3dfa8;
+  --sand-soft: #fbefdc;
+  --blush: #f4e7e4;
+  /* --muted: gegenüber dem Handoff-Wert (#8B7BA8) bewusst dunkler gezogen.
+     Der Original-Wert verletzt WCAG AA gemessen (3,17–3,82:1 statt 4,5:1 gegen
+     --paper/--card/--blush, siehe design.md-Kontrasttabelle). #685C7E erreicht
+     5,1–6,1:1 gegen alle drei Flächen (gleicher Farbton, dunkler gezogen). */
+  --muted: #685c7e;
+  --link: #2a6e93;
+
+  --font-heading: "Baloo 2", "Comic Sans MS", "Comic Neue", system-ui, sans-serif;
+  --font-body: "Nunito", "Comic Sans MS", "Comic Neue", system-ui, sans-serif;
+
+  --k-radius-card: 32px;
+  --k-radius-btn: 24px;
+  --k-radius-sm: 20px;
+  --k-radius-pill: 999px;
+
+  --k-border-lg: 4px;
+  --k-border-sm: 3px;
+
+  --k-shadow-card: 0 10px 0 var(--ink);
+  --k-shadow-btn: 0 8px 0 var(--ink);
+  --k-shadow-pill: 0 6px 0 var(--ink);
+
+  --k-space-1: 8px;
+  --k-space-2: 12px;
+  --k-space-3: 16px;
+  --k-space-4: 22px;
+  --k-space-5: 26px;
+  --k-space-6: 34px;
+}
+
+/* Haptische Druck-Mechanik (siehe design.md) — Basisklasse für alle Buttons/
+   Kacheln im Redesign. Wird von den einzelnen Screen-Stories (#71-77) auf die
+   jeweiligen bestehenden Klassen angewendet (additiv, `.k-btn` zusätzlich zur
+   bestehenden Klasse auf demselben Element), nicht in dieser Story. */
+.k-btn {
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-btn);
+  box-shadow: var(--k-shadow-btn);
+  transition:
+    transform 0.12s,
+    box-shadow 0.12s,
+    background 0.12s;
+}
+
+.k-btn:hover:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 0 5px 0 var(--ink);
+}
+
+.k-btn:active:not(:disabled) {
+  transform: translateY(8px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+.k-btn:focus-visible {
+  outline: 5px solid var(--sky);
+  outline-offset: 4px;
+}
+
+/* Redesign-Keyframes (siehe design.md). Ungenutzt, bis einzelne Screen-Stories
+   sie auf konkrete Elemente anwenden (Maskottchen, Sticker-Feedback, Konfetti). */
+@keyframes k-pop {
+  0% {
+    transform: scale(0.7) rotate(-6deg);
+  }
+  55% {
+    transform: scale(1.08) rotate(2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes k-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes k-wiggle {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes k-conf {
+  0% {
+    transform: translate3d(0, -30px, 0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--dx), 640px, 0) rotate(var(--rot));
+    opacity: 0;
+  }
 }
 
 * {
