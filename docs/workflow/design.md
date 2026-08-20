@@ -558,6 +558,100 @@ Begründung:
 
 **Barrierefreiheit:** Button als echtes `<button>`-Element, per Tastatur erreichbar/auslösbar (Tab-Reihenfolge nach den Buchstaben-Kästchen, vor dem "Weiter"-Button), mit `aria-label` (siehe oben) statt reinem Icon-Button. Der Zustandswechsel (Kästchen gefüllt, Feedback-Text erscheint) läuft über den bestehenden `aria-live="polite"`-Bereich (`.question-screen__feedback`), keine neue Ankündigungslogik nötig.
 
+## Kindgerechtes Redesign: Visuelle Spezifikation (20.08.2026, `ux-design`, Claude-Design-Handoff)
+
+**Anlass:** Der Nutzer hat mit Claude Design ein komplettes visuelles Redesign gestaltet (Handoff-Bundle, High-Fidelity-Prototyp `Tierquiz Kids.dc.html`). Spielablauf/Datenlogik bleiben unverändert — reine Optik-/Typo-/Feedback-Aufbau-Erneuerung plus drei neue Motivations-Features (Sticker-Album, Konfetti, Maskottchen "Fine"). Diese Spezifikation ist die verbindliche Quelle für `web-developer` — das Original-Handoff-Bundle liegt außerhalb des Repos (`~/Downloads/`) und ist **nicht** die Quelle der Wahrheit für künftige Sessions.
+
+### Design-Tokens
+
+| Token | Wert | Verwendung |
+|---|---|---|
+| `--ink` | `#231A45` | Text, alle Rahmen, alle Schatten |
+| `--paper` | `#FFF3E2` | Seitenhintergrund |
+| `--card` | `#ffffff` | Kartenflächen, unbeantwortete Kacheln |
+| `--sky` | `#9CD5F2` | Auswahl-Zustand, richtige Antwort, Ergebnis-Panel, Score-Badge |
+| `--sand` | `#F3DFA8` | Logo-Kachel, Maskottchen-Karte, Album-Badge, aktiver Fortschrittspunkt |
+| `--sand-soft` | `#FBEFDC` | Medien-Karte, vorgegebene Buchstaben, Memory-Rückseite |
+| `--blush` | `#F4E7E4` | Feedback bei falscher Antwort, gewählte falsche Kachel |
+| `--muted` | `#8B7BA8` | Sekundärtext, Labels — **siehe Kontrast-Korrektur unten** |
+| `--link` | `#2A6E93` | Links (`a`), Hover → `#231A45` |
+| Radius | Karten `32px`, Buttons/Kacheln `24px`, kleine Boxen `18–22px`, Pills `999px` | |
+| Rahmen | Karten/Buttons `4px solid var(--ink)`; kleine Elemente `3px` | |
+| Schatten | Karten `0 10px 0 #231A45`, Buttons `0 8px 0 #231A45`, Pills `0 6px 0 #231A45` (harter Offset, kein Blur) | |
+| Spacing | 8 / 12 / 16 / 22 / 26 / 34 px | |
+
+### Barrierefreiheits-Korrektur: `--muted` verletzt WCAG AA (blockierend, vor Umsetzung zu fixen)
+
+Bestehende Konvention in `global.css` (siehe Header-Kommentar dort): alle Farbpaarungen sind gegen ≥4.5:1 (Normaltext) / ≥3:1 (UI/Großtext) geprüft. Ich habe die neuen Tokens gegen dieselbe Schwelle real berechnet (WCAG-Relativluminanz-Formel, nicht geschätzt):
+
+| Paarung | Kontrast | Schwelle | Ergebnis |
+|---|---|---|---|
+| `--ink` auf `--paper` | 14,7:1 | 4,5:1 | ✅ |
+| `--ink` auf `--sky` | 10,1:1 | 4,5:1 | ✅ |
+| `--ink` auf `--sand` | 12,2:1 | 4,5:1 | ✅ |
+| `--ink` auf `--blush` | 13,3:1 | 4,5:1 | ✅ |
+| `--link` auf `--card` | 5,6:1 | 4,5:1 | ✅ |
+| `--muted` auf `--paper` | 3,49:1 | 4,5:1 | ❌ **fehlt** |
+| `--muted` auf `--card` | 3,82:1 | 4,5:1 | ❌ **fehlt** |
+| `--muted` auf `--blush` | 3,17:1 | 4,5:1 | ❌ **fehlt** |
+
+`--muted` fällt bei **jeder** im Handoff spezifizierten Textverwendung (Labels 13–15px, Sekundärtext, "gewählt & falsch"-Feedbacktext auf `--blush`) unter die Schwelle — passiert nur die 3:1-UI-Schwelle, nicht die 4,5:1-Textschwelle, obwohl es laut Spec als lesbarer Text (nicht nur Dekoration/Icon) eingesetzt wird. Das ist kein Stilbruch-Risiko, sondern ein echter, gemessener Verstoß gegen die im Projekt bereits etablierte Konvention.
+
+**Fix, zwei gleichwertige Optionen für `web-developer`/finale Entscheidung bei Umsetzung:**
+1. `--muted` dunkler ziehen (Ziel-Relativluminanz ≤ 0,143, also spürbar dunkler als der aktuelle Wert — passt den Farbton an, ohne den Rest der Palette zu berühren), **oder**
+2. Wo Text (nicht Icon/Dekoration) betroffen ist, `--ink` mit reduzierter Opazität statt `--muted` verwenden — Muster existiert im Handoff bereits an anderer Stelle (Infosatz nutzt `opacity:.75` auf dunklem Text) und ist damit kein neues Konzept.
+Beide Optionen sind vor Story-Freigabe der Token-Story zu verifizieren (Akzeptanzkriterium: gemessener Kontrast ≥4,5:1 überall wo `--muted`/Ersatz als Text auf Fläche dient), nicht nachträglich.
+
+### Typografie
+
+- Headings: **Baloo 2**, 800. H1 Start `76px`, H1 Frage `44px`, Feedback-Titel `52px`, Ergebnis-Zahl `120px`, Kachel-Label `32px`.
+- Body: **Nunito**, 700/800. Fließtext `19–25px`, Labels `13–15px` (uppercase, `letter-spacing:.1em`).
+- Minimum im gesamten UI: 15px; alle Antwort-/Aktionsflächen ≥88px hoch (Kacheln 128px, Memory-Karten 150px, Buchstabenboxen 78×96px).
+- Font-Loading: selbst gehostete `.woff2` (siehe `architecture.md`, Abschnitt "Kindgerechtes Redesign: Technische Leitplanken") — kein Google-Fonts-CDN.
+
+### Button-Verhalten ("haptische" Druck-Mechanik, gilt für alle Kacheln/Buttons inkl. Memory-Karten/Buchstabenboxen)
+
+```css
+.k-btn { border:4px solid var(--ink); border-radius:24px; box-shadow:0 8px 0 var(--ink);
+         transition:transform .12s, box-shadow .12s, background .12s; }
+.k-btn:hover:not(:disabled) { transform:translateY(3px); box-shadow:0 5px 0 var(--ink); }
+.k-btn:active:not(:disabled) { transform:translateY(8px); box-shadow:0 0 0 var(--ink); }
+.k-btn:focus-visible { outline:5px solid #9CD5F2; outline-offset:4px; }
+```
+
+### Keyframes + Barrierefreiheit (bereits korrekt spezifiziert, deckt sich mit bestehender Konvention)
+
+```css
+@keyframes k-pop { 0%{transform:scale(.7) rotate(-6deg)} 55%{transform:scale(1.08) rotate(2deg)} 100%{transform:scale(1) rotate(0)} }
+@keyframes k-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+@keyframes k-wiggle { 0%,100%{transform:rotate(-2deg)} 50%{transform:rotate(2deg)} }
+@keyframes k-conf { 0%{transform:translate3d(0,-30px,0) rotate(0);opacity:1}
+                    100%{transform:translate3d(var(--dx),640px,0) rotate(var(--rot));opacity:0} }
+```
+`@media (prefers-reduced-motion: reduce)`: `k-conf`/`k-float`/`k-wiggle` deaktivieren, `k-pop` auf reine Opazitätsänderung reduzieren — **bereits korrekt im Handoff spezifiziert**, deckt sich mit der bestehenden globalen `prefers-reduced-motion`-Konvention in `global.css` (keine Lücke gefunden).
+
+### Screens (Kurzfassung je Screen — exakte px-/Klassen-Werte final, siehe Story-Issues für vollständige Akzeptanzkriterien)
+
+- **Kopfzeile (alle Screens, neu — schließt Issue #66 mit ein):** Logo-Kachel 52×52 (`k-wiggle`), Wortmarke, Modus-Pill links; Fortschritts-Pills (ein Punkt pro Frage: beantwortet=`--sky`, aktuell=`--sand`, offen=weiß) + Score-Badge rechts. **Enthält den Home-/Zurück-Button aus Issue #66** — bisher hatte kein Screen irgendeine Navigations-Chrome (verifiziert), dieser Screen führt sie erstmals ein, statt sie separat pro Screen nachzurüsten.
+- **Start:** Grid `1fr 400px`. Links: H1, 3-Schritte-Auswahl (Spielmodus 5 Kacheln, Schwierigkeit 2, Rundenlänge 3), CTA. Rechts: Maskottchen-Karte (Platzhalter, siehe unten) mit Sprechblase, darunter Album-Vorschau (Grid 4×3, `N/12`).
+- **Frage (Quizfragen/Wer bin ich?/Tiergeräusche):** Grid `460px 1fr`. Medienkarte links (variiert je Modus — Foto+Button / Foto dauerhaft / Play-Karte), Fragekarte rechts mit Vorlesebutton, Antwortkacheln 2×2 (2 bei Verwechslungspaaren).
+- **Buchstabensuche:** Foto-Karte + Buchstabenreihe (78×96 Boxen), Fehlerzeile reserviert (kein Layout-Sprung), "Lösung zeigen" zurückhaltend gestaltet.
+- **Tier-Memory:** eine Karte, Grid 6 Spalten, Rückseite `--sand-soft` + 🐾, aufgedeckt weiß + `k-pop`, Paar gefunden `--sky`.
+- **Feedback-Panel** (alle Modi außer Memory): Grid `130px 1fr 320px` — Maskottchen-Platzhalter, Titel+Fun-Fact-Box+Infosatz (bestehende `buildInfoSentence()`/Wikipedia-Link-Logik unverändert wiederverwendet), Sticker-Karte (Foto+Name+"NEU!"-Pill bei Album-Neuzugang) + Weiter-Button. Konfetti-Trigger bei richtiger Antwort.
+- **Ergebnis:** Score `120px`, Ermutigungssatz (`getEncouragement()` unverändert), Album-Zusammenfassung, Album-Karte 3 Spalten. Konfetti bei Rundenende. Memory-Variante: eigener Satz, kein Verlaufseintrag (bestehendes Verhalten).
+
+### Maskottchen "Fine" — Platzhalter-Entscheidung
+
+Illustration existiert noch nicht. `software-architect` bestätigt: technisch problemlos später austauschbar, wenn von Anfang an über einen einzigen Asset-Pfad referenziert (siehe `architecture.md`). **UX-Entscheidung: mit Platzhalter starten** (gestreifte Textur wie im Prototyp, oder ersatzweise ein großes Emoji als Übergangslösung), echte Illustration als unabhängige, jederzeit nachschiebbare Folge-Story — kein Blocker für den Rest des Redesigns.
+
+### Zielgruppen-Einschätzung (6–10 vs. 10–12 Jahre)
+
+Das Handoff ist im Titel auf "7 Jahre" zugeschnitten, `requirements.md` definiert aber zwei Stufen (6–10/10–12). Einschätzung: **kein Blocker.** Die verspielten Motivations-Elemente (Maskottchen, Sticker, Konfetti, große abgerundete Baloo-2-Headlines) sind stilistisch näher an der jüngeren Gruppe, entfernen aber keine Funktionalität für die ältere Gruppe — Kachelgrößen/Kontraste/Bedienbarkeit gelten unverändert für beide Stufen, und niemand ist gezwungen, das Album zu beachten. Eine mögliche spätere Anpassung (z. B. dezenterer visueller Ton in der "Knifflig"-Stufe) ist eine optionale Geschmacksfrage, keine jetzt zu klärende Anforderungslücke.
+
+### Fokus-Reihenfolge
+
+Handoff verlangt "Frage → Hilfe → Antworten → Weiter". Ob das 1:1 der aktuellen DOM-Reihenfolge in `question.js`/`memory.js`/`letterSearch.js` entspricht, ist beim bestehenden Code nicht abschließend verifiziert (nur Funktionsnamen bekannt, nicht exakte Markup-Reihenfolge) — **Akzeptanzkriterium der jeweiligen Screen-Story**: `web-developer` verifiziert die reale Tab-Reihenfolge nach dem Umbau, nicht nur übernehmen, dass sie automatisch passt.
+
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
 
 Alle vorherigen offenen Fragen sind geklärt: Zielalter → zwei Stufen 6–10/10–12 (siehe "Zielgruppe"), Sound-Effekte → nein, Fragenanzahl → 10 pro Runde (fest), Weiter-Mechanik → manueller Button, Sprache → Deutsch. Details jeweils in den Abschnitten oben eingearbeitet.
