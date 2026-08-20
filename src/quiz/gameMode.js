@@ -21,7 +21,13 @@
 // #26 auswählbar, aber erst ab #28 tatsächlich bis zum Frage-Bildschirm
 // durchverdrahtet war.
 //
-// Seit Issue #46: vierter Wert `LETTER_SEARCH` für den "Buchstabensuche"-
+// Seit Issue #45: vierter Wert `MEMORY` für den "Tier-Memory"-Modus ergänzt
+// (architecture.md, "Neuer Spielmodus 'Tier-Memory': Finale technische
+// Leitplanken", Punkt 1) — anders als REVERSE/SOUND hat dieser Modus KEINEN
+// Bezug zu state.questions/roundLength im bisherigen Sinn (siehe
+// src/quiz/memory.js/src/screens/memory.js: reiner UI-lokaler Kartenzustand).
+//
+// Seit Issue #46: fünfter Wert `LETTER_SEARCH` für den "Buchstabensuche"-
 // Modus (Name laut architecture.md, "Neuer Spielmodus 'Buchstabensuche':
 // Finale technische Leitplanken", Punkt 1: "Neuer Wert LETTER_SEARCH:
 // 'letterSearch' in GAME_MODE"). Gleiches Vorgehen wie bei SOUND oben: der
@@ -32,5 +38,6 @@ export const GAME_MODE = Object.freeze({
   QUIZ: "quiz",
   REVERSE: "reverse",
   SOUND: "sound",
+  MEMORY: "memory",
   LETTER_SEARCH: "letterSearch",
 });

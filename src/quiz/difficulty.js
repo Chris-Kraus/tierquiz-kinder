@@ -95,3 +95,27 @@ export function getWrongAnswerStrategyForDifficulty(difficulty) {
   assertKnownDifficulty(difficulty, "getWrongAnswerStrategyForDifficulty");
   return difficulty === DIFFICULTY_LEVELS.HARD ? "close" : "distinct";
 }
+
+// Tier-Memory (Issue #45): hier bestimmt die Schwierigkeitsstufe direkt die
+// Kartenanzahl statt eines Feld-Sets (siehe architecture.md, Abschnitt
+// "Neuer Spielmodus 'Tier-Memory': Finale technische Leitplanken", Punkt 5) —
+// bewusst NICHT über getFieldsForDifficulty()/EASY_FIELDS/HARD_FIELDS
+// modelliert, da Memory keine Tierdatenbank-Felder für die Fragestellung
+// nutzt (nur image_filename). Eigene, parallele Funktion statt eines
+// künstlichen Pseudofeldes wie heaviest_animal/confusion_pair.
+const MEMORY_PAIR_COUNTS = Object.freeze({
+  [DIFFICULTY_LEVELS.EASY]: 6,
+  [DIFFICULTY_LEVELS.HARD]: 12,
+});
+
+/**
+ * Liefert die Anzahl der Tierpaare (nicht Karten gesamt — das Doppelte) für
+ * den Tier-Memory-Modus je Schwierigkeitsstufe (design.md-Tabelle: 6 bzw.
+ * 12 Paare).
+ * @param {string} difficulty einer der Werte aus DIFFICULTY_LEVELS
+ * @returns {number}
+ */
+export function getMemoryPairCountForDifficulty(difficulty) {
+  assertKnownDifficulty(difficulty, "getMemoryPairCountForDifficulty");
+  return MEMORY_PAIR_COUNTS[difficulty];
+}
