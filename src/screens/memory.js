@@ -41,6 +41,8 @@ import {
 import { getMemoryPairCountForDifficulty } from "../quiz/difficulty.js";
 import { buildInfoSentence } from "../quiz/infoSentence.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
+import { addCollectedAnimal } from "../quiz/album.js";
+import { triggerConfetti } from "../quiz/confetti.js";
 
 // design.md, "Interaktion": "ca. 1 Sekunde — lang genug zum Erkennen, kurz
 // genug um keine Wartezeit-Frustration zu erzeugen".
@@ -68,8 +70,24 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
 
   container.innerHTML = `
     <section class="memory-screen" aria-labelledby="memory-heading">
-      <h2 id="memory-heading" class="memory-screen__title">Tier-Memory</h2>
-      <p class="memory-screen__progress" aria-live="polite"></p>
+      <!-- Redesign (Issue #76, design.md "Tier-Memory"): Kopfzeile mit Titel
+           + zwei Pills (Paare/Versuche) statt reinem Fließtext-Fortschritt.
+           .memory-screen__progress bleibt als reines Live-Region-Element für
+           Screenreader erhalten (visuell redundant zu den Pills, aber schon
+           vorhandene, funktionierende aria-live-Ankündigung — kein Grund,
+           das anzufassen). -->
+      <div class="memory-screen__header">
+        <h2 id="memory-heading" class="memory-screen__title">Finde die Tierpaare!</h2>
+        <div class="memory-screen__pills">
+          <span class="memory-screen__pill memory-screen__pill--pairs"></span>
+          <span class="memory-screen__pill memory-screen__pill--attempts"></span>
+        </div>
+      </div>
+      <!-- Bleibt in der Barrierefreiheits-Struktur (kein hidden-Attribut,
+           das würde auch aria-live für Screenreader unwirksam machen) --
+           visuell versteckt, da dieselbe Information jetzt in den Pills
+           oben sichtbar ist (siehe .visually-hidden in global.css). -->
+      <p class="memory-screen__progress visually-hidden" aria-live="polite"></p>
 
       <!-- Ladezustand vor Rundenstart (architecture.md: "einheitlicher
            Ladebildschirm vor Rundenstart, keinen Pro-Karte-Ladezustand") —
@@ -88,7 +106,7 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
           <p class="memory-board-status__text">
             Die Karten wollen gerade nicht laden.
           </p>
-          <button type="button" class="memory-board-status__retry-button">
+          <button type="button" class="memory-board-status__retry-button k-btn">
             Nochmal versuchen
           </button>
         </div>
@@ -131,10 +149,28 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
         <span class="question-screen__fun-fact-lead">Wusstest du schon?</span>
         <span class="question-screen__fun-fact-text"></span>
       </p>
+
+      <!-- Redesign (Issue #76, design.md "Tier-Memory"): Fußnote unterhalb
+           des Bretts + Konfetti-Container (Trigger bei jedem gefundenen
+           Paar, siehe #69/handleCardClick unten). -->
+      <p class="memory-screen__footnote">
+        Tippe zwei Karten an. Passen sie zusammen, bleiben sie offen — und
+        das Tier wandert ins Album.
+      </p>
+      <div class="feedback-panel__confetti" aria-hidden="true"></div>
     </section>
   `;
 
   const progressEl = container.querySelector(".memory-screen__progress");
+  const pairsPillEl = container.querySelector(
+    ".memory-screen__pill--pairs",
+  );
+  const attemptsPillEl = container.querySelector(
+    ".memory-screen__pill--attempts",
+  );
+  const confettiContainerEl = container.querySelector(
+    ".feedback-panel__confetti",
+  );
   const statusEl = container.querySelector(".memory-board-status");
   const loadingEl = container.querySelector(".memory-board-status__loading");
   const errorEl = container.querySelector(".memory-board-status__error");
@@ -171,6 +207,11 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
 
   function updateProgress() {
     progressEl.textContent = `${solvedCount} von ${pairCount} Paaren gefunden`;
+    // Redesign (Issue #76, design.md "Tier-Memory"): sichtbare Pills statt
+    // reinem Fließtext — progressEl bleibt als aria-live-Ankündigung für
+    // Screenreader bestehen (siehe Template-Kommentar oben).
+    pairsPillEl.textContent = `Paare ${solvedCount} von ${pairCount}`;
+    attemptsPillEl.textContent = `Versuche ${attempts}`;
   }
 
   // design.md: der Infotext-Bereich verschwindet, sobald das Kind die
@@ -263,6 +304,15 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
     if (flippedCards.length < 2) return;
 
     attempts += 1;
+    // Redesign (Issue #76): Versuche-Pill muss nach JEDEM Versuch aktuell
+    // sein, nicht nur bei Treffer (echter Fund: der bisherige einzige
+    // updateProgress()-Aufruf unten lief nur im Treffer-Zweig, die Pill
+    // blieb bei einem Fehlversuch bis zum nächsten Treffer veraltet). Nur
+    // die Pill direkt aktualisieren, nicht die volle updateProgress()
+    // (die auch den aria-live-Text neu setzt) — sonst würde ein
+    // Fehlversuch den unveränderten "X von Y Paaren"-Text erneut per
+    // aria-live ankündigen.
+    attemptsPillEl.textContent = `Versuche ${attempts}`;
     const [first, second] = flippedCards;
     flippedCards = [];
 
@@ -298,6 +348,12 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
   function showMatchFeedback(animalId) {
     const animal = animalById.get(animalId);
     if (!animal) return;
+
+    // Redesign (Issue #68/#69/#76, design.md "Tier-Memory"/"Album"): jedes
+    // gefundene Paar sammelt das Tier ins Album und löst Konfetti aus
+    // (README: "Auslöser: jede richtige Antwort, jedes Memory-Paar").
+    addCollectedAnimal(animal.id);
+    triggerConfetti(confettiContainerEl);
 
     infoSentenceTextEl.textContent = buildInfoSentence(animal);
     infoSentenceEl.hidden = false;
