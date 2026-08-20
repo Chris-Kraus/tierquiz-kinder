@@ -243,6 +243,105 @@ button {
   }
 }
 
+/* Kopfzeile (Redesign, Issue #70, schließt Issue #66 ab; siehe design.md,
+   Abschnitt "Kindgerechtes Redesign" -> Screens -> Kopfzeile). Nutzt die
+   Redesign-Tokens (--ink/--paper/--sand/--sky/--k-*) direkt, nicht die
+   älteren --color-*-Tokens — analog zur Entscheidung in Issue #67, dass
+   neue/umgebaute Bereiche die neuen Tokens verwenden, bestehende Screens
+   aber erst schrittweise umgestellt werden. */
+.app-header {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--k-space-4) var(--k-space-5) var(--k-space-1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--k-space-3);
+  flex-wrap: wrap;
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--k-space-2);
+}
+
+.app-header__home-button {
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sand);
+  border-radius: var(--k-radius-sm);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.app-header__logo {
+  display: inline-block;
+  animation: k-wiggle 3s ease-in-out infinite;
+}
+
+.app-header__wordmark {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 30px;
+  color: var(--ink);
+}
+
+.app-header__mode-pill {
+  background: var(--card);
+  border: var(--k-border-sm) solid var(--ink);
+  border-radius: var(--k-radius-pill);
+  padding: 4px 16px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.app-header__status {
+  display: flex;
+  align-items: center;
+  gap: var(--k-space-3);
+}
+
+.app-header__progress {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.app-header__progress-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--k-radius-pill);
+  border: var(--k-border-sm) solid var(--ink);
+  background: var(--card);
+}
+
+.app-header__progress-dot--answered {
+  background: var(--sky);
+}
+
+.app-header__progress-dot--current {
+  background: var(--sand);
+}
+
+.app-header__score {
+  background: var(--sky);
+  border: var(--k-border-sm) solid var(--ink);
+  border-radius: var(--k-radius-pill);
+  padding: 4px 16px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--ink);
+}
+
 /* Start-Bildschirm (siehe design.md, "Nutzerfluss" Punkt 1). */
 
 .start-screen {

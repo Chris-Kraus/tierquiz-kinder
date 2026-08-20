@@ -19,41 +19,78 @@ import { renderMemoryScreen } from "./screens/memory.js";
 import { renderLetterSearchScreen } from "./screens/letterSearch.js";
 import { createQuizState } from "./quiz/state.js";
 import { GAME_MODE } from "./quiz/gameMode.js";
+import { renderHeader } from "./screens/header.js";
 
 // App-Einstiegspunkt: verdrahtet die Navigation zwischen den Bildschirmen.
-// Jeder Bildschirm rendert sich selbst vollständig in `#app` (siehe jeweilige
-// render*Screen-Funktion) und meldet über einen Callback, wann der nächste
-// Bildschirm dran ist – die Screens kennen einander dadurch nicht direkt.
+// Jeder Bildschirm rendert sich selbst vollständig in `#app-content` (siehe
+// jeweilige render*Screen-Funktion) und meldet über einen Callback, wann der
+// nächste Bildschirm dran ist – die Screens kennen einander dadurch nicht
+// direkt.
+//
+// Seit dem Redesign (Issue #70): `#app` ist nicht mehr der direkte Ziel-
+// Container der Screens, sondern hält zusätzlich eine persistente Kopfzeile
+// (`#app-header`, siehe screens/header.js) neben `#app-content`. Die
+// Kopfzeile kennt die einzelnen Screens nicht direkt — main.js bleibt die
+// einzige Stelle, die bei jedem Bildschirm-Wechsel sowohl den Screen als
+// auch die Kopfzeile neu rendert.
 
 const app = document.querySelector("#app");
+app.innerHTML = `
+  <div id="app-header" class="app-header"></div>
+  <div id="app-content"></div>
+`;
+const appHeader = document.querySelector("#app-header");
+const appContent = document.querySelector("#app-content");
 
 function showStartScreen() {
-  renderStartScreen(app, { onStart: showQuestionScreen });
+  renderHeader(appHeader, { onBackToStart: showStartScreen });
+  renderStartScreen(appContent, { onStart: showQuestionScreen });
 }
 
 function showQuestionScreen(quizState) {
+  renderHeader(appHeader, {
+    onBackToStart: showStartScreen,
+    mode: quizState.mode,
+    progress:
+      quizState.mode === GAME_MODE.MEMORY
+        ? undefined // Tier-Memory hat keine Fragen-Fortschritts-Anzeige (siehe memory.js, eigener Paare-Fortschritt)
+        : {
+            currentIndex: quizState.currentIndex,
+            roundLength: quizState.roundLength,
+            score: quizState.score,
+          },
+  });
+
   if (quizState.mode === GAME_MODE.REVERSE) {
-    renderReverseQuestionScreen(app, quizState, {
+    renderReverseQuestionScreen(appContent, quizState, {
       onFinish: showResultScreen,
     });
     return;
   }
   if (quizState.mode === GAME_MODE.SOUND) {
-    renderSoundQuestionScreen(app, quizState, { onFinish: showResultScreen });
+    renderSoundQuestionScreen(appContent, quizState, {
+      onFinish: showResultScreen,
+    });
     return;
   }
   if (quizState.mode === GAME_MODE.MEMORY) {
-    renderMemoryScreen(app, quizState, { onFinish: showResultScreen });
+    renderMemoryScreen(appContent, quizState, { onFinish: showResultScreen });
     return;
   }
   if (quizState.mode === GAME_MODE.LETTER_SEARCH) {
-    renderLetterSearchScreen(app, quizState, { onFinish: showResultScreen });
+    renderLetterSearchScreen(appContent, quizState, {
+      onFinish: showResultScreen,
+    });
     return;
   }
-  renderQuestionScreen(app, quizState, { onFinish: showResultScreen });
+  renderQuestionScreen(appContent, quizState, { onFinish: showResultScreen });
 }
 
 function showResultScreen(quizState) {
+  renderHeader(appHeader, {
+    onBackToStart: showStartScreen,
+    mode: quizState.mode,
+  });
   // "Nochmal spielen" und "Zurück zum Start" führen laut design.md bewusst
   // zu zwei getrennten Pfaden (QA-Feedback zu Issue #7, siehe Issue-Kommentar):
   // "Nochmal spielen" spart der Zielgruppe die erneute Stufenwahl und startet
@@ -62,7 +99,7 @@ function showResultScreen(quizState) {
   // weiterhin zum Start-Bildschirm mit freier Schwierigkeitswahl. Seit Issue
   // #13 (PM-Entscheidung 13.08.2026) gilt dasselbe für die Fragenanzahl: sie
   // wird bei "Nochmal spielen" beibehalten, analog zur Schwierigkeitsstufe.
-  renderResultScreen(app, quizState, {
+  renderResultScreen(appContent, quizState, {
     onPlayAgain: () => {
       // Immer ein komplett neuer quizState (createQuizState) statt den
       // abgeschlossenen quizState wiederzuverwenden bzw. zu mutieren – Score/
