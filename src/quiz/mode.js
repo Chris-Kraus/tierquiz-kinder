@@ -9,10 +9,15 @@
 // (generateNextReverseQuestion / generateNextSoundQuestion), siehe Issue #36,
 // Abstimmung mit `software-architect`.
 
+// Seit Issue #46: vierter Wert `LETTER_SEARCH` für den "Buchstabensuche"-
+// Modus (Wert konsistent zu GAME_MODE.LETTER_SEARCH in gameMode.js sowie zur
+// dortigen Fragegenerator-Benennung `generateNextLetterSearchQuestion`,
+// gleiches Namensschema wie bei REVERSE/SOUND oben).
 export const QUIZ_MODES = Object.freeze({
   QUIZ: "quiz",
   REVERSE: "reverse",
   SOUND: "sound",
+  LETTER_SEARCH: "letterSearch",
 });
 
 // Quizfragen war vor Issue #36 der einzige Modus im Projekt. Dient sowohl als
@@ -27,6 +32,7 @@ export const MODE_LABELS = Object.freeze({
   [QUIZ_MODES.QUIZ]: "Quizfragen",
   [QUIZ_MODES.REVERSE]: "Wer bin ich?",
   [QUIZ_MODES.SOUND]: "Tiergeräusche",
+  [QUIZ_MODES.LETTER_SEARCH]: "Buchstabensuche",
 });
 
 /**

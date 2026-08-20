@@ -13,6 +13,10 @@ import { renderSoundQuestionScreen } from "./screens/soundQuestion.js";
 // entscheidet anhand von quizState.mode auch hierfür, welcher Bildschirm
 // gerendert wird (gleiches Kopplungsmuster wie bei REVERSE/SOUND oben).
 import { renderMemoryScreen } from "./screens/memory.js";
+// Issue #46: neuer Frage-Bildschirm für den "Buchstabensuche"-Modus --
+// gleiches Weiche-Prinzip wie bei REVERSE/SOUND oben, main.js bleibt die
+// einzige Stelle, die alle Frage-Bildschirme kennt.
+import { renderLetterSearchScreen } from "./screens/letterSearch.js";
 import { createQuizState } from "./quiz/state.js";
 import { GAME_MODE } from "./quiz/gameMode.js";
 
@@ -40,6 +44,10 @@ function showQuestionScreen(quizState) {
   }
   if (quizState.mode === GAME_MODE.MEMORY) {
     renderMemoryScreen(app, quizState, { onFinish: showResultScreen });
+    return;
+  }
+  if (quizState.mode === GAME_MODE.LETTER_SEARCH) {
+    renderLetterSearchScreen(app, quizState, { onFinish: showResultScreen });
     return;
   }
   renderQuestionScreen(app, quizState, { onFinish: showResultScreen });

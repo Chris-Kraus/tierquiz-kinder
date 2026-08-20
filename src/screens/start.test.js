@@ -35,6 +35,12 @@ vi.mock("../quiz/memory.js", () => ({
   buildMemoryDeck: (...args) => buildMemoryDeck(...args),
 }));
 
+const generateNextLetterSearchQuestion = vi.fn();
+vi.mock("../quiz/letterSearchQuestionGenerator.js", () => ({
+  generateNextLetterSearchQuestion: (...args) =>
+    generateNextLetterSearchQuestion(...args),
+}));
+
 const { renderStartScreen } = await import("./start.js");
 
 function render() {
@@ -50,6 +56,7 @@ beforeEach(() => {
   generateNextReverseQuestion.mockReset();
   generateNextSoundQuestion.mockReset();
   buildMemoryDeck.mockReset();
+  generateNextLetterSearchQuestion.mockReset();
 });
 
 describe("Modus-Auswahl (Issue #26)", () => {
@@ -59,25 +66,19 @@ describe("Modus-Auswahl (Issue #26)", () => {
     const quizButton = container.querySelector('[data-mode="quiz"]');
     const reverseButton = container.querySelector('[data-mode="reverse"]');
 
-    expect(quizButton.classList.contains("mode-button--selected")).toBe(
-      true,
-    );
+    expect(quizButton.classList.contains("mode-button--selected")).toBe(true);
     expect(quizButton.getAttribute("aria-pressed")).toBe("true");
     expect(reverseButton.classList.contains("mode-button--selected")).toBe(
       false,
     );
     expect(reverseButton.getAttribute("aria-pressed")).toBe("false");
 
-    const onlineIcon = reverseButton.querySelector(
-      ".mode-button__online-icon",
-    );
+    const onlineIcon = reverseButton.querySelector(".mode-button__online-icon");
     expect(onlineIcon).not.toBeNull();
     expect(onlineIcon.getAttribute("aria-label")).toMatch(/Internet/);
     // Der bestehende Quizfragen-Modus bekommt laut Akzeptanzkriterium kein
     // Online-Icon.
-    expect(
-      quizButton.querySelector(".mode-button__online-icon"),
-    ).toBeNull();
+    expect(quizButton.querySelector(".mode-button__online-icon")).toBeNull();
   });
 
   it("bleibt bei 'Quizfragen', wenn der Testabruf fehlschlägt, mit freundlichem Hinweis statt Fehlertext", async () => {
@@ -96,9 +97,7 @@ describe("Modus-Auswahl (Issue #26)", () => {
     });
 
     const quizButton = container.querySelector('[data-mode="quiz"]');
-    expect(quizButton.classList.contains("mode-button--selected")).toBe(
-      true,
-    );
+    expect(quizButton.classList.contains("mode-button--selected")).toBe(true);
     expect(reverseButton.classList.contains("mode-button--selected")).toBe(
       false,
     );
@@ -127,9 +126,7 @@ describe("Modus-Auswahl (Issue #26)", () => {
     );
     expect(reverseButton.getAttribute("aria-pressed")).toBe("true");
     const quizButton = container.querySelector('[data-mode="quiz"]');
-    expect(quizButton.classList.contains("mode-button--selected")).toBe(
-      false,
-    );
+    expect(quizButton.classList.contains("mode-button--selected")).toBe(false);
     expect(container.querySelector(".mode-picker__hint").hidden).toBe(true);
   });
 
@@ -137,7 +134,8 @@ describe("Modus-Auswahl (Issue #26)", () => {
     generateNextReverseQuestion.mockResolvedValue({ text: "x" });
     const { container } = render();
 
-    container.querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.HARD}"]`)
+    container
+      .querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.HARD}"]`)
       .click();
     container.querySelector('[data-mode="reverse"]').click();
 
@@ -185,9 +183,7 @@ describe("Modus-Auswahl: dritte Kachel 'Tiergeräusche' (Issue #31)", () => {
     const onlineIcon = soundButton.querySelector(".mode-button__online-icon");
     expect(onlineIcon).not.toBeNull();
     expect(onlineIcon.getAttribute("aria-label")).toMatch(/Internet/);
-    expect(soundButton.classList.contains("mode-button--selected")).toBe(
-      false,
-    );
+    expect(soundButton.classList.contains("mode-button--selected")).toBe(false);
     expect(soundButton.getAttribute("aria-pressed")).toBe("false");
 
     // Die beiden bestehenden Kacheln bleiben unverändert (Akzeptanzkriterium
@@ -215,9 +211,7 @@ describe("Modus-Auswahl: dritte Kachel 'Tiergeräusche' (Issue #31)", () => {
 
     const quizButton = container.querySelector('[data-mode="quiz"]');
     expect(quizButton.classList.contains("mode-button--selected")).toBe(true);
-    expect(soundButton.classList.contains("mode-button--selected")).toBe(
-      false,
-    );
+    expect(soundButton.classList.contains("mode-button--selected")).toBe(false);
     expect(soundButton.disabled).toBe(false);
 
     const hintEl = container.querySelector(".mode-picker__hint");
@@ -237,14 +231,10 @@ describe("Modus-Auswahl: dritte Kachel 'Tiergeräusche' (Issue #31)", () => {
       expect(soundButton.getAttribute("aria-busy")).toBe("false");
     });
 
-    expect(soundButton.classList.contains("mode-button--selected")).toBe(
-      true,
-    );
+    expect(soundButton.classList.contains("mode-button--selected")).toBe(true);
     expect(soundButton.getAttribute("aria-pressed")).toBe("true");
     const quizButton = container.querySelector('[data-mode="quiz"]');
-    expect(quizButton.classList.contains("mode-button--selected")).toBe(
-      false,
-    );
+    expect(quizButton.classList.contains("mode-button--selected")).toBe(false);
     expect(container.querySelector(".mode-picker__hint").hidden).toBe(true);
   });
 
@@ -305,16 +295,14 @@ describe("Modus-Auswahl: dritte Kachel 'Tiergeräusche' (Issue #31)", () => {
       expect(soundButton.getAttribute("aria-busy")).toBe("false");
     });
 
-    expect(soundButton.classList.contains("mode-button--selected")).toBe(
-      true,
-    );
+    expect(soundButton.classList.contains("mode-button--selected")).toBe(true);
     expect(reverseButton.classList.contains("mode-button--selected")).toBe(
       false,
     );
   });
 });
 
-describe("Modus-Auswahl: fünfte Kachel 'Tier-Memory' (Issue #45)", () => {
+describe("Modus-Auswahl: vierte Kachel 'Tier-Memory' (Issue #45)", () => {
   it("zeigt 'Tier-Memory' mit eigenem Icon und Online-Hinweis, ohne die bestehenden drei Kacheln zu verändern", () => {
     const { container } = render();
 
@@ -427,6 +415,167 @@ describe("Modus-Auswahl: fünfte Kachel 'Tier-Memory' (Issue #45)", () => {
       expect(buildMemoryDeck).toHaveBeenCalled();
     });
     expect(buildMemoryDeck.mock.calls[0][1]).toBe(DIFFICULTY_LEVELS.HARD);
+  });
+});
+
+describe("Modus-Auswahl: fünfte Kachel 'Buchstabensuche' (Issue #46)", () => {
+  it("zeigt 'Buchstabensuche' mit Buchstaben- und Online-Icon, ohne die bestehenden Kacheln zu verändern", () => {
+    const { container } = render();
+
+    const quizButton = container.querySelector('[data-mode="quiz"]');
+    const reverseButton = container.querySelector('[data-mode="reverse"]');
+    const soundButton = container.querySelector('[data-mode="sound"]');
+    const letterSearchButton = container.querySelector(
+      '[data-mode="letterSearch"]',
+    );
+
+    expect(letterSearchButton).not.toBeNull();
+    expect(
+      letterSearchButton.querySelector(".mode-button__label").textContent,
+    ).toBe("Buchstabensuche");
+    const onlineIcon = letterSearchButton.querySelector(
+      ".mode-button__online-icon",
+    );
+    expect(onlineIcon).not.toBeNull();
+    expect(onlineIcon.getAttribute("aria-label")).toMatch(/Internet/);
+    expect(letterSearchButton.classList.contains("mode-button--selected")).toBe(
+      false,
+    );
+    expect(letterSearchButton.getAttribute("aria-pressed")).toBe("false");
+
+    // Die bestehenden Kacheln bleiben unverändert.
+    expect(quizButton.classList.contains("mode-button--selected")).toBe(true);
+    expect(reverseButton.querySelector(".mode-button__label").textContent).toBe(
+      "Wer bin ich?",
+    );
+    expect(soundButton.querySelector(".mode-button__label").textContent).toBe(
+      "Tiergeräusche",
+    );
+  });
+
+  it("bleibt bei 'Quizfragen', wenn der Testabruf für 'Buchstabensuche' fehlschlägt, mit freundlichem Hinweis statt Fehlertext", async () => {
+    generateNextLetterSearchQuestion.mockRejectedValue(
+      new Error("Netzwerkfehler"),
+    );
+    const { container } = render();
+
+    const letterSearchButton = container.querySelector(
+      '[data-mode="letterSearch"]',
+    );
+    letterSearchButton.click();
+
+    expect(letterSearchButton.getAttribute("aria-busy")).toBe("true");
+    expect(letterSearchButton.disabled).toBe(true);
+
+    await vi.waitFor(() => {
+      expect(letterSearchButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    const quizButton = container.querySelector('[data-mode="quiz"]');
+    expect(quizButton.classList.contains("mode-button--selected")).toBe(true);
+    expect(letterSearchButton.classList.contains("mode-button--selected")).toBe(
+      false,
+    );
+    expect(letterSearchButton.disabled).toBe(false);
+
+    const hintEl = container.querySelector(".mode-picker__hint");
+    expect(hintEl.hidden).toBe(false);
+    expect(hintEl.textContent).toBe("Dafür brauchst du gerade Internet 🌐");
+    expect(container.textContent).not.toMatch(/Netzwerkfehler|Error/);
+  });
+
+  it("wählt 'Buchstabensuche' aus, wenn der Testabruf gelingt", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue({
+      animalName: "Löwe",
+    });
+    const { container } = render();
+
+    const letterSearchButton = container.querySelector(
+      '[data-mode="letterSearch"]',
+    );
+    letterSearchButton.click();
+
+    await vi.waitFor(() => {
+      expect(letterSearchButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    expect(letterSearchButton.classList.contains("mode-button--selected")).toBe(
+      true,
+    );
+    expect(letterSearchButton.getAttribute("aria-pressed")).toBe("true");
+    const quizButton = container.querySelector('[data-mode="quiz"]');
+    expect(quizButton.classList.contains("mode-button--selected")).toBe(false);
+    expect(container.querySelector(".mode-picker__hint").hidden).toBe(true);
+  });
+
+  it("ruft den Testabruf für 'Buchstabensuche' OHNE Schwierigkeitsstufen-Parameter auf (architecture.md: kein difficulty-Parameter nötig)", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue({
+      animalName: "x",
+    });
+    const { container } = render();
+
+    container
+      .querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.HARD}"]`)
+      .click();
+    container.querySelector('[data-mode="letterSearch"]').click();
+
+    await vi.waitFor(() => {
+      expect(generateNextLetterSearchQuestion).toHaveBeenCalled();
+    });
+    expect(generateNextLetterSearchQuestion.mock.calls[0]).toHaveLength(2);
+  });
+
+  it("erzeugt beim Start einen Quiz-Zustand mit mode 'letterSearch', wenn 'Buchstabensuche' erfolgreich ausgewählt wurde", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue({
+      animalName: "Löwe",
+    });
+    const { container, onStart } = render();
+
+    container
+      .querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.EASY}"]`)
+      .click();
+    const letterSearchButton = container.querySelector(
+      '[data-mode="letterSearch"]',
+    );
+    letterSearchButton.click();
+    await vi.waitFor(() => {
+      expect(letterSearchButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    container.querySelector(".start-button").click();
+
+    expect(onStart).toHaveBeenCalledTimes(1);
+    const quizState = onStart.mock.calls[0][0];
+    expect(quizState.mode).toBe("letterSearch");
+    expect(quizState.pendingLetterSearchQuestion).toEqual({
+      animalName: "Löwe",
+    });
+    expect(generateNextLetterSearchQuestion).toHaveBeenCalledTimes(1);
+  });
+
+  it("verwirft ein zwischenzeitlich vorhandenes Buchstabensuche-Testabruf-Ergebnis, wenn zurück zu 'Quizfragen' gewechselt wird", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue({
+      animalName: "Löwe",
+    });
+    const { container, onStart } = render();
+
+    container
+      .querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.EASY}"]`)
+      .click();
+    const letterSearchButton = container.querySelector(
+      '[data-mode="letterSearch"]',
+    );
+    letterSearchButton.click();
+    await vi.waitFor(() => {
+      expect(letterSearchButton.getAttribute("aria-busy")).toBe("false");
+    });
+
+    container.querySelector('[data-mode="quiz"]').click();
+    container.querySelector(".start-button").click();
+
+    const quizState = onStart.mock.calls[0][0];
+    expect(quizState.mode).toBe("quiz");
+    expect(quizState.pendingLetterSearchQuestion).toBeUndefined();
   });
 });
 

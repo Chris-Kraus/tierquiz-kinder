@@ -770,6 +770,130 @@ button {
   margin-inline: auto;
 }
 
+/* Buchstabensuche-Modus (Issue #46, design.md "Eingabemechanik"): Reihe von
+   Buchstaben-Kästchen unterhalb des Bildrahmens, statt der Antwortkacheln der
+   übrigen Modi. flex-wrap erlaubt den in design.md geforderten Zeilenumbruch
+   bei langen Namen ("bei langen Namen zeilenumbrechend").
+   QA-Bugfix (Issue #46, Zyklus 1): .letter-puzzle__word setzte ursprünglich
+   `flex-wrap: nowrap`, um ein Wort optisch zusammenzuhalten -- bei einem
+   langen EINTEILIGEN Namen ohne jedes Leerzeichen/Bindestrich (getestet:
+   "Fichtenkreuzschnabel", 20 Buchstaben) gibt es dadurch aber gar keine
+   Umbruch-Stelle mehr, die Kästchen-Reihe lief seitlich über den Viewport
+   hinaus. Da hier -- anders als bei normalem Fließtext -- jeder Buchstabe
+   ohnehin sein eigenes, optisch abgegrenztes Kästchen hat, ist ein Umbruch
+   MITTEN in einem Namensteil visuell unproblematisch (kein zusammenhängendes
+   Wortbild wie bei echtem Text, das dadurch zerrissen würde) -- daher jetzt
+   `flex-wrap: wrap` auch hier, das behebt den Overflow bei jeder Namenslänge
+   zuverlässig, unabhängig von Leerzeichen-Position. */
+.letter-puzzle {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  row-gap: 0.6rem;
+  column-gap: 0.35rem;
+}
+
+.letter-puzzle__word {
+  display: inline-flex;
+  flex-wrap: wrap;
+  row-gap: 0.6rem;
+  gap: 0.35rem;
+}
+
+/* Sichtbares, nicht editierbares Trennzeichen zwischen zwei Namensteilen
+   (design.md/Akzeptanzkriterium: "Leerzeichen/Bindestriche sind nie eine
+   Lücke") -- kein eigenes Kästchen, damit optisch klar ist, dass hier keine
+   Eingabe erwartet wird. */
+.letter-puzzle__separator {
+  width: 0.9rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-secondary-dark);
+}
+
+/* Gemeinsame Basis für vorgegebene (given) UND editierbare (blank) Kästchen
+   -- beide gleich groß, damit das Kind die komplette "Wortform" auf einen
+   Blick sieht (design.md: "ähnlich einem Kreuzworträtsel-Wort"). Größe
+   deutlich über dem 44×44-px-Touch-Zielgrößen-Minimum (design.md,
+   "Layout-Empfehlungen").
+   QA-Bugfix (Issue #46, Zyklus 1): vorher stand hier nur `min-width`/
+   `min-height` -- für die vorgegebenen Buchstaben (<span>, richtet sich ohne
+   width/height am Inhalt aus) reichte das zufällig aus, für die Lücken
+   (<input type="text">) griff mangels explizitem `width` aber die
+   Browser-UA-Standardbreite eines Text-Inputs (~289px statt der
+   beabsichtigten ~44px) -- sichtbar als riesige "Pillen" neben den kleinen
+   vorgegebenen Kästchen. Jetzt fixe `width`/`height` (statt nur min-*)
+   erzwingen für BEIDE Kästchen-Typen exakt dieselbe Größe, unabhängig vom
+   jeweiligen Element-Default. `flex-shrink: 0` verhindert zusätzlich, dass
+   die Kästchen in einem engen Flex-Container (siehe .letter-puzzle/
+   .letter-puzzle__word oben) ungleichmäßig zusammengestaucht werden, bevor
+   der Zeilenumbruch greift. */
+.letter-box {
+  width: 2.75rem;
+  height: 3.25rem;
+  flex-shrink: 0;
+  padding: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Vorgegebene Buchstaben: reiner Text (<span>, kein <input>) -- für
+   Screenreader-Nutzer:innen dadurch bereits von selbst als "kein
+   editierbares Feld" erkennbar (design.md, "Barrierefreiheit": "kein
+   editierbares Feld, reiner Text"), optisch dezenter Hintergrund statt Rahmen
+   grenzt sie zusätzlich sichtbar von den Lücken unten ab. */
+.letter-box--given {
+  background: var(--color-disabled-bg);
+  color: var(--color-text);
+  border: 3px solid transparent;
+}
+
+/* Lücken: echte <input maxlength="1">-Felder (design.md, "Eingabemechanik" --
+   bewusste Abweichung vom sonstigen Tap-only-Muster des Projekts, siehe
+   dortige Begründung). */
+.letter-box--blank {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 3px solid var(--color-secondary);
+  caret-color: var(--color-secondary-dark);
+}
+
+/* Nach korrekter Eingabe gesperrtes Feld (design.md: "Feld wird
+   readonly/gesperrt") -- dieselbe Grün/Weiß-Kombination wie
+   .answer-tile--correct, damit "richtig" projektweit einheitlich aussieht.
+   Häkchen-Icon wird hier bewusst NICHT zusätzlich eingeblendet: der Buchstabe
+   selbst füllt das Kästchen bereits vollständig aus (anders als bei den
+   Antwortkacheln, die neben dem Text noch Platz für ein Icon haben). */
+.letter-box--filled {
+  background: var(--color-primary);
+  border-color: var(--color-primary-dark);
+  color: #fff;
+}
+
+/* Kurze, freundliche Fehlermeldung pro Buchstabe (design.md, "Fehlerfall pro
+   Buchstabe") -- bewusst dezent statt Warnbanner, gleicher Ton wie
+   .mode-picker__hint oben, kein Rot/Buzzer-Farbcode. */
+.letter-puzzle__error {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-secondary-dark);
+}
+
+.letter-puzzle__error[hidden] {
+  display: none;
+}
+
 /* Große Touch-Zielflächen (siehe design.md, "Layout-Empfehlungen"),
    echtes <button>-Element, per Tastatur bedienbar (design.md,
    "Barrierefreiheit"). Kein Hover-abhängiges UI: Hover ist rein additiv. */
