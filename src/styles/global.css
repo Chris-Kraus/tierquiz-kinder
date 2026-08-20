@@ -1905,87 +1905,126 @@ button {
    ausschließlich bereits gegen WCAG-AA geprüfte Kombinationen von oben
    wiederverwendet. */
 
+/* Ergebnis-Bildschirm (Redesign, Issue #77; design.md "Ergebnis"): Grid
+   1fr 460px — links Score-Panel (--sky), rechts Album-Karte. */
 .result-screen {
   width: 100%;
-  max-width: 32rem;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 460px;
+  gap: var(--k-space-5);
+  text-align: left;
+  position: relative;
+}
+
+@media (max-width: 860px) {
+  .result-screen {
+    grid-template-columns: 1fr;
+  }
+}
+
+.result-screen__panel {
+  background: var(--sky);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  padding: var(--k-space-6);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--space-md);
+  gap: var(--k-space-3);
 }
 
-.result-screen__mascot {
+.result-screen__label {
   margin: 0;
-  font-size: 4rem;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+
+.result-screen__score-number {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(3rem, 10vw, 120px);
   line-height: 1;
-}
-
-.result-screen__title {
-  margin: 0;
-  font-size: clamp(1.8rem, 5vw, 2.5rem);
-  color: var(--color-primary-dark);
-}
-
-.result-screen__score {
-  margin: 0;
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--color-text);
+  color: var(--ink);
 }
 
 .result-screen__encouragement {
   margin: 0;
-  font-size: 1.15rem;
-  color: var(--color-secondary-dark);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--ink);
+}
+
+/* Bestehender voller Satz (inkl. "davon N aufgelöst") bleibt als kleinerer,
+   sekundärer Text erhalten — die neue Großzahl oben ist rein additiv. */
+.result-screen__score {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--ink);
+  opacity: 0.75;
 }
 
 .result-screen__actions {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
-  margin-top: var(--space-sm);
+  gap: var(--k-space-2);
+  margin-top: var(--k-space-2);
 }
 
-/* Primäre Aktion "Nochmal spielen": selbe Akzent-Kombination wie
-   .start-button/.next-button, groß und dominant (design.md, "Ergebnis-/
-   Abschluss-Bildschirm": "Nochmal spielen" primär/groß). */
+/* Primäre Aktion "Nochmal spielen" (design.md: min-height 96, 28px, --ink
+   Fläche bei "richtig", sonst weißer Kontrast). */
 .result-screen__play-again {
-  min-width: 16rem;
-  min-height: 4.5rem;
-  padding: var(--space-md) var(--space-lg);
-  border: none;
-  border-radius: var(--radius-lg);
-  background: var(--color-accent);
-  color: var(--color-accent-text);
-  font-size: 1.5rem;
-  font-weight: 700;
-  cursor: pointer;
+  min-height: 96px;
+  padding: var(--k-space-3) var(--k-space-5);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 800;
+  border-radius: var(--k-radius-btn);
 }
 
-.result-screen__play-again:active {
-  transform: scale(0.97);
-}
-
-/* Sekundäre Aktion "Zurück zum Start": zurückhaltender als der Primär-Button,
-   selbe geprüfte Sekundärfarbe wie .difficulty-button. */
+/* Sekundäre Aktion "Zurück zum Start": weiß, zurückhaltender. */
 .result-screen__back-to-start {
-  min-width: 14rem;
-  min-height: 3.5rem;
-  padding: var(--space-sm) var(--space-lg);
-  border: 3px solid var(--color-secondary);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  color: var(--color-secondary-dark);
-  font-size: 1.1rem;
-  font-weight: 700;
-  cursor: pointer;
+  min-height: 96px;
+  padding: var(--k-space-3) var(--k-space-5);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 800;
+  border-radius: var(--k-radius-btn);
 }
 
-.result-screen__back-to-start:active {
-  transform: scale(0.97);
+.result-screen__side {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Album-Karte auf dem Ergebnis-Bildschirm: gleiche Komponente wie auf dem
+   Start-Bildschirm (Issue #71), aber 3 statt 4 Spalten mit größeren
+   118px-Feldern (design.md: "Rechts Album-Karte wie Start, aber Grid 3
+   Spalten, Felder 118px, Fußnote 16px"). */
+.start-album-preview--result .start-album-preview__grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.start-album-preview--result .start-album-preview__slot {
+  min-height: 118px;
+}
+
+.start-album-preview__footnote {
+  margin: var(--k-space-3) 0 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--muted);
 }
 
 /* Verlaufsliste der letzten Ergebnisse (Issue #14): dezenter, standardmäßig
