@@ -860,6 +860,18 @@ Bewusst **nicht** über `getFieldsForDifficulty()`/`EASY_FIELDS`/`HARD_FIELDS` m
 
 Beide Stories fallen unter die bereits bestehende Leitplanke "Branch-Strategie für neue Spielmodi" (siehe oben): jeweils ein eigener Feature-Branch (`feature/tier-memory`, `feature/buchstabensuche`), Merge erst wenn der jeweilige Modus Ende-zu-Ende spielbar ist. Da beide Modi unterschiedliche neue Dateien betreffen (`src/screens/memory.js`+`src/quiz/memory.js` vs. `src/screens/letterSearch.js`+`src/quiz/letterPuzzle.js`) und beide dieselben, aber additiv erweiterbaren gemeinsamen Dateien anfassen (`gameMode.js`, `difficulty.js`, `start.js`/`main.js` für Modus-Auswahl/-Weiche), ist ein Merge-Konflikt bei paralleler Bearbeitung möglich, aber gut auflösbar (rein additive Änderungen an denselben Stellen, kein widersprüchlicher Umbau) — kein Grund, die beiden Branches voneinander abhängig zu machen oder eine feste Reihenfolge vorzuschreiben.
 
+## Buchstabensuche: "Lösung anzeigen"-Option — technische Umsetzung (Issue #52, 20.08.2026, `software-architect`, umgesetzt/gemerged PR #65)
+
+**Anlass:** `business-analyst`/`ux-design` haben mit dem Nutzer die offene Rückfrage zur Zählung im Rundenergebnis geklärt (siehe `requirements.md`/`design.md`, Ergänzung 20.08.2026): Score/Total bleiben unverändert "N von N richtig", zusätzlich wird ausgewiesen, wie viele Fragen per "Lösung zeigen"-Button statt eigenständig gelöst wurden. Diese technische Umsetzung wurde vorab mit `software-architect` abgestimmt, um sicherzustellen, dass keine Breaking Change der bestehenden `results`-Datenstruktur entsteht.
+
+**1. `recordAnswer()` (`src/quiz/state.js`):** Zusätzlicher optionaler Parameter `resolved` (boolean, Default `false`), der pro Antwort unverändert im bestehenden `answers[]`-Array vermerkt wird (analog zu `correct`) — **keine separate Zählvariable** in `state.js`. Die Anzahl aufgelöster Fragen pro Runde ist damit jederzeit aus `state.answers.filter(a => a.resolved).length` ableitbar (Single Source of Truth), statt einen zweiten, potenziell divergierenden Zähler mitzuführen.
+
+**2. `saveResultToHistory()` (`src/quiz/history.js`):** Zusätzliches **optionales** Feld `resolvedCount` im Verlaufseintrag — exakt dasselbe rückwärtskompatible Muster wie das optionale `mode`-Feld aus Issue #36: kein Backfill für bestehende Alt-Einträge (die einfach kein `resolvedCount` haben), kein Pflichtfeld, keine Schema-Migration. Anzeige-Fallback (`resolvedCount ?? 0`, Zusatztext nur bei `> 0`) lebt ausschließlich in `src/screens/result.js`, nicht in `history.js` selbst — konsistent mit dem bestehenden Trennungsprinzip (Datenhaltung vs. Darstellung).
+
+**3. Ergebnis-Bildschirm (`src/screens/result.js`):** `resolvedCount` wird aus `state.answers` abgeleitet (siehe Punkt 1) und sowohl im Hauptsatz ("... davon X aufgelöst!") als auch in der Verlaufsliste (`formatScoreText()`) genutzt — Zusatz erscheint ausschließlich bei mindestens 1 aufgelöster Frage, keine Layout-Änderung bei 0.
+
+**Bestätigt: keine Breaking Change.** `results`-Einträge ohne `resolvedCount` (alle vor diesem Feature gespeicherten sowie Einträge aus Modi, die den Button nicht nutzen) bleiben unverändert lesbar und darstellbar — `resolvedCount` ist rein additiv, wie bereits bei `mode` (#36) etabliert.
+
 ## Bugfix-Historie
 
 ### Englischer Fallback bei Habitat-/Kontinent-Labels ("coastal margin" beim Seeotter, 15.08.2026, `software-architect`)
