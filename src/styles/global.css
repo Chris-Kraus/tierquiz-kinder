@@ -1243,17 +1243,18 @@ button {
    .letter-puzzle__word oben) ungleichmäßig zusammengestaucht werden, bevor
    der Zeilenumbruch greift. */
 .letter-box {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 78px;
+  height: 96px;
   flex-shrink: 0;
   padding: 0.2rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-lg);
-  font-size: 1.4rem;
-  font-weight: 700;
-  font-family: inherit;
+  border-radius: var(--k-radius-sm);
+  border: var(--k-border-lg) solid var(--ink);
+  font-family: var(--font-heading);
+  font-size: 42px;
+  font-weight: 800;
   text-align: center;
   box-sizing: border-box;
 }
@@ -1261,69 +1262,64 @@ button {
 /* Vorgegebene Buchstaben: reiner Text (<span>, kein <input>) -- für
    Screenreader-Nutzer:innen dadurch bereits von selbst als "kein
    editierbares Feld" erkennbar (design.md, "Barrierefreiheit": "kein
-   editierbares Feld, reiner Text"), optisch dezenter Hintergrund statt Rahmen
-   grenzt sie zusätzlich sichtbar von den Lücken unten ab. */
+   editierbares Feld, reiner Text"). design.md: "--sand-soft, readOnly, kein
+   Schatten". */
 .letter-box--given {
-  background: var(--color-disabled-bg);
-  color: var(--color-text);
-  border: 3px solid transparent;
+  background: var(--sand-soft);
+  color: var(--ink);
+  box-shadow: none;
 }
 
 /* Lücken: echte <input maxlength="1">-Felder (design.md, "Eingabemechanik" --
    bewusste Abweichung vom sonstigen Tap-only-Muster des Projekts, siehe
-   dortige Begründung). */
+   dortige Begründung). design.md: "offen: weiß + box-shadow:0 6px 0 ink". */
 .letter-box--blank {
-  background: var(--color-surface);
-  color: var(--color-text);
-  border: 3px solid var(--color-secondary);
-  caret-color: var(--color-secondary-dark);
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 0 6px 0 var(--ink);
+  caret-color: var(--ink);
 }
 
-/* Nach korrekter Eingabe gesperrtes Feld (design.md: "Feld wird
-   readonly/gesperrt") -- dieselbe Grün/Weiß-Kombination wie
-   .answer-tile--correct, damit "richtig" projektweit einheitlich aussieht.
-   Häkchen-Icon wird hier bewusst NICHT zusätzlich eingeblendet: der Buchstabe
-   selbst füllt das Kästchen bereits vollständig aus (anders als bei den
-   Antwortkacheln, die neben dem Text noch Platz für ein Icon haben). */
+/* Nach korrekter Eingabe gesperrtes Feld (design.md: "korrekt getippt: --sky,
+   readOnly"). Häkchen-Icon wird hier bewusst NICHT zusätzlich eingeblendet:
+   der Buchstabe selbst füllt das Kästchen bereits vollständig aus (anders
+   als bei den Antwortkacheln, die neben dem Text noch Platz für ein Icon
+   haben). */
 .letter-box--filled {
-  background: var(--color-primary);
-  border-color: var(--color-primary-dark);
-  color: #fff;
+  background: var(--sky);
+  box-shadow: none;
+  color: var(--ink);
 }
 
 /* Kurze, freundliche Fehlermeldung pro Buchstabe (design.md, "Fehlerfall pro
-   Buchstabe") -- bewusst dezent statt Warnbanner, gleicher Ton wie
-   .mode-picker__hint oben, kein Rot/Buzzer-Farbcode. */
+   Buchstabe") -- bewusst dezent statt Warnbanner, kein Rot/Buzzer-Farbcode. */
 .letter-puzzle__error {
   margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-secondary-dark);
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
 }
 
 .letter-puzzle__error[hidden] {
-  display: none;
+  visibility: hidden;
 }
 
 /* "Lösung zeigen"-Button (Issue #52, design.md "Buchstabensuche: Lösung
-   anzeigen"): bewusst dieselbe zurückhaltende Pill-Optik/Farbgebung wie
-   .reverse-image-frame__retry-button (Sekundär-Stil statt der kräftigen
-   Primärfarbe von .next-button & Co.), damit der Button nicht zum
-   vorschnellen Überspringen verlockt, aber jederzeit verfügbar bleibt. */
+   anzeigen"): bewusst zurückhaltend (weiß, --muted, design.md: "min-height
+   72, 20px"), damit der Button nicht zum vorschnellen Überspringen
+   verlockt, aber jederzeit verfügbar bleibt. Kein k-btn-Schatten/-Druck-
+   Mechanik hier absichtlich, um sich optisch von den kräftigen Primär-
+   Buttons abzuheben (nur Rahmen/Radius aus .k-btn werden mitgenutzt). */
 .letter-puzzle__solve-button {
-  min-height: 2.5rem;
+  min-height: 72px;
   padding: 0.4rem 1rem;
-  border: 2px solid var(--color-secondary);
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-secondary-dark);
-  font-size: 0.9rem;
+  border-radius: var(--k-radius-btn);
+  background: var(--card);
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 20px;
   font-weight: 700;
-  cursor: pointer;
-}
-
-.letter-puzzle__solve-button:active {
-  transform: scale(0.97);
 }
 
 /* Große Touch-Zielflächen (siehe design.md, "Layout-Empfehlungen"),
@@ -1554,7 +1550,8 @@ button {
    image in diesem Modus NICHT existiert (Redundanz-Entscheidung aus Issue
    #35 — das Bild ist dort bereits durchgehend sichtbar). */
 .question-screen__feedback-image,
-.reverse-question__sticker-frame {
+.reverse-question__sticker-frame,
+.letter-search__sticker-frame {
   width: 100%;
   background: var(--card);
   border: var(--k-border-lg) solid var(--ink);
@@ -1568,7 +1565,8 @@ button {
 }
 
 .question-screen__feedback-image-img,
-.reverse-question__sticker-img {
+.reverse-question__sticker-img,
+.letter-search__sticker-img {
   width: 100%;
   height: 130px;
   object-fit: cover;
