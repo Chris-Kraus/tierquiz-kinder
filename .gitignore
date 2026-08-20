@@ -4,5 +4,8 @@ dist/
 *.log
 scripts/fetch-animals/.cache/
 
-# KI-Tooling (Claude Code), bewusst getrennt vom Projekt-Code gehalten
-.claude/
+# KI-Tooling (Claude Code): projektspezifische Skills/Agents werden versioniert
+# (siehe Chris-Kraus/claude-setup, skill-agent-placement-convention.md), nur
+# lokale/persönliche Dateien (z.B. settings.local.json) bleiben ausgeschlossen.
+.claude/*
+!.claude/skills/
