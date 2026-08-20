@@ -112,6 +112,106 @@ describe("Regulärer Quizfragen-Ergebnis-Zweig bleibt unverändert (Regressionss
       total: 10,
       difficulty: "6-10",
       mode: GAME_MODE.QUIZ,
+      resolvedCount: 0,
     });
+  });
+});
+
+describe("Buchstabensuche: 'davon X aufgelöst' im Rundenergebnis (Issue #52)", () => {
+  it("zeigt bei mindestens 1 aufgelöster Frage den Zusatz 'davon X aufgelöst' im Hauptsatz und übergibt resolvedCount an saveResultToHistory", () => {
+    const container = render({
+      mode: GAME_MODE.LETTER_SEARCH,
+      difficulty: "6-10",
+      score: 10,
+      questions: new Array(10).fill({}),
+      answers: [
+        { resolved: false },
+        { resolved: true },
+        { resolved: false },
+        { resolved: true },
+        { resolved: false },
+        { resolved: false },
+        { resolved: false },
+        { resolved: false },
+        { resolved: false },
+        { resolved: false },
+      ],
+    });
+
+    expect(
+      container.querySelector(".result-screen__score").textContent,
+    ).toMatch(
+      /Du hast 10 von 10 Fragen richtig beantwortet, davon 2 aufgelöst!/,
+    );
+    expect(saveResultToHistory).toHaveBeenCalledWith({
+      score: 10,
+      total: 10,
+      difficulty: "6-10",
+      mode: GAME_MODE.LETTER_SEARCH,
+      resolvedCount: 2,
+    });
+  });
+
+  it("zeigt bei 0 aufgelösten Fragen unverändert nur den bisherigen Satz, keine 'davon 0 aufgelöst'-Ergänzung", () => {
+    const container = render({
+      mode: GAME_MODE.LETTER_SEARCH,
+      difficulty: "6-10",
+      score: 10,
+      questions: new Array(10).fill({}),
+      answers: new Array(10).fill({ resolved: false }),
+    });
+
+    expect(
+      container.querySelector(".result-screen__score").textContent,
+    ).toMatch(/^\s*Du hast 10 von 10 Fragen richtig beantwortet!\s*$/);
+    expect(container.textContent).not.toMatch(/aufgelöst/);
+  });
+
+  it("zeigt weiterhin 'N von N richtig' unverändert, wenn `answers` fehlt (Modi ohne resolved-Unterstützung)", () => {
+    const container = render({
+      mode: GAME_MODE.QUIZ,
+      difficulty: "6-10",
+      score: 7,
+      questions: new Array(10).fill({}),
+    });
+
+    expect(
+      container.querySelector(".result-screen__score").textContent,
+    ).toMatch(/^\s*Du hast 7 von 10 Fragen richtig beantwortet!\s*$/);
+  });
+
+  it("zeigt in der Verlaufsliste bei resolvedCount > 0 den Zusatz 'davon X aufgelöst'", () => {
+    saveResultToHistory.mockReturnValue([
+      {
+        id: "current",
+        date: "2026-08-20T10:00:00.000Z",
+        score: 10,
+        total: 10,
+        difficulty: "6-10",
+        mode: GAME_MODE.LETTER_SEARCH,
+        resolvedCount: 3,
+      },
+      {
+        id: "older",
+        date: "2026-08-19T10:00:00.000Z",
+        score: 8,
+        total: 10,
+        difficulty: "6-10",
+        mode: GAME_MODE.QUIZ,
+        resolvedCount: 0,
+      },
+    ]);
+
+    const container = render({
+      mode: GAME_MODE.LETTER_SEARCH,
+      difficulty: "6-10",
+      score: 10,
+      questions: new Array(10).fill({}),
+      answers: [{ resolved: true }],
+    });
+
+    const results = container.querySelectorAll(".result-history__result");
+    expect(results[0].textContent).toBe("10 von 10 richtig, davon 3 aufgelöst");
+    expect(results[1].textContent).toBe("8 von 10 richtig");
   });
 });

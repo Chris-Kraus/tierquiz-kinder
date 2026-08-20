@@ -24,6 +24,14 @@
 // geschrieben, sondern ausschließlich auf Anzeige-Ebene in `result.js` als
 // "Quizfragen" interpretiert (siehe dortige Kommentare).
 //
+// Seit Issue #52 (Buchstabensuche, "Lösung zeigen", Abstimmung mit
+// `software-architect`, 20.08.2026) zusätzlich: optionales `resolvedCount`
+// (Anzahl der per "Lösung zeigen"-Button aufgelösten Fragen dieser Runde) —
+// exakt dasselbe rückwärtskompatible Muster wie `mode` aus Issue #36: kein
+// Backfill für Alt-Einträge ohne dieses Feld, der Anzeige-Fallback
+// (`entry.resolvedCount ?? 0`, Anzeige nur bei `> 0`) lebt ausschließlich in
+// `result.js`.
+//
 // `localStorage` kann fehlen oder blockiert sein (z. B. Safari Private Mode)
 // — jeder Zugriff ist deshalb in try/catch gekapselt. Bei Fehlschlag wird das
 // Feature einfach nicht angeboten (leeres Array / `null`), kein Absturz,
@@ -145,10 +153,15 @@ export function loadResultHistory(storage) {
  * @param {number} result.total Fragenanzahl der Runde
  * @param {string} result.difficulty Schwierigkeitsstufe (siehe DIFFICULTY_LEVELS)
  * @param {string} [result.mode] Spielmodus (siehe src/quiz/mode.js), optional
+ * @param {number} [result.resolvedCount] Anzahl der per "Lösung
+ *   zeigen"-Button aufgelösten Fragen dieser Runde (Issue #52), optional
  * @param {Storage} [storage] Storage-Implementierung, Standard `localStorage` (für Tests austauschbar)
- * @returns {{id: string, date: string, score: number, total: number, difficulty: string, mode?: string}[] | null}
+ * @returns {{id: string, date: string, score: number, total: number, difficulty: string, mode?: string, resolvedCount?: number}[] | null}
  */
-export function saveResultToHistory({ score, total, difficulty, mode }, storage) {
+export function saveResultToHistory(
+  { score, total, difficulty, mode, resolvedCount },
+  storage,
+) {
   const target = resolveStorage(storage);
   if (!target) return null;
 
@@ -161,6 +174,7 @@ export function saveResultToHistory({ score, total, difficulty, mode }, storage)
       total,
       difficulty,
       mode,
+      resolvedCount,
     };
     const updated = [entry, ...existing].slice(0, MAX_HISTORY_ENTRIES);
     target.setItem(STORAGE_KEY, JSON.stringify(updated));

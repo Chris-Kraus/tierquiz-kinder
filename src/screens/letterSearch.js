@@ -25,6 +25,15 @@
 // kein neuer State-Mechanismus nötig. Infosatz (Issue #12) + Wikipedia-Link
 // (Issue #15) + Fun Fact (Issue #24) sind 1:1 aus soundQuestion.js/
 // reverseQuestion.js übernommen (identisches Markup/identische Klassen).
+//
+// Seit Issue #52 ("Lösung zeigen"): zusätzlicher, visuell zurückhaltender
+// Button unterhalb der Kästchen-Reihe, mit dem das Kind die Antwort auflösen
+// kann, statt weiter raten zu müssen. Wiederverwendet denselben Abschluss-
+// Ablauf wie beim regulären Lösen (Infosatz/Wikipedia-Link/Fun Fact/"Weiter"-
+// Button, siehe revealAnswerExtrasAndNext), markiert die Antwort im Zustand
+// aber zusätzlich als `resolved: true` (recordAnswer, state.js) und zeigt ein
+// bewusst anderes, nicht-grünes Feedback (siehe handleShowSolution unten),
+// damit kein falsches "selbst richtig gelöst"-Signal entsteht.
 
 import animalsData from "../../data/animals.json";
 import {
@@ -153,6 +162,21 @@ export function renderLetterSearchScreen(
            kriterium: "Fehlermeldung per aria-live angekündigt"). -->
       <p class="letter-puzzle__error" role="status" aria-live="polite" hidden></p>
 
+      <!-- "Lösung zeigen"-Button (Issue #52, design.md "Buchstabensuche:
+           Lösung anzeigen"): durchgehend sichtbar, sobald die Frage geladen
+           ist, verschwindet nach Anzeige der Lösung (analog zum Zustand nach
+           korrektem Lösen). Bewusst nach den Buchstaben-Kästchen und vor dem
+           "Weiter"-Button im Markup, damit die Tab-Reihenfolge ohne
+           zusätzliches tabindex-Handling passt. -->
+      <button
+        type="button"
+        class="letter-puzzle__solve-button"
+        aria-label="Lösung anzeigen und Namen auflösen"
+        hidden
+      >
+        Lösung zeigen
+      </button>
+
       <p
         class="question-screen__feedback"
         role="status"
@@ -204,6 +228,7 @@ export function renderLetterSearchScreen(
   );
   const letterPuzzleEl = container.querySelector(".letter-puzzle");
   const letterErrorEl = container.querySelector(".letter-puzzle__error");
+  const solveButton = container.querySelector(".letter-puzzle__solve-button");
   const feedbackEl = container.querySelector(".question-screen__feedback");
   const infoSentenceEl = container.querySelector(
     ".question-screen__info-sentence",
@@ -274,6 +299,7 @@ export function renderLetterSearchScreen(
     letterPuzzleEl.innerHTML = "";
     blankInputs = [];
     puzzleSolved = false;
+    solveButton.hidden = true;
     hideLetterError();
     resetFeedback();
   }
@@ -399,14 +425,13 @@ export function renderLetterSearchScreen(
     }
   }
 
-  function handlePuzzleSolved() {
-    const question = quizState.questions[quizState.currentIndex];
-    if (!question) return;
-
-    feedbackEl.textContent = "✓ Super gemacht! Richtig ergänzt!";
-    feedbackEl.classList.add("question-screen__feedback--correct");
-    feedbackEl.hidden = false;
-
+  // Gemeinsamer Abschluss-Teil für eigenständiges Lösen UND "Lösung zeigen"
+  // (Issue #52: "Wiederverwendet denselben Ablauf wie beim regulären Lösen")
+  // -- Infosatz/Wikipedia-Link/Fun Fact sowie der "Weiter"-Button sehen in
+  // beiden Fällen identisch aus, nur Feedback-Text/-Optik und der
+  // `resolved`-Wert unterscheiden sich (siehe handlePuzzleSolved/
+  // handleShowSolution unten).
+  function revealAnswerExtrasAndNext(question) {
     const answeredAnimal = animalById.get(question.animalId);
     if (answeredAnimal) {
       infoSentenceTextEl.textContent = buildInfoSentence(answeredAnimal);
@@ -422,18 +447,80 @@ export function renderLetterSearchScreen(
       funFactEl.hidden = false;
     }
 
+    solveButton.hidden = true;
+    nextButton.hidden = false;
+    nextButton.focus();
+  }
+
+  function handlePuzzleSolved() {
+    const question = quizState.questions[quizState.currentIndex];
+    if (!question) return;
+
+    feedbackEl.textContent = "✓ Super gemacht! Richtig ergänzt!";
+    feedbackEl.classList.add("question-screen__feedback--correct");
+    feedbackEl.hidden = false;
+
     // Kein "falsch beantwortet" möglich in diesem Modus (architecture.md,
     // Punkt 5: "es gibt hier strukturell kein 'falsch beantwortet'") -- daher
     // immer correct: true, dieselbe Fortschritts-/Rundenlogik wie in den
-    // übrigen Modi läuft dadurch unverändert weiter.
+    // übrigen Modi läuft dadurch unverändert weiter. `resolved` bleibt hier
+    // unverändert `false` (Standard) -- eigenständig gelöst, nicht per
+    // "Lösung zeigen" (Issue #52).
     recordAnswer(quizState, {
       question,
       selectedText: question.animalName,
       correct: true,
     });
 
-    nextButton.hidden = false;
-    nextButton.focus();
+    revealAnswerExtrasAndNext(question);
+  }
+
+  // "Lösung zeigen" (Issue #52, design.md "Buchstabensuche: Lösung
+  // anzeigen"): füllt alle verbleibenden Lücken mit dem korrekten Namen und
+  // löst danach denselben Ablauf wie beim regulären Lösen aus -- aber mit
+  // sichtbar unterschiedlichem Feedback (neutraler statt grüner Kästchen-
+  // Zustand, "Hier ist die Lösung: {Name}" statt "✓ Super gemacht!"), damit
+  // kein falsches "selbst richtig gelöst"-Signal entsteht.
+  function handleShowSolution() {
+    if (puzzleSolved) return;
+    puzzleSolved = true;
+
+    const question = quizState.questions[quizState.currentIndex];
+    if (!question) return;
+
+    // Bereits vom Kind korrekt eingetippte Felder bleiben unverändert (grün/
+    // "filled") -- nur die tatsächlich noch offenen Lücken werden aufgelöst
+    // (Akzeptanzkriterium: "füllt alle verbleibenden Lücken").
+    blankInputs.forEach((input) => {
+      if (input.readOnly) return;
+      const expected = input.dataset.expectedChar;
+      input.value = expected;
+      input.readOnly = true;
+      // Neutraler Darstellungs-Zustand, analog zu den bereits vorgegebenen
+      // Kästchen -- bewusst NICHT .letter-box--filled (grünes "richtig"-Grün
+      // wäre hier irreführend, design.md).
+      input.classList.remove("letter-box--blank");
+      input.classList.add("letter-box--given");
+      input.setAttribute(
+        "aria-label",
+        `${input.dataset.baseLabel}: ${expected}, aufgelöst`,
+      );
+    });
+    hideLetterError();
+
+    feedbackEl.textContent = `Hier ist die Lösung: ${question.animalName}`;
+    feedbackEl.hidden = false;
+    // Bewusst OHNE "question-screen__feedback--correct" (kein Häkchen-Icon,
+    // keine grüne Erfolgsfarbe -- design.md/Akzeptanzkriterium).
+
+    recordAnswer(quizState, {
+      question,
+      selectedText: question.animalName,
+      correct: true,
+      resolved: true,
+    });
+
+    revealAnswerExtrasAndNext(question);
   }
 
   function showLoadedQuestion(question) {
@@ -457,6 +544,11 @@ export function renderLetterSearchScreen(
     const puzzle = buildLetterPuzzle(question.animalName, quizState.difficulty);
     renderLetterPuzzle(puzzle);
     focusNextOpenInput();
+
+    // "Lösung zeigen" ist durchgehend sichtbar, sobald die Frage geladen ist
+    // (Issue #52, design.md: "kein Freischalten erst nach X Fehlversuchen,
+    // keine zusätzliche Hürde").
+    solveButton.hidden = false;
   }
 
   async function loadQuestion(index, reuseQuestion) {
@@ -488,6 +580,8 @@ export function renderLetterSearchScreen(
   retryButton.addEventListener("click", () => {
     loadQuestion(quizState.currentIndex);
   });
+
+  solveButton.addEventListener("click", handleShowSolution);
 
   nextButton.addEventListener("click", () => {
     advanceToNextQuestion(quizState);

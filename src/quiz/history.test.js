@@ -158,6 +158,31 @@ describe("saveResultToHistory", () => {
     expect(updated[0].mode).toBe(QUIZ_MODES.REVERSE);
   });
 
+  it("speichert das übergebene resolvedCount-Feld (Issue #52)", () => {
+    const storage = createFakeStorage();
+    const updated = saveResultToHistory(
+      {
+        score: 10,
+        total: 10,
+        difficulty: DIFFICULTY_LEVELS.EASY,
+        resolvedCount: 2,
+      },
+      storage,
+    );
+
+    expect(updated[0].resolvedCount).toBe(2);
+  });
+
+  it("lässt resolvedCount unverändert undefined, wenn es nicht übergeben wird (rückwärtskompatibel, Issue #52)", () => {
+    const storage = createFakeStorage();
+    const updated = saveResultToHistory(
+      { score: 7, total: 10, difficulty: DIFFICULTY_LEVELS.EASY },
+      storage,
+    );
+
+    expect(updated[0].resolvedCount).toBeUndefined();
+  });
+
   it("vergibt unterschiedlichen Einträgen unterschiedliche IDs (Issue #36, Grundlage für gezieltes Löschen)", () => {
     const storage = createFakeStorage();
     saveResultToHistory(
@@ -197,6 +222,7 @@ describe("loadResultHistory — Migration von Alt-Einträgen ohne id/mode (Issue
     expect(typeof history[0].id).toBe("string");
     expect(history[0].id.length).toBeGreaterThan(0);
     expect(history[0].mode).toBeUndefined();
+    expect(history[0].resolvedCount).toBeUndefined();
     expect(history[0]).toMatchObject({ score: 4, total: 10 });
   });
 

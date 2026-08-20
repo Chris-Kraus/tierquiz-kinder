@@ -73,17 +73,30 @@ export function createQuizState(
  * richtiger Antwort den Punktestand und hängt einen Eintrag an die
  * Antworten-Historie an. Mutiert `state` bewusst (einfacher, DOM-naher
  * Zustand, kein Redux-artiges Immutability-Muster nötig für diesen Umfang).
+ *
+ * Seit Issue #52 (Buchstabensuche, "Lösung zeigen") zusätzlich: optionaler
+ * Parameter `resolved`, der vermerkt, ob die Antwort über den "Lösung
+ * zeigen"-Button aufgelöst statt eigenständig gelöst wurde. Keine separate
+ * Zählvariable — die Anzahl aufgelöster Fragen pro Runde wird bei Bedarf aus
+ * `state.answers.filter(a => a.resolved).length` abgeleitet (Single Source
+ * of Truth, wie bereits bei `score`).
  * @param {object} state Quiz-Zustand aus createQuizState
  * @param {object} params
  * @param {object} params.question die beantwortete Frage (aus questions)
  * @param {string} params.selectedText Anzeigetext der gewählten Option
  * @param {boolean} params.correct ob die gewählte Option korrekt war
+ * @param {boolean} [params.resolved] ob die Antwort per "Lösung
+ *   zeigen"-Button aufgelöst wurde (Issue #52), Standard `false`
  */
-export function recordAnswer(state, { question, selectedText, correct }) {
+export function recordAnswer(
+  state,
+  { question, selectedText, correct, resolved = false },
+) {
   state.answers.push({
     questionId: question.id,
     selectedText,
     correct,
+    resolved,
   });
   if (correct) {
     state.score += 1;

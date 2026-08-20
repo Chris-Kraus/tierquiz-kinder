@@ -8,7 +8,7 @@
 // bestehender, bereits produktiv laufender Funktionen (kein Scope-Creep).
 
 import { describe, it, expect } from "vitest";
-import { createQuizState } from "./state.js";
+import { createQuizState, recordAnswer } from "./state.js";
 import { DIFFICULTY_LEVELS } from "./difficulty.js";
 import { GAME_MODE } from "./gameMode.js";
 
@@ -32,5 +32,60 @@ describe("createQuizState — Spielmodus (Issue #28)", () => {
     expect(() =>
       createQuizState(DIFFICULTY_LEVELS.EASY, [], 10, "unbekannt"),
     ).toThrow(/Spielmodus/);
+  });
+});
+
+describe("recordAnswer — resolved-Feld (Issue #52, Buchstabensuche 'Lösung zeigen')", () => {
+  it("vermerkt resolved: false als Standard, wenn der Parameter nicht übergeben wird", () => {
+    const state = createQuizState(DIFFICULTY_LEVELS.EASY);
+    recordAnswer(state, {
+      question: { id: "q1" },
+      selectedText: "Löwe",
+      correct: true,
+    });
+
+    expect(state.answers).toHaveLength(1);
+    expect(state.answers[0].resolved).toBe(false);
+    expect(state.score).toBe(1);
+  });
+
+  it("vermerkt resolved: true, wenn explizit übergeben (per 'Lösung zeigen' aufgelöst)", () => {
+    const state = createQuizState(DIFFICULTY_LEVELS.EASY);
+    recordAnswer(state, {
+      question: { id: "q1" },
+      selectedText: "Löwe",
+      correct: true,
+      resolved: true,
+    });
+
+    expect(state.answers[0].resolved).toBe(true);
+    // Zählt weiterhin normal zum Punktestand (bestehende Prämisse aus
+    // Issue #46: keine neue "Scheitern"-Kategorie).
+    expect(state.score).toBe(1);
+  });
+
+  it("leitet die Anzahl aufgelöster Fragen bei mehreren Antworten korrekt aus answers.filter ab (keine separate Zählvariable)", () => {
+    const state = createQuizState(DIFFICULTY_LEVELS.EASY);
+    recordAnswer(state, {
+      question: { id: "q1" },
+      selectedText: "Löwe",
+      correct: true,
+    });
+    recordAnswer(state, {
+      question: { id: "q2" },
+      selectedText: "Tiger",
+      correct: true,
+      resolved: true,
+    });
+    recordAnswer(state, {
+      question: { id: "q3" },
+      selectedText: "Bär",
+      correct: true,
+      resolved: true,
+    });
+
+    const resolvedCount = state.answers.filter((a) => a.resolved).length;
+    expect(resolvedCount).toBe(2);
+    expect(state.score).toBe(3);
   });
 });

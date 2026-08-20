@@ -435,3 +435,247 @@ describe("renderLetterSearchScreen (Issue #46)", () => {
     expect(quizState.questions).toHaveLength(2);
   });
 });
+
+describe("'Lösung zeigen' (Issue #52)", () => {
+  it("ist versteckt, solange die Frage noch lädt, und erscheint sobald sie geladen ist", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue(buildQuestion());
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.LETTER_SEARCH,
+    );
+    const { container } = render(quizState);
+
+    const solveButton = container.querySelector(".letter-puzzle__solve-button");
+    expect(solveButton.hidden).toBe(true);
+
+    await vi.waitFor(() => expect(solveButton.hidden).toBe(false));
+    expect(solveButton.getAttribute("aria-label")).toBe(
+      "Lösung anzeigen und Namen auflösen",
+    );
+    expect(solveButton.tagName).toBe("BUTTON");
+    expect(solveButton.getAttribute("type")).toBe("button");
+  });
+
+  it("steht im Markup nach den Buchstaben-Kästchen und vor dem 'Weiter'-Button (Tab-Reihenfolge)", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue(buildQuestion());
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.LETTER_SEARCH,
+    );
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".letter-box--blank")).toHaveLength(1),
+    );
+
+    const focusable = Array.from(
+      container.querySelectorAll(
+        ".letter-box--blank, .letter-puzzle__solve-button, .next-button",
+      ),
+    );
+    const tags = focusable.map((el) => el.className);
+    const solveIndex = tags.findIndex((c) =>
+      c.includes("letter-puzzle__solve-button"),
+    );
+    const nextIndex = tags.findIndex((c) => c.includes("next-button"));
+    const blankIndex = tags.findIndex((c) => c.includes("letter-box--blank"));
+    expect(blankIndex).toBeLessThan(solveIndex);
+    expect(solveIndex).toBeLessThan(nextIndex);
+  });
+
+  it("füllt bei Klick alle verbleibenden Lücken mit dem korrekten Namen und lässt den Button danach verschwinden", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue(buildQuestion());
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.LETTER_SEARCH,
+    );
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".letter-box--blank")).toHaveLength(1),
+    );
+
+    const solveButton = container.querySelector(".letter-puzzle__solve-button");
+    solveButton.click();
+
+    // "Löwe": die eine Lücke (w) ist jetzt aufgelöst.
+    expect(container.querySelectorAll(".letter-box--blank")).toHaveLength(0);
+    expect(solveButton.hidden).toBe(true);
+  });
+
+  it("zeigt nach Auflösen den neutralen Feedback-Text statt '✓ Super gemacht!' und OHNE die --correct-Klasse (visuell abgegrenzt vom echten Lösen)", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue(buildQuestion());
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.LETTER_SEARCH,
+    );
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".letter-box--blank")).toHaveLength(1),
+    );
+
+    container.querySelector(".letter-puzzle__solve-button").click();
+
+    const feedbackEl = container.querySelector(".question-screen__feedback");
+    expect(feedbackEl.hidden).toBe(false);
+    expect(feedbackEl.textContent).toBe("Hier ist die Lösung: Löwe");
+    expect(feedbackEl.textContent).not.toMatch(/Super gemacht/);
+    expect(
+      feedbackEl.classList.contains("question-screen__feedback--correct"),
+    ).toBe(false);
+  });
+
+  it("nutzt für aufgelöste Kästchen den neutralen letter-box--given-Zustand statt des grünen letter-box--filled", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue(buildQuestion());
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.LETTER_SEARCH,
+    );
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".letter-box--blank")).toHaveLength(1),
+    );
+
+    const input = container.querySelector(".letter-box--blank");
+    container.querySelector(".letter-puzzle__solve-button").click();
+
+    expect(input.value).toBe("w");
+    expect(input.readOnly).toBe(true);
+    expect(input.classList.contains("letter-box--given")).toBe(true);
+    expect(input.classList.contains("letter-box--filled")).toBe(false);
+    expect(input.getAttribute("aria-label")).toMatch(/aufgelöst/);
+  });
+
+  it("lässt bereits vom Kind korrekt eingetippte Kästchen unverändert (grün/filled) und löst nur die verbleibenden Lücken auf (gemischter Zustand)", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue(
+      buildQuestion({ animalId: "Q1", animalName: "Großer Panda" }),
+    );
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.LETTER_SEARCH,
+    );
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(
+        container.querySelectorAll(".letter-box--blank").length,
+      ).toBeGreaterThan(1),
+    );
+
+    // Ein Feld eigenständig korrekt lösen, bevor "Lösung zeigen" geklickt wird.
+    const firstBlank = container.querySelector(".letter-box--blank");
+    firstBlank.value = firstBlank.dataset.expectedChar;
+    firstBlank.dispatchEvent(new Event("input"));
+    expect(firstBlank.classList.contains("letter-box--filled")).toBe(true);
+
+    container.querySelector(".letter-puzzle__solve-button").click();
+
+    // Das eigenständig gelöste Feld bleibt grün/filled ...
+    expect(firstBlank.classList.contains("letter-box--filled")).toBe(true);
+    expect(firstBlank.classList.contains("letter-box--given")).toBe(false);
+    // ... alle übrigen, noch offenen (nicht bereits korrekt ausgefüllten)
+    // Lücken sind jetzt neutral aufgelöst -- keine echte offene Lücke mehr.
+    expect(
+      container.querySelectorAll(".letter-box--blank:not(.letter-box--filled)"),
+    ).toHaveLength(0);
+  });
+
+  it("zeigt danach Infosatz, Wikipedia-Link, Fun Fact und den 'Weiter'-Button wie beim regulären Lösen", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue(buildQuestion());
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.LETTER_SEARCH,
+    );
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".letter-box--blank")).toHaveLength(1),
+    );
+
+    container.querySelector(".letter-puzzle__solve-button").click();
+
+    expect(
+      container.querySelector(".question-screen__info-sentence").hidden,
+    ).toBe(false);
+    expect(
+      container.querySelector(".question-screen__info-sentence-wikipedia-link")
+        .hidden,
+    ).toBe(false);
+    expect(container.querySelector(".question-screen__fun-fact").hidden).toBe(
+      false,
+    );
+    expect(container.querySelector(".next-button").hidden).toBe(false);
+  });
+
+  it("trägt die Antwort als resolved: true, correct: true im Zustand ein und zählt normal zum Punktestand", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue(buildQuestion());
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.LETTER_SEARCH,
+    );
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".letter-box--blank")).toHaveLength(1),
+    );
+
+    container.querySelector(".letter-puzzle__solve-button").click();
+
+    expect(quizState.answers).toHaveLength(1);
+    expect(quizState.answers[0].correct).toBe(true);
+    expect(quizState.answers[0].resolved).toBe(true);
+    expect(quizState.score).toBe(1);
+  });
+
+  it("ignoriert einen zweiten Klick, nachdem bereits aufgelöst wurde (kein doppelter recordAnswer-Aufruf)", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue(buildQuestion());
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.LETTER_SEARCH,
+    );
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".letter-box--blank")).toHaveLength(1),
+    );
+
+    const solveButton = container.querySelector(".letter-puzzle__solve-button");
+    solveButton.click();
+    solveButton.click();
+
+    expect(quizState.answers).toHaveLength(1);
+  });
+
+  it("versteckt den Button, sobald das Kind die Frage eigenständig löst (kein doppeltes Angebot nach Erfolg)", async () => {
+    generateNextLetterSearchQuestion.mockResolvedValue(buildQuestion());
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.LETTER_SEARCH,
+    );
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".letter-box--blank")).toHaveLength(1),
+    );
+
+    fillCorrectly(container);
+
+    expect(
+      container.querySelector(".letter-puzzle__solve-button").hidden,
+    ).toBe(true);
+    expect(quizState.answers[0].resolved).toBe(false);
+  });
+});
