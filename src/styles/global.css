@@ -180,6 +180,24 @@
   }
 }
 
+/* Konfetti-Partikel (src/quiz/confetti.js, Issue #69). Farbe/Radius/--dx/
+   --rot/animation-duration werden von confetti.js per Inline-Style pro
+   Partikel gesetzt; hier nur die gemeinsame Basisgeometrie + Animation. Der
+   Elterncontainer (jeweiliger Screen) braucht `position: relative` und
+   `overflow: hidden` (siehe design.md) — das legen die Screen-Stories fest. */
+.k-confetti-particle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--ink);
+  animation-name: k-conf;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+  pointer-events: none;
+}
+
 * {
   box-sizing: border-box;
 }
