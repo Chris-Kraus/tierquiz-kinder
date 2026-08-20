@@ -267,6 +267,16 @@ button {
   gap: 0.5rem;
 }
 
+/* CSS-Cascade-Falle wie bei .image-hint[hidden]/.mode-picker__hint[hidden]
+   oben: `display: flex` im Author-Stylesheet gewinnt gegen die UA-Regel
+   `[hidden] { display: none }` unabhängig von der Spezifität (Origin sticht
+   Spezifität) -- ohne diese Regel bliebe die Fragenanzahl-Auswahl trotz
+   `hidden`-Attribut (siehe start.js, roundLengthPickerEl.hidden) im
+   Tier-Memory-Modus sichtbar (QA-Fund, Issue #45). */
+.round-length-picker[hidden] {
+  display: none;
+}
+
 .round-length-picker__label {
   margin: 0;
   font-size: 0.9rem;
