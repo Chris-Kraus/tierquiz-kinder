@@ -652,6 +652,36 @@ Das Handoff ist im Titel auf "7 Jahre" zugeschnitten, `requirements.md` definier
 
 Handoff verlangt "Frage → Hilfe → Antworten → Weiter". Ob das 1:1 der aktuellen DOM-Reihenfolge in `question.js`/`memory.js`/`letterSearch.js` entspricht, ist beim bestehenden Code nicht abschließend verifiziert (nur Funktionsnamen bekannt, nicht exakte Markup-Reihenfolge) — **Akzeptanzkriterium der jeweiligen Screen-Story**: `web-developer` verifiziert die reale Tab-Reihenfolge nach dem Umbau, nicht nur übernehmen, dass sie automatisch passt.
 
+## Sterne-/Maskottchen-Freischaltsystem (21.08.2026, `ux-design`, konsultiert von `business-analyst`)
+
+Ergänzung zum bereits gemergten Kids-Redesign (PR #78), Handoff-Datei "CHANGES-sterne-maskottchen.md": Runden-Sterne (≥5 richtige Tiere = 1 Stern, Memory: vollständig gelöst = immer 1 Stern), 5 Sterne = 1 von 50 wählbaren Maskottchen, Karussell unter dem Album, Album 12→9.
+
+### Stern-Icon-Kollision im Header — Empfehlung: Rundenpunktestand bekommt eigenes Icon, ⭐ bleibt exklusiv der Maskottchen-Währung vorbehalten
+
+Der bestehende Header zeigt während einer laufenden Frage-Runde bereits "⭐ {score}" (`.app-header__score`, Anzahl bisher richtiger Antworten dieser Runde). Die neue Spezifikation will zusätzlich ein persistentes Sterne-Badge "⭐ {stars}/5" im selben Header — beide gleichzeitig sichtbar während einer laufenden Runde, beide mit ⭐. Das ist für die Zielgruppe (6–12 Jahre) eine echte Verwechslungsgefahr: zwei ⭐-Zahlen im selben Sichtfeld ohne erkennbaren Bedeutungsunterschied.
+
+**Entscheidung:** ⭐ wird projektweit exklusiv zum Symbol der persistenten Maskottchen-Währung (taucht so bereits an vielen weiteren Stellen auf: Sterne-Box im Ergebnis, Album-Fußnote, Karussell-Hinweiszeile — ⭐ dort umzubenennen würde mehr Inkonsistenz erzeugen als der schmalere bestehende Rundenpunktestand). Der bestehende Rundenpunktestand (`.app-header__score`) wechselt stattdessen von "⭐ {score}" auf **"✓ {score}"** — das Häkchen-Symbol ist im Projekt bereits fest als "richtig beantwortet"-Symbol etabliert (`.answer-tile--correct .answer-tile__icon` zeigt exakt dieses ✓ nach jeder richtigen Antwort), die Wiederverwendung ist daher naheliegend statt eine dritte, neue Bedeutung einzuführen. Ergebnis: ⭐ bedeutet ab sofort im gesamten Header/UI immer "Sterne Richtung nächstem Maskottchen", ✓ bedeutet immer "richtige Antworten in dieser Runde" — beide Badges können nebeneinander stehen, ohne dass ein Kind zwischen zwei gleich aussehenden Zahlen raten muss. Reine Text-/Icon-Änderung in `header.js`, kein Layout-Umbau nötig.
+
+### Singular/Plural-Copy ("1 Stern" / "N Sterne")
+
+Kein bestehender Präzedenzfall wiederverwendbar: Der scheinbar ähnliche Fall aus Issue #52 (`resolvedCount`, "davon X aufgelöst") brauchte nie eine echte Singular/Plural-Unterscheidung, da "aufgelöst" im Deutschen nicht dekliniert wird — dort reichte ein einfaches `> 0`-Gate ohne Wortformwechsel. Für "Stern"/"Sterne" ist dagegen eine echte grammatikalische Unterscheidung nötig. **Empfehlung:** ein einziger kleiner Helper (z. B. `formatStars(n) => n === 1 ? "1 Stern" : \`${n} Sterne\`\`), da Deutsch bei Zählung nur zwischen genau 1 und "alles andere" unterscheidet (kein Sonderfall für 0, "0 Sterne" ist korrekt) — keine Bibliothek nötig, reine Ternary genügt für diesen einen Anwendungsfall.
+
+### Barrierefreiheit
+
+- Header-Stern-Badge: als `<button>` mit `aria-label="{stars} Sterne — neues Maskottchen wählen"` (bei `canRedeem`) bzw. `disabled`+`aria-disabled="true"` (sonst) — wie im Handoff vorgesehen, keine Ergänzung nötig.
+- Karussell-Pfeile: zusätzlich zu `disabled` an den Rändern je ein `aria-label` ("Vorheriges Maskottchen"/"Nächstes Maskottchen" statt nur "←"/"→", da reine Pfeil-Glyphen für Screenreader nicht aussagekräftig sind).
+- Karussell-Bühne: `aria-live="polite"` auf dem Bühnen-Container (analog zum bestehenden Muster bei `.reverse-image-frame`, siehe Frage-/Feedback-Bildschirm "Wer bin ich?"), damit ein Wechsel des angezeigten Maskottchens per Pfeil-Klick auch ohne visuellen Fokuswechsel angekündigt wird.
+- Freischaltung: kurze `role="status"`-Ankündigung ("Neues Maskottchen freigeschaltet: {Name}") nach erfolgreichem Einlösen, konsistent mit bestehenden Status-Ankündigungsmustern im Projekt (z. B. Feedback-Text-Bereiche).
+- Maskottchen-Kacheln in der Auswahl: echte `<button>`-Elemente, natürliche Tab-Reihenfolge im Grid (kein manuelles `tabindex` nötig), Mindest-Tapfläche wie bei bestehenden Kacheln (min-height 132px laut Handoff liegt bereits deutlich über der 44×44px-Mindestgröße).
+
+### Guide-Sprechblase je Maskottchen — kein separates Zitat nötig
+
+Die Handoff-Tabelle liefert pro Maskottchen nur Name + Rolle (z. B. "rät neugierig mit"), keine 50 einzelnen Sprechblasen-Zitate. **Entscheidung:** Die vorhandene "Rolle"-Spalte wird direkt als Sprechblasentext wiederverwendet (z. B. "Fine, dein Tierguide" / "rät neugierig mit") statt 50 neue Zitate zu erfinden, die im Handoff nicht vorgesehen sind — die Rollenbeschreibungen sind bereits so formuliert, dass sie als kurzer Guide-Kommentar funktionieren, ohne zusätzlichen Content-Aufwand.
+
+### Layout-Auswirkung Album 12→9 + Karussell
+
+Kein Konflikt mit "Kein Scrollen bei der Kernaufgabe" — diese Vorgabe gilt für die Kernaufgaben-Screens (Frage/Feedback), nicht für Start-/Ergebnis-Screen (dort ist Scrollen bereits an anderer Stelle toleriert, siehe Tier-Memory-Board-Vorgabe). Die Album-Verkleinerung 3×3 statt 4×3 reduziert zudem die vertikal beanspruchte Fläche des Albums selbst, was das neu hinzukommende Karussell darunter größtenteils kompensiert. **Akzeptanzkriterium für die Umsetzung:** `web-developer` prüft die reale Bildschirmhöhe auf Start- und Ergebnis-Screen nach dem Umbau per Screenshot (etablierter Verifikationsstandard dieses Projekts), keine reine Annahme.
+
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
 
 Alle vorherigen offenen Fragen sind geklärt: Zielalter → zwei Stufen 6–10/10–12 (siehe "Zielgruppe"), Sound-Effekte → nein, Fragenanzahl → 10 pro Runde (fest), Weiter-Mechanik → manueller Button, Sprache → Deutsch. Details jeweils in den Abschnitten oben eingearbeitet.
