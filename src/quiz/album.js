@@ -15,8 +15,12 @@
 
 const STORAGE_KEY = "tierquiz-kinder:album";
 
-/** Ziel-Anzahl gesammelter Tiere fürs Album (siehe design.md, "Redesign"). */
-export const ALBUM_TARGET = 12;
+/** Ziel-Anzahl gesammelter Tiere fürs Album (siehe design.md, "Redesign").
+ * Seit Issue #80 (Sterne-/Maskottchen-Freischaltsystem) auf 9 (3×3-Raster)
+ * gesenkt, um Platz für das neue Maskottchen-Karussell darunter zu schaffen
+ * — siehe architecture.md, "Sterne-/Maskottchen-Freischaltsystem: Technische
+ * Leitplanken". Reiner Konstanten-Wert, keine Struktur-Änderung. */
+export const ALBUM_TARGET = 9;
 
 /** Liefert die zu nutzende Storage-Implementierung: übergebener Parameter
  * (v. a. für Tests) oder das globale `localStorage`, falls vorhanden. Der

@@ -20,6 +20,14 @@ import { renderLetterSearchScreen } from "./screens/letterSearch.js";
 import { createQuizState } from "./quiz/state.js";
 import { GAME_MODE } from "./quiz/gameMode.js";
 import { renderHeader } from "./screens/header.js";
+// Issue #80: Sterne-/Maskottchen-Freischaltsystem (erster Teil, reine
+// Datengrundlage ohne sichtbare UI). showResultScreen ist bereits die
+// einzige Stelle, durch die jeder Rundenabschluss aller fünf Modi läuft
+// (siehe architecture.md, "Sterne-/Maskottchen-Freischaltsystem: Technische
+// Leitplanken") — recordRoundCompletion wird deshalb genau hier einmal
+// aufgerufen statt in den einzelnen Frage-Bildschirmen dupliziert, die
+// bleiben weiterhin frei von Kenntnis des Maskottchen-Systems.
+import { recordRoundCompletion } from "./quiz/progress.js";
 
 // App-Einstiegspunkt: verdrahtet die Navigation zwischen den Bildschirmen.
 // Jeder Bildschirm rendert sich selbst vollständig in `#app-content` (siehe
@@ -87,6 +95,15 @@ function showQuestionScreen(quizState) {
 }
 
 function showResultScreen(quizState) {
+  // Stern-Vergabe zentral hier auswerten (siehe Import-Kommentar oben) —
+  // noch keine UI dafür in dieser Story (#81/#83 folgen), rein stille
+  // Persistenz.
+  recordRoundCompletion({
+    mode: quizState.mode,
+    score: quizState.score,
+    roundLength: quizState.roundLength,
+  });
+
   renderHeader(appHeader, {
     onBackToStart: showStartScreen,
     mode: quizState.mode,
