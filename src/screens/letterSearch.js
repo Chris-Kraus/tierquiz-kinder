@@ -47,9 +47,10 @@ import { buildInfoSentence } from "../quiz/infoSentence.js";
 import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
 // Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
-// (#80-#83): das bislang leere `.feedback-panel__mascot`-Platzhalterfeld
-// zeigt jetzt Tint + Emoji des aktiven Maskottchens (siehe question.js,
-// gleiches Prinzip -- rein darstellend, keine Live-Aktualisierung nötig).
+// (#80-#83): das `.feedback-panel__mascot`-Feld zeigt Tint + Emoji + Name +
+// Rolle des aktiven Maskottchens (siehe question.js, gleiches Prinzip --
+// QA-Bugfix Test-Fix-Zyklus 1: Name/Rolle fehlten ursprünglich als Text).
+// Rein darstellend bis auf das Emoji, keine Live-Aktualisierung nötig.
 import { loadProgress } from "../quiz/progress.js";
 import { MASCOTS, tintOf } from "../quiz/mascots.js";
 
@@ -202,8 +203,10 @@ export function renderLetterSearchScreen(
            Kein separater Bild-Refetch für die Sticker-Karte — wie #73 wird
            das bereits geladene reverse-image-frame-Bild wiederverwendet. -->
       <div class="feedback-panel" hidden>
-        <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};" aria-hidden="true">
+        <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};">
           <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
+          <p class="feedback-panel__mascot-name">${activeMascot.name}</p>
+          <p class="feedback-panel__mascot-role">${activeMascot.role}</p>
         </div>
         <div class="feedback-panel__body">
           <p

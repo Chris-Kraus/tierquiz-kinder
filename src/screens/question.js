@@ -56,14 +56,16 @@ import {
 import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
 // Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
-// (#80-#83): das bislang leere `.feedback-panel__mascot`-Platzhalterfeld
-// zeigt jetzt Tint + Emoji des über `loadProgress().activeIdx` aktiven
-// Maskottchen -- konsistent mit der Guide-Karte auf dem Start-Bildschirm
-// (siehe start.js). Rein darstellend (aria-hidden bleibt bestehen), daher
-// reicht ein einmaliger Wert beim Rendern, keine Live-Aktualisierung nötig
-// (ein Wechsel des aktiven Maskottchens passiert nur über die Maskottchen-
-// Auswahl, die diesen Bildschirm ohnehin per onDone -> showQuestionScreen
-// komplett neu rendert, siehe main.js).
+// (#80-#83): das `.feedback-panel__mascot`-Feld zeigt Tint + Emoji + Name +
+// Rolle des über `loadProgress().activeIdx` aktiven Maskottchen -- konsistent
+// mit der Guide-Karte auf dem Start-Bildschirm (siehe start.js,
+// renderMascotAreaMarkup). QA-Bugfix (Test-Fix-Zyklus 1, Issue-82-Kommentare):
+// Name/Rolle fehlten ursprünglich komplett als Text (nur Tint+Emoji). Rein
+// darstellend bis auf das Emoji (aria-hidden nur dort), daher reicht ein
+// einmaliger Wert beim Rendern, keine Live-Aktualisierung nötig (ein Wechsel
+// des aktiven Maskottchens passiert nur über die Maskottchen-Auswahl, die
+// diesen Bildschirm ohnehin per onDone -> showQuestionScreen komplett neu
+// rendert, siehe main.js).
 import { loadProgress } from "../quiz/progress.js";
 import { MASCOTS, tintOf } from "../quiz/mascots.js";
 
@@ -166,8 +168,10 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
            .question-screen wirkt statt gegen die schmale rechte Spalte —
            sonst Overflow, siehe PR-Beschreibung/Commit-Historie. -->
       <div class="feedback-panel" hidden>
-        <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};" aria-hidden="true">
+        <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};">
           <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
+          <p class="feedback-panel__mascot-name">${activeMascot.name}</p>
+          <p class="feedback-panel__mascot-role">${activeMascot.role}</p>
         </div>
         <div class="feedback-panel__body">
           <p

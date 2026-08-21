@@ -207,9 +207,12 @@ describe("Visuelle Unterscheidbarkeit Infosatz vs. Fun-Fact (Issue #24 QA-Bugfix
 });
 
 // Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
-// (#80-#83): das bislang leere `.feedback-panel__mascot`-Platzhalterfeld
-// zeigt jetzt Tint + Emoji des aktiven Maskottchens, konsistent mit der
-// Guide-Karte auf dem Start-Bildschirm (siehe start.test.js).
+// (#80-#83): das `.feedback-panel__mascot`-Feld zeigt Tint + Emoji + Name +
+// Rolle des aktiven Maskottchens, konsistent mit der Guide-Karte auf dem
+// Start-Bildschirm (siehe start.test.js). QA-Bugfix (Test-Fix-Zyklus 1):
+// Name/Rolle fehlten ursprünglich komplett als Text -- die beiden `it`-
+// Blöcke unten prüfen jetzt zusätzlich zu Tint/Emoji auch Name und Rolle,
+// um genau diese Testlücke zu schließen.
 describe("Dynamisches Maskottchen im Feedback-Panel (Issue #82)", () => {
   function createFakeStorage() {
     const store = new Map();
@@ -237,6 +240,12 @@ describe("Dynamisches Maskottchen im Feedback-Panel (Issue #82)", () => {
     expect(
       mascotEl.querySelector(".feedback-panel__mascot-emoji").textContent,
     ).toBe(MASCOTS[0].emoji);
+    expect(
+      mascotEl.querySelector(".feedback-panel__mascot-name").textContent,
+    ).toBe(MASCOTS[0].name);
+    expect(
+      mascotEl.querySelector(".feedback-panel__mascot-role").textContent,
+    ).toBe(MASCOTS[0].role);
   });
 
   it("zeigt das über activeIdx aktive Maskottchen, nicht immer Fine der Fuchs", () => {
@@ -279,5 +288,11 @@ describe("Dynamisches Maskottchen im Feedback-Panel (Issue #82)", () => {
     expect(
       mascotEl.querySelector(".feedback-panel__mascot-emoji").textContent,
     ).toBe(MASCOTS[3].emoji);
+    expect(
+      mascotEl.querySelector(".feedback-panel__mascot-name").textContent,
+    ).toBe(MASCOTS[3].name);
+    expect(
+      mascotEl.querySelector(".feedback-panel__mascot-role").textContent,
+    ).toBe(MASCOTS[3].role);
   });
 });

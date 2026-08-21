@@ -1547,7 +1547,7 @@ button {
 
 .feedback-panel__mascot {
   width: 100%;
-  aspect-ratio: 1;
+  min-height: 130px;
   border-radius: var(--k-radius-sm);
   /* Fallback, falls kein Inline-Tint ankommt -- im Normalfall überschreibt
      der Inline-`background` diese Regel mit `tintOf(activeMascotId)` (Issue
@@ -1556,13 +1556,45 @@ button {
      soundQuestion.js/letterSearch.js/memory.js). */
   background: rgba(255, 255, 255, 0.5);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  gap: 2px;
+  padding: var(--k-space-2);
+  /* QA-Bugfix (Issue #82, Test-Fix-Zyklus 1): Feld zeigte ursprünglich nur
+     Tint+Emoji ohne aria-hidden-Wrapper-Ausschluss der Textinhalte -- jetzt,
+     wo Name+Rolle als echter Text dazukommen, bleibt nur das Emoji selbst
+     dekorativ/aria-hidden (siehe Markup), das Feld wächst dafür über die
+     feste 130px-Quadratform hinaus (aspect-ratio entfernt zugunsten von
+     min-height), analog zu .mascot-carousel__stage, das dieselbe
+     Emoji+Name+Rolle-Kombination bereits in einem flexiblen Feld zeigt. */
 }
 
 .feedback-panel__mascot-emoji {
-  font-size: 64px;
+  font-size: 48px;
   line-height: 1;
+}
+
+/* Name + Rolle im Feedback-Panel-Guide-Feld (Issue #82, QA-Bugfix Test-Fix-
+   Zyklus 1): kleinere Variante von .mascot-carousel__stage-name/-role für
+   das schmalere 130px-Feld, gleiche Rollen-/Farbzuordnung wie dort. */
+.feedback-panel__mascot-name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.feedback-panel__mascot-role {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
 }
 
 .feedback-panel__body {
