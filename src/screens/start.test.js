@@ -409,8 +409,12 @@ describe("Modus-Auswahl: dritte Kachel 'Tiergeräusche' (Issue #31)", () => {
     const soundButton = container.querySelector('[data-mode="sound"]');
 
     expect(soundButton).not.toBeNull();
+    // Seit Issue #87: Kurzlabel "Tierlaute" statt "Tiergeräusche" auf der
+    // Kachel selbst (Handoff-Vorgabe gegen Mitten-im-Wort-Umbruch in der
+    // schmaleren Einzeilen-Kachel) -- die Kopfzeilen-Modus-Pille (header.js)
+    // bleibt unverändert bei "Tiergeräusche", nicht Teil dieser Story.
     expect(soundButton.querySelector(".mode-button__label").textContent).toBe(
-      "Tiergeräusche",
+      "Tierlaute",
     );
     expect(soundButton.querySelector(".mode-button__icon").textContent).toBe(
       "🔊",
@@ -665,9 +669,12 @@ describe("Modus-Auswahl: fünfte Kachel 'Buchstabensuche' (Issue #46)", () => {
     );
 
     expect(letterSearchButton).not.toBeNull();
+    // Seit Issue #87: Kurzlabel "Buchstaben" statt "Buchstabensuche" auf der
+    // Kachel (dieselbe Kurzform, die header.js für die Kopfzeilen-Modus-Pille
+    // bereits verwendet, siehe HEADER_MODE_LABELS).
     expect(
       letterSearchButton.querySelector(".mode-button__label").textContent,
-    ).toBe("Buchstabensuche");
+    ).toBe("Buchstaben");
     const onlineIcon = letterSearchButton.querySelector(
       ".mode-button__online-icon",
     );
@@ -684,7 +691,7 @@ describe("Modus-Auswahl: fünfte Kachel 'Buchstabensuche' (Issue #46)", () => {
       "Wer bin ich?",
     );
     expect(soundButton.querySelector(".mode-button__label").textContent).toBe(
-      "Tiergeräusche",
+      "Tierlaute",
     );
   });
 
@@ -976,5 +983,112 @@ describe("Start-Button — Moduswahl an den Quiz-Zustand weiterreichen (Issue #2
     const quizState = onStart.mock.calls[0][0];
     expect(quizState.mode).toBe("quiz");
     expect(quizState.pendingMemoryDeck).toBeUndefined();
+  });
+});
+
+// Issue #87: reiner Zeilenlayout-Umbau der Startseite (Titel -> Kartenzeile
+// "Mein Maskottchen"/"Meine Sammlung" -> Modus-Auswahl in EINER Reihe ->
+// Schwierigkeit -> Fragenanzahl -> CTA), siehe requirements.md/design.md
+// "Startseiten-/Sammlungs-Neuaufbau". Bewusst strukturelle statt visuelle
+// Assertions (keine Prüfung konkreter CSS-Pixelwerte, siehe Story-Vorgabe) --
+// die tatsächliche Ein-Zeilen-Darstellung bei 1280px ist zusätzlich per
+// Screenshot manuell verifiziert (siehe PR-Beschreibung).
+describe("Zeilenlayout der Startseite (Issue #87)", () => {
+  it("Titelzeile (H1 + Absatz) steht in einer eigenen, vollbreiten Zeile", () => {
+    const { container } = render();
+
+    const titleRow = container.querySelector(".start-screen__title-row");
+    expect(titleRow).not.toBeNull();
+    expect(titleRow.querySelector("#start-title")).not.toBeNull();
+    expect(titleRow.querySelector(".start-screen__intro")).not.toBeNull();
+  });
+
+  it("Kartenzeile mit genau zwei Karten ('Mein Maskottchen' links, 'Meine Sammlung' rechts) steht zwischen Titelzeile und Modus-Auswahl", () => {
+    const { container } = render();
+
+    const cardsRow = container.querySelector(".start-cards");
+    expect(cardsRow).not.toBeNull();
+
+    const cards = cardsRow.querySelectorAll(".start-card");
+    expect(cards).toHaveLength(2);
+    expect(cards[0].querySelector(".start-card__title").textContent).toBe(
+      "Mein Maskottchen",
+    );
+    expect(cards[1].querySelector(".start-card__title").textContent).toBe(
+      "Meine Sammlung",
+    );
+
+    // Reihenfolge der Zeilen: Titel -> Karten -> Modus-Auswahl (design.md,
+    // "Startseiten-/Sammlungs-Neuaufbau").
+    const rows = Array.from(
+      container.querySelector(".start-screen").children,
+    );
+    const titleRowIndex = rows.indexOf(
+      container.querySelector(".start-screen__title-row"),
+    );
+    const cardsRowIndex = rows.indexOf(cardsRow);
+    const modePickerIndex = rows.indexOf(
+      container.querySelector(".mode-picker"),
+    );
+    expect(titleRowIndex).toBeLessThan(cardsRowIndex);
+    expect(cardsRowIndex).toBeLessThan(modePickerIndex);
+  });
+
+  it("zeigt alle 5 Modus-Kacheln in EINER Reihe -- genau ein .mode-picker__group, kein Umbruch auf mehrere Container (Reversion der 2-zeiligen Entscheidung vom 16.08.2026)", () => {
+    const { container } = render();
+
+    const groups = container.querySelectorAll(".mode-picker__group");
+    expect(groups).toHaveLength(1);
+    expect(groups[0].querySelectorAll(".mode-button")).toHaveLength(5);
+  });
+
+  it("jede Modus-Kachel zeigt Icon, Label UND einen kurzen Hinweistext (z. B. 'Antwort antippen')", () => {
+    const { container } = render();
+
+    const quizButton = container.querySelector('[data-mode="quiz"]');
+    expect(
+      quizButton.querySelector(".mode-button__icon").textContent,
+    ).toBe("❓");
+    expect(
+      quizButton.querySelector(".mode-button__label").textContent,
+    ).toBe("Quizfragen");
+    expect(
+      quizButton.querySelector(".mode-button__hint").textContent,
+    ).toBe("Antwort antippen");
+  });
+
+  it("Schwierigkeits-Zeile ist als eigene Zeilen-Sektion (Label + Kachel-Gruppe) umschlossen", () => {
+    const { container } = render();
+
+    const row = container.querySelector(".difficulty-picker-row");
+    expect(row).not.toBeNull();
+    expect(row.querySelector("#difficulty-picker-label")).not.toBeNull();
+    expect(row.querySelector(".difficulty-picker")).not.toBeNull();
+  });
+
+  it("Fragenanzahl-Kacheln behalten alle vier bestehenden Optionen (5/10/15/20 Fragen) im neuen Zeilenlayout -- bewusst NICHT auf 3 reduziert, siehe Datei-Kommentar bei ROUND_LENGTH_OPTIONS in start.js", () => {
+    const { container } = render();
+
+    const chips = Array.from(container.querySelectorAll(".round-length-chip"));
+    expect(chips.map((chip) => chip.textContent)).toEqual([
+      "5 Fragen",
+      "10 Fragen",
+      "15 Fragen",
+      "20 Fragen",
+    ]);
+  });
+
+  it("CTA-Button 'Los geht's! 🚀' steht als letzte, vollbreite Zeile nach der Fragenanzahl-Auswahl", () => {
+    const { container } = render();
+
+    const rows = Array.from(
+      container.querySelector(".start-screen").children,
+    );
+    const roundLengthIndex = rows.indexOf(
+      container.querySelector(".round-length-picker"),
+    );
+    const ctaIndex = rows.indexOf(container.querySelector(".start-button"));
+    expect(roundLengthIndex).toBeLessThan(ctaIndex);
+    expect(ctaIndex).toBe(rows.length - 1);
   });
 });

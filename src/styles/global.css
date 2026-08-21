@@ -413,44 +413,39 @@ button {
 
 /* Start-Bildschirm (siehe design.md, "Nutzerfluss" Punkt 1). */
 
-/* Start-Bildschirm (Redesign, Issue #71; siehe design.md, "Kindgerechtes
-   Redesign" -> Screens -> Start). Grid 1fr 400px: links Titel/Auswahl-Schritte
-   (.start-screen__main), rechts Maskottchen-Karte + Album-Vorschau
-   (.start-screen__side, beide neu in dieser Story). Unter 860px Breite fällt
-   die Seitenspalte unter die Hauptspalte (kein horizontales Scrollen auf
-   kleinen Bildschirmen, siehe Issue #37). */
+/* Start-Bildschirm -- Zeilenlayout (Issue #87, löst den zweispaltigen
+   Haupt-/Seitenspalten-Aufbau aus Issue #71 ab; siehe requirements.md/
+   design.md "Startseiten-/Sammlungs-Neuaufbau", CHANGES-startseite-
+   sammlung.md Abschnitt 1). Container ist jetzt eine einzige Flex-Spalte aus
+   Vollbreite-"Zeilen" (Titel -> Kartenzeile -> Modus -> Schwierigkeit ->
+   Fragenanzahl -> CTA), `gap: 34px` trennt die Zeilen. Kein Grid-Zwei-
+   Spalten-Layout mehr, daher auch kein Bedarf mehr für den früheren
+   860px-Umbruch-Breakpoint auf `.start-screen` selbst (die einzige verbliebene
+   Zwei-Spalten-Stelle ist die neue Kartenzeile, siehe `.start-cards` unten,
+   die weiterhin einen eigenen schmalen Fallback bekommt). */
 .start-screen {
   width: 100%;
-  max-width: 1200px;
-  display: grid;
-  grid-template-columns: 1fr 400px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px 28px 0;
+  display: flex;
+  flex-direction: column;
   gap: var(--k-space-6);
   text-align: left;
 }
 
-@media (max-width: 860px) {
-  .start-screen {
-    grid-template-columns: 1fr;
-  }
-}
-
-.start-screen__main {
+.start-screen__title-row {
   display: flex;
   flex-direction: column;
-  gap: var(--k-space-4);
-}
-
-.start-screen__side {
-  display: flex;
-  flex-direction: column;
-  gap: var(--k-space-4);
+  gap: var(--k-space-3);
+  width: 100%;
 }
 
 .start-screen__title {
   margin: 0;
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: clamp(2.5rem, 6vw, 76px);
+  font-size: 80px;
   color: var(--ink);
 }
 
@@ -458,22 +453,70 @@ button {
   margin: 0;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 19px;
+  font-size: 26px;
   color: var(--ink);
 }
 
-/* Gemeinsamer Schritt-Label-Stil ("1 · Welches Spiel?" usw., siehe design.md,
-   "Layout-Empfehlungen"). */
+/* Kartenzeile (Issue #87, Punkt 2): links "Mein Maskottchen", rechts "Meine
+   Sammlung", gleich hoch (`align-items: stretch`). Reiner Zeilen-/Grid-
+   Rahmen für diese Story -- der eigentliche Karteninhalt ist Platzhalter
+   (siehe start.js, `renderSideSection()`) und wird in den Folge-Stories
+   #88/#89 ersetzt. Unter 860px (gleicher Breakpoint wie zuvor auf
+   `.start-screen`, siehe Issue #37) fällt die zweite Karte unter die erste,
+   damit auf kleinen Bildschirmen kein horizontales Scrollen entsteht. */
+.start-cards {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 26px;
+  align-items: stretch;
+}
+
+@media (max-width: 860px) {
+  .start-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.start-card {
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  box-shadow: var(--k-shadow-card);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-3);
+  text-align: center;
+}
+
+.start-card__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 26px;
+  color: var(--ink);
+}
+
+.start-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-3);
+  flex: 1;
+}
+
+/* Gemeinsamer Schritt-Überschrift-Stil ("1 · Welches Spiel möchtest du
+   spielen?" usw.) -- seit Issue #87 H2-große Überschriften (40px, "gleiche
+   Größe wie der CTA-Text", CHANGES-startseite-sammlung.md Abschnitt 1)
+   statt der vorherigen kleinen Uppercase-Labels. */
 .mode-picker__label,
 .difficulty-picker__label,
 .round-length-picker__label {
   margin: 0;
-  font-family: var(--font-body);
+  font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--muted);
+  font-size: 40px;
+  color: var(--ink);
 }
 
 .mode-picker {
@@ -481,14 +524,20 @@ button {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: var(--k-space-1);
+  gap: var(--k-space-3);
 }
 
+/* Issue #87: bewusste Reversion der Skalierungsentscheidung vom 16.08.2026
+   (design.md, "Modus-Auswahl auf dem Start-Bildschirm: Fünfter/sechster
+   Modus" -- dort: 2-zeiliger Umbruch bei 5 Kacheln). `minmax(0, 1fr)` ist
+   Pflicht (Handoff-Warnung): ohne die 0-Untergrenze hängen die Spalten an
+   ihrem min-content fest und die Seite scrollt horizontal, siehe
+   CHANGES-startseite-sammlung.md Abschnitt 1. */
 .mode-picker__group {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-  gap: var(--k-space-3);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
 }
 
 /* Kindgerechter, nicht-technischer Hinweis bei fehlgeschlagenem Testabruf
@@ -505,6 +554,14 @@ button {
   display: none;
 }
 
+.difficulty-picker-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--k-space-3);
+  width: 100%;
+}
+
 .difficulty-picker {
   width: 100%;
   display: flex;
@@ -514,28 +571,42 @@ button {
 
 /* Große Touch-Zielflächen, deutlich über dem 44×44-px-Minimum (siehe design.md,
    "Barrierefreiheit"). Echtes <button>-Element, per Tastatur bedienbar.
-   min-height 104px (Modus-Kacheln)/92px (Schwierigkeit) laut design.md — die
-   haptische Druck-Mechanik selbst kommt von der zusätzlichen `.k-btn`-Klasse
-   (siehe start.js, Issue #67), hier nur Größe/Fläche/Layout. */
+   Seit Issue #87: min-height 100px (Schwierigkeit/Fragenanzahl) laut neuer
+   Handoff-Datei (CHANGES-startseite-sammlung.md Abschnitt 1) statt der
+   vorherigen 92px -- die haptische Druck-Mechanik selbst kommt von der
+   zusätzlichen `.k-btn`-Klasse (siehe start.js, Issue #67), hier nur Größe/
+   Fläche/Layout. Inhalt zentriert (`text-align: center` zusätzlich zum
+   bestehenden `align-items: center`), siehe Handoff-Vorgabe. */
 .difficulty-button,
 .mode-button {
   flex: 1 1 12rem;
-  min-height: 92px;
+  min-height: 100px;
   padding: var(--k-space-3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   gap: 6px;
   background: var(--card);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 20px;
   font-weight: 800;
+  min-width: 0;
 }
 
+/* Modus-Kacheln (Issue #87, Punkt 3): jetzt in einer einzigen Reihe (siehe
+   `.mode-picker__group` oben) statt der vorherigen Mehrzeilen-Umbruchs --
+   Icon oben/Text darunter (Spalten-Ausrichtung, unverändert gegenüber der
+   bisherigen Kachel-internen Anordnung), aber deutlich schmaler pro Kachel,
+   daher `min-width: 0` (siehe oben) + `overflow-wrap: anywhere` im Textblock
+   (`.mode-button__text` unten) Pflicht gegen Textüberlauf/horizontales
+   Scrollen bei den fünf gleichzeitig sichtbaren Kacheln. */
 .mode-button {
-  min-height: 104px;
+  min-height: 168px;
+  padding: 18px 12px;
+  gap: 12px;
   border-radius: 26px;
 }
 
@@ -564,17 +635,42 @@ button {
   justify-content: center;
   font-size: 28px;
   position: relative;
+  flex-shrink: 0;
+}
+
+/* Textblock (Label + Hinweis) einer Modus-Kachel -- eigener min-width: 0
+   nötig, damit `overflow-wrap: anywhere` in der schmalen Einzeilen-Kachel
+   tatsächlich greift (ein Flex-/Grid-Kind ohne `min-width: 0` wächst sonst
+   über seinen Content hinaus und verhindert den Umbruch, Handoff-Warnung zu
+   horizontalem Scroll). */
+.mode-button__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  width: 100%;
 }
 
 .mode-button__label {
-  font-size: 24px;
+  font-size: 21px;
+  overflow-wrap: anywhere;
+}
+
+.mode-button__hint {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  overflow-wrap: anywhere;
 }
 
 /* "Ausgewählt" wird nicht nur über Farbe kommuniziert, sondern zusätzlich über
    Häkchen-Symbol und aria-pressed (siehe design.md, "Barrierefreiheit",
    "Keine ausschließlich farbbasierte Codierung"). */
 .difficulty-button--selected,
-.mode-button--selected {
+.mode-button--selected,
+.round-length-chip--selected {
   background: var(--sky);
 }
 
@@ -623,16 +719,19 @@ button {
   display: inline-block;
 }
 
-/* Fragenanzahl-Auswahl (Issue #13): bewusst deutlich kleiner/dezenter als
-   .difficulty-picker (Chip-Reihe statt große Kacheln), damit sie klar
-   sekundär zur Schwierigkeitsstufen-Auswahl bleibt (design.md-Abstimmung mit
-   ux-design, siehe Issue-Kommentar). */
+/* Fragenanzahl-Auswahl (Issue #13, Zeilenlayout seit Issue #87): früher eine
+   bewusst kleine/dezente Chip-Reihe (design.md-Abstimmung mit ux-design), die
+   neue Handoff-Datei (CHANGES-startseite-sammlung.md Abschnitt 1) verlangt
+   für diese Zeile jetzt aber volle Kachel-Größe wie beim Schwierigkeitsstufen-
+   Picker ("flex: 1", 32px) -- siehe `.round-length-chip` unten, das dieselbe
+   Größenordnung wie `.difficulty-button` bekommt statt der vorherigen kleinen
+   Pillen-Chips. */
 .round-length-picker {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: var(--k-space-1);
+  gap: var(--k-space-3);
 }
 
 /* CSS-Cascade-Falle wie bei .image-hint[hidden]/.mode-picker__hint[hidden]
@@ -647,35 +746,34 @@ button {
 
 .round-length-chip-group {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--k-space-2);
+  gap: 16px;
 }
 
-/* Kleiner als .difficulty-button, aber weiterhin deutlich über dem
-   44×44-px-Touch-Zielgrößen-Minimum (design.md, "Barrierefreiheit"). Echtes
-   <button>-Element, per Tastatur bedienbar. */
+/* Seit Issue #87: volle Kachel-Größe (analog `.difficulty-button`, min-height
+   100px, `flex: 1`, zentriert) statt der vorherigen kleinen Pillen-Chips --
+   die Auswahl bleibt weiterhin ein echtes <button>-Element, per Tastatur
+   bedienbar, deutlich über dem 44×44-px-Touch-Zielgrößen-Minimum (design.md,
+   "Barrierefreiheit"). */
 .round-length-chip {
-  min-width: 2.75rem;
-  min-height: 2.75rem;
-  padding: 0.4rem 0.9rem;
+  flex: 1;
+  min-height: 100px;
+  min-width: 0;
+  padding: var(--k-space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   background: var(--card);
   color: var(--ink);
   font-family: var(--font-heading);
   font-size: 32px;
   font-weight: 800;
-  border-radius: var(--k-radius-pill);
-}
-
-/* "Ausgewählt" wird wie beim Schwierigkeitsstufen-Picker nicht nur über Farbe
-   kommuniziert, sondern zusätzlich über aria-pressed (design.md,
-   "Barrierefreiheit", "Keine ausschließlich farbbasierte Codierung"). */
-.round-length-chip--selected {
-  background: var(--sky);
+  border-radius: var(--k-radius-card);
 }
 
 .start-button {
   width: 100%;
-  min-height: 108px;
+  min-height: 112px;
   padding: var(--k-space-3) var(--k-space-5);
   background: var(--ink);
   color: var(--paper);

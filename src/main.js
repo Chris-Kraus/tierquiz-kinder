@@ -57,16 +57,22 @@ app.innerHTML = `
 const appHeader = document.querySelector("#app-header");
 const appContent = document.querySelector("#app-content");
 
+// Issue #87: Kopfzeile wird auf der Startseite komplett ausgeblendet
+// (`showHeader = screen !== "start"`, design.md/requirements.md
+// "Startseiten-/Sammlungs-Neuaufbau") -- das neue Zeilenlayout dort braucht
+// weder Logo/Home-Button noch Modus-Pille/Sterne-Badge (Letzteres bekommt in
+// einer Folge-Story #89 eine eigene Platzierung unter der neuen "Meine
+// Sammlung"-Karte). `appHeader.innerHTML` wird hier bewusst geleert statt gar
+// nicht angefasst zu lassen -- kommt man von einem anderen Bildschirm zurück
+// zum Start (z. B. über den Home-Button), muss die zuvor dort gerenderte
+// Kopfzeile verschwinden, nicht nur beim allerersten Aufruf leer bleiben.
+// Alle anderen Bildschirme (Frage-Runde, Ergebnis, Maskottchen-Auswahl) rufen
+// weiterhin unverändert renderHeader() auf (siehe showQuestionScreen/
+// showResultScreen unten) -- keine neue header.js-Option nötig, da main.js
+// bereits die einzige Stelle ist, die pro Bildschirm-Wechsel entscheidet, ob
+// und wie die Kopfzeile gerendert wird.
 function showStartScreen() {
-  renderHeader(appHeader, {
-    onBackToStart: showStartScreen,
-    // Issue #81: Closure über den aktuellen Navigationszustand (hier: den
-    // Start-Bildschirm selbst) statt eines String-basierten `backTo`-Werts
-    // (architecture.md, Punkt 3) -- "Später ↩"/Einlösen im Chooser kehrt
-    // damit exakt hierher zurück.
-    onOpenMascotChooser: () =>
-      renderMascotChooserScreen(appContent, { onDone: () => showStartScreen() }),
-  });
+  appHeader.innerHTML = "";
   renderStartScreen(appContent, { onStart: showQuestionScreen });
 }
 
