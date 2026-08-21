@@ -20,6 +20,13 @@ import { renderLetterSearchScreen } from "./screens/letterSearch.js";
 import { createQuizState } from "./quiz/state.js";
 import { GAME_MODE } from "./quiz/gameMode.js";
 import { renderHeader } from "./screens/header.js";
+// Issue #81: neuer Maskottchen-Auswahl-Bildschirm, geöffnet über das im
+// Header neu hinzugekommene Sterne-Badge (siehe screens/header.js,
+// `onOpenMascotChooser`). Rendert wie jeder andere Screen ausschließlich in
+// `appContent` -- main.js bleibt die einzige Stelle, die renderHeader() UND
+// den jeweiligen Content-Screen kennt (siehe unten, `onOpenMascotChooser`-
+// Closures pro Navigationszustand, architecture.md Punkt 3).
+import { renderMascotChooserScreen } from "./screens/mascotChooser.js";
 // Issue #80: Sterne-/Maskottchen-Freischaltsystem (erster Teil, reine
 // Datengrundlage ohne sichtbare UI). showResultScreen ist bereits die
 // einzige Stelle, durch die jeder Rundenabschluss aller fünf Modi läuft
@@ -51,7 +58,15 @@ const appHeader = document.querySelector("#app-header");
 const appContent = document.querySelector("#app-content");
 
 function showStartScreen() {
-  renderHeader(appHeader, { onBackToStart: showStartScreen });
+  renderHeader(appHeader, {
+    onBackToStart: showStartScreen,
+    // Issue #81: Closure über den aktuellen Navigationszustand (hier: den
+    // Start-Bildschirm selbst) statt eines String-basierten `backTo`-Werts
+    // (architecture.md, Punkt 3) -- "Später ↩"/Einlösen im Chooser kehrt
+    // damit exakt hierher zurück.
+    onOpenMascotChooser: () =>
+      renderMascotChooserScreen(appContent, { onDone: () => showStartScreen() }),
+  });
   renderStartScreen(appContent, { onStart: showQuestionScreen });
 }
 
@@ -67,6 +82,16 @@ function showQuestionScreen(quizState) {
             roundLength: quizState.roundLength,
             score: quizState.score,
           },
+    // Issue #81: Closure über denselben (mutierten) quizState -- der
+    // jeweilige Frage-Bildschirm hält currentIndex/score direkt auf diesem
+    // Objekt, daher landet "Später ↩"/Einlösen exakt bei der Frage, von der
+    // aus geöffnet wurde, nicht bei Frage 1 (siehe question.js: baut
+    // quizState.questions nur einmal auf, ein erneuter renderQuestionScreen-
+    // Aufruf für denselben quizState ist idempotent).
+    onOpenMascotChooser: () =>
+      renderMascotChooserScreen(appContent, {
+        onDone: () => showQuestionScreen(quizState),
+      }),
   });
 
   if (quizState.mode === GAME_MODE.REVERSE) {
@@ -95,18 +120,34 @@ function showQuestionScreen(quizState) {
 }
 
 function showResultScreen(quizState) {
-  // Stern-Vergabe zentral hier auswerten (siehe Import-Kommentar oben) —
-  // noch keine UI dafür in dieser Story (#81/#83 folgen), rein stille
-  // Persistenz.
-  recordRoundCompletion({
-    mode: quizState.mode,
-    score: quizState.score,
-    roundLength: quizState.roundLength,
-  });
+  // Stern-Vergabe zentral hier auswerten (siehe Import-Kommentar oben).
+  // Seit Issue #81 kann dieselbe Funktion für denselben quizState/
+  // Ergebnis-Objekt MEHRFACH aufgerufen werden: öffnet das Kind über das neue
+  // Sterne-Badge die Maskottchen-Auswahl mitten vom Ergebnis-Bildschirm aus
+  // und kehrt danach hierher zurück (`onOpenMascotChooser` unten,
+  // architecture.md Punkt 3), ruft main.js showResultScreen(quizState) ein
+  // zweites Mal mit demselben Objekt auf. Ohne Schutz würde
+  // recordRoundCompletion() dabei fälschlich ein zweites Mal ausgewertet und
+  // bei score >= 5 ein zweiter, unverdienter Stern vergeben. Der `starsAwarded`-
+  // Merker wird direkt auf das Ergebnis-Objekt geschrieben (gleiches Muster
+  // wie die transienten `pending*`-Felder in start.js) und verhindert das --
+  // rein lokale main.js-Absicherung, keine Änderung an progress.js nötig.
+  if (!quizState.starsAwarded) {
+    recordRoundCompletion({
+      mode: quizState.mode,
+      score: quizState.score,
+      roundLength: quizState.roundLength,
+    });
+    quizState.starsAwarded = true;
+  }
 
   renderHeader(appHeader, {
     onBackToStart: showStartScreen,
     mode: quizState.mode,
+    onOpenMascotChooser: () =>
+      renderMascotChooserScreen(appContent, {
+        onDone: () => showResultScreen(quizState),
+      }),
   });
   // "Nochmal spielen" und "Zurück zum Start" führen laut design.md bewusst
   // zu zwei getrennten Pfaden (QA-Feedback zu Issue #7, siehe Issue-Kommentar):
