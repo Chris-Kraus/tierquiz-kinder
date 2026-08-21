@@ -793,69 +793,126 @@ button {
   cursor: not-allowed;
 }
 
-/* Maskottchen-Karte (design.md: --sand Fläche, Platzhalter 200px + k-float,
-   darunter weiße Sprechblase). Echte Illustration fehlt noch (siehe
-   architecture.md, "Kindgerechtes Redesign" -> Maskottchen "Fine") — die
-   Platzhalter-Textur unten ist bewusst über eine einzige Regel referenziert,
-   damit ein späterer Austausch keine Markup-Änderung braucht. */
-.start-mascot-card {
-  background: var(--sand);
+/* "Mein Maskottchen"-Bühne (Issue #88, neue Handoff-Datei
+   "CHANGES-startseite-sammlung.md", Abschnitt 2) -- ersetzt die frühere,
+   kleinere Guide-Karte + Karussell-Bühne aus Issue #82
+   (die alten Klassen .start-mascot-card und .mascot-carousel__stage, siehe
+   Bugfix-/Story-Historie). `aspect-ratio: 1.1` + `box-sizing: border-box` sind laut
+   Handoff PFLICHT -- ohne Letzteres würden Rahmen (4px) und Padding
+   (28px/22px) über die 100% Kartenbreite hinauslaufen (der globale
+   `* { box-sizing: border-box }`-Reset oben deckt das zwar bereits ab, die
+   Regel steht hier trotzdem explizit, wie im Handoff ausdrücklich als
+   Warnhinweis festgehalten). */
+.mascot-stage {
+  width: 100%;
+  aspect-ratio: 1.1;
+  box-sizing: border-box;
   border: var(--k-border-lg) solid var(--ink);
-  border-radius: var(--k-radius-card);
-  box-shadow: var(--k-shadow-card);
-  padding: var(--k-space-4);
+  border-radius: 22px;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
 }
 
-.start-mascot-card__placeholder {
-  height: 200px;
-  border-radius: var(--k-radius-btn);
-  /* Fallback-Textur, falls aus irgendeinem Grund kein Tint via Inline-Style
-     ankommt (siehe start.js, renderMascotAreaMarkup) -- im Normalfall
-     überschreibt der Inline-`background` diese Regel mit `tintOf(activeId)`
-     (Issue #82, "Dynamischer Guide"). */
-  background: repeating-linear-gradient(
-    135deg,
-    #ffe3b8 0 14px,
-    #ffefd6 14px 28px
-  );
+/* Emoji-Platzhalter für das aktive Maskottchen -- siehe mascots.js-Datei-
+   Kommentar: Emojis sind bewusst nur Platzhalter für spätere Comic-
+   Illustrationen, ein späterer Austausch braucht nur diese eine Regel/dieses
+   eine Markup-Element anzufassen. */
+.mascot-stage__figure {
+  font-size: 96px;
+  line-height: 1;
+  animation: k-float 4s ease-in-out infinite;
+}
+
+.mascot-stage__name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 28px;
+  color: var(--ink);
+}
+
+.mascot-stage__role {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 17px;
+  /* Handoff nennt hier wörtlich #5C5470 -- dieselbe gedeckte Lila-Familie,
+     die beim ursprünglichen Redesign bereits einmal gegen WCAG AA geprüft
+     und als --muted (#685C7E) festgelegt wurde (siehe Token-Kommentar oben).
+     Bewusst der bereits verifizierte Token statt eines zweiten, ungeprüften
+     Lila-Werts an derselben Stelle (dieselbe Karte, dieselbe Aufgabe wie die
+     frühere .mascot-carousel__stage-role, die ebenfalls --muted nutzt). */
+  color: var(--muted);
+}
+
+.start-mascot-card__select-label {
+  /* fängt den Höhenausgleich zur "Meine Sammlung"-Nachbarkarte ab (Handoff:
+     "damit die Bühne ihr Verhältnis behält") -- .start-card__body ist bereits
+     ein Flex-Container, `margin-top: auto` schiebt Label+Nav+Hinweis als
+     Gruppe an den unteren Kartenrand, ohne die Bühne selbst zu stauchen. */
+  margin: 0;
+  margin-top: auto;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  /* Siehe Kommentar bei .mascot-stage__role -- Handoff nennt #8B7BA8,
+     bewusst durch den bereits WCAG-AA-geprüften --muted-Token ersetzt. */
+  color: var(--muted);
+}
+
+.start-mascot-card__hint {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* Wiederverwendbare 3-teilige Nav-Komponente (src/quiz/navControl.js, Issue
+   #88): Pfeil ← / weißes Badge / Pfeil →, zentriert, 12px gap. Erste von 4
+   geplanten Verwendungsstellen (architecture.md) -- .mascot-carousel* bleibt
+   vorerst bestehen, da result.js (Issue #90) noch darauf verweist. */
+.nav-control {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: k-float 3s ease-in-out infinite;
+  gap: 12px;
 }
 
-/* Emoji-Platzhalter für das aktive Maskottchen (Issue #82) -- siehe
-   mascots.js-Datei-Kommentar: Emojis sind bewusst nur Platzhalter für
-   spätere Comic-Illustrationen, eine spätere Austausch braucht nur diese eine
-   Regel/dieses eine Markup-Element anzufassen. */
-.start-mascot-card__emoji {
-  font-size: 72px;
-  line-height: 1;
-}
-
-.start-mascot-card__bubble {
-  margin-top: var(--k-space-3);
+/* .k-btn (oben) liefert Rahmen/Haptik-Übergänge; die drei Werte hier
+   überschreiben bewusst .k-btns Standard-Radius/-Schatten (24px/"0 8px 0"),
+   da der Handoff für dieses kleinere Nav-Element explizit andere Maße nennt
+   (Radius 12, Schatten "0 5px 0"). Reihenfolge im Stylesheet ist hier
+   relevant: diese Regel steht bewusst NACH der .k-btn-Definition, damit sie
+   bei gleicher Selektor-Spezifität gewinnt. */
+.nav-control__arrow {
   background: var(--card);
-  border: var(--k-border-lg) solid var(--ink);
-  border-radius: var(--k-radius-sm);
-  padding: var(--k-space-3);
+  min-height: 48px;
+  font-size: 22px;
+  padding: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 0 var(--ink);
 }
 
-.start-mascot-card__label {
-  margin: 0 0 4px;
-  font-family: var(--font-body);
-  font-weight: 800;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--link);
+.nav-control__arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
-.start-mascot-card__quote {
-  margin: 0;
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 20px;
+.nav-control__badge {
+  background: var(--card);
+  border: var(--k-border-sm) solid var(--ink);
+  border-radius: 12px;
+  padding: 8px 22px;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  white-space: nowrap;
   color: var(--ink);
 }
 

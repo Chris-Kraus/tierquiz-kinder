@@ -130,13 +130,19 @@ import { buildMemoryDeck } from "../quiz/memory.js";
 import { generateNextLetterSearchQuestion } from "../quiz/letterSearchQuestionGenerator.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
 import { loadCollectedAnimals, getAlbumProgress, ALBUM_TARGET } from "../quiz/album.js";
-// Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
-// (#80-#83): Karussell + dynamischer Guide unterhalb des Albums --
-// `loadProgress`/`setActiveIdx` liefern/steuern den aktiven Maskottchen-
-// Index (siehe progress.js), `MASCOTS`/`tintOf` die Anzeige-Daten (Name,
-// Emoji, Rolle, Hintergrundfarbe je Maskottchen, siehe mascots.js).
+// Issue #82 (Datengrundlage weiterhin genutzt), Issue #88 (Markup/Wiring
+// ersetzt -- siehe renderMascotStageCardMarkup() unten): `loadProgress`/
+// `setActiveIdx` liefern/steuern den aktiven Maskottchen-Index (siehe
+// progress.js), `MASCOTS`/`tintOf` die Anzeige-Daten (Name, Emoji, Rolle,
+// Hintergrundfarbe je Maskottchen, siehe mascots.js).
 import { loadProgress, setActiveIdx } from "../quiz/progress.js";
 import { MASCOTS, tintOf } from "../quiz/mascots.js";
+// Issue #88: neue wiederverwendbare Nav-Komponente (Pfeil/Badge/Pfeil),
+// ersetzt das bisherige, screen-eigene Karussell-Markup/-Wiring aus Issue
+// #82 (renderMascotCarouselMarkup()/wireMascotCarousel()) an dieser ersten
+// von 4 geplanten Verwendungsstellen (siehe architecture.md,
+// "Wiederverwendbare 3-teilige Nav-Komponente").
+import { buildNavControlMarkup, wireNavControl } from "../quiz/navControl.js";
 
 // Nachschlage-Karte Tier-ID -> deutscher Name fürs Album (Redesign, Issue
 // #71) — einmalig aus der ohnehin schon importierten animals.json gebaut,
@@ -197,50 +203,23 @@ function formatStars(n) {
 }
 
 /**
- * Baut das Markup für die dynamische Maskottchen-Guide-Karte (Issue #82,
- * ersetzt die bisher fest verdrahtete "Fine, dein Tierguide"-Anzeige) --
- * zeigt das über `loadProgress().activeIdx` bestimmte aktive Maskottchen
- * (design.md, "Guide-Sprechblase je Maskottchen": die "Rolle" aus mascots.js
- * wird direkt als Sprechblasentext verwendet, kein separates Zitat pro
- * Maskottchen). Nimmt den bereits geladenen Fortschritt als Parameter
- * entgegen (statt selbst erneut loadProgress() aufzurufen), damit Guide-Karte
- * und Karussell darunter (siehe renderMascotCarouselMarkup) garantiert
- * denselben Stand zeigen, auch wenn beide innerhalb desselben
- * Side-Section-Renderings gebaut werden.
+ * Baut das Markup für die "Mein Maskottchen"-Karte (Issue #88, neue
+ * Handoff-Datei "CHANGES-startseite-sammlung.md", Abschnitt 2) -- ersetzt
+ * die bisherige Kombination aus Guide-Karte (vormals
+ * renderMascotGuideMarkup()) + kleinem Karussell (vormals
+ * renderMascotCarouselMarkup()) aus Issue #82 durch eine große quadratische
+ * Bühne (`aspect-ratio: 1.1`, `box-sizing: border-box` -- Pflicht laut
+ * Handoff, sonst laufen Rahmen/Padding über die 100% Kartenbreite hinaus)
+ * plus das neue wiederverwendbare Nav-Element (src/quiz/navControl.js). Das
+ * frühere Sprechblasen-Element ("Fine, dein Tierguide") entfällt laut
+ * Handoff ersatzlos -- der Guide geht vollständig in der neuen Bühne auf.
+ * `aria-live="polite"` auf der Bühne (gleiches Muster wie vorher
+ * `.mascot-carousel__stage`), damit ein Pfeil-Klick auch ohne visuellen
+ * Fokuswechsel angekündigt wird.
  * @param {{stars: number, unlockedIds: number[], activeIdx: number}} progress
  * @returns {string}
  */
-function renderMascotGuideMarkup(progress) {
-  const { unlockedIds, activeIdx } = progress;
-  const activeMascotId = unlockedIds[activeIdx] ?? 0;
-  const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
-  const tint = tintOf(activeMascotId);
-
-  return `
-    <div class="start-mascot-card">
-      <div class="start-mascot-card__placeholder" style="background: ${tint};" aria-hidden="true">
-        <span class="start-mascot-card__emoji" aria-hidden="true">${activeMascot.emoji}</span>
-      </div>
-      <div class="start-mascot-card__bubble">
-        <p class="start-mascot-card__label">${activeMascot.name}, dein Tierguide</p>
-        <p class="start-mascot-card__quote">„${activeMascot.role}“</p>
-      </div>
-    </div>
-  `;
-}
-
-/**
- * Baut das Markup für das Maskottchen-Karussell unter dem Album (Issue #82,
- * Handoff "Maskottchen-Karussell"): Pfeile navigieren durch die
- * freigeschalteten Maskottchen (`unlockedIds`), an den Rändern `disabled`
- * (`aria-label` statt reiner Pfeil-Glyphe, design.md "Barrierefreiheit").
- * Bühne mit `aria-live="polite"` (gleiches Muster wie `.reverse-image-frame`
- * in reverseQuestion.js), damit ein Wechsel per Pfeil-Klick auch ohne
- * visuellen Fokuswechsel angekündigt wird.
- * @param {{stars: number, unlockedIds: number[], activeIdx: number}} progress
- * @returns {string}
- */
-function renderMascotCarouselMarkup(progress) {
+function renderMascotStageCardMarkup(progress) {
   const { stars, unlockedIds, activeIdx } = progress;
   const activeMascotId = unlockedIds[activeIdx] ?? 0;
   const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
@@ -249,45 +228,35 @@ function renderMascotCarouselMarkup(progress) {
   const allCollected = unlockedIds.length >= MASCOTS.length;
   const canRedeem = stars >= 5 && !allCollected;
 
+  // Drei-Fälle-Hinweiszeile laut Handoff, Abschnitt 2.5 -- Copy hier bewusst
+  // wörtlich aus der neuen Handoff-Datei übernommen (weicht leicht vom
+  // vorherigen #82-Karussell-Wortlaut ab).
   let hint;
   if (allCollected) {
     hint = "Du hast alle 50 Maskottchen gesammelt!";
   } else if (canRedeem) {
     hint = `Du hast ${stars} Sterne — du darfst dir ein neues Maskottchen aussuchen!`;
   } else {
-    hint = `${unlockedIds.length} von 50 dabei · noch ${formatStars(5 - stars)} bis zum nächsten.`;
+    hint = `Noch ${formatStars(5 - stars)}, bis du ein weiteres Maskottchen freischalten kannst.`;
   }
 
-  const isFirst = activeIdx === 0;
-  const isLast = activeIdx === unlockedIds.length - 1;
+  const navMarkup = buildNavControlMarkup({
+    label: `${activeIdx + 1}/${unlockedIds.length}`,
+    disabledPrev: activeIdx === 0,
+    disabledNext: activeIdx === unlockedIds.length - 1,
+    ariaLabelPrev: "Vorheriges Maskottchen",
+    ariaLabelNext: "Nächstes Maskottchen",
+  });
 
   return `
-    <div class="mascot-carousel">
-      <div class="mascot-carousel__header">
-        <h3 class="mascot-carousel__title">Meine Maskottchen</h3>
-        <span class="mascot-carousel__pill">${activeIdx + 1} von ${unlockedIds.length}</span>
-      </div>
-      <div class="mascot-carousel__row">
-        <button
-          type="button"
-          class="mascot-carousel__arrow mascot-carousel__arrow--prev k-btn"
-          aria-label="Vorheriges Maskottchen"
-          ${isFirst ? "disabled" : ""}
-        >←</button>
-        <div class="mascot-carousel__stage" style="background: ${tint};" aria-live="polite">
-          <span class="mascot-carousel__stage-emoji" aria-hidden="true">${activeMascot.emoji}</span>
-          <p class="mascot-carousel__stage-name">${activeMascot.name}</p>
-          <p class="mascot-carousel__stage-role">${activeMascot.role}</p>
-        </div>
-        <button
-          type="button"
-          class="mascot-carousel__arrow mascot-carousel__arrow--next k-btn"
-          aria-label="Nächstes Maskottchen"
-          ${isLast ? "disabled" : ""}
-        >→</button>
-      </div>
-      <p class="mascot-carousel__hint">${hint}</p>
+    <div class="mascot-stage" style="background: ${tint};" aria-live="polite">
+      <span class="mascot-stage__figure" aria-hidden="true">${activeMascot.emoji}</span>
+      <p class="mascot-stage__name">${activeMascot.name}</p>
+      <p class="mascot-stage__role">${activeMascot.role}</p>
     </div>
+    <p class="start-mascot-card__select-label">Maskottchen auswählen</p>
+    ${navMarkup}
+    <p class="start-mascot-card__hint">${hint}</p>
   `;
 }
 
@@ -552,20 +521,16 @@ export function renderStartScreen(container, { onStart } = {}) {
     </section>
   `;
 
-  // Issue #87: die frühere gemeinsame Seitenspalte (`.start-screen__side`)
-  // ist der neuen Kartenzeile (`.start-cards`, zwei Karten "Mein Maskottchen"
-  // / "Meine Sammlung") gewichen -- der eigentliche Karten-INHALT (Bühne +
-  // dreiteiliges Nav-Element bzw. Sammlungs-Raster) ist laut Issue-Scope
-  // explizit NICHT Teil dieser Story (folgt in #88/#89). Bis dahin bleibt der
-  // bereits bestehende Guide/Karussell- bzw. Album-Vorschau-Markup unverändert
-  // erhalten, nur als Platzhalter-Inhalt in die jeweilige Karte verschoben --
-  // "Mein Maskottchen" bekommt Guide-Karte + Karussell (bisher gemeinsam in
-  // der Seitenspalte), "Meine Sammlung" die bisherige Album-Vorschau (wird in
-  // #89 durch das echte 50-Maskottchen-Raster ersetzt, #91 entfernt album.js
-  // vollständig). Gleiches Re-Render-Prinzip wie zuvor: `renderSideSection()`
-  // baut den initialen Zustand UND wird nach jedem Pfeil-Klick erneut
-  // aufgerufen (Issue #82, Punkt 4), aktualisiert aber jetzt zwei getrennte
-  // Karten-Body-Container statt einer gemeinsamen Seitenspalte.
+  // Issue #87 richtete die Kartenzeile (`.start-cards`, "Mein Maskottchen"
+  // / "Meine Sammlung") als reinen Layout-Rahmen ein. Issue #88 füllt jetzt
+  // die linke Karte mit der echten Bühne + dem neuen navControl.js-Element
+  // (siehe renderMascotStageCardMarkup() oben); die rechte Karte bleibt bis
+  // #89 bei der bisherigen Album-Vorschau (wird dort durch das echte
+  // 50-Maskottchen-Raster ersetzt, #91 entfernt album.js vollständig).
+  // Gleiches Re-Render-Prinzip wie zuvor: `renderSideSection()` baut den
+  // initialen Zustand UND wird nach jedem Pfeil-Klick erneut aufgerufen,
+  // aktualisiert aber jetzt zwei getrennte Karten-Body-Container statt einer
+  // gemeinsamen Seitenspalte.
   const mascotCardBodyEl = container.querySelector("[data-mascot-card-body]");
   const collectionCardBodyEl = container.querySelector(
     "[data-collection-card-body]",
@@ -573,32 +538,27 @@ export function renderStartScreen(container, { onStart } = {}) {
 
   function renderSideSection() {
     const progress = loadProgress();
-    mascotCardBodyEl.innerHTML = `
-      ${renderMascotGuideMarkup(progress)}
-      ${renderMascotCarouselMarkup(progress)}
-    `;
+    mascotCardBodyEl.innerHTML = renderMascotStageCardMarkup(progress);
     collectionCardBodyEl.innerHTML = renderAlbumPreviewMarkup();
-    wireMascotCarousel();
-  }
 
-  function wireMascotCarousel() {
-    const prevButton = mascotCardBodyEl.querySelector(
-      ".mascot-carousel__arrow--prev",
-    );
-    const nextButton = mascotCardBodyEl.querySelector(
-      ".mascot-carousel__arrow--next",
-    );
-
-    prevButton?.addEventListener("click", () => {
-      const { activeIdx } = loadProgress();
-      setActiveIdx(activeIdx - 1);
-      renderSideSection();
-    });
-
-    nextButton?.addEventListener("click", () => {
-      const { activeIdx } = loadProgress();
-      setActiveIdx(activeIdx + 1);
-      renderSideSection();
+    // Doppel-Tap-Robustheit (architecture.md, Punkt 3): onPrev/onNext lesen
+    // hier bewusst JEDES MAL frisch über loadProgress(), statt die oben
+    // bereits geladene `progress`-Variable (eine potenziell veraltete
+    // Kopie) wiederzuverwenden -- kein Debounce/Timeout dazwischen, danach
+    // sofortiges Neu-Rendern (inkl. Neu-Verdrahten frischer Buttons), damit
+    // ein zweiter, schnell folgender Klick garantiert den bereits durch den
+    // ersten Klick geschriebenen Stand liest.
+    wireNavControl(mascotCardBodyEl, {
+      onPrev: () => {
+        const { activeIdx } = loadProgress();
+        setActiveIdx(activeIdx - 1);
+        renderSideSection();
+      },
+      onNext: () => {
+        const { activeIdx } = loadProgress();
+        setActiveIdx(activeIdx + 1);
+        renderSideSection();
+      },
     });
   }
 
