@@ -55,6 +55,17 @@ import {
 } from "../quiz/imageHint.js";
 import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
+// Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
+// (#80-#83): das bislang leere `.feedback-panel__mascot`-Platzhalterfeld
+// zeigt jetzt Tint + Emoji des über `loadProgress().activeIdx` aktiven
+// Maskottchen -- konsistent mit der Guide-Karte auf dem Start-Bildschirm
+// (siehe start.js). Rein darstellend (aria-hidden bleibt bestehen), daher
+// reicht ein einmaliger Wert beim Rendern, keine Live-Aktualisierung nötig
+// (ein Wechsel des aktiven Maskottchens passiert nur über die Maskottchen-
+// Auswahl, die diesen Bildschirm ohnehin per onDone -> showQuestionScreen
+// komplett neu rendert, siehe main.js).
+import { loadProgress } from "../quiz/progress.js";
+import { MASCOTS, tintOf } from "../quiz/mascots.js";
 
 /**
  * Rendert den Frage-Bildschirm in den übergebenen Container und steuert den
@@ -87,6 +98,10 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   const animalById = new Map(
     animalsData.animals.map((animal) => [animal.id, animal]),
   );
+
+  const { unlockedIds, activeIdx } = loadProgress();
+  const activeMascotId = unlockedIds[activeIdx] ?? 0;
+  const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
 
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="question-heading">
@@ -151,7 +166,9 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
            .question-screen wirkt statt gegen die schmale rechte Spalte —
            sonst Overflow, siehe PR-Beschreibung/Commit-Historie. -->
       <div class="feedback-panel" hidden>
-        <div class="feedback-panel__mascot" aria-hidden="true"></div>
+        <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};" aria-hidden="true">
+          <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
+        </div>
         <div class="feedback-panel__body">
           <p
             class="question-screen__feedback"

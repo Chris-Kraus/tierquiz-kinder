@@ -77,6 +77,12 @@ import {
   buildAttribution,
   REQUEST_TIMEOUT_MS,
 } from "../quiz/imageHint.js";
+// Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
+// (#80-#83): das bislang leere `.feedback-panel__mascot`-Platzhalterfeld
+// zeigt jetzt Tint + Emoji des aktiven Maskottchens (siehe question.js,
+// gleiches Prinzip -- rein darstellend, keine Live-Aktualisierung nötig).
+import { loadProgress } from "../quiz/progress.js";
+import { MASCOTS, tintOf } from "../quiz/mascots.js";
 
 /**
  * Rendert den "Tiergeräusche"-Frage-Bildschirm in den übergebenen Container
@@ -118,6 +124,10 @@ export function renderSoundQuestionScreen(
   const animalById = new Map(
     animalsData.animals.map((animal) => [animal.id, animal]),
   );
+
+  const { unlockedIds, activeIdx } = loadProgress();
+  const activeMascotId = unlockedIds[activeIdx] ?? 0;
+  const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
 
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="sound-question-heading">
@@ -245,7 +255,9 @@ export function renderSoundQuestionScreen(
            (anders als "Wer bin ich?"/#73 — hier ist ein Foto nach der
            Antwort keine Dopplung, da vorher nur Ton zu hören war). -->
       <div class="feedback-panel" hidden>
-        <div class="feedback-panel__mascot" aria-hidden="true"></div>
+        <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};" aria-hidden="true">
+          <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
+        </div>
         <div class="feedback-panel__body">
           <p
             class="question-screen__feedback"

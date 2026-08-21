@@ -15,6 +15,13 @@
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { DIFFICULTY_LEVELS } from "../quiz/difficulty.js";
+import {
+  setActiveIdx,
+  redeemMascot,
+  recordRoundCompletion,
+} from "../quiz/progress.js";
+import { GAME_MODE } from "../quiz/gameMode.js";
+import { MASCOTS, tintOf } from "../quiz/mascots.js";
 
 const ANIMAL_WITH_FUN_FACT = {
   id: "Q1",
@@ -196,5 +203,81 @@ describe("Visuelle Unterscheidbarkeit Infosatz vs. Fun-Fact (Issue #24 QA-Bugfix
       funFactEl.querySelector(".question-screen__fun-fact-icon"),
     ).not.toBeNull();
     expect(funFactEl.textContent).toContain("Wusstest du schon?");
+  });
+});
+
+// Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
+// (#80-#83): das bislang leere `.feedback-panel__mascot`-Platzhalterfeld
+// zeigt jetzt Tint + Emoji des aktiven Maskottchens, konsistent mit der
+// Guide-Karte auf dem Start-Bildschirm (siehe start.test.js).
+describe("Dynamisches Maskottchen im Feedback-Panel (Issue #82)", () => {
+  function createFakeStorage() {
+    const store = new Map();
+    return {
+      getItem: (key) => (store.has(key) ? store.get(key) : null),
+      setItem: (key, value) => {
+        store.set(key, String(value));
+      },
+    };
+  }
+
+  beforeEach(() => {
+    globalThis.localStorage = createFakeStorage();
+  });
+
+  it("zeigt das Start-Default-Maskottchen (Fine der Fuchs) mit seinem Tint", () => {
+    const container = document.createElement("div");
+    const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [
+      buildQuestion("Q1", "Wolf"),
+    ]);
+    renderQuestionScreen(container, quizState);
+
+    const mascotEl = container.querySelector(".feedback-panel__mascot");
+    expect(mascotEl.getAttribute("style")).toContain(tintOf(0));
+    expect(
+      mascotEl.querySelector(".feedback-panel__mascot-emoji").textContent,
+    ).toBe(MASCOTS[0].emoji);
+  });
+
+  it("zeigt das über activeIdx aktive Maskottchen, nicht immer Fine der Fuchs", () => {
+    recordRoundCompletion({
+      mode: GAME_MODE.QUIZ,
+      score: 5,
+      roundLength: 10,
+    });
+    recordRoundCompletion({
+      mode: GAME_MODE.QUIZ,
+      score: 5,
+      roundLength: 10,
+    });
+    recordRoundCompletion({
+      mode: GAME_MODE.QUIZ,
+      score: 5,
+      roundLength: 10,
+    });
+    recordRoundCompletion({
+      mode: GAME_MODE.QUIZ,
+      score: 5,
+      roundLength: 10,
+    });
+    recordRoundCompletion({
+      mode: GAME_MODE.QUIZ,
+      score: 5,
+      roundLength: 10,
+    });
+    redeemMascot(3);
+    setActiveIdx(1); // unlockedIds = [0, 3] -> Position 1 = Maskottchen id 3
+
+    const container = document.createElement("div");
+    const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [
+      buildQuestion("Q1", "Wolf"),
+    ]);
+    renderQuestionScreen(container, quizState);
+
+    const mascotEl = container.querySelector(".feedback-panel__mascot");
+    expect(mascotEl.getAttribute("style")).toContain(tintOf(3));
+    expect(
+      mascotEl.querySelector(".feedback-panel__mascot-emoji").textContent,
+    ).toBe(MASCOTS[3].emoji);
   });
 });

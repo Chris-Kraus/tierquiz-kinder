@@ -12,6 +12,15 @@
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { DIFFICULTY_LEVELS } from "../quiz/difficulty.js";
+import {
+  loadProgress,
+  setActiveIdx,
+  redeemMascot,
+  recordRoundCompletion,
+} from "../quiz/progress.js";
+import { GAME_MODE } from "../quiz/gameMode.js";
+import { MASCOTS } from "../quiz/mascots.js";
+import { ALBUM_TARGET } from "../quiz/album.js";
 
 vi.mock("../../data/animals.json", () => ({
   default: { animals: [] },
@@ -51,12 +60,238 @@ function render() {
   return { container, onStart };
 }
 
+// Karussell/Guide (Issue #82) lesen/schreiben den Fortschritt über die echte
+// progress.js-API ohne Storage-Override -- gleiches Problem/gleiche Lösung
+// wie in header.test.js/mascotChooser.test.js: diese jsdom/Node-Kombination
+// stellt kein echtes globales `localStorage` bereit. In-Memory-Fake pro Test
+// statt `.clear()`.
+function createFakeStorage() {
+  const store = new Map();
+  return {
+    getItem: (key) => (store.has(key) ? store.get(key) : null),
+    setItem: (key, value) => {
+      store.set(key, String(value));
+    },
+  };
+}
+
+// Treibt den Sternestand über die echte progress.js-API hoch (kein
+// dupliziertes localStorage-Schema in den Tests), analog zu
+// mascotChooser.test.js.
+function setStars(n) {
+  for (let i = 0; i < n; i += 1) {
+    recordRoundCompletion({ mode: GAME_MODE.QUIZ, score: 5, roundLength: 10 });
+  }
+}
+
+// Schaltet ein bestimmtes Maskottchen frei (5 Sterne hochtreiben, dann
+// einlösen) -- baut `unlockedIds` ausschließlich über die echte
+// redeemMascot()-API auf, kein direktes localStorage-Schreiben.
+function unlockMascot(mascotId) {
+  setStars(5);
+  redeemMascot(mascotId);
+}
+
 beforeEach(() => {
   document.body.innerHTML = "";
   generateNextReverseQuestion.mockReset();
   generateNextSoundQuestion.mockReset();
   buildMemoryDeck.mockReset();
   generateNextLetterSearchQuestion.mockReset();
+  globalThis.localStorage = createFakeStorage();
+});
+
+describe("Album 3×3-Raster (Issue #82)", () => {
+  it("rendert genau ALBUM_TARGET (9) Album-Felder in einem 3-Spalten-Grid", () => {
+    const { container } = render();
+
+    const slots = container.querySelectorAll(".start-album-preview__slot");
+    expect(slots).toHaveLength(ALBUM_TARGET);
+    expect(ALBUM_TARGET).toBe(9);
+
+    const badge = container.querySelector(".start-album-preview__badge");
+    expect(badge.textContent).toBe(`0/${ALBUM_TARGET}`);
+  });
+});
+
+describe("Dynamischer Guide auf dem Start-Bildschirm (Issue #82)", () => {
+  it("zeigt das Start-Default-Maskottchen (Fine der Fuchs) als Guide", () => {
+    const { container } = render();
+
+    expect(
+      container.querySelector(".start-mascot-card__label").textContent,
+    ).toBe("Fine der Fuchs, dein Tierguide");
+    expect(
+      container.querySelector(".start-mascot-card__quote").textContent,
+    ).toBe("„rät neugierig mit“");
+  });
+
+  it("zeigt das aktive (nicht das erste) freigeschaltete Maskottchen, wenn activeIdx entsprechend gesetzt ist", () => {
+    unlockMascot(1);
+    unlockMascot(2);
+    setActiveIdx(1); // unlockedIds = [0, 1, 2] -> Position 1 = Maskottchen id 1
+
+    const { container } = render();
+
+    expect(
+      container.querySelector(".start-mascot-card__label").textContent,
+    ).toBe(`${MASCOTS[1].name}, dein Tierguide`);
+    expect(
+      container.querySelector(".start-mascot-card__quote").textContent,
+    ).toBe(`„${MASCOTS[1].role}“`);
+  });
+});
+
+describe("Maskottchen-Karussell (Issue #82)", () => {
+  it("zeigt beim Start-Default genau 1 freigeschaltetes Maskottchen, beide Pfeile disabled", () => {
+    const { container } = render();
+
+    expect(container.querySelector(".mascot-carousel__pill").textContent).toBe(
+      "1 von 1",
+    );
+    expect(
+      container.querySelector(".mascot-carousel__arrow--prev").disabled,
+    ).toBe(true);
+    expect(
+      container.querySelector(".mascot-carousel__arrow--next").disabled,
+    ).toBe(true);
+  });
+
+  it("hat aussagekräftige aria-label statt reiner Pfeil-Glyphen, und aria-live='polite' auf der Bühne", () => {
+    const { container } = render();
+
+    expect(
+      container
+        .querySelector(".mascot-carousel__arrow--prev")
+        .getAttribute("aria-label"),
+    ).toBe("Vorheriges Maskottchen");
+    expect(
+      container
+        .querySelector(".mascot-carousel__arrow--next")
+        .getAttribute("aria-label"),
+    ).toBe("Nächstes Maskottchen");
+    expect(
+      container.querySelector(".mascot-carousel__stage").getAttribute("aria-live"),
+    ).toBe("polite");
+  });
+
+  it("aktiviert den 'zurück'-Pfeil und deaktiviert 'weiter' korrekt in der Mitte, an den Rändern jeweils umgekehrt", () => {
+    unlockMascot(1);
+    unlockMascot(2);
+    setActiveIdx(1); // Mitte von 3 freigeschalteten Maskottchen
+
+    const { container } = render();
+
+    expect(
+      container.querySelector(".mascot-carousel__arrow--prev").disabled,
+    ).toBe(false);
+    expect(
+      container.querySelector(".mascot-carousel__arrow--next").disabled,
+    ).toBe(false);
+    expect(container.querySelector(".mascot-carousel__pill").textContent).toBe(
+      "2 von 3",
+    );
+  });
+
+  it("navigiert per Pfeil-Klick, aktualisiert Bühne/Pille/Guide synchron und persistiert setActiveIdx", () => {
+    unlockMascot(1);
+    unlockMascot(2);
+    setActiveIdx(0); // unlockedIds = [0, 1, 2], starte bei Fine (id 0)
+
+    const { container } = render();
+
+    expect(
+      container.querySelector(".mascot-carousel__stage-name").textContent,
+    ).toBe(MASCOTS[0].name);
+
+    container.querySelector(".mascot-carousel__arrow--next").click();
+
+    expect(
+      container.querySelector(".mascot-carousel__stage-name").textContent,
+    ).toBe(MASCOTS[1].name);
+    expect(container.querySelector(".mascot-carousel__pill").textContent).toBe(
+      "2 von 3",
+    );
+    // Guide-Karte unter dem Album wechselt synchron mit (Issue #82, Punkt 4).
+    expect(
+      container.querySelector(".start-mascot-card__label").textContent,
+    ).toBe(`${MASCOTS[1].name}, dein Tierguide`);
+    // Persistiert über setActiveIdx (progress.js) statt nur lokalem UI-Zustand.
+    expect(loadProgress().activeIdx).toBe(1);
+
+    container.querySelector(".mascot-carousel__arrow--prev").click();
+    expect(
+      container.querySelector(".mascot-carousel__stage-name").textContent,
+    ).toBe(MASCOTS[0].name);
+    expect(loadProgress().activeIdx).toBe(0);
+  });
+
+  it("bewahrt bereits getroffene Schwierigkeitsstufen-Auswahl über einen Karussell-Pfeilklick hinweg", () => {
+    unlockMascot(1);
+    const { container } = render();
+
+    const easyButton = container.querySelector(
+      `[data-difficulty="${DIFFICULTY_LEVELS.EASY}"]`,
+    );
+    easyButton.click();
+    expect(easyButton.classList.contains("difficulty-button--selected")).toBe(
+      true,
+    );
+
+    container.querySelector(".mascot-carousel__arrow--next").click();
+
+    // Die Seitenspalte (Guide/Album/Karussell) wurde neu gerendert, die
+    // Schwierigkeitsstufen-Auswahl links (unabhängiger DOM-Bereich/lokaler
+    // Zustand) bleibt davon unberührt.
+    expect(
+      container
+        .querySelector(`[data-difficulty="${DIFFICULTY_LEVELS.EASY}"]`)
+        .classList.contains("difficulty-button--selected"),
+    ).toBe(true);
+    expect(container.querySelector(".start-button").disabled).toBe(false);
+  });
+
+  describe("Hinweiszeile: drei Fälle (Handoff 'Maskottchen-Karussell')", () => {
+    it("einlösbar: 'Du hast {stars} Sterne — du darfst dir ein neues Maskottchen aussuchen!'", () => {
+      setStars(5);
+      const { container } = render();
+
+      expect(container.querySelector(".mascot-carousel__hint").textContent).toBe(
+        "Du hast 5 Sterne — du darfst dir ein neues Maskottchen aussuchen!",
+      );
+    });
+
+    it("normal, Singular: '1 von 50 dabei · noch 1 Stern bis zum nächsten.' bei 4 Sternen", () => {
+      setStars(4);
+      const { container } = render();
+
+      expect(container.querySelector(".mascot-carousel__hint").textContent).toBe(
+        "1 von 50 dabei · noch 1 Stern bis zum nächsten.",
+      );
+    });
+
+    it("normal, Plural: 'noch 5 Sterne bis zum nächsten.' bei 0 Sternen (Start-Default)", () => {
+      const { container } = render();
+
+      expect(container.querySelector(".mascot-carousel__hint").textContent).toBe(
+        "1 von 50 dabei · noch 5 Sterne bis zum nächsten.",
+      );
+    });
+
+    it("alle 50 gesammelt: 'Du hast alle 50 Maskottchen gesammelt!'", () => {
+      for (let id = 1; id < MASCOTS.length; id += 1) {
+        unlockMascot(id);
+      }
+      const { container } = render();
+
+      expect(loadProgress().unlockedIds).toHaveLength(50);
+      expect(container.querySelector(".mascot-carousel__hint").textContent).toBe(
+        "Du hast alle 50 Maskottchen gesammelt!",
+      );
+      // Auch bei zusätzlichen 5 Sternen bleibt es bei der "alle gesammelt"-
+      // Meldung, nicht der einlösbaren -- kein Redeem-Screen mehr möglich.
+    });
+  });
 });
 
 describe("Modus-Auswahl (Issue #26)", () => {

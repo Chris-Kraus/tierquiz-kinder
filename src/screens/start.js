@@ -117,6 +117,13 @@ import { buildMemoryDeck } from "../quiz/memory.js";
 import { generateNextLetterSearchQuestion } from "../quiz/letterSearchQuestionGenerator.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
 import { loadCollectedAnimals, getAlbumProgress, ALBUM_TARGET } from "../quiz/album.js";
+// Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
+// (#80-#83): Karussell + dynamischer Guide unterhalb des Albums --
+// `loadProgress`/`setActiveIdx` liefern/steuern den aktiven Maskottchen-
+// Index (siehe progress.js), `MASCOTS`/`tintOf` die Anzeige-Daten (Name,
+// Emoji, Rolle, Hintergrundfarbe je Maskottchen, siehe mascots.js).
+import { loadProgress, setActiveIdx } from "../quiz/progress.js";
+import { MASCOTS, tintOf } from "../quiz/mascots.js";
 
 // Nachschlage-Karte Tier-ID -> deutscher Name fürs Album (Redesign, Issue
 // #71) — einmalig aus der ohnehin schon importierten animals.json gebaut,
@@ -161,6 +168,112 @@ function renderAlbumPreviewMarkup() {
       <div class="start-album-preview__grid">
         ${slots.join("")}
       </div>
+    </div>
+  `;
+}
+
+// Singular/Plural-Copy fürs Karussell-Hinweiszeile (Handoff, "Maskottchen-
+// Karussell": "noch {N Stern|N Sterne} bis zum nächsten") -- Deutsch
+// unterscheidet beim Zählen nur zwischen genau 1 und allem anderen, kein
+// Sonderfall für 0 nötig (siehe design.md, "Singular/Plural-Copy"). Kein
+// bestehender Helper dafür wiederverwendbar (weder header.js noch
+// mascotChooser.js zeigen bislang einen Sterne-Zählsatz), daher neu -- reine
+// Ternary genügt, keine Bibliothek nötig.
+function formatStars(n) {
+  return n === 1 ? "1 Stern" : `${n} Sterne`;
+}
+
+/**
+ * Baut das Markup für die dynamische Maskottchen-Guide-Karte (Issue #82,
+ * ersetzt die bisher fest verdrahtete "Fine, dein Tierguide"-Anzeige) --
+ * zeigt das über `loadProgress().activeIdx` bestimmte aktive Maskottchen
+ * (design.md, "Guide-Sprechblase je Maskottchen": die "Rolle" aus mascots.js
+ * wird direkt als Sprechblasentext verwendet, kein separates Zitat pro
+ * Maskottchen). Nimmt den bereits geladenen Fortschritt als Parameter
+ * entgegen (statt selbst erneut loadProgress() aufzurufen), damit Guide-Karte
+ * und Karussell darunter (siehe renderMascotCarouselMarkup) garantiert
+ * denselben Stand zeigen, auch wenn beide innerhalb desselben
+ * Side-Section-Renderings gebaut werden.
+ * @param {{stars: number, unlockedIds: number[], activeIdx: number}} progress
+ * @returns {string}
+ */
+function renderMascotGuideMarkup(progress) {
+  const { unlockedIds, activeIdx } = progress;
+  const activeMascotId = unlockedIds[activeIdx] ?? 0;
+  const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
+  const tint = tintOf(activeMascotId);
+
+  return `
+    <div class="start-mascot-card">
+      <div class="start-mascot-card__placeholder" style="background: ${tint};" aria-hidden="true">
+        <span class="start-mascot-card__emoji" aria-hidden="true">${activeMascot.emoji}</span>
+      </div>
+      <div class="start-mascot-card__bubble">
+        <p class="start-mascot-card__label">${activeMascot.name}, dein Tierguide</p>
+        <p class="start-mascot-card__quote">„${activeMascot.role}“</p>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Baut das Markup für das Maskottchen-Karussell unter dem Album (Issue #82,
+ * Handoff "Maskottchen-Karussell"): Pfeile navigieren durch die
+ * freigeschalteten Maskottchen (`unlockedIds`), an den Rändern `disabled`
+ * (`aria-label` statt reiner Pfeil-Glyphe, design.md "Barrierefreiheit").
+ * Bühne mit `aria-live="polite"` (gleiches Muster wie `.reverse-image-frame`
+ * in reverseQuestion.js), damit ein Wechsel per Pfeil-Klick auch ohne
+ * visuellen Fokuswechsel angekündigt wird.
+ * @param {{stars: number, unlockedIds: number[], activeIdx: number}} progress
+ * @returns {string}
+ */
+function renderMascotCarouselMarkup(progress) {
+  const { stars, unlockedIds, activeIdx } = progress;
+  const activeMascotId = unlockedIds[activeIdx] ?? 0;
+  const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
+  const tint = tintOf(activeMascotId);
+
+  const allCollected = unlockedIds.length >= MASCOTS.length;
+  const canRedeem = stars >= 5 && !allCollected;
+
+  let hint;
+  if (allCollected) {
+    hint = "Du hast alle 50 Maskottchen gesammelt!";
+  } else if (canRedeem) {
+    hint = `Du hast ${stars} Sterne — du darfst dir ein neues Maskottchen aussuchen!`;
+  } else {
+    hint = `${unlockedIds.length} von 50 dabei · noch ${formatStars(5 - stars)} bis zum nächsten.`;
+  }
+
+  const isFirst = activeIdx === 0;
+  const isLast = activeIdx === unlockedIds.length - 1;
+
+  return `
+    <div class="mascot-carousel">
+      <div class="mascot-carousel__header">
+        <h3 class="mascot-carousel__title">Meine Maskottchen</h3>
+        <span class="mascot-carousel__pill">${activeIdx + 1} von ${unlockedIds.length}</span>
+      </div>
+      <div class="mascot-carousel__row">
+        <button
+          type="button"
+          class="mascot-carousel__arrow mascot-carousel__arrow--prev k-btn"
+          aria-label="Vorheriges Maskottchen"
+          ${isFirst ? "disabled" : ""}
+        >←</button>
+        <div class="mascot-carousel__stage" style="background: ${tint};" aria-live="polite">
+          <span class="mascot-carousel__stage-emoji" aria-hidden="true">${activeMascot.emoji}</span>
+          <p class="mascot-carousel__stage-name">${activeMascot.name}</p>
+          <p class="mascot-carousel__stage-role">${activeMascot.role}</p>
+        </div>
+        <button
+          type="button"
+          class="mascot-carousel__arrow mascot-carousel__arrow--next k-btn"
+          aria-label="Nächstes Maskottchen"
+          ${isLast ? "disabled" : ""}
+        >→</button>
+      </div>
+      <p class="mascot-carousel__hint">${hint}</p>
     </div>
   `;
 }
@@ -385,18 +498,52 @@ export function renderStartScreen(container, { onStart } = {}) {
       <button type="button" class="start-button k-btn" disabled>Los geht's! 🚀</button>
     </div>
 
-    <div class="start-screen__side">
-      <div class="start-mascot-card">
-        <div class="start-mascot-card__placeholder" aria-hidden="true"></div>
-        <div class="start-mascot-card__bubble">
-          <p class="start-mascot-card__label">Fine, dein Tierguide</p>
-          <p class="start-mascot-card__quote">„Tippe auf mich, wenn du die Frage nochmal hören willst!“</p>
-        </div>
-      </div>
-      ${renderAlbumPreviewMarkup()}
-    </div>
+    <div class="start-screen__side"></div>
     </section>
   `;
+
+  // Guide-Karte, Album-Vorschau und Karussell werden zusammen in
+  // `.start-screen__side` gerendert (siehe renderSideSection unten) --
+  // dieselbe Funktion baut den initialen Zustand UND wird nach jedem
+  // Pfeil-Klick erneut aufgerufen, um Guide + Karussell synchron zu
+  // aktualisieren (Issue #82, Punkt 4: "Pfeil-Klick ruft setActiveIdx auf und
+  // aktualisiert Karussell + alle Guide-Anzeigen konsistent"). Ein voller
+  // Re-Render NUR dieser Seitenspalte statt des ganzen Bildschirms, damit die
+  // bereits getroffene Modus-/Schwierigkeitsstufen-/Fragenanzahl-Auswahl
+  // (lokaler Zustand oben in dieser Funktion) dabei nicht verloren geht --
+  // gleiches Teilbereich-Update-Idiom wie z. B. `renderLetterPuzzle()` in
+  // letterSearch.js oder `updateProgress()` in memory.js (Cache-Container +
+  // innerHTML-Ersatz + Re-Wiring statt kompletten Bildschirm-Re-Renders).
+  const sideEl = container.querySelector(".start-screen__side");
+
+  function renderSideSection() {
+    const progress = loadProgress();
+    sideEl.innerHTML = `
+      ${renderMascotGuideMarkup(progress)}
+      ${renderAlbumPreviewMarkup()}
+      ${renderMascotCarouselMarkup(progress)}
+    `;
+    wireMascotCarousel();
+  }
+
+  function wireMascotCarousel() {
+    const prevButton = sideEl.querySelector(".mascot-carousel__arrow--prev");
+    const nextButton = sideEl.querySelector(".mascot-carousel__arrow--next");
+
+    prevButton?.addEventListener("click", () => {
+      const { activeIdx } = loadProgress();
+      setActiveIdx(activeIdx - 1);
+      renderSideSection();
+    });
+
+    nextButton?.addEventListener("click", () => {
+      const { activeIdx } = loadProgress();
+      setActiveIdx(activeIdx + 1);
+      renderSideSection();
+    });
+  }
+
+  renderSideSection();
 
   const modeButtons = Array.from(container.querySelectorAll(".mode-button"));
   const quizModeButton = container.querySelector(

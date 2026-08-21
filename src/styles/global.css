@@ -711,12 +711,28 @@ button {
 .start-mascot-card__placeholder {
   height: 200px;
   border-radius: var(--k-radius-btn);
+  /* Fallback-Textur, falls aus irgendeinem Grund kein Tint via Inline-Style
+     ankommt (siehe start.js, renderMascotAreaMarkup) -- im Normalfall
+     überschreibt der Inline-`background` diese Regel mit `tintOf(activeId)`
+     (Issue #82, "Dynamischer Guide"). */
   background: repeating-linear-gradient(
     135deg,
     #ffe3b8 0 14px,
     #ffefd6 14px 28px
   );
+  display: flex;
+  align-items: center;
+  justify-content: center;
   animation: k-float 3s ease-in-out infinite;
+}
+
+/* Emoji-Platzhalter für das aktive Maskottchen (Issue #82) -- siehe
+   mascots.js-Datei-Kommentar: Emojis sind bewusst nur Platzhalter für
+   spätere Comic-Illustrationen, eine spätere Austausch braucht nur diese eine
+   Regel/dieses eine Markup-Element anzufassen. */
+.start-mascot-card__emoji {
+  font-size: 72px;
+  line-height: 1;
 }
 
 .start-mascot-card__bubble {
@@ -745,10 +761,16 @@ button {
   color: var(--ink);
 }
 
-/* Album-Vorschau (design.md: Grid 4x3, 68px-Felder; gesammelt = Platzhalter-
+/* Album-Vorschau (design.md: Grid 3x3, 68px-Felder; gesammelt = Platzhalter-
    Textur + Tiername, offen = #FFF8EC-Fläche mit "?"). Dieselbe Komponente
-   wird auf dem Ergebnis-Bildschirm mit 3 Spalten/118px wiederverwendet
-   (Issue #77) — hier die Start-Bildschirm-Variante (4 Spalten/68px). */
+   wird auf dem Ergebnis-Bildschirm mit 118px-Feldern wiederverwendet (Issue
+   #77) — hier die Start-Bildschirm-Variante (68px). Seit Issue #82: 3 statt
+   4 Spalten (ALBUM_TARGET von 12 auf 9 gesenkt, siehe album.js), damit das
+   Grid auch visuell als 3×3 statt als 3 volle + 1 angebrochene Reihe
+   erscheint -- die Ergebnis-Variante brauchte zuvor bereits einen eigenen
+   3-Spalten-Override (`.start-album-preview--result`), der jetzt mit der
+   Basis-Regel übereinstimmt und deshalb entfernt wurde (kein doppelt
+   gepflegter Wert mehr). */
 .start-album-preview {
   background: var(--card);
   border: var(--k-border-lg) solid var(--ink);
@@ -784,7 +806,7 @@ button {
 
 .start-album-preview__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
 
@@ -1527,7 +1549,20 @@ button {
   width: 100%;
   aspect-ratio: 1;
   border-radius: var(--k-radius-sm);
+  /* Fallback, falls kein Inline-Tint ankommt -- im Normalfall überschreibt
+     der Inline-`background` diese Regel mit `tintOf(activeMascotId)` (Issue
+     #82: "Maskottchen-Feld im Feedback-Panel (130px)" bekommt denselben Tint
+     wie Guide-Fläche/Karussell-Bühne, siehe question.js/reverseQuestion.js/
+     soundQuestion.js/letterSearch.js/memory.js). */
   background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedback-panel__mascot-emoji {
+  font-size: 64px;
+  line-height: 1;
 }
 
 .feedback-panel__body {
@@ -2070,13 +2105,11 @@ button {
 }
 
 /* Album-Karte auf dem Ergebnis-Bildschirm: gleiche Komponente wie auf dem
-   Start-Bildschirm (Issue #71), aber 3 statt 4 Spalten mit größeren
-   118px-Feldern (design.md: "Rechts Album-Karte wie Start, aber Grid 3
-   Spalten, Felder 118px, Fußnote 16px"). */
-.start-album-preview--result .start-album-preview__grid {
-  grid-template-columns: repeat(3, 1fr);
-}
-
+   Start-Bildschirm (Issue #71), aber mit größeren 118px-Feldern statt 68px
+   (design.md: "Rechts Album-Karte wie Start, aber Grid 3 Spalten, Felder
+   118px, Fußnote 16px"). Die Spaltenzahl selbst (3) kommt seit Issue #82
+   bereits aus der Basis-Regel `.start-album-preview__grid` -- der frühere
+   3-Spalten-Override hier ist entfallen (siehe Kommentar dort). */
 .start-album-preview--result .start-album-preview__slot {
   min-height: 118px;
 }
@@ -2085,6 +2118,117 @@ button {
   margin: var(--k-space-3) 0 0;
   font-family: var(--font-body);
   font-size: 16px;
+  color: var(--muted);
+}
+
+/* Maskottchen-Karussell (Issue #82, dritter Teil des Sterne-/Maskottchen-
+   Freischaltsystems #80-#83): unter dem Album auf Start- UND
+   Ergebnis-Bildschirm (siehe start.js/result.js) -- eine gemeinsame Regel
+   genügt, da beide Bildschirme exakt dasselbe Markup/dieselben Klassen
+   erzeugen (gleiches Wiederverwendungsprinzip wie bei `.start-album-preview`
+   oben). Trenner via `border-top` auf dem Container selbst statt eigenem
+   `<hr>`-Element (Handoff, "Maskottchen-Karussell"). */
+.mascot-carousel {
+  border-top: 4px dashed #e4d6be;
+  margin-top: 20px;
+  padding-top: 16px;
+}
+
+.mascot-carousel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--k-space-3);
+}
+
+.mascot-carousel__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+/* Gleiches Pillen-Muster wie `.memory-screen__pill` (Issue #76) -- Fläche
+   `--sky` laut Handoff. */
+.mascot-carousel__pill {
+  background: var(--sky);
+  border: var(--k-border-sm) solid var(--ink);
+  border-radius: var(--k-radius-pill);
+  padding: 4px 16px;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.mascot-carousel__row {
+  display: flex;
+  align-items: center;
+  gap: var(--k-space-3);
+}
+
+.mascot-carousel__arrow {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  background: var(--card);
+  font-size: 30px;
+  border-radius: var(--k-radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Am Rand disabled (Handoff: "opacity: .35"), nur freigeschaltete
+   Maskottchen sind über die Pfeile erreichbar. */
+.mascot-carousel__arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.mascot-carousel__stage {
+  flex: 1;
+  min-width: 0;
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-btn);
+  padding: var(--k-space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.mascot-carousel__stage-emoji {
+  font-size: 68px;
+  line-height: 1;
+}
+
+.mascot-carousel__stage-name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--ink);
+}
+
+.mascot-carousel__stage-role {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.mascot-carousel__hint {
+  margin: var(--k-space-3) 0 0;
+  font-family: var(--font-body);
+  font-size: 15px;
   color: var(--muted);
 }
 

@@ -46,6 +46,12 @@ import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 import { buildInfoSentence } from "../quiz/infoSentence.js";
 import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
+// Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
+// (#80-#83): das bislang leere `.feedback-panel__mascot`-Platzhalterfeld
+// zeigt jetzt Tint + Emoji des aktiven Maskottchens (siehe question.js,
+// gleiches Prinzip -- rein darstellend, keine Live-Aktualisierung nötig).
+import { loadProgress } from "../quiz/progress.js";
+import { MASCOTS, tintOf } from "../quiz/mascots.js";
 
 // Kindgerechte, kurze Fehlermeldung bei falscher Buchstaben-Eingabe
 // (design.md, "Fehlerfall pro Buchstabe": "kein 'Falsch!', kein Rot/Buzzer-
@@ -95,6 +101,10 @@ export function renderLetterSearchScreen(
   const animalById = new Map(
     animalsData.animals.map((animal) => [animal.id, animal]),
   );
+
+  const { unlockedIds, activeIdx } = loadProgress();
+  const activeMascotId = unlockedIds[activeIdx] ?? 0;
+  const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
 
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="letter-search-heading">
@@ -192,7 +202,9 @@ export function renderLetterSearchScreen(
            Kein separater Bild-Refetch für die Sticker-Karte — wie #73 wird
            das bereits geladene reverse-image-frame-Bild wiederverwendet. -->
       <div class="feedback-panel" hidden>
-        <div class="feedback-panel__mascot" aria-hidden="true"></div>
+        <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};" aria-hidden="true">
+          <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
+        </div>
         <div class="feedback-panel__body">
           <p
             class="question-screen__feedback"

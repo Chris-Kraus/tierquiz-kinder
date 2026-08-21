@@ -10,6 +10,14 @@
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { GAME_MODE } from "../quiz/gameMode.js";
+import {
+  loadProgress,
+  setActiveIdx,
+  redeemMascot,
+  recordRoundCompletion,
+} from "../quiz/progress.js";
+import { MASCOTS } from "../quiz/mascots.js";
+import { ALBUM_TARGET } from "../quiz/album.js";
 
 const saveResultToHistory = vi.fn();
 vi.mock("../quiz/history.js", () => ({
@@ -19,6 +27,31 @@ vi.mock("../quiz/history.js", () => ({
 }));
 
 const { renderResultScreen } = await import("./result.js");
+
+// Gleiches In-Memory-Fake wie in start.test.js/header.test.js/
+// mascotChooser.test.js -- diese jsdom/Node-Kombination stellt kein echtes
+// globales `localStorage` bereit, progress.js braucht aber eines (kein
+// Storage-Parameter aus result.js heraus).
+function createFakeStorage() {
+  const store = new Map();
+  return {
+    getItem: (key) => (store.has(key) ? store.get(key) : null),
+    setItem: (key, value) => {
+      store.set(key, String(value));
+    },
+  };
+}
+
+function setStars(n) {
+  for (let i = 0; i < n; i += 1) {
+    recordRoundCompletion({ mode: GAME_MODE.QUIZ, score: 5, roundLength: 10 });
+  }
+}
+
+function unlockMascot(mascotId) {
+  setStars(5);
+  redeemMascot(mascotId);
+}
 
 function render(quizState) {
   const container = document.createElement("div");
@@ -34,6 +67,136 @@ beforeEach(() => {
   document.body.innerHTML = "";
   saveResultToHistory.mockReset();
   saveResultToHistory.mockReturnValue([]);
+  globalThis.localStorage = createFakeStorage();
+});
+
+describe("Album 3×3-Raster auf dem Ergebnis-Bildschirm (Issue #82)", () => {
+  it("rendert genau ALBUM_TARGET (9) Album-Felder", () => {
+    const container = render({
+      mode: GAME_MODE.QUIZ,
+      difficulty: "6-10",
+      score: 7,
+      questions: new Array(10).fill({}),
+    });
+
+    const slots = container.querySelectorAll(".start-album-preview__slot");
+    expect(slots).toHaveLength(ALBUM_TARGET);
+    expect(ALBUM_TARGET).toBe(9);
+  });
+});
+
+describe("Maskottchen-Karussell auf dem Ergebnis-Bildschirm (Issue #82)", () => {
+  function renderQuiz() {
+    return render({
+      mode: GAME_MODE.QUIZ,
+      difficulty: "6-10",
+      score: 7,
+      questions: new Array(10).fill({}),
+    });
+  }
+
+  it("zeigt beim Start-Default genau 1 freigeschaltetes Maskottchen, beide Pfeile disabled", () => {
+    const container = renderQuiz();
+
+    expect(container.querySelector(".mascot-carousel__pill").textContent).toBe(
+      "1 von 1",
+    );
+    expect(
+      container.querySelector(".mascot-carousel__arrow--prev").disabled,
+    ).toBe(true);
+    expect(
+      container.querySelector(".mascot-carousel__arrow--next").disabled,
+    ).toBe(true);
+  });
+
+  it("hat aussagekräftige aria-label statt reiner Pfeil-Glyphen, und aria-live='polite' auf der Bühne", () => {
+    const container = renderQuiz();
+
+    expect(
+      container
+        .querySelector(".mascot-carousel__arrow--prev")
+        .getAttribute("aria-label"),
+    ).toBe("Vorheriges Maskottchen");
+    expect(
+      container
+        .querySelector(".mascot-carousel__arrow--next")
+        .getAttribute("aria-label"),
+    ).toBe("Nächstes Maskottchen");
+    expect(
+      container.querySelector(".mascot-carousel__stage").getAttribute("aria-live"),
+    ).toBe("polite");
+  });
+
+  it("navigiert per Pfeil-Klick, aktualisiert Bühne/Pille synchron und persistiert setActiveIdx", () => {
+    unlockMascot(1);
+    unlockMascot(2);
+    setActiveIdx(0);
+
+    const container = renderQuiz();
+
+    expect(
+      container.querySelector(".mascot-carousel__stage-name").textContent,
+    ).toBe(MASCOTS[0].name);
+    expect(
+      container.querySelector(".mascot-carousel__arrow--prev").disabled,
+    ).toBe(true);
+    expect(
+      container.querySelector(".mascot-carousel__arrow--next").disabled,
+    ).toBe(false);
+
+    container.querySelector(".mascot-carousel__arrow--next").click();
+
+    expect(
+      container.querySelector(".mascot-carousel__stage-name").textContent,
+    ).toBe(MASCOTS[1].name);
+    expect(container.querySelector(".mascot-carousel__pill").textContent).toBe(
+      "2 von 3",
+    );
+    expect(loadProgress().activeIdx).toBe(1);
+
+    // An der letzten Position ist "weiter" disabled.
+    container.querySelector(".mascot-carousel__arrow--next").click();
+    expect(container.querySelector(".mascot-carousel__pill").textContent).toBe(
+      "3 von 3",
+    );
+    expect(
+      container.querySelector(".mascot-carousel__arrow--next").disabled,
+    ).toBe(true);
+    expect(
+      container.querySelector(".mascot-carousel__arrow--prev").disabled,
+    ).toBe(false);
+  });
+
+  describe("Hinweiszeile: drei Fälle (gleiche Logik wie start.js)", () => {
+    it("einlösbar", () => {
+      setStars(5);
+      const container = renderQuiz();
+
+      expect(container.querySelector(".mascot-carousel__hint").textContent).toBe(
+        "Du hast 5 Sterne — du darfst dir ein neues Maskottchen aussuchen!",
+      );
+    });
+
+    it("normal, Singular bei 4 Sternen", () => {
+      setStars(4);
+      const container = renderQuiz();
+
+      expect(container.querySelector(".mascot-carousel__hint").textContent).toBe(
+        "1 von 50 dabei · noch 1 Stern bis zum nächsten.",
+      );
+    });
+
+    it("alle 50 gesammelt", () => {
+      for (let id = 1; id < MASCOTS.length; id += 1) {
+        unlockMascot(id);
+      }
+      const container = renderQuiz();
+
+      expect(container.querySelector(".mascot-carousel__hint").textContent).toBe(
+        "Du hast alle 50 Maskottchen gesammelt!",
+      );
+    });
+  });
 });
 
 describe("Tier-Memory-Ergebnis (Issue #45)", () => {
