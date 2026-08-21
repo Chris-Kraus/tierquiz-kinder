@@ -280,6 +280,177 @@ describe("Regulärer Quizfragen-Ergebnis-Zweig bleibt unverändert (Regressionss
   });
 });
 
+describe("Sterne-Box im Ergebnis-Bildschirm (Issue #83)", () => {
+  function renderQuiz(extra = {}) {
+    return render({
+      mode: GAME_MODE.QUIZ,
+      difficulty: "6-10",
+      score: 7,
+      questions: new Array(10).fill({}),
+      ...extra,
+    });
+  }
+
+  it("zeigt bei canRedeem (5 Sterne) das Label '5 Sterne voll!', den Einlösbar-Satz und den CTA-Button", () => {
+    setStars(5);
+    const container = renderQuiz({ earned: false });
+
+    expect(container.querySelector(".stars-box__label").textContent).toBe(
+      "5 Sterne voll!",
+    );
+    expect(container.querySelector(".stars-box__sentence").textContent).toBe(
+      "Du darfst dir jetzt ein neues Maskottchen aussuchen.",
+    );
+    expect(container.querySelector(".stars-box__cta")).not.toBeNull();
+    expect(container.querySelector(".stars-box__cta").textContent).toBe(
+      "Neues Maskottchen wählen 🎁",
+    );
+  });
+
+  it("zeigt bei verdientem, aber noch nicht einlösbarem Stern den passenden Satz mit Singular '1 Stern', kein CTA", () => {
+    // 4 Sterne bereits vorhanden + in dieser Runde ein 5. verdient wäre
+    // bereits canRedeem -- daher hier 3 Sterne vorher + earned: true, macht
+    // 4 Sterne insgesamt, "noch 1 Stern" bis zum nächsten Maskottchen.
+    setStars(3);
+    recordRoundCompletion({ mode: GAME_MODE.QUIZ, score: 5, roundLength: 10 });
+    const container = renderQuiz({ earned: true });
+
+    expect(container.querySelector(".stars-box__sentence").textContent).toBe(
+      "Runde geschafft — dafür gibt es 1 Stern! Noch 1 Stern bis zum nächsten Maskottchen.",
+    );
+    expect(container.querySelector(".stars-box__cta")).toBeNull();
+  });
+
+  it("zeigt bei verdientem Stern und Plural-Fall (2 Sterne) 'Noch N Sterne'", () => {
+    setStars(2);
+    recordRoundCompletion({ mode: GAME_MODE.QUIZ, score: 5, roundLength: 10 });
+    const container = renderQuiz({ earned: true });
+
+    expect(container.querySelector(".stars-box__sentence").textContent).toBe(
+      "Runde geschafft — dafür gibt es 1 Stern! Noch 2 Sterne bis zum nächsten Maskottchen.",
+    );
+  });
+
+  it("zeigt bei keinem verdienten Stern den Ermutigungssatz, kein CTA", () => {
+    const container = renderQuiz({ score: 3, earned: false });
+
+    expect(container.querySelector(".stars-box__sentence").textContent).toBe(
+      "Ab 5 richtigen Tieren in einer Runde gibt es einen Stern. Probier es gleich nochmal!",
+    );
+    expect(container.querySelector(".stars-box__cta")).toBeNull();
+    expect(container.querySelector(".stars-box__label").textContent).toBe(
+      "Sterne",
+    );
+  });
+
+  it("markiert genau den neu verdienten Stern mit der k-pop-Animationsklasse", () => {
+    setStars(2);
+    recordRoundCompletion({ mode: GAME_MODE.QUIZ, score: 5, roundLength: 10 });
+    const container = renderQuiz({ earned: true });
+
+    const stars = container.querySelectorAll(".stars-box__star");
+    expect(stars).toHaveLength(5);
+    const newStars = container.querySelectorAll(".stars-box__star--new");
+    expect(newStars).toHaveLength(1);
+    // 3. Stern (Index 2) ist der neu verdiente.
+    expect(stars[2].classList.contains("stars-box__star--new")).toBe(true);
+  });
+
+  it("markiert keinen Stern mit k-pop, wenn kein Stern verdient wurde", () => {
+    const container = renderQuiz({ score: 3, earned: false });
+
+    expect(container.querySelectorAll(".stars-box__star--new")).toHaveLength(
+      0,
+    );
+  });
+
+  it("öffnet beim Klick auf den CTA-Button die Maskottchen-Auswahl via onOpenMascotChooser", () => {
+    setStars(5);
+    const container = render({
+      mode: GAME_MODE.QUIZ,
+      difficulty: "6-10",
+      score: 7,
+      questions: new Array(10).fill({}),
+      earned: false,
+    });
+    const onOpenMascotChooser = vi.fn();
+
+    // renderResultScreen erneut mit demselben Container aufrufen, diesmal
+    // mit onOpenMascotChooser-Callback (render()-Helper oben setzt ihn nicht).
+    renderResultScreen(
+      container,
+      {
+        mode: GAME_MODE.QUIZ,
+        difficulty: "6-10",
+        score: 7,
+        questions: new Array(10).fill({}),
+        earned: false,
+      },
+      { onPlayAgain: vi.fn(), onBackToStart: vi.fn(), onOpenMascotChooser },
+    );
+
+    container.querySelector(".stars-box__cta").click();
+    expect(onOpenMascotChooser).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("Bedingtes Runde-Label (Issue #83)", () => {
+  it("zeigt 'Runde geschafft 🎉' wenn earned === true", () => {
+    const container = render({
+      mode: GAME_MODE.QUIZ,
+      difficulty: "6-10",
+      score: 7,
+      questions: new Array(10).fill({}),
+      earned: true,
+    });
+
+    expect(container.querySelector(".result-screen__label").textContent).toBe(
+      "Runde geschafft 🎉",
+    );
+  });
+
+  it("zeigt 'Runde beendet' wenn kein Stern verdient wurde (earned: false)", () => {
+    const container = render({
+      mode: GAME_MODE.QUIZ,
+      difficulty: "6-10",
+      score: 3,
+      questions: new Array(10).fill({}),
+      earned: false,
+    });
+
+    expect(container.querySelector(".result-screen__label").textContent).toBe(
+      "Runde beendet",
+    );
+  });
+
+  it("zeigt 'Runde beendet' als Default, wenn `earned` gar nicht gesetzt ist (bestehende Aufrufe ohne main.js)", () => {
+    const container = render({
+      mode: GAME_MODE.QUIZ,
+      difficulty: "6-10",
+      score: 7,
+      questions: new Array(10).fill({}),
+    });
+
+    expect(container.querySelector(".result-screen__label").textContent).toBe(
+      "Runde beendet",
+    );
+  });
+
+  it("zeigt 'Runde geschafft 🎉' bei Tier-Memory (dort immer earned === true, siehe recordRoundCompletion)", () => {
+    const container = render({
+      mode: GAME_MODE.MEMORY,
+      difficulty: "6-10",
+      memoryPairCount: 6,
+      memoryAttempts: 4,
+      earned: true,
+    });
+
+    expect(container.querySelector(".result-screen__label").textContent).toBe(
+      "Runde geschafft 🎉",
+    );
+  });
+});
+
 describe("Buchstabensuche: 'davon X aufgelöst' im Rundenergebnis (Issue #52)", () => {
   it("zeigt bei mindestens 1 aufgelöster Frage den Zusatz 'davon X aufgelöst' im Hauptsatz und übergibt resolvedCount an saveResultToHistory", () => {
     const container = render({

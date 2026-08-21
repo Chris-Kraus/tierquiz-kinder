@@ -118,9 +118,79 @@ function renderAlbumCardMarkup() {
 // start.js (siehe dortiger Kommentar zu design.md, "Singular/Plural-Copy");
 // bewusst hier dupliziert statt geteilt importiert, gleiches
 // Wiederverwendungsprinzip wie renderAlbumCardMarkup oben (kein gemeinsames
-// UI-Utility-Modul im Projekt).
+// UI-Utility-Modul im Projekt). Seit Issue #83 auch von renderStarsBoxMarkup
+// unten wiederverwendet (nicht neu erfunden, siehe design.md,
+// "Singular/Plural-Copy").
 function formatStars(n) {
   return n === 1 ? "1 Stern" : `${n} Sterne`;
+}
+
+/**
+ * Baut das Markup für die Sterne-Box im Ergebnis-Bildschirm (Issue #83,
+ * vierter/letzter Teil des Sterne-/Maskottchen-Freischaltsystems #80-#83).
+ * Weiße Karte (4px Rahmen, Radius 24, Padding 18, margin-top 16, siehe
+ * Issue/Handoff "Sterne-Box im Ergebnis"): Label + Reihe aus 5 Zeichen
+ * (gefüllt ⭐ / offen ☆) + situativer Satz (drei Fälle) + optionaler
+ * CTA-Button.
+ *
+ * `canRedeem`-Formel identisch zu header.js (stars >= 5 &&
+ * unlockedIds.length < 50), hier bewusst dupliziert statt geteilt importiert
+ * (gleiches Wiederverwendungsprinzip wie renderAlbumCardMarkup oben).
+ *
+ * Die Sterne-Reihe zeigt `min(stars, 5)` gefüllte Sterne -- im normalen
+ * Spielfluss ist `stars` ohnehin nie größer als 5 (Einlösen setzt sofort auf
+ * `stars - 5` zurück, siehe progress.js redeemMascot), der `min()`-Schutz
+ * greift nur in dem seltenen Fall, dass ein Kind nach Erreichen von 5 Sternen
+ * noch eine weitere Runde spielt, ohne zwischendurch einzulösen. Der in
+ * dieser Runde neu verdiente Stern (`earned === true`) ist dabei immer der
+ * zuletzt gefüllte (`filledCount - 1`) und bekommt die `k-pop`-Animation aus
+ * dem Redesign (bereits bestehendes Keyframe, siehe global.css) --
+ * respektiert automatisch die projektweite `prefers-reduced-motion`-Regel
+ * (global.css, gilt pauschal für alle `animation-duration`n, keine eigene
+ * Ausnahme nötig).
+ * @param {{stars: number, unlockedIds: number[]}} progress
+ * @param {boolean} earned ob in dieser Runde tatsächlich ein Stern verdient wurde
+ * @returns {string}
+ */
+function renderStarsBoxMarkup(progress, earned) {
+  const { stars, unlockedIds } = progress;
+  const canRedeem = stars >= 5 && unlockedIds.length < 50;
+  const filledCount = Math.min(stars, 5);
+  const poppedIndex = earned ? filledCount - 1 : -1;
+
+  const starsRow = Array.from({ length: 5 }, (_, i) => {
+    const filled = i < filledCount;
+    const isNew = filled && i === poppedIndex;
+    return `<span
+      class="stars-box__star${isNew ? " stars-box__star--new" : ""}"
+      style="${filled ? "" : "opacity: .4;"}"
+    >${filled ? "⭐" : "☆"}</span>`;
+  }).join("");
+
+  let sentence;
+  if (canRedeem) {
+    sentence = "Du darfst dir jetzt ein neues Maskottchen aussuchen.";
+  } else if (earned) {
+    sentence = `Runde geschafft — dafür gibt es 1 Stern! Noch ${formatStars(5 - stars)} bis zum nächsten Maskottchen.`;
+  } else {
+    sentence =
+      "Ab 5 richtigen Tieren in einer Runde gibt es einen Stern. Probier es gleich nochmal!";
+  }
+
+  const ctaHtml = canRedeem
+    ? `<button type="button" class="stars-box__cta k-btn">Neues Maskottchen wählen 🎁</button>`
+    : "";
+
+  return `
+    <div class="stars-box">
+      <p class="stars-box__label">${canRedeem ? "5 Sterne voll!" : "Sterne"}</p>
+      <div class="stars-box__row" aria-label="${stars} von 5 Sternen">
+        ${starsRow}
+      </div>
+      <p class="stars-box__sentence">${sentence}</p>
+      ${ctaHtml}
+    </div>
+  `;
 }
 
 /**
@@ -371,12 +441,28 @@ function getEncouragement(score, total) {
  *   (neuer Zustand, neue Fragen) zu starten.
  * @param {() => void} [callbacks.onBackToStart] wird bei Klick auf "Zurück
  *   zum Start" aufgerufen; führt ebenfalls zum Start-Bildschirm zurück.
+ * @param {() => void} [callbacks.onOpenMascotChooser] Issue #83: wird beim
+ *   Klick auf den CTA-Button der Sterne-Box aufgerufen (nur gerendert bei
+ *   `canRedeem`) — main.js übergibt hier dieselbe Closure wie beim
+ *   Header-Badge (Issue #81, architecture.md Punkt 3), inkl. Rücksprung zum
+ *   Ergebnis-Bildschirm über `onDone`.
  */
 export function renderResultScreen(
   container,
   quizState,
-  { onPlayAgain, onBackToStart } = {},
+  { onPlayAgain, onBackToStart, onOpenMascotChooser } = {},
 ) {
+  // Issue #83, vierter/letzter Teil des Sterne-/Maskottchen-
+  // Freischaltsystems (#80-#83): main.js wertet recordRoundCompletion()
+  // zentral in showResultScreen() aus und schreibt das Ergebnis (`earned`)
+  // als transientes Feld auf denselben quizState (analog zum bestehenden
+  // `starsAwarded`-Merker dort) -- dieser Screen kennt recordRoundCompletion
+  // selbst nicht, liest nur das fertige Ergebnis. Fehlt das Feld (z. B. in
+  // bestehenden Tests, die renderResultScreen ohne main.js direkt aufrufen),
+  // gilt `earned === undefined` als falsy -> "Runde beendet"/kein Stern
+  // verdient, ein sinnvoller Default statt eines Absturzes.
+  const earned = quizState.earned === true;
+
   // Issue #45, design.md ("Rundenende"): Tier-Memory hat kein "richtig von N
   // Fragen"-Ergebnis (score/questions passen konzeptionell nicht, siehe
   // architecture.md Punkt 4) — eigener, durchweg wertschätzender Text statt
@@ -443,15 +529,19 @@ export function renderResultScreen(
     ? `${quizState.memoryPairCount}/${quizState.memoryPairCount}`
     : `${quizState.score}/${quizState.questions.length}`;
 
+  const progress = loadProgress();
+
   container.innerHTML = `
     <section class="result-screen" aria-labelledby="result-title">
       <div class="result-screen__panel">
-        <p id="result-title" class="result-screen__label">Runde geschafft 🎉</p>
+        <p id="result-title" class="result-screen__label">${earned ? "Runde geschafft 🎉" : "Runde beendet"}</p>
         <p class="result-screen__score-number">${scoreNumber}</p>
         <p class="result-screen__encouragement">${encouragement}</p>
         <p class="result-screen__score">
           ${scoreText}
         </p>
+
+        ${renderStarsBoxMarkup(progress, earned)}
 
         <div class="result-screen__actions">
           <button type="button" class="result-screen__play-again k-btn">
@@ -485,6 +575,15 @@ export function renderResultScreen(
 
   backToStartButton.addEventListener("click", () => {
     onBackToStart?.();
+  });
+
+  // Issue #83: CTA-Button der Sterne-Box, nur vorhanden bei `canRedeem`
+  // (siehe renderStarsBoxMarkup) -- öffnet dieselbe Maskottchen-Auswahl wie
+  // das Header-Badge, über dieselbe main.js-Closure (Issue #81,
+  // architecture.md Punkt 3).
+  const starsBoxCta = container.querySelector(".stars-box__cta");
+  starsBoxCta?.addEventListener("click", () => {
+    onOpenMascotChooser?.();
   });
 
   if (historyWrapper) {

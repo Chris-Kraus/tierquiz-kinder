@@ -132,13 +132,23 @@ function showResultScreen(quizState) {
   // Merker wird direkt auf das Ergebnis-Objekt geschrieben (gleiches Muster
   // wie die transienten `pending*`-Felder in start.js) und verhindert das --
   // rein lokale main.js-Absicherung, keine Änderung an progress.js nötig.
+  //
+  // Seit Issue #83 wird zusätzlich das `earned`-Ergebnis von
+  // recordRoundCompletion() als transientes `quizState.earned`-Feld
+  // gemerkt (gleiches Muster wie `starsAwarded` direkt darüber) -- result.js
+  // braucht diesen Wert für das bedingte Panel-Label ("Runde geschafft
+  // 🎉"/"Runde beendet") sowie die Sterne-Box, auch bei einem erneuten
+  // showResultScreen()-Aufruf nach Rücksprung aus der Maskottchen-Auswahl
+  // (dann liefert recordRoundCompletion selbst nichts mehr, der `if`-Zweig
+  // wird ja übersprungen).
   if (!quizState.starsAwarded) {
-    recordRoundCompletion({
+    const { earned } = recordRoundCompletion({
       mode: quizState.mode,
       score: quizState.score,
       roundLength: quizState.roundLength,
     });
     quizState.starsAwarded = true;
+    quizState.earned = earned;
   }
 
   renderHeader(appHeader, {
@@ -178,6 +188,13 @@ function showResultScreen(quizState) {
       );
     },
     onBackToStart: showStartScreen,
+    // Issue #83: CTA-Button der Sterne-Box ("Neues Maskottchen wählen 🎁")
+    // -- dieselbe Closure wie beim Header-Sterne-Badge oben (Issue #81,
+    // architecture.md Punkt 3), inkl. Rücksprung genau hierher.
+    onOpenMascotChooser: () =>
+      renderMascotChooserScreen(appContent, {
+        onDone: () => showResultScreen(quizState),
+      }),
   });
 }
 

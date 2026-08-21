@@ -2098,6 +2098,70 @@ button {
   opacity: 0.75;
 }
 
+/* Sterne-Box (Issue #83, vierter/letzter Teil des Sterne-/Maskottchen-
+   Freischaltsystems #80-#83): weiße Karte im Ergebnis-Panel, zeigt den
+   aktuellen Sternestand + situativen Satz + optionalen CTA-Button (siehe
+   Handoff, "Sterne-Box im Ergebnis"). Werte laut Handoff: 4px Rahmen,
+   Radius 24, Padding 18, margin-top 16. */
+.stars-box {
+  width: 100%;
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: 24px;
+  padding: 18px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-2);
+}
+
+.stars-box__label {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+
+.stars-box__row {
+  display: flex;
+  gap: 6px;
+  font-size: 28px;
+  line-height: 1;
+}
+
+/* Der in dieser Runde neu verdiente Stern (siehe renderStarsBoxMarkup in
+   result.js) -- respektiert die projektweite prefers-reduced-motion-Regel
+   oben automatisch (gilt pauschal für alle animation-duration, keine eigene
+   Ausnahme nötig). */
+.stars-box__star--new {
+  display: inline-block;
+  animation: k-pop 0.4s ease-out;
+}
+
+.stars-box__sentence {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--ink);
+}
+
+/* CTA-Button, nur bei canRedeem gerendert (design.md/Handoff: Fläche --sky,
+   volle Breite, min-height 88). */
+.stars-box__cta {
+  width: 100%;
+  min-height: 88px;
+  padding: var(--k-space-2) var(--k-space-4);
+  background: var(--sky);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 800;
+  border-radius: var(--k-radius-btn);
+}
+
 .result-screen__actions {
   width: 100%;
   display: flex;
