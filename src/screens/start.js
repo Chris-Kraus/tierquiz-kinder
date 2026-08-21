@@ -116,6 +116,54 @@ import { generateNextSoundQuestion } from "../quiz/soundQuestionGenerator.js";
 import { buildMemoryDeck } from "../quiz/memory.js";
 import { generateNextLetterSearchQuestion } from "../quiz/letterSearchQuestionGenerator.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
+import { loadCollectedAnimals, getAlbumProgress, ALBUM_TARGET } from "../quiz/album.js";
+
+// Nachschlage-Karte Tier-ID -> deutscher Name fürs Album (Redesign, Issue
+// #71) — einmalig aus der ohnehin schon importierten animals.json gebaut,
+// kein zusätzlicher Datenzugriff nötig.
+const ANIMAL_NAME_BY_ID = new Map(
+  animalsData.animals.map((animal) => [animal.id, animal.name_de]),
+);
+
+/**
+ * Baut das Markup für die Album-Vorschau auf dem Start-Bildschirm (siehe
+ * design.md, "Kindgerechtes Redesign" -> Screens -> Start). Zeigt bis zu
+ * ALBUM_TARGET Felder: gesammelte Tiere mit Namen, offene Felder als "?".
+ * Rein darstellend, keine eigene Interaktion.
+ */
+function renderAlbumPreviewMarkup() {
+  const collectedIds = loadCollectedAnimals();
+  const { collected, target } = getAlbumProgress(undefined, ALBUM_TARGET);
+
+  const slots = [];
+  for (let i = 0; i < target; i += 1) {
+    const animalId = collectedIds[i];
+    if (animalId) {
+      const name = ANIMAL_NAME_BY_ID.get(animalId) ?? "?";
+      slots.push(
+        `<div class="start-album-preview__slot start-album-preview__slot--collected">
+          <span class="start-album-preview__slot-name">${name}</span>
+        </div>`,
+      );
+    } else {
+      slots.push(
+        `<div class="start-album-preview__slot" aria-hidden="true">?</div>`,
+      );
+    }
+  }
+
+  return `
+    <div class="start-album-preview">
+      <div class="start-album-preview__header">
+        <p class="start-album-preview__title">Mein Album</p>
+        <span class="start-album-preview__badge">${collected}/${target}</span>
+      </div>
+      <div class="start-album-preview__grid">
+        ${slots.join("")}
+      </div>
+    </div>
+  `;
+}
 
 // Werte laut UX-Abstimmung zu Issue #13: 4 Chips, gleichermaßen für beide
 // Schwierigkeitsstufen (PM-Entscheidung 13.08.2026, siehe Issue-Kommentar).
@@ -170,13 +218,13 @@ export function renderStartScreen(container, { onStart } = {}) {
 
   container.innerHTML = `
     <section class="start-screen" aria-labelledby="start-title">
-      <p class="start-screen__mascot" aria-hidden="true">🦁</p>
-      <h1 id="start-title" class="start-screen__title">Tierquiz</h1>
-      <p class="start-screen__intro">Wähle deine Stufe und leg los!</p>
+    <div class="start-screen__main">
+      <h1 id="start-title" class="start-screen__title">Hallo! Wollen wir Tiere entdecken?</h1>
+      <p class="start-screen__intro">Wähle dir ein Spiel aus. Ich lese jede Frage vor — und falsch raten ist völlig okay, dann schauen wir uns das Tier zusammen an.</p>
 
       <div class="mode-picker">
         <p id="mode-picker-label" class="mode-picker__label">
-          Was möchtest du spielen?
+          1 · Welches Spiel?
         </p>
         <div
           class="mode-picker__group"
@@ -185,23 +233,28 @@ export function renderStartScreen(container, { onStart } = {}) {
         >
           <button
             type="button"
-            class="mode-button mode-button--selected"
+            class="mode-button mode-button--selected k-btn"
             data-mode="${GAME_MODE.QUIZ}"
             aria-pressed="true"
           >
             <span class="mode-button__check" aria-hidden="true">✓</span>
+            <span class="mode-button__icon-box" aria-hidden="true">
+              <span class="mode-button__icon">❓</span>
+            </span>
             <span class="mode-button__label">Quizfragen</span>
           </button>
           <button
             type="button"
-            class="mode-button"
+            class="mode-button k-btn"
             data-mode="${GAME_MODE.REVERSE}"
             aria-pressed="false"
             aria-busy="false"
           >
             <span class="mode-button__check" aria-hidden="true">✓</span>
-            <span class="mode-button__icon" aria-hidden="true">🔎</span>
-            <span class="mode-button__spinner" aria-hidden="true"></span>
+            <span class="mode-button__icon-box" aria-hidden="true">
+              <span class="mode-button__icon">🔎</span>
+              <span class="mode-button__spinner" aria-hidden="true"></span>
+            </span>
             <span class="mode-button__label">Wer bin ich?</span>
             <span
               class="mode-button__online-icon"
@@ -212,14 +265,16 @@ export function renderStartScreen(container, { onStart } = {}) {
           </button>
           <button
             type="button"
-            class="mode-button"
+            class="mode-button k-btn"
             data-mode="${GAME_MODE.SOUND}"
             aria-pressed="false"
             aria-busy="false"
           >
             <span class="mode-button__check" aria-hidden="true">✓</span>
-            <span class="mode-button__icon" aria-hidden="true">🔊</span>
-            <span class="mode-button__spinner" aria-hidden="true"></span>
+            <span class="mode-button__icon-box" aria-hidden="true">
+              <span class="mode-button__icon">🔊</span>
+              <span class="mode-button__spinner" aria-hidden="true"></span>
+            </span>
             <span class="mode-button__label">Tiergeräusche</span>
             <span
               class="mode-button__online-icon"
@@ -230,14 +285,16 @@ export function renderStartScreen(container, { onStart } = {}) {
           </button>
           <button
             type="button"
-            class="mode-button"
+            class="mode-button k-btn"
             data-mode="${GAME_MODE.MEMORY}"
             aria-pressed="false"
             aria-busy="false"
           >
             <span class="mode-button__check" aria-hidden="true">✓</span>
-            <span class="mode-button__icon" aria-hidden="true">🧠</span>
-            <span class="mode-button__spinner" aria-hidden="true"></span>
+            <span class="mode-button__icon-box" aria-hidden="true">
+              <span class="mode-button__icon">🧠</span>
+              <span class="mode-button__spinner" aria-hidden="true"></span>
+            </span>
             <span class="mode-button__label">Tier-Memory</span>
             <span
               class="mode-button__online-icon"
@@ -248,14 +305,16 @@ export function renderStartScreen(container, { onStart } = {}) {
           </button>
           <button
             type="button"
-            class="mode-button"
+            class="mode-button k-btn"
             data-mode="${GAME_MODE.LETTER_SEARCH}"
             aria-pressed="false"
             aria-busy="false"
           >
             <span class="mode-button__check" aria-hidden="true">✓</span>
-            <span class="mode-button__icon" aria-hidden="true">🔤</span>
-            <span class="mode-button__spinner" aria-hidden="true"></span>
+            <span class="mode-button__icon-box" aria-hidden="true">
+              <span class="mode-button__icon">🔤</span>
+              <span class="mode-button__spinner" aria-hidden="true"></span>
+            </span>
             <span class="mode-button__label">Buchstabensuche</span>
             <span
               class="mode-button__online-icon"
@@ -273,16 +332,19 @@ export function renderStartScreen(container, { onStart } = {}) {
         ></p>
       </div>
 
+      <p id="difficulty-picker-label" class="difficulty-picker__label">
+        2 · Wie schwer?
+      </p>
       <div
         class="difficulty-picker"
         role="group"
-        aria-label="Schwierigkeitsstufe wählen"
+        aria-labelledby="difficulty-picker-label"
       >
         ${DIFFICULTY_OPTIONS.map(
           (option) => `
           <button
             type="button"
-            class="difficulty-button"
+            class="difficulty-button k-btn"
             data-difficulty="${option.value}"
             aria-pressed="false"
           >
@@ -296,7 +358,7 @@ export function renderStartScreen(container, { onStart } = {}) {
 
       <div class="round-length-picker">
         <p id="round-length-label" class="round-length-picker__label">
-          Anzahl der Fragen
+          3 · Wie viele Fragen?
         </p>
         <div
           class="round-length-chip-group"
@@ -307,7 +369,7 @@ export function renderStartScreen(container, { onStart } = {}) {
             (value) => `
             <button
               type="button"
-              class="round-length-chip${
+              class="round-length-chip k-btn${
                 value === DEFAULT_ROUND_LENGTH
                   ? " round-length-chip--selected"
                   : ""
@@ -320,7 +382,19 @@ export function renderStartScreen(container, { onStart } = {}) {
         </div>
       </div>
 
-      <button type="button" class="start-button" disabled>Los geht's!</button>
+      <button type="button" class="start-button k-btn" disabled>Los geht's! 🚀</button>
+    </div>
+
+    <div class="start-screen__side">
+      <div class="start-mascot-card">
+        <div class="start-mascot-card__placeholder" aria-hidden="true"></div>
+        <div class="start-mascot-card__bubble">
+          <p class="start-mascot-card__label">Fine, dein Tierguide</p>
+          <p class="start-mascot-card__quote">„Tippe auf mich, wenn du die Frage nochmal hören willst!“</p>
+        </div>
+      </div>
+      ${renderAlbumPreviewMarkup()}
+    </div>
     </section>
   `;
 

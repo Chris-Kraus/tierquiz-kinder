@@ -52,6 +52,62 @@ import {
 import { DIFFICULTY_LABELS } from "../quiz/difficulty.js";
 import { QUIZ_MODES, getModeLabel } from "../quiz/mode.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
+import animalsData from "../../data/animals.json";
+import { loadCollectedAnimals, getAlbumProgress, ALBUM_TARGET } from "../quiz/album.js";
+import { triggerConfetti } from "../quiz/confetti.js";
+
+const ANIMAL_NAME_BY_ID = new Map(
+  animalsData.animals.map((animal) => [animal.id, animal.name_de]),
+);
+
+/**
+ * Baut das Markup für die Album-Karte auf dem Ergebnis-Bildschirm (Redesign,
+ * Issue #77, design.md "Ergebnis": "Album-Karte wie Start, aber Grid 3
+ * Spalten, Felder 118px"). Gleiche Datenquelle/Logik wie die Start-Bildschirm-
+ * Vorschau (Issue #71), bewusst hier dupliziert statt importiert (start.js
+ * exportiert seine Version nicht, beide Bildschirme kennen einander nicht
+ * direkt — gleiches Kopplungsprinzip wie im gesamten Projekt).
+ */
+function renderAlbumCardMarkup() {
+  const collectedIds = loadCollectedAnimals();
+  const { collected, target } = getAlbumProgress(undefined, ALBUM_TARGET);
+
+  const slots = [];
+  for (let i = 0; i < target; i += 1) {
+    const animalId = collectedIds[i];
+    if (animalId) {
+      const name = ANIMAL_NAME_BY_ID.get(animalId) ?? "?";
+      slots.push(
+        `<div class="start-album-preview__slot start-album-preview__slot--collected">
+          <span class="start-album-preview__slot-name">${name}</span>
+        </div>`,
+      );
+    } else {
+      slots.push(
+        `<div class="start-album-preview__slot" aria-hidden="true">?</div>`,
+      );
+    }
+  }
+
+  return `
+    <div class="start-album-preview start-album-preview--result">
+      <div class="start-album-preview__header">
+        <p class="start-album-preview__title">Mein Album</p>
+        <span class="start-album-preview__badge">${collected}/${target}</span>
+      </div>
+      <div class="start-album-preview__grid">
+        ${slots.join("")}
+      </div>
+      <p class="start-album-preview__footnote">
+        ${
+          collected >= target
+            ? "Du hast schon alle Tiere gesammelt! 🎉"
+            : `Noch ${target - collected} ${target - collected === 1 ? "Tier" : "Tiere"} zu sammeln!`
+        }
+      </p>
+    </div>
+  `;
+}
 
 /**
  * Formatiert einen ISO-Datums-String für die Verlaufsliste, z. B.
@@ -305,25 +361,42 @@ export function renderResultScreen(
     });
   }
 
+  // Redesign (Issue #77, design.md "Ergebnis"): kompakte "X/Y"-Großzahl
+  // zusätzlich zum bestehenden vollen Satz (.result-screen__score bleibt
+  // unverändert bestehen, inkl. "davon N aufgelöst" -- bestehende Tests
+  // prüfen genau diesen Text). Memory-Variante: "N/N" (design.md: "Score =
+  // '6/6'"), da alle Paare bei Rundenende per Definition gefunden sind.
+  const scoreNumber = isMemoryResult
+    ? `${quizState.memoryPairCount}/${quizState.memoryPairCount}`
+    : `${quizState.score}/${quizState.questions.length}`;
+
   container.innerHTML = `
     <section class="result-screen" aria-labelledby="result-title">
-      <p class="result-screen__mascot" aria-hidden="true">🎉</p>
-      <h2 id="result-title" class="result-screen__title">Runde geschafft!</h2>
-      <p class="result-screen__score">
-        ${scoreText}
-      </p>
-      <p class="result-screen__encouragement">${encouragement}</p>
+      <div class="result-screen__panel">
+        <p id="result-title" class="result-screen__label">Runde geschafft 🎉</p>
+        <p class="result-screen__score-number">${scoreNumber}</p>
+        <p class="result-screen__encouragement">${encouragement}</p>
+        <p class="result-screen__score">
+          ${scoreText}
+        </p>
 
-      <div class="result-screen__actions">
-        <button type="button" class="result-screen__play-again">
-          Nochmal spielen
-        </button>
-        <button type="button" class="result-screen__back-to-start">
-          Zurück zum Start
-        </button>
+        <div class="result-screen__actions">
+          <button type="button" class="result-screen__play-again k-btn">
+            Nochmal! 🔁
+          </button>
+          <button type="button" class="result-screen__back-to-start k-btn">
+            Zum Start
+          </button>
+        </div>
+
+        <div class="result-history-container">${renderHistorySection(history)}</div>
       </div>
 
-      <div class="result-history-container">${renderHistorySection(history)}</div>
+      <div class="result-screen__side">
+        ${renderAlbumCardMarkup()}
+      </div>
+
+      <div class="feedback-panel__confetti" aria-hidden="true"></div>
     </section>
   `;
 
@@ -346,6 +419,10 @@ export function renderResultScreen(
   if (historyWrapper) {
     wireHistoryControls(historyWrapper);
   }
+
+  // Redesign (Issue #69/#77, design.md "Ergebnis"): Konfetti bei Rundenende
+  // (README: "Auslöser: ... Rundenende").
+  triggerConfetti(container.querySelector(".feedback-panel__confetti"));
 
   playAgainButton.focus();
 }

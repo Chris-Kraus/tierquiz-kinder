@@ -44,6 +44,8 @@ import { buildLetterPuzzle } from "../quiz/letterPuzzle.js";
 import { recordAnswer, advanceToNextQuestion } from "../quiz/state.js";
 import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 import { buildInfoSentence } from "../quiz/infoSentence.js";
+import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
+import { triggerConfetti } from "../quiz/confetti.js";
 
 // Kindgerechte, kurze Fehlermeldung bei falscher Buchstaben-Eingabe
 // (design.md, "Fehlerfall pro Buchstabe": "kein 'Falsch!', kein Rot/Buzzer-
@@ -97,57 +99,63 @@ export function renderLetterSearchScreen(
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="letter-search-heading">
       <p class="question-screen__progress"></p>
+
+      <!-- Redesign (Issue #75): Medienkarte, gleiche Gruppierung wie
+           question.js/reverseQuestion.js/soundQuestion.js (#72-#74). -->
+      <div class="question-screen__media">
+        <!-- Identisches Markup/identische Klassen wie in reverseQuestion.js
+             (Bildrahmen mit Lade-/Fehlerzustand) -- bewusste Wiederverwendung
+             desselben, bereits QA-geprüften CSS (design.md, "Bildschirmaufbau:
+             gleiche Bildrahmen-Optik/Größe wie beim 'Wer bin ich?'-Modus"). -->
+        <div class="reverse-image-frame" aria-live="polite" aria-busy="true">
+          <div class="reverse-image-frame__loading">
+            <span class="reverse-image-frame__loading-icon" aria-hidden="true"
+              >🐾</span
+            >
+            <p class="reverse-image-frame__loading-text">Bild wird geladen …</p>
+          </div>
+          <img
+            class="reverse-image-frame__image"
+            alt=""
+            hidden
+          />
+          <div class="reverse-image-frame__error" hidden>
+            <span class="reverse-image-frame__error-icon" aria-hidden="true"
+              >🙈</span
+            >
+            <p class="reverse-image-frame__error-text">
+              Dieses Bild will gerade nicht laden.
+            </p>
+            <button
+              type="button"
+              class="reverse-image-frame__retry-button"
+            >
+              Nochmal versuchen
+            </button>
+          </div>
+        </div>
+
+        <!-- Pflicht-Attributionszeile auf jeder Frage (design.md: "identisches
+             Pflicht-Attributions-Muster wie bei #28"). -->
+        <p class="image-hint__attribution" hidden>
+          <span class="letter-search__attribution-text"></span>
+          <a
+            class="image-hint__attribution-link"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+            >(Lizenz)</a
+          >
+        </p>
+      </div>
+
+      <div class="question-screen__body">
       <!-- design.md: feste Überschrift statt wechselndem Fragetext, analog
            zu reverseQuestion.js/soundQuestion.js. -->
       <h2 id="letter-search-heading" class="question-screen__text">
         Wie heißt dieses Tier?
       </h2>
-
-      <!-- Identisches Markup/identische Klassen wie in reverseQuestion.js
-           (Bildrahmen mit Lade-/Fehlerzustand) -- bewusste Wiederverwendung
-           desselben, bereits QA-geprüften CSS (design.md, "Bildschirmaufbau:
-           gleiche Bildrahmen-Optik/Größe wie beim 'Wer bin ich?'-Modus"). -->
-      <div class="reverse-image-frame" aria-live="polite" aria-busy="true">
-        <div class="reverse-image-frame__loading">
-          <span class="reverse-image-frame__loading-icon" aria-hidden="true"
-            >🐾</span
-          >
-          <p class="reverse-image-frame__loading-text">Bild wird geladen …</p>
-        </div>
-        <img
-          class="reverse-image-frame__image"
-          alt=""
-          hidden
-        />
-        <div class="reverse-image-frame__error" hidden>
-          <span class="reverse-image-frame__error-icon" aria-hidden="true"
-            >🙈</span
-          >
-          <p class="reverse-image-frame__error-text">
-            Dieses Bild will gerade nicht laden.
-          </p>
-          <button
-            type="button"
-            class="reverse-image-frame__retry-button"
-          >
-            Nochmal versuchen
-          </button>
-        </div>
-      </div>
-
-      <!-- Pflicht-Attributionszeile auf jeder Frage (design.md: "identisches
-           Pflicht-Attributions-Muster wie bei #28"). -->
-      <p class="image-hint__attribution" hidden>
-        <span class="letter-search__attribution-text"></span>
-        <a
-          class="image-hint__attribution-link"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          hidden
-          >(Lizenz)</a
-        >
-      </p>
 
       <!-- Buchstaben-Kästchen-Reihe(n) (design.md, "Eingabemechanik") --
            wird pro Frage komplett neu aufgebaut (renderLetterPuzzle unten). -->
@@ -170,44 +178,63 @@ export function renderLetterSearchScreen(
            zusätzliches tabindex-Handling passt. -->
       <button
         type="button"
-        class="letter-puzzle__solve-button"
+        class="letter-puzzle__solve-button k-btn"
         aria-label="Lösung anzeigen und Namen auflösen"
         hidden
       >
         Lösung zeigen
       </button>
+      </div>
 
-      <p
-        class="question-screen__feedback"
-        role="status"
-        aria-live="polite"
-        hidden
-      ></p>
+      <!-- Redesign (Issue #75): dasselbe Feedback-Panel wie question.js
+           (Issue #72) — bewusst außerhalb von .question-screen__body als
+           eigenes Grid-Item (siehe dortiger Kommentar zum Overflow-Fund).
+           Kein separater Bild-Refetch für die Sticker-Karte — wie #73 wird
+           das bereits geladene reverse-image-frame-Bild wiederverwendet. -->
+      <div class="feedback-panel" hidden>
+        <div class="feedback-panel__mascot" aria-hidden="true"></div>
+        <div class="feedback-panel__body">
+          <p
+            class="question-screen__feedback"
+            role="status"
+            aria-live="polite"
+            hidden
+          ></p>
 
-      <!-- Infosatz + Wikipedia-Link, identisches Markup wie reverseQuestion.js/
-           soundQuestion.js. -->
-      <p class="question-screen__info-sentence" hidden>
-        <span class="question-screen__info-sentence-text"></span>
-        <a
-          class="question-screen__info-sentence-wikipedia-link"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          hidden
-        >
-          <span aria-hidden="true">📖</span>
-          <span class="question-screen__info-sentence-wikipedia-link-text"></span>
-        </a>
-      </p>
+          <!-- Infosatz + Wikipedia-Link, identisches Markup wie reverseQuestion.js/
+               soundQuestion.js. -->
+          <p class="question-screen__info-sentence" hidden>
+            <span class="question-screen__info-sentence-text"></span>
+            <a
+              class="question-screen__info-sentence-wikipedia-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              hidden
+            >
+              <span aria-hidden="true">📖</span>
+              <span class="question-screen__info-sentence-wikipedia-link-text"></span>
+            </a>
+          </p>
 
-      <!-- Fun Fact, identisches Markup wie soundQuestion.js (Issue #24). -->
-      <p class="question-screen__fun-fact" hidden>
-        <span class="question-screen__fun-fact-icon" aria-hidden="true">💡</span>
-        <span class="question-screen__fun-fact-lead">Wusstest du schon?</span>
-        <span class="question-screen__fun-fact-text"></span>
-      </p>
+          <!-- Fun Fact, identisches Markup wie soundQuestion.js (Issue #24). -->
+          <p class="question-screen__fun-fact" hidden>
+            <span class="question-screen__fun-fact-icon" aria-hidden="true">💡</span>
+            <span class="question-screen__fun-fact-lead">Wusstest du schon?</span>
+            <span class="question-screen__fun-fact-text"></span>
+          </p>
+        </div>
 
-      <button type="button" class="next-button" hidden>Weiter</button>
+        <div class="feedback-panel__sticker">
+          <div class="letter-search__sticker-frame">
+            <img class="letter-search__sticker-img" alt="" />
+            <p class="feedback-panel__sticker-name"></p>
+            <span class="feedback-panel__sticker-badge"></span>
+          </div>
+          <div class="feedback-panel__confetti" aria-hidden="true"></div>
+          <button type="button" class="next-button k-btn" hidden>Weiter</button>
+        </div>
+      </div>
     </section>
   `;
 
@@ -229,6 +256,19 @@ export function renderLetterSearchScreen(
   const letterPuzzleEl = container.querySelector(".letter-puzzle");
   const letterErrorEl = container.querySelector(".letter-puzzle__error");
   const solveButton = container.querySelector(".letter-puzzle__solve-button");
+  // Redesign (Issue #75): gemeinsamer Feedback-Panel-Wrapper wie question.js
+  // (Issue #72) — Sichtbarkeit folgt feedbackEl.hidden.
+  const feedbackPanelEl = container.querySelector(".feedback-panel");
+  const confettiContainerEl = container.querySelector(
+    ".feedback-panel__confetti",
+  );
+  const stickerImgEl = container.querySelector(".letter-search__sticker-img");
+  const stickerNameEl = container.querySelector(
+    ".feedback-panel__sticker-name",
+  );
+  const stickerBadgeEl = container.querySelector(
+    ".feedback-panel__sticker-badge",
+  );
   const feedbackEl = container.querySelector(".question-screen__feedback");
   const infoSentenceEl = container.querySelector(
     ".question-screen__info-sentence",
@@ -267,12 +307,17 @@ export function renderLetterSearchScreen(
   }
 
   function resetFeedback() {
+    feedbackPanelEl.hidden = true;
     feedbackEl.hidden = true;
     feedbackEl.textContent = "";
-    feedbackEl.classList.remove(
-      "question-screen__feedback--correct",
-      "question-screen__feedback--incorrect",
+    feedbackPanelEl.classList.remove(
+      "feedback-panel--correct",
+      "feedback-panel--incorrect",
     );
+    stickerImgEl.src = "";
+    stickerImgEl.alt = "";
+    stickerNameEl.textContent = "";
+    stickerBadgeEl.textContent = "";
     infoSentenceEl.hidden = true;
     infoSentenceTextEl.textContent = "";
     wikipediaLinkEl.hidden = true;
@@ -433,6 +478,24 @@ export function renderLetterSearchScreen(
   // handleShowSolution unten).
   function revealAnswerExtrasAndNext(question) {
     const answeredAnimal = animalById.get(question.animalId);
+
+    // Redesign (Issue #68/#75, design.md "Sticker-Karte"): Sammeln gilt für
+    // beide Abschluss-Pfade (eigenständig gelöst UND "Lösung zeigen") — dieser
+    // Modus hat strukturell kein "falsch beantwortet", nur "selbst gelöst"
+    // vs. "aufgelöst" (siehe architecture.md, Punkt 5). Bild wird aus dem
+    // bereits geladenen reverse-image-frame-Bild übernommen (keine zweite
+    // Netzwerkanfrage, gleiches Prinzip wie #73).
+    if (answeredAnimal) {
+      const wasAlreadyCollected = loadCollectedAnimals().includes(
+        answeredAnimal.id,
+      );
+      addCollectedAnimal(answeredAnimal.id);
+      stickerImgEl.src = imageEl.src;
+      stickerImgEl.alt = "";
+      stickerNameEl.textContent = answeredAnimal.name_de;
+      stickerBadgeEl.textContent = wasAlreadyCollected ? "SCHAU MAL" : "NEU!";
+    }
+
     if (answeredAnimal) {
       infoSentenceTextEl.textContent = buildInfoSentence(answeredAnimal);
       infoSentenceEl.hidden = false;
@@ -457,8 +520,14 @@ export function renderLetterSearchScreen(
     if (!question) return;
 
     feedbackEl.textContent = "✓ Super gemacht! Richtig ergänzt!";
-    feedbackEl.classList.add("question-screen__feedback--correct");
+    feedbackPanelEl.classList.add("feedback-panel--correct");
+    feedbackPanelEl.hidden = false;
     feedbackEl.hidden = false;
+
+    // Redesign (Issue #69/#75): Konfetti nur beim eigenständigen Lösen, nicht
+    // bei "Lösung zeigen" (design.md/Copy-Regeln: Belohnung für echte
+    // eigene Leistung).
+    triggerConfetti(confettiContainerEl);
 
     // Kein "falsch beantwortet" möglich in diesem Modus (architecture.md,
     // Punkt 5: "es gibt hier strukturell kein 'falsch beantwortet'") -- daher
@@ -509,9 +578,12 @@ export function renderLetterSearchScreen(
     hideLetterError();
 
     feedbackEl.textContent = `Hier ist die Lösung: ${question.animalName}`;
+    // Redesign (Issue #75): --incorrect/blush statt --correct/sky für die
+    // Panel-Fläche — bewusst kein Häkchen-Icon/keine grüne Erfolgsfarbe
+    // (design.md/Akzeptanzkriterium), kein Konfetti (siehe handlePuzzleSolved).
+    feedbackPanelEl.classList.add("feedback-panel--incorrect");
+    feedbackPanelEl.hidden = false;
     feedbackEl.hidden = false;
-    // Bewusst OHNE "question-screen__feedback--correct" (kein Häkchen-Icon,
-    // keine grüne Erfolgsfarbe -- design.md/Akzeptanzkriterium).
 
     recordAnswer(quizState, {
       question,

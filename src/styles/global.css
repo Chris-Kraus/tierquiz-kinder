@@ -2,9 +2,32 @@
    ("Visuelle Grundlinie", "Barrierefreiheit"). Alle Farbpaarungen unten sind gegen
    WCAG-AA geprüft (≥ 4,5:1 Fließtext, ≥ 3:1 große Schrift/UI-Elemente). */
 
+/* Selbst gehostete Variable Fonts (Baloo 2, Nunito) statt Google-Fonts-CDN, siehe
+   docs/workflow/architecture.md, Abschnitt "Kindgerechtes Redesign: Technische
+   Leitplanken" — vermeidet eine neue NFR-1-Ausnahme (Kernfunktion bleibt 100%
+   offline-lauffähig, da Fonts lokal mit der App ausgeliefert werden). Beide
+   Dateien sind Variable Fonts (ein einziges .woff2 pro Familie deckt die
+   benötigten Schnitte 600–800 über die wght-Achse ab). */
+@font-face {
+  font-family: "Baloo 2";
+  src: url("/fonts/baloo2-variable.woff2") format("woff2-variations"), url("/fonts/baloo2-variable.woff2") format("woff2");
+  font-weight: 600 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url("/fonts/nunito-variable.woff2") format("woff2-variations"), url("/fonts/nunito-variable.woff2") format("woff2");
+  font-weight: 600 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light;
   font-family:
+    "Nunito",
     "Comic Sans MS",
     "Comic Neue",
     system-ui,
@@ -38,6 +61,141 @@
   --space-lg: 2rem;
 
   --radius-lg: 1.25rem;
+
+  /* Redesign-Tokens (Claude-Design-Handoff, siehe docs/workflow/design.md,
+     Abschnitt "Kindgerechtes Redesign: Visuelle Spezifikation"). Bewusst
+     zusätzlich zu den obigen --color-*-Tokens eingeführt, nicht als Ersatz:
+     die einzelnen Screen-Redesign-Stories (#71-77) verdrahten die bestehenden
+     Klassen schrittweise auf diese neuen Tokens um, statt hier blind alle
+     --color-*-Referenzen im Bestand zu ersetzen (Risiko unklarer Seiteneffekte
+     über 1700+ Zeilen ohne Einzelprüfung jeder Verwendungsstelle). */
+  --ink: #231a45;
+  --paper: #fff3e2;
+  --card: #ffffff;
+  --sky: #9cd5f2;
+  --sand: #f3dfa8;
+  --sand-soft: #fbefdc;
+  --blush: #f4e7e4;
+  /* --muted: gegenüber dem Handoff-Wert (#8B7BA8) bewusst dunkler gezogen.
+     Der Original-Wert verletzt WCAG AA gemessen (3,17–3,82:1 statt 4,5:1 gegen
+     --paper/--card/--blush, siehe design.md-Kontrasttabelle). #685C7E erreicht
+     5,1–6,1:1 gegen alle drei Flächen (gleicher Farbton, dunkler gezogen). */
+  --muted: #685c7e;
+  --link: #2a6e93;
+
+  --font-heading: "Baloo 2", "Comic Sans MS", "Comic Neue", system-ui, sans-serif;
+  --font-body: "Nunito", "Comic Sans MS", "Comic Neue", system-ui, sans-serif;
+
+  --k-radius-card: 32px;
+  --k-radius-btn: 24px;
+  --k-radius-sm: 20px;
+  --k-radius-pill: 999px;
+
+  --k-border-lg: 4px;
+  --k-border-sm: 3px;
+
+  --k-shadow-card: 0 10px 0 var(--ink);
+  --k-shadow-btn: 0 8px 0 var(--ink);
+  --k-shadow-pill: 0 6px 0 var(--ink);
+
+  --k-space-1: 8px;
+  --k-space-2: 12px;
+  --k-space-3: 16px;
+  --k-space-4: 22px;
+  --k-space-5: 26px;
+  --k-space-6: 34px;
+}
+
+/* Haptische Druck-Mechanik (siehe design.md) — Basisklasse für alle Buttons/
+   Kacheln im Redesign. Wird von den einzelnen Screen-Stories (#71-77) auf die
+   jeweiligen bestehenden Klassen angewendet (additiv, `.k-btn` zusätzlich zur
+   bestehenden Klasse auf demselben Element), nicht in dieser Story. */
+.k-btn {
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-btn);
+  box-shadow: var(--k-shadow-btn);
+  transition:
+    transform 0.12s,
+    box-shadow 0.12s,
+    background 0.12s;
+}
+
+.k-btn:hover:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 0 5px 0 var(--ink);
+}
+
+.k-btn:active:not(:disabled) {
+  transform: translateY(8px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+.k-btn:focus-visible {
+  outline: 5px solid var(--sky);
+  outline-offset: 4px;
+}
+
+/* Redesign-Keyframes (siehe design.md). Ungenutzt, bis einzelne Screen-Stories
+   sie auf konkrete Elemente anwenden (Maskottchen, Sticker-Feedback, Konfetti). */
+@keyframes k-pop {
+  0% {
+    transform: scale(0.7) rotate(-6deg);
+  }
+  55% {
+    transform: scale(1.08) rotate(2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes k-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes k-wiggle {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes k-conf {
+  0% {
+    transform: translate3d(0, -30px, 0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--dx), 640px, 0) rotate(var(--rot));
+    opacity: 0;
+  }
+}
+
+/* Konfetti-Partikel (src/quiz/confetti.js, Issue #69). Farbe/Radius/--dx/
+   --rot/animation-duration werden von confetti.js per Inline-Style pro
+   Partikel gesetzt; hier nur die gemeinsame Basisgeometrie + Animation. Der
+   Elterncontainer (jeweiliger Screen) braucht `position: relative` und
+   `overflow: hidden` (siehe design.md) — das legen die Screen-Stories fest. */
+.k-confetti-particle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--ink);
+  animation-name: k-conf;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+  pointer-events: none;
 }
 
 * {
@@ -62,11 +220,19 @@ button {
 
 /* #app ist das einzige Flex-Kind von body; ohne explizite Breite würde es sich
    am Inhalt orientieren (shrink-to-fit) statt den verfügbaren Platz zu nutzen,
-   wodurch .start-screen schmaler würde als sein eigentliches max-width erlaubt. */
+   wodurch .start-screen schmaler würde als sein eigentliches max-width erlaubt.
+   Seit dem Redesign (Issue #70) hat #app zwei Kinder (#app-header,
+   #app-content statt nur einem Screen-Container) — `flex-direction: column`
+   ist deshalb zwingend nötig, sonst landen Kopfzeile und Bildschirminhalt
+   nebeneinander in einer Flex-Reihe statt übereinander (per echtem
+   Screenshot gefunden, nicht nur vermutet: die Kopfzeile erschien dadurch
+   mittig auf der Seite statt oben, gestreckt auf die volle Höhe des viel
+   höheren #app-content-Nachbarn). */
 #app {
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Sichtbarer Fokusring für Tastaturbedienung (siehe design.md,
@@ -85,62 +251,183 @@ button {
   }
 }
 
-/* Start-Bildschirm (siehe design.md, "Nutzerfluss" Punkt 1). */
-
-.start-screen {
+/* Kopfzeile (Redesign, Issue #70, schließt Issue #66 ab; siehe design.md,
+   Abschnitt "Kindgerechtes Redesign" -> Screens -> Kopfzeile). Nutzt die
+   Redesign-Tokens (--ink/--paper/--sand/--sky/--k-*) direkt, nicht die
+   älteren --color-*-Tokens — analog zur Entscheidung in Issue #67, dass
+   neue/umgebaute Bereiche die neuen Tokens verwenden, bestehende Screens
+   aber erst schrittweise umgestellt werden. */
+.app-header {
   width: 100%;
-  max-width: 32rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--k-space-4) var(--k-space-5) var(--k-space-1);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-  gap: var(--space-md);
+  justify-content: space-between;
+  gap: var(--k-space-3);
+  flex-wrap: wrap;
 }
 
-.start-screen__mascot {
-  margin: 0;
-  font-size: 4.5rem;
-  line-height: 1;
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--k-space-2);
+}
+
+.app-header__home-button {
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sand);
+  border-radius: var(--k-radius-sm);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.app-header__logo {
+  display: inline-block;
+  animation: k-wiggle 3s ease-in-out infinite;
+}
+
+.app-header__wordmark {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 30px;
+  color: var(--ink);
+}
+
+.app-header__mode-pill {
+  background: var(--card);
+  border: var(--k-border-sm) solid var(--ink);
+  border-radius: var(--k-radius-pill);
+  padding: 4px 16px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.app-header__status {
+  display: flex;
+  align-items: center;
+  gap: var(--k-space-3);
+}
+
+.app-header__progress {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.app-header__progress-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--k-radius-pill);
+  border: var(--k-border-sm) solid var(--ink);
+  background: var(--card);
+}
+
+.app-header__progress-dot--answered {
+  background: var(--sky);
+}
+
+.app-header__progress-dot--current {
+  background: var(--sand);
+}
+
+.app-header__score {
+  background: var(--sky);
+  border: var(--k-border-sm) solid var(--ink);
+  border-radius: var(--k-radius-pill);
+  padding: 4px 16px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+/* Start-Bildschirm (siehe design.md, "Nutzerfluss" Punkt 1). */
+
+/* Start-Bildschirm (Redesign, Issue #71; siehe design.md, "Kindgerechtes
+   Redesign" -> Screens -> Start). Grid 1fr 400px: links Titel/Auswahl-Schritte
+   (.start-screen__main), rechts Maskottchen-Karte + Album-Vorschau
+   (.start-screen__side, beide neu in dieser Story). Unter 860px Breite fällt
+   die Seitenspalte unter die Hauptspalte (kein horizontales Scrollen auf
+   kleinen Bildschirmen, siehe Issue #37). */
+.start-screen {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: var(--k-space-6);
+  text-align: left;
+}
+
+@media (max-width: 860px) {
+  .start-screen {
+    grid-template-columns: 1fr;
+  }
+}
+
+.start-screen__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-4);
+}
+
+.start-screen__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-4);
 }
 
 .start-screen__title {
   margin: 0;
-  font-size: clamp(2.5rem, 6vw, 3.5rem);
-  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 6vw, 76px);
+  color: var(--ink);
 }
 
 .start-screen__intro {
   margin: 0;
-  font-size: 1.25rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--ink);
 }
 
-/* Modus-Auswahl (Issue #26, design.md "Modus-Auswahl auf dem
-   Start-Bildschirm"): bewusst KEIN neues visuelles Vokabular — dieselbe
-   Kachel-Optik wie .difficulty-button unten, nur als eigene Klasse geführt,
-   damit beide Kachel-Gruppen unabhängig voneinander ihren Auswahlzustand
-   verwalten können. Steht im Markup ÜBER der Schwierigkeitsstufen-Auswahl
-   (grundlegendere Entscheidung zuerst, siehe design.md). */
+/* Gemeinsamer Schritt-Label-Stil ("1 · Welches Spiel?" usw., siehe design.md,
+   "Layout-Empfehlungen"). */
+.mode-picker__label,
+.difficulty-picker__label,
+.round-length-picker__label {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
 .mode-picker {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.mode-picker__label {
-  margin: 0;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--color-secondary-dark);
+  align-items: stretch;
+  gap: var(--k-space-1);
 }
 
 .mode-picker__group {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-md);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: var(--k-space-3);
 }
 
 /* Kindgerechter, nicht-technischer Hinweis bei fehlgeschlagenem Testabruf
@@ -148,8 +435,9 @@ button {
    passend zum bestehenden freundlichen Ton aller Fehlerzustände im Projekt. */
 .mode-picker__hint {
   margin: 0;
-  font-size: 0.9rem;
-  color: var(--color-secondary-dark);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--muted);
 }
 
 .mode-picker__hint[hidden] {
@@ -160,36 +448,34 @@ button {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-md);
+  gap: var(--k-space-3);
 }
 
 /* Große Touch-Zielflächen, deutlich über dem 44×44-px-Minimum (siehe design.md,
-   "Layout-Empfehlungen"/"Barrierefreiheit"). Echtes <button>-Element, per
-   Tastatur bedienbar. Gilt gleichermaßen für die Modus-Auswahl-Kacheln oben
-   (.mode-button, Issue #26) — identische Optik, siehe Kommentar dort. */
+   "Barrierefreiheit"). Echtes <button>-Element, per Tastatur bedienbar.
+   min-height 104px (Modus-Kacheln)/92px (Schwierigkeit) laut design.md — die
+   haptische Druck-Mechanik selbst kommt von der zusätzlichen `.k-btn`-Klasse
+   (siehe start.js, Issue #67), hier nur Größe/Fläche/Layout. */
 .difficulty-button,
 .mode-button {
   flex: 1 1 12rem;
-  min-height: 6.5rem;
-  padding: var(--space-md);
+  min-height: 92px;
+  padding: var(--k-space-3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
-  border: 3px solid var(--color-secondary);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  color: var(--color-secondary-dark);
-  font-size: 1.25rem;
-  font-weight: 700;
-  cursor: pointer;
+  gap: 6px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 800;
 }
 
-.difficulty-button:not(:disabled):active,
-.mode-button:not(:disabled):active {
-  transform: scale(0.97);
+.mode-button {
+  min-height: 104px;
+  border-radius: 26px;
 }
 
 .difficulty-button__check,
@@ -200,8 +486,27 @@ button {
 }
 
 .difficulty-button__hint {
-  font-size: 0.95rem;
-  font-weight: 400;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.mode-button__icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  border: var(--k-border-sm) solid var(--ink);
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  position: relative;
+}
+
+.mode-button__label {
+  font-size: 24px;
 }
 
 /* "Ausgewählt" wird nicht nur über Farbe kommuniziert, sondern zusätzlich über
@@ -209,9 +514,11 @@ button {
    "Keine ausschließlich farbbasierte Codierung"). */
 .difficulty-button--selected,
 .mode-button--selected {
-  background: var(--color-primary);
-  border-color: var(--color-primary-dark);
-  color: #fff;
+  background: var(--sky);
+}
+
+.mode-button--selected .mode-button__icon-box {
+  background: var(--card);
 }
 
 .difficulty-button--selected .difficulty-button__check,
@@ -241,7 +548,7 @@ button {
   display: none;
   width: 1em;
   height: 1em;
-  border: 2px solid var(--color-secondary);
+  border: 2px solid var(--ink);
   border-top-color: transparent;
   border-radius: 50%;
   animation: image-hint-spin 0.8s linear infinite;
@@ -263,8 +570,8 @@ button {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: stretch;
+  gap: var(--k-space-1);
 }
 
 /* CSS-Cascade-Falle wie bei .image-hint[hidden]/.mode-picker__hint[hidden]
@@ -277,72 +584,179 @@ button {
   display: none;
 }
 
-.round-length-picker__label {
-  margin: 0;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--color-secondary-dark);
-}
-
 .round-length-chip-group {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
+  gap: var(--k-space-2);
 }
 
 /* Kleiner als .difficulty-button, aber weiterhin deutlich über dem
-   44×44-px-Touch-Zielgrößen-Minimum (design.md, "Layout-Empfehlungen"). Echtes
+   44×44-px-Touch-Zielgrößen-Minimum (design.md, "Barrierefreiheit"). Echtes
    <button>-Element, per Tastatur bedienbar. */
 .round-length-chip {
   min-width: 2.75rem;
   min-height: 2.75rem;
   padding: 0.4rem 0.9rem;
-  border: 2px solid var(--color-secondary);
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-secondary-dark);
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.round-length-chip:active {
-  transform: scale(0.97);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 800;
+  border-radius: var(--k-radius-pill);
 }
 
 /* "Ausgewählt" wird wie beim Schwierigkeitsstufen-Picker nicht nur über Farbe
    kommuniziert, sondern zusätzlich über aria-pressed (design.md,
-   "Barrierefreiheit", "Keine ausschließlich farbbasierte Codierung"). Bewusst
-   dieselbe bereits gegen WCAG-AA geprüfte Primär-Grün/Weiß-Kombination wie
-   .difficulty-button--selected statt eines neuen, ungeprüften Farbpaars. */
+   "Barrierefreiheit", "Keine ausschließlich farbbasierte Codierung"). */
 .round-length-chip--selected {
-  background: var(--color-primary);
-  border-color: var(--color-primary-dark);
-  color: #fff;
+  background: var(--sky);
 }
 
 .start-button {
-  min-width: 14rem;
-  min-height: 4rem;
-  padding: var(--space-md) var(--space-lg);
-  border: none;
-  border-radius: var(--radius-lg);
-  background: var(--color-accent);
-  color: var(--color-accent-text);
-  font-size: 1.5rem;
-  font-weight: 700;
-  cursor: pointer;
+  width: 100%;
+  min-height: 108px;
+  padding: var(--k-space-3) var(--k-space-5);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 800;
+  border-radius: var(--k-radius-card);
+  border-color: var(--ink);
+  box-shadow: var(--k-shadow-card);
 }
 
 .start-button:disabled {
   background: var(--color-disabled-bg);
   color: var(--color-disabled-text);
+  border-color: var(--color-disabled-bg);
+  box-shadow: none;
   cursor: not-allowed;
 }
 
-.start-button:not(:disabled):active {
-  transform: scale(0.97);
+/* Maskottchen-Karte (design.md: --sand Fläche, Platzhalter 200px + k-float,
+   darunter weiße Sprechblase). Echte Illustration fehlt noch (siehe
+   architecture.md, "Kindgerechtes Redesign" -> Maskottchen "Fine") — die
+   Platzhalter-Textur unten ist bewusst über eine einzige Regel referenziert,
+   damit ein späterer Austausch keine Markup-Änderung braucht. */
+.start-mascot-card {
+  background: var(--sand);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  box-shadow: var(--k-shadow-card);
+  padding: var(--k-space-4);
+}
+
+.start-mascot-card__placeholder {
+  height: 200px;
+  border-radius: var(--k-radius-btn);
+  background: repeating-linear-gradient(
+    135deg,
+    #ffe3b8 0 14px,
+    #ffefd6 14px 28px
+  );
+  animation: k-float 3s ease-in-out infinite;
+}
+
+.start-mascot-card__bubble {
+  margin-top: var(--k-space-3);
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-sm);
+  padding: var(--k-space-3);
+}
+
+.start-mascot-card__label {
+  margin: 0 0 4px;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--link);
+}
+
+.start-mascot-card__quote {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--ink);
+}
+
+/* Album-Vorschau (design.md: Grid 4x3, 68px-Felder; gesammelt = Platzhalter-
+   Textur + Tiername, offen = #FFF8EC-Fläche mit "?"). Dieselbe Komponente
+   wird auf dem Ergebnis-Bildschirm mit 3 Spalten/118px wiederverwendet
+   (Issue #77) — hier die Start-Bildschirm-Variante (4 Spalten/68px). */
+.start-album-preview {
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  padding: var(--k-space-4);
+}
+
+.start-album-preview__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--k-space-3);
+}
+
+.start-album-preview__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.start-album-preview__badge {
+  background: var(--sand);
+  border: var(--k-border-sm) solid var(--ink);
+  border-radius: var(--k-radius-pill);
+  padding: 2px 14px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.start-album-preview__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.start-album-preview__slot {
+  aspect-ratio: 1;
+  min-height: 68px;
+  border-radius: 14px;
+  background: #fff8ec;
+  border: 2px solid #e4d6be;
+  color: #cbb795;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.start-album-preview__slot--collected {
+  background: repeating-linear-gradient(
+    135deg,
+    #ffe3b8 0 14px,
+    #ffefd6 14px 28px
+  );
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  padding: 4px;
+}
+
+.start-album-preview__slot-name {
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.1;
 }
 
 /* Frage-Bildschirm (siehe design.md, "Nutzerfluss" Punkte 2–5,
@@ -352,50 +766,80 @@ button {
    --color-accent-text, Disabled-Grau) – bewusst keine neuen Farbpaare
    eingeführt, um die geprüfte Kontrastbasis nicht zu verlassen. */
 
+/* Frage-Bildschirm (Redesign, Issue #72; design.md, "Kindgerechtes Redesign"
+   -> Screens -> Frage/Feedback-Panel). Grid 460px 1fr: Medienkarte links
+   (.image-hint-button/.image-hint, unverändertes Verhalten aus #16/#30, nur
+   neu gestylt), Frage+Antworten rechts. Unter 760px fällt die Medienspalte
+   über die Frage (kein horizontales Scrollen auf Telefonen). */
 .question-screen {
   width: 100%;
-  max-width: 38rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--space-md);
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: var(--k-space-5);
+  text-align: left;
+}
+
+@media (max-width: 760px) {
+  .question-screen {
+    grid-template-columns: 1fr;
+  }
 }
 
 .question-screen__progress {
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-secondary-dark);
+  grid-column: 1 / -1;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--muted);
 }
 
 .question-screen__text {
   margin: 0;
-  font-size: clamp(1.4rem, 4vw, 2.1rem);
-  line-height: 1.3;
-  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 4vw, 44px);
+  line-height: 1.2;
+  color: var(--ink);
 }
 
-/* Bild-Rateshilfe (Issue #16, Option D′; design.md, Abschnitt "Bild-
-   Rateshilfe (Issue #16)"): kleiner, dezenter sekundärer Button oberhalb der
-   Antwortkacheln — deutlich zurückhaltender als .answer-tile (kleinere
-   Fläche, gedeckteres Farbschema wie .round-length-chip), damit die
-   eigentliche Aufgabe (Frage beantworten) klar im Vordergrund bleibt. Nur im
-   Markup sichtbar, wenn image_filename für das aktuelle Tier vorhanden ist
-   (siehe question.js, resetImageHint). */
+.question-screen__media {
+  background: var(--sand-soft);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  padding: var(--k-space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--k-space-2);
+}
+
+.question-screen__body {
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  padding: var(--k-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-4);
+}
+
+/* Bild-Rateshilfe (Issue #16, Option D′; design.md, "Medien-Karte"): Karte
+   links, `--sand-soft`-Fläche. Button/Bild-Verhalten aus #16/#30 unverändert,
+   hier nur die Kartenoptik + der Button selbst neu gestylt. */
 .image-hint-button {
   display: inline-flex;
   align-items: center;
   gap: 0.4em;
-  padding: 0.45rem 0.9rem;
-  min-height: 2.75rem;
-  border: 2px solid var(--color-secondary);
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-secondary-dark);
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
+  padding: 0.6rem 1.1rem;
+  min-height: 84px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 800;
+  border-radius: var(--k-radius-btn);
 }
 
 /* CSS-Cascade-Falle: Ein `display`-Wert im Author-Stylesheet gewinnt gegen
@@ -488,51 +932,6 @@ button {
 }
 
 .image-hint__attribution-link {
-  color: inherit;
-  text-decoration: underline;
-  margin-left: 0.3em;
-}
-
-/* Issue #30 (Bild-Rateshilfe: Automatische Anzeige nach der Antwort): visueller
-   Zwilling von .image-hint/.image-hint__image/.image-hint__attribution* oben
-   (gleiche Rahmen-Optik, design.md: "Gleiche Bildrahmen-Optik ... aber ohne
-   die Button-Chrome darüber") — bewusst eigene Selektoren statt geteilter
-   Klassen, da es sich um eine eigenständige DOM-Instanz im Feedback-Bereich
-   handelt (siehe question.js, feedbackImage*-Elemente), kein Button/Icon
-   darüber nötig. Zentriert sich wie der Fun-Fact-/Infosatz-Block automatisch
-   in die Fließspalte des Feedback-Bereichs ein. */
-.question-screen__feedback-image {
-  width: 100%;
-  max-width: 16rem;
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-/* Gleiche Cascade-Falle wie bei .image-hint[hidden] oben. */
-.question-screen__feedback-image[hidden] {
-  display: none;
-}
-
-.question-screen__feedback-image-img {
-  width: 100%;
-  height: 11rem;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-  border: 3px solid var(--color-secondary);
-  background: var(--color-disabled-bg);
-}
-
-.question-screen__feedback-image-attribution {
-  margin: 0;
-  font-size: 0.75rem;
-  color: var(--color-secondary-dark);
-  text-align: center;
-}
-
-.question-screen__feedback-image-attribution-link {
   color: inherit;
   text-decoration: underline;
   margin-left: 0.3em;
@@ -844,17 +1243,18 @@ button {
    .letter-puzzle__word oben) ungleichmäßig zusammengestaucht werden, bevor
    der Zeilenumbruch greift. */
 .letter-box {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 78px;
+  height: 96px;
   flex-shrink: 0;
   padding: 0.2rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-lg);
-  font-size: 1.4rem;
-  font-weight: 700;
-  font-family: inherit;
+  border-radius: var(--k-radius-sm);
+  border: var(--k-border-lg) solid var(--ink);
+  font-family: var(--font-heading);
+  font-size: 42px;
+  font-weight: 800;
   text-align: center;
   box-sizing: border-box;
 }
@@ -862,76 +1262,71 @@ button {
 /* Vorgegebene Buchstaben: reiner Text (<span>, kein <input>) -- für
    Screenreader-Nutzer:innen dadurch bereits von selbst als "kein
    editierbares Feld" erkennbar (design.md, "Barrierefreiheit": "kein
-   editierbares Feld, reiner Text"), optisch dezenter Hintergrund statt Rahmen
-   grenzt sie zusätzlich sichtbar von den Lücken unten ab. */
+   editierbares Feld, reiner Text"). design.md: "--sand-soft, readOnly, kein
+   Schatten". */
 .letter-box--given {
-  background: var(--color-disabled-bg);
-  color: var(--color-text);
-  border: 3px solid transparent;
+  background: var(--sand-soft);
+  color: var(--ink);
+  box-shadow: none;
 }
 
 /* Lücken: echte <input maxlength="1">-Felder (design.md, "Eingabemechanik" --
    bewusste Abweichung vom sonstigen Tap-only-Muster des Projekts, siehe
-   dortige Begründung). */
+   dortige Begründung). design.md: "offen: weiß + box-shadow:0 6px 0 ink". */
 .letter-box--blank {
-  background: var(--color-surface);
-  color: var(--color-text);
-  border: 3px solid var(--color-secondary);
-  caret-color: var(--color-secondary-dark);
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 0 6px 0 var(--ink);
+  caret-color: var(--ink);
 }
 
-/* Nach korrekter Eingabe gesperrtes Feld (design.md: "Feld wird
-   readonly/gesperrt") -- dieselbe Grün/Weiß-Kombination wie
-   .answer-tile--correct, damit "richtig" projektweit einheitlich aussieht.
-   Häkchen-Icon wird hier bewusst NICHT zusätzlich eingeblendet: der Buchstabe
-   selbst füllt das Kästchen bereits vollständig aus (anders als bei den
-   Antwortkacheln, die neben dem Text noch Platz für ein Icon haben). */
+/* Nach korrekter Eingabe gesperrtes Feld (design.md: "korrekt getippt: --sky,
+   readOnly"). Häkchen-Icon wird hier bewusst NICHT zusätzlich eingeblendet:
+   der Buchstabe selbst füllt das Kästchen bereits vollständig aus (anders
+   als bei den Antwortkacheln, die neben dem Text noch Platz für ein Icon
+   haben). */
 .letter-box--filled {
-  background: var(--color-primary);
-  border-color: var(--color-primary-dark);
-  color: #fff;
+  background: var(--sky);
+  box-shadow: none;
+  color: var(--ink);
 }
 
 /* Kurze, freundliche Fehlermeldung pro Buchstabe (design.md, "Fehlerfall pro
-   Buchstabe") -- bewusst dezent statt Warnbanner, gleicher Ton wie
-   .mode-picker__hint oben, kein Rot/Buzzer-Farbcode. */
+   Buchstabe") -- bewusst dezent statt Warnbanner, kein Rot/Buzzer-Farbcode. */
 .letter-puzzle__error {
   margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-secondary-dark);
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
 }
 
 .letter-puzzle__error[hidden] {
-  display: none;
+  visibility: hidden;
 }
 
 /* "Lösung zeigen"-Button (Issue #52, design.md "Buchstabensuche: Lösung
-   anzeigen"): bewusst dieselbe zurückhaltende Pill-Optik/Farbgebung wie
-   .reverse-image-frame__retry-button (Sekundär-Stil statt der kräftigen
-   Primärfarbe von .next-button & Co.), damit der Button nicht zum
-   vorschnellen Überspringen verlockt, aber jederzeit verfügbar bleibt. */
+   anzeigen"): bewusst zurückhaltend (weiß, --muted, design.md: "min-height
+   72, 20px"), damit der Button nicht zum vorschnellen Überspringen
+   verlockt, aber jederzeit verfügbar bleibt. Kein k-btn-Schatten/-Druck-
+   Mechanik hier absichtlich, um sich optisch von den kräftigen Primär-
+   Buttons abzuheben (nur Rahmen/Radius aus .k-btn werden mitgenutzt). */
 .letter-puzzle__solve-button {
-  min-height: 2.5rem;
+  min-height: 72px;
   padding: 0.4rem 1rem;
-  border: 2px solid var(--color-secondary);
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-secondary-dark);
-  font-size: 0.9rem;
+  border-radius: var(--k-radius-btn);
+  background: var(--card);
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 20px;
   font-weight: 700;
-  cursor: pointer;
-}
-
-.letter-puzzle__solve-button:active {
-  transform: scale(0.97);
 }
 
 /* Große Touch-Zielflächen (siehe design.md, "Layout-Empfehlungen"),
    echtes <button>-Element, per Tastatur bedienbar (design.md,
    "Barrierefreiheit"). Kein Hover-abhängiges UI: Hover ist rein additiv. */
 .answer-tile {
-  min-height: 5.5rem;
+  min-height: 128px;
   /* min-width: 0 hebt die sonst übliche Flex-Kind-Mindestbreite (Breite des
      unwrapped Inhalts) auf -- ohne das ignoriert ein Grid-Item mit
      `display: flex` seine zugewiesene Spaltenbreite und sprengt die Spalte,
@@ -939,22 +1334,16 @@ button {
      bisherigen Aussehen nichts (Kacheln waren nie so schmal, dass das
      bisher sichtbar wurde). */
   min-width: 0;
-  padding: var(--space-md);
+  padding: var(--k-space-3);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  border: 3px solid var(--color-secondary);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  color: var(--color-secondary-dark);
-  font-size: 1.15rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.answer-tile:not(:disabled):active {
-  transform: scale(0.97);
+  gap: var(--k-space-2);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 32px;
+  font-weight: 800;
 }
 
 .answer-tile:disabled {
@@ -962,19 +1351,27 @@ button {
 }
 
 /* Kacheln, die nach der Auswahl weder die gewählte noch die richtige Antwort
-   sind: schlicht gedimmt (Farbe ist hier nie die einzige Information, siehe
-   Icon/Text bei den beiden relevanten Zuständen unten). */
+   sind: gedimmt per Opazität statt Umfärbung (design.md: "Übrige:
+   opacity:.55, deaktiviert" — Farbe ist hier nie die einzige Information,
+   siehe Icon/Text bei den beiden relevanten Zuständen unten). */
 .answer-tile:disabled:not(.answer-tile--correct):not(
     .answer-tile--selected-wrong
   ) {
-  background: var(--color-disabled-bg);
-  color: var(--color-disabled-text);
-  border-color: var(--color-disabled-bg);
+  opacity: 0.55;
 }
 
 .answer-tile__icon {
-  font-size: 1.3rem;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--k-radius-sm);
+  background: var(--card);
+  border: var(--k-border-sm) solid var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 /* Zusätzliches Sicherheitsnetz zu min-width: 0 oben: erlaubt notfalls auch
@@ -982,81 +1379,133 @@ button {
    `white-space` bricht nur zwischen Wörtern), damit eine Kachel auch bei
    ungewöhnlich langen Tiernamen nie über ihre Spaltenbreite hinausragt. */
 .answer-tile__text {
+  /* min-width: 0 ist hier zusätzlich zum bereits bestehenden min-width: 0 auf
+     .answer-tile selbst nötig: seit dem Redesign hat .answer-tile__icon eine
+     feste 60x60px-Box (immer sichtbar, auch vor der Antwort, design.md-
+     Ziffern-Badge) statt wie vorher leerem/kurzem Inline-Text — bei einem
+     langen, bindestrichlosen Tiernamen (z. B. "Bruchwasserläufer") überstieg
+     die addierte Mindestbreite von Badge+Text sonst die Kachelbreite, was
+     `overflow-wrap: break-word` allein nicht auffängt (automatische
+     Flex-Mindestbreite bemisst sich sonst am längsten unteilbaren Wort). Per
+     echtem Browser-Screenshot gefunden: Badge und Text liefen symmetrisch
+     links/rechts über den Kachelrand hinaus. */
+  min-width: 0;
   overflow-wrap: break-word;
 }
 
-/* Richtig: grün/ermutigend, zusätzlich Häkchen-Icon (nicht nur Farbe, siehe
-   design.md "Barrierefreiheit"). */
+/* Richtig (nach Antwort): Fläche --sky, Badge weiß mit Häkchen, k-pop-Pop-
+   Animation (design.md) — nicht nur Farbe, siehe Icon/Text. */
 .answer-tile--correct {
-  background: var(--color-primary);
-  border-color: var(--color-primary-dark);
-  color: #fff;
+  background: var(--sky);
 }
 
-/* Falsch: bewusst kein Signalrot, sondern dieselbe gedeckte Akzentfarbe
-   (Gelb/Orange) wie der Start-Button, plus neutrales Icon statt X (design.md
-   "Feedback richtig/falsch"). */
+.answer-tile--correct .answer-tile__icon {
+  animation: k-pop 0.4s ease-out;
+}
+
+/* Gewählt & falsch: Fläche --blush, Text --muted (design.md) — bewusst kein
+   Signalrot, neutrales Icon statt X. */
 .answer-tile--selected-wrong {
-  background: var(--color-accent);
-  border-color: var(--color-accent-text);
-  color: var(--color-accent-text);
+  background: var(--blush);
+  color: var(--muted);
 }
 
 .question-screen__feedback {
   margin: 0;
   width: 100%;
-  padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-lg);
-  font-size: 1.15rem;
-  font-weight: 700;
-  background: var(--color-surface);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--ink);
 }
 
-.question-screen__feedback--correct {
-  color: var(--color-primary-dark);
-  border: 3px solid var(--color-primary);
+/* Feedback-Panel (Redesign, Issue #72, design.md "Feedback-Panel"): Grid
+   130px/1fr/320px — Maskottchen | Text-Spalte (Feedback/Infosatz/Fun-Fact,
+   Issue #12/#15/#24 unverändert) | Sticker-Karte (Foto/Name/Badge, Issue #30
+   + neu) + Weiter-Button. Fläche folgt richtig/falsch (--sky/--blush) über
+   `.feedback-panel--correct`/`--incorrect` (siehe question.js, ersetzt die
+   vorherigen `.question-screen__feedback--*`-Klassen auf dem inneren Text). */
+.feedback-panel {
+  width: 100%;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 130px 1fr 320px;
+  gap: var(--k-space-5);
+  margin-top: var(--k-space-4);
+  padding: var(--k-space-5);
+  border-radius: var(--k-radius-card);
+  border: var(--k-border-lg) solid var(--ink);
+  animation: k-pop 0.35s ease-out;
 }
 
-.question-screen__feedback--incorrect {
-  color: var(--color-accent-text);
-  border: 3px solid var(--color-accent);
+/* CSS-Cascade-Falle wie bei .image-hint[hidden]/.mode-picker__hint[hidden]
+   etc. andernorts in dieser Datei: `display: grid` im Author-Stylesheet
+   gewinnt gegen die UA-Regel `[hidden] { display: none }` unabhängig von der
+   Spezifität (Origin sticht Spezifität) — ohne diese Regel bliebe das Panel
+   trotz `hidden`-Attribut sichtbar (per echtem Browser-Screenshot gefunden:
+   leere weiße Box unterhalb der Antwortkacheln vor der ersten Antwort). */
+.feedback-panel[hidden] {
+  display: none;
 }
 
-/* Infosatz zum Tier (Issue #12): eigener, visuell abgesetzter Block
-   unterhalb des Richtig/Falsch-Feedbacks, oberhalb des "Weiter"-Buttons
-   (design.md, "Fun Fact im Feedback-Schritt" — dieselbe Platzierung/Optik
-   wird hier für den verwandten Infosatz-Baustein wiederverwendet). Dezente,
-   blaue Tönung (--color-secondary) statt der Grün/Gelb-Feedbackfarben, damit
-   der Block klar als "zusätzliche Info" statt als weiteres Richtig/Falsch-
-   Signal erkennbar ist. Wird IMMER angezeigt (PM-Entscheidung), daher kein
+@media (max-width: 760px) {
+  .feedback-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feedback-panel--correct {
+  background: var(--sky);
+}
+
+.feedback-panel--incorrect {
+  background: var(--blush);
+}
+
+.feedback-panel__mascot {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--k-radius-sm);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.feedback-panel__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-2);
+}
+
+.feedback-panel__sticker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-3);
+}
+
+/* Infosatz zum Tier (Issue #12): reiner Text unterhalb des Fun-Fact-Blocks,
+   reduzierte Opazität statt eigener Farbfläche (design.md: "Infosatz 16px,
+   opacity:.75"). Wird IMMER angezeigt (PM-Entscheidung), daher kein
    Sonderfall für "kein Infosatz vorhanden" nötig. */
 .question-screen__info-sentence {
   margin: 0;
-  width: 100%;
-  padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-lg);
-  background: rgba(47, 128, 196, 0.1);
-  border: 3px solid var(--color-secondary);
-  color: var(--color-text);
-  font-size: 1rem;
+  font-family: var(--font-body);
+  color: var(--ink);
+  opacity: 0.75;
+  font-size: 16px;
   line-height: 1.4;
-  text-align: left;
 }
 
 /* Wikipedia-Link (Issue #15): seit der Zusammenführungs-Anfrage (14.08.2026)
    kein eigener, danebenstehender Block mehr, sondern letztes Element
-   INNERHALB des Infosatz-Blocks oben (gleicher Rahmen/Hintergrund, kein
-   zweiter Kasten). `display: flex` sorgt dafür, dass der Link auf einer
-   eigenen Zeile unterhalb des Infosatz-Texts erscheint, statt sich mitten in
-   den Fließtext einzureihen. Nur im Markup sichtbar (siehe question.js),
-   wenn animal.wikipedia_url_de vorhanden ist — der Infosatz selbst bleibt
-   unverändert, wenn der Link fehlt (kein erzwungener Leerraum). */
+   INNERHALB des Infosatz-Blocks oben. `display: flex` sorgt dafür, dass der
+   Link auf einer eigenen Zeile unterhalb des Infosatz-Texts erscheint, statt
+   sich mitten in den Fließtext einzureihen. Nur im Markup sichtbar (siehe
+   question.js), wenn animal.wikipedia_url_de vorhanden ist. */
 .question-screen__info-sentence-wikipedia-link {
   display: flex;
   align-items: center;
   gap: 0.4em;
   margin-top: 0.5em;
-  color: var(--color-secondary-dark);
+  color: var(--link);
   font-size: 1rem;
   font-weight: 700;
   text-decoration: underline;
@@ -1069,57 +1518,115 @@ button {
   display: none;
 }
 
-/* Fun Fact (Issue #24, design.md "Fun Fact im Feedback-Schritt"): eigener,
-   visuell abgesetzter Block direkt unterhalb des Infosatz-Blocks oben,
-   oberhalb des "Weiter"-Buttons — konzeptionell EIGENSTÄNDIG neben dem
-   Infosatz (architecture.md: "kein Baustein-Fallback-System wie
-   infoSentence.js", roher kuratierter Freitext). Bewusst die Akzent-
-   Gelb/Orange-Tönung statt der blauen Infosatz-Farbe, damit beide Blöcke bei
-   gleichzeitiger Anzeige klar als zwei unterschiedliche Bausteine erkennbar
-   bleiben, statt wie ein einzelner, zusammenhängender Block zu wirken.
-   Wiederverwendet dieselbe bereits gegen WCAG-AA geprüfte Akzentfarb-
-   Kombination wie .question-screen__feedback--incorrect/.answer-tile--
-   selected-wrong, kein neues Farbpaar. `hidden` per Default (siehe
-   question.js) -> reserviert keinen Platz, solange kein fun_fact vorhanden
-   ist (kein Layout-Sprung). */
+/* Fun Fact (Issue #24, design.md "Fun Fact im Feedback-Schritt"): weiße Box
+   oberhalb des Infosatz-Texts (design.md: "weiße Box, Radius 22, 3px Rahmen
+   mit '💡 Wusstest du schon?'"). `hidden` per Default (siehe question.js) ->
+   reserviert keinen Platz, solange kein fun_fact vorhanden ist. */
 .question-screen__fun-fact {
   margin: 0;
   width: 100%;
-  padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-lg);
-  background: rgba(245, 184, 51, 0.18);
-  border: 3px solid var(--color-accent);
-  color: var(--color-text);
-  font-size: 1rem;
+  padding: var(--k-space-3);
+  border-radius: var(--k-radius-sm);
+  background: var(--card);
+  border: var(--k-border-sm) solid var(--ink);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 19px;
   line-height: 1.4;
-  text-align: left;
-}
-
-.question-screen__fun-fact-icon {
-  margin-right: 0.4em;
 }
 
 .question-screen__fun-fact-lead {
-  font-weight: 700;
-  color: var(--color-accent-text);
+  font-weight: 800;
   margin-right: 0.4em;
 }
 
-.next-button {
-  min-width: 12rem;
-  min-height: 4rem;
-  padding: var(--space-md) var(--space-lg);
-  border: none;
-  border-radius: var(--radius-lg);
-  background: var(--color-accent);
-  color: var(--color-accent-text);
-  font-size: 1.35rem;
-  font-weight: 700;
-  cursor: pointer;
+/* Sticker-Karte: Foto + Name + Badge (design.md, "Sticker-Karte"). Das Bild
+   selbst (.question-screen__feedback-image-img) und sein Lade-/
+   Fehlerverhalten bleiben unverändert (Issue #30) — hier nur die Karten-
+   optik + die neuen Name-/Badge-Elemente. Gilt gleichermaßen für die
+   "Wer bin ich?"-Variante (Issue #73, .reverse-question__sticker-*) — dort
+   bewusst EIGENE Klassen statt derselben wie hier, weil ein bestehender Test
+   (reverseQuestion.test.js) explizit prüft, dass .question-screen__feedback-
+   image in diesem Modus NICHT existiert (Redundanz-Entscheidung aus Issue
+   #35 — das Bild ist dort bereits durchgehend sichtbar). */
+.question-screen__feedback-image,
+.reverse-question__sticker-frame,
+.letter-search__sticker-frame {
+  width: 100%;
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-btn);
+  box-shadow: var(--k-shadow-btn);
+  padding: var(--k-space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
-.next-button:active {
-  transform: scale(0.97);
+.question-screen__feedback-image-img,
+.reverse-question__sticker-img,
+.letter-search__sticker-img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: var(--k-radius-sm);
+  border: var(--k-border-sm) solid var(--ink);
+  background: var(--sand-soft);
+}
+
+.question-screen__feedback-image-attribution {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.question-screen__feedback-image-attribution-link {
+  color: inherit;
+  text-decoration: underline;
+  margin-left: 0.3em;
+}
+
+.feedback-panel__sticker-name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.feedback-panel__sticker-badge {
+  background: var(--sand);
+  border: var(--k-border-sm) solid var(--ink);
+  border-radius: var(--k-radius-pill);
+  padding: 2px 14px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.feedback-panel__confetti {
+  position: relative;
+  height: 0;
+}
+
+.next-button {
+  width: 100%;
+  min-height: 96px;
+  padding: var(--k-space-3) var(--k-space-5);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 800;
+  border-radius: var(--k-radius-btn);
+}
+
+.feedback-panel--incorrect .next-button {
+  background: var(--blush);
 }
 
 /* Issue #37 (Nebenbefund aus #28): "Kein Scrollen bei der Kernaufgabe"
@@ -1175,27 +1682,83 @@ button {
    Scrollen hier ausdrücklich zulässig (kein max-width/Höhen-Zwang für das
    Karten-Grid) — ein Memory-Brett mit bis zu 24 Karten ist ein strukturell
    anderer Inhaltstyp, "Überblick verschaffen" ist Teil des Spiels. */
+/* Tier-Memory (Redesign, Issue #76; design.md "Tier-Memory"): eine weiße
+   Karte statt Fließtext-Layout, Kopfzeile mit Titel + zwei Pills. */
 .memory-screen {
   width: 100%;
-  max-width: 44rem;
+  max-width: 1000px;
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  padding: var(--k-space-5);
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  text-align: left;
+  gap: var(--k-space-4);
+}
+
+.memory-screen__header {
+  display: flex;
   align-items: center;
-  text-align: center;
-  gap: var(--space-md);
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--k-space-3);
 }
 
 .memory-screen__title {
   margin: 0;
-  font-size: clamp(1.8rem, 5vw, 2.5rem);
-  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 5vw, 32px);
+  color: var(--ink);
 }
 
-.memory-screen__progress {
+.memory-screen__pills {
+  display: flex;
+  gap: var(--k-space-2);
+}
+
+.memory-screen__pill {
+  border: var(--k-border-sm) solid var(--ink);
+  border-radius: var(--k-radius-pill);
+  padding: 4px 16px;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.memory-screen__pill--pairs {
+  background: var(--sky);
+}
+
+.memory-screen__pill--attempts {
+  background: var(--card);
+}
+
+.memory-screen__footnote {
   margin: 0;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--color-secondary-dark);
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--muted);
+}
+
+/* Rein für Screenreader (aria-live-Ankündigung bleibt erhalten, siehe
+   memory.js) — dieselbe Information ist jetzt sichtbar in den Pills oben.
+   Standard-"clip"-Technik statt display:none/hidden, da letzteres das
+   Element auch aus der Accessibility-Tree nähme und aria-live wirkungslos
+   machen würde. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Ladezustand vor Rundenstart: visueller Zwilling von .reverse-image-frame
@@ -1265,8 +1828,14 @@ button {
 .memory-board {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
-  gap: var(--space-sm);
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--k-space-3);
+}
+
+@media (max-width: 700px) {
+  .memory-board {
+    grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  }
 }
 
 .memory-board[hidden] {
@@ -1279,21 +1848,17 @@ button {
    (design.md, "Barrierefreiheit"). */
 .memory-card {
   aspect-ratio: 1;
-  min-height: 4.5rem;
+  min-height: 150px;
   min-width: 0;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid var(--color-secondary);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-btn);
+  background: var(--sand-soft);
   cursor: pointer;
   overflow: hidden;
-}
-
-.memory-card:not(:disabled):active {
-  transform: scale(0.97);
 }
 
 .memory-card:disabled {
@@ -1301,7 +1866,7 @@ button {
 }
 
 .memory-card__back {
-  font-size: 1.8rem;
+  font-size: 40px;
   line-height: 1;
 }
 
@@ -1319,20 +1884,20 @@ button {
   display: none;
 }
 
-/* Aufgedeckt, noch unbestätigt: dezente blaue Umrandung (dieselbe Farbe wie
-   .question-screen__info-sentence), unterscheidet sich klar von der
-   grünen "gelöst"-Markierung unten (design.md, "Barrierefreiheit": "keine
+/* Aufgedeckt, noch unbestätigt: weiße Fläche + Pop-Animation (design.md:
+   "Aufgedeckt: weiß, ... k-pop .3s"), unterscheidet sich klar von der
+   --sky-"gelöst"-Markierung unten (design.md, "Barrierefreiheit": "keine
    ausschließlich farbbasierte Codierung" — der Zustandsunterschied ist
    zusätzlich über aria-pressed/aria-label vermittelt, siehe memory.js). */
 .memory-card--revealed {
-  border-color: var(--color-secondary-dark);
+  background: var(--card);
+  animation: k-pop 0.3s ease-out;
 }
 
-/* Dauerhaft gelöstes Paar: grüne Umrandung wie .answer-tile--correct, bleibt
-   sichtbar/disabled für den Rest der Runde. */
+/* Dauerhaft gelöstes Paar: --sky-Fläche (design.md), bleibt sichtbar/
+   disabled für den Rest der Runde. */
 .memory-card--solved {
-  border-color: var(--color-primary);
-  background: rgba(31, 122, 76, 0.08);
+  background: var(--sky);
 }
 
 /* Ergebnis-Bildschirm (siehe design.md, "Nutzerfluss" Punkt 6). Wie beim
@@ -1340,87 +1905,126 @@ button {
    ausschließlich bereits gegen WCAG-AA geprüfte Kombinationen von oben
    wiederverwendet. */
 
+/* Ergebnis-Bildschirm (Redesign, Issue #77; design.md "Ergebnis"): Grid
+   1fr 460px — links Score-Panel (--sky), rechts Album-Karte. */
 .result-screen {
   width: 100%;
-  max-width: 32rem;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 460px;
+  gap: var(--k-space-5);
+  text-align: left;
+  position: relative;
+}
+
+@media (max-width: 860px) {
+  .result-screen {
+    grid-template-columns: 1fr;
+  }
+}
+
+.result-screen__panel {
+  background: var(--sky);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  padding: var(--k-space-6);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--space-md);
+  gap: var(--k-space-3);
 }
 
-.result-screen__mascot {
+.result-screen__label {
   margin: 0;
-  font-size: 4rem;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+
+.result-screen__score-number {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(3rem, 10vw, 120px);
   line-height: 1;
-}
-
-.result-screen__title {
-  margin: 0;
-  font-size: clamp(1.8rem, 5vw, 2.5rem);
-  color: var(--color-primary-dark);
-}
-
-.result-screen__score {
-  margin: 0;
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--color-text);
+  color: var(--ink);
 }
 
 .result-screen__encouragement {
   margin: 0;
-  font-size: 1.15rem;
-  color: var(--color-secondary-dark);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--ink);
+}
+
+/* Bestehender voller Satz (inkl. "davon N aufgelöst") bleibt als kleinerer,
+   sekundärer Text erhalten — die neue Großzahl oben ist rein additiv. */
+.result-screen__score {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--ink);
+  opacity: 0.75;
 }
 
 .result-screen__actions {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
-  margin-top: var(--space-sm);
+  gap: var(--k-space-2);
+  margin-top: var(--k-space-2);
 }
 
-/* Primäre Aktion "Nochmal spielen": selbe Akzent-Kombination wie
-   .start-button/.next-button, groß und dominant (design.md, "Ergebnis-/
-   Abschluss-Bildschirm": "Nochmal spielen" primär/groß). */
+/* Primäre Aktion "Nochmal spielen" (design.md: min-height 96, 28px, --ink
+   Fläche bei "richtig", sonst weißer Kontrast). */
 .result-screen__play-again {
-  min-width: 16rem;
-  min-height: 4.5rem;
-  padding: var(--space-md) var(--space-lg);
-  border: none;
-  border-radius: var(--radius-lg);
-  background: var(--color-accent);
-  color: var(--color-accent-text);
-  font-size: 1.5rem;
-  font-weight: 700;
-  cursor: pointer;
+  min-height: 96px;
+  padding: var(--k-space-3) var(--k-space-5);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 800;
+  border-radius: var(--k-radius-btn);
 }
 
-.result-screen__play-again:active {
-  transform: scale(0.97);
-}
-
-/* Sekundäre Aktion "Zurück zum Start": zurückhaltender als der Primär-Button,
-   selbe geprüfte Sekundärfarbe wie .difficulty-button. */
+/* Sekundäre Aktion "Zurück zum Start": weiß, zurückhaltender. */
 .result-screen__back-to-start {
-  min-width: 14rem;
-  min-height: 3.5rem;
-  padding: var(--space-sm) var(--space-lg);
-  border: 3px solid var(--color-secondary);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  color: var(--color-secondary-dark);
-  font-size: 1.1rem;
-  font-weight: 700;
-  cursor: pointer;
+  min-height: 96px;
+  padding: var(--k-space-3) var(--k-space-5);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 800;
+  border-radius: var(--k-radius-btn);
 }
 
-.result-screen__back-to-start:active {
-  transform: scale(0.97);
+.result-screen__side {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Album-Karte auf dem Ergebnis-Bildschirm: gleiche Komponente wie auf dem
+   Start-Bildschirm (Issue #71), aber 3 statt 4 Spalten mit größeren
+   118px-Feldern (design.md: "Rechts Album-Karte wie Start, aber Grid 3
+   Spalten, Felder 118px, Fußnote 16px"). */
+.start-album-preview--result .start-album-preview__grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.start-album-preview--result .start-album-preview__slot {
+  min-height: 118px;
+}
+
+.start-album-preview__footnote {
+  margin: var(--k-space-3) 0 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--muted);
 }
 
 /* Verlaufsliste der letzten Ergebnisse (Issue #14): dezenter, standardmäßig
@@ -1562,14 +2166,26 @@ button {
    Rahmen nur einen Play-Button statt eines Bildes enthält. */
 .sound-player-frame {
   width: 100%;
-  max-width: 20rem;
-  height: clamp(8rem, 18vh, 9.5rem);
+  min-height: 240px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-lg);
-  border: 3px solid var(--color-secondary);
-  background: var(--color-disabled-bg);
+  gap: var(--k-space-3);
+  border-radius: var(--k-radius-btn);
+  background: var(--card);
+}
+
+.sound-player-frame__hint {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.sound-player-frame__hint[hidden] {
+  display: none;
 }
 
 .sound-player-frame__loading,
@@ -1653,15 +2269,13 @@ button {
    Möglichkeit ist, an die zur Beantwortung nötige Information zu kommen
    (design.md, "Layout"). */
 .sound-play-button {
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 130px;
+  height: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
   border-radius: 50%;
-  background: var(--color-primary);
-  color: #fff;
+  background: var(--sky);
   cursor: pointer;
 }
 
@@ -1675,7 +2289,7 @@ button {
 }
 
 .sound-play-button__icon {
-  font-size: 2.25rem;
+  font-size: 60px;
   line-height: 1;
 }
 
@@ -1707,5 +2321,5 @@ button {
    (soundQuestion.js, setPlayButtonPlaying) auch rein visuell erkennbar ist
    (design.md, "Play/Pause-Toggle beim Tierlaut-Button"). */
 .sound-play-button--playing {
-  background: var(--color-primary-dark);
+  background: var(--sand);
 }
