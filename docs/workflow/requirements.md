@@ -351,6 +351,21 @@ Root Cause im Code verifiziert, reiner CSS-Bug (JS-Klick-Handler ist korrekt und
 
 Als **Issue #98** angelegt und auf dem Board auf `Ready` gesetzt (Root Cause und Scope eindeutig geklärt, keine offene Fachfrage) — bewusst keine ausführlichere Analyse hier, da Ursache und Fix-Richtung bereits im Issue selbst vollständig dokumentiert sind (einzelne CSS-Regel-Reihenfolge, kein architektonisches Thema).
 
+## Ergänzung 22.08.2026: Deployment-Entscheidung — GitHub Pages, Repo öffentlich (Issue folgt)
+
+**Anlass:** Nutzer möchte das Spiel ohne lokales Setup im Browser spielbar machen (insbesondere Tablet/Smartphone), kostenlos, bestenfalls direkt über GitHub.
+
+**Evaluation (durchgeführt, mit Nutzer abgestimmt):** Zwei kostenlose Optionen geprüft — (A) Repo öffentlich + GitHub Pages (100% GitHub-nativ, unbegrenzte kostenlose Actions-Minuten bei öffentlichen Repos) vs. (B) Repo bleibt privat + Drittanbieter-Static-Host (Cloudflare Pages/Netlify, kostenlos, Quellcode bleibt privat). **Nutzer-Entscheidung: Option A.**
+
+**Lizenz-/Copyright-Prüfung (vor der Entscheidung geklärt):** Keine neue Rechtsexposition durch Public-Repo. Bilder werden zur Laufzeit live von Wikimedia Commons geladen (Option D′, kein lokales Bundling, Attribution bereits korrekt zur Laufzeit angezeigt) — unabhängig von Repo-Sichtbarkeit. Tierdaten (`data/animals.json`) sind CC0 (Wikidata-Quelle), waren also immer schon frei nutzbar. Eigener Code bleibt Copyright des Nutzers ("All rights reserved" ist GitHub-Standard ohne explizite `LICENSE`-Datei — öffentliche Sichtbarkeit ≠ Nutzungsfreigabe).
+
+**Umgesetzt (durch mich direkt, auf Nutzeranweisung, kein Rollen-Skill nötig für reine GitHub-Settings-Änderungen):**
+1. Repo-Sichtbarkeit von `private` auf `public` umgestellt (durch den Nutzer selbst vorgenommen, vor dieser Doku-Ergänzung bereits erledigt — per API-Check bestätigt).
+2. **Interaction Limits gesetzt** (`contributors_only`, 6 Monate, bis 22.02.2027) als Absicherung gegen unerwünschte Kommentare von Fremden auf Issues/PRs — einzige verfügbare GitHub-Bordmaßnahme dafür, da Issues aktiv bleiben müssen (Story-Tracking-System dieses Projekts) und es keinen permanenten "nur Collaborators"-Schalter für öffentliche Repos gibt. Muss nach Ablauf ggf. erneuert werden.
+3. Commits/Pushes sind bereits strukturell abgesichert (einziger Collaborator: der Repo-Owner selbst) — Forks/PRs von Fremden sind auf öffentlichen GitHub-Repos technisch nicht verhinderbar, landen aber nie ohne expliziten Merge durch den Owner im Repo.
+
+**Nächster Schritt (folgt als Story über den regulären Workflow):** GitHub-Pages-Deployment einrichten — `vite.config.js` um `base: '/tierquiz-kinder/'` ergänzen, neuer GitHub-Actions-Workflow (`actions/deploy-pages`) für automatisches Deployment bei jedem Push auf `main`, Pages-Feature in den Repo-Settings aktivieren, Live-URL + Mobile-Zugriff verifizieren.
+
 ## Korrektur (13.08.2026)
 
 Im Zuge der realen Datenbeschaffung für Issue #2 (Wikidata) wurde festgestellt, dass die reale Feldabdeckung deutlich von der ursprünglichen Annahme abweicht (kein Testartefakt, gemessen an 1.480 hydrierten Tier-Datensätzen). Daraufhin wurde mit dem Nutzer abgestimmt: **"Farbe" entfällt als Basisfeld** (0% Abdeckung), und die Pflichtfelder wurden auf `id`, `name_de`, `category` reduziert — die übrigen Felder bleiben optional mit variierender Abdeckung je Tier. Details siehe "Datenbasis (Tierdatenbank)" oben sowie `architecture.md`.

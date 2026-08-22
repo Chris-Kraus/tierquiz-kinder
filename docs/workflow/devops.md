@@ -170,8 +170,33 @@ Keine weiteren Kandidaten: keine verwaisten Branches (Feature-Branch aus PR #44 
 
 **Status:** Issue #48 aus Sicht `devops-engineer` erledigt. Committen/Pushen bleibt bei PM/`web-developer` (hier ohnehin nichts zu committen, da die gelöschte Datei nie in Git war).
 
+## Issue #104: GitHub Pages Deployment eingerichtet (22.08.2026)
+
+**Kontext:** Erste Deployment-Story für das Projekt, siehe `requirements.md` Abschnitt "Ergänzung 22.08.2026: Deployment-Entscheidung — GitHub Pages, Repo öffentlich" für die vorgelagerte Entscheidung (Repo bereits öffentlich, Interaction Limits bereits gesetzt). Diese Story ist der rein technische Deployment-Teil.
+
+**Umgesetzt (Branch `setup/github-pages-deployment`, PR #105):**
+
+1. `vite.config.js`: `base: "/tierquiz-kinder/"` ergänzt (Seite läuft künftig unter `https://chris-kraus.github.io/tierquiz-kinder/`, Subpfad statt Domain-Root). Lokal verifiziert: `npm run build` erzeugt jetzt korrekte `/tierquiz-kinder/assets/...`-Pfade in `dist/index.html` statt `/assets/...`.
+
+2. Neuer Workflow `.github/workflows/deploy-pages.yml`: Trigger Push auf `main` + manueller `workflow_dispatch`; Permissions `contents: read`/`pages: write`/`id-token: write`; Concurrency-Gruppe `"pages"` (`cancel-in-progress: false`) nach GitHubs Standard-Pages-Vorlage. Build-Job (Checkout → Node 20, da kein `.nvmrc`/`engines`-Feld im Projekt vorhanden war → `npm ci` → `npm run build` → `actions/upload-pages-artifact` auf `dist/`) und Deploy-Job (`needs: build`, `actions/deploy-pages`, Environment `github-pages`).
+
+3. GitHub Pages in den Repo-Settings aktiviert: `gh api -X POST repos/Chris-Kraus/tierquiz-kinder/pages -f build_type=workflow` — erfolgreich beim ersten Versuch. `build_type` steht jetzt auf `"workflow"`, `html_url` auf `https://chris-kraus.github.io/tierquiz-kinder/`. `status` ist aktuell `null`, da der Workflow (trigget nur auf `main`) noch keinen Lauf hatte — erwartet bis zum ersten Merge.
+
+**Nebenbefund (behoben):** Beim Anlegen der PR schlug sowohl `gh pr create` (GraphQL-Fehler "does not have the correct permissions to execute CreatePullRequest") als auch der direkte REST-Aufruf (`GET .../pulls` → 404) fehl. Ursache verifiziert: `has_pull_requests` stand auf Repo-Ebene auf `false` (vermutlich unbeabsichtigter Nebeneffekt der private→public-Umstellung oder der Interaction-Limits-Automatisierung, nicht der eigentlichen Interaction-Limits-Einstellung selbst, die separat und korrekt über `contributors_only` läuft). Behoben per `gh api -X PATCH repos/Chris-Kraus/tierquiz-kinder -f has_pull_requests=true` — danach lief `gh pr create` ohne weitere Probleme durch. Reine Wiederherstellung eines Standard-GitHub-Features, keine sicherheitsrelevante Änderung; Interaction Limits (`contributors_only`, bis 22.02.2027) bleiben unverändert aktiv.
+
+**Lokale Verifikation:**
+- `npm run test`: 28 Dateien / 422 Tests grün.
+- `npm run lint`: 13 vorbestehende Fehler in `scripts/fetch-animals/` (unrelated `no-undef`/`no-unused-vars`) — per `git stash` gegengeprüft, bereits auf `main` vorhanden, keine Regression durch diese Änderung.
+- `npm run build`: erfolgreich, korrekte `/tierquiz-kinder/`-Asset-Pfade.
+- Workflow-YAML manuell Zeile für Zeile gegen GitHubs offizielle Pages-Vorlage geprüft (Einrückung, `needs`-Abhängigkeit, Permissions/Concurrency/Environment-Blöcke); `actionlint`/`pyyaml` waren lokal nicht installiert, daher keine automatisierte Validierung möglich.
+
+**Was nicht von diesem Branch aus prüfbar ist:** Der Workflow triggert nur `on: push: branches: [main]`, läuft also nicht auf dem Feature-Branch/PR selbst. Der tatsächliche Actions-Lauf, die Live-URL und der Mobile-Browser-Test (Akzeptanzkriterien aus Issue #104) sind erst nach dem Merge prüfbar — an `qa-engineer` im Issue-Kommentar entsprechend übergeben.
+
+**Status:** PR #105 offen, nicht gemerged (Merge bleibt bei `web-developer`). Committen/Pushen für diese reine Infrastruktur-Story (kein Application-Code unter `src/**`) direkt durch `devops-engineer` vorgenommen, analog zum bereits etablierten Präzedenzfall für reine GitHub-Settings-/Infra-Änderungen in diesem Projekt.
+
 ## Offene Infrastruktur-Fragen
 
 - Follow-up-Empfehlung an `web-developer`: totes `color`-Feld aus `src/quiz/difficulty.js` (`EASY_FIELDS`) und `src/quiz/questionGenerator.js` (`FIELD_DEFINITIONS.color`) entfernen (siehe oben) — keine funktionale Dringlichkeit, nur Code-Hygiene.
 - Kategorien-Schieflage (Säugetiere/Vögel dominieren) ist bekannt und im Issue-Kommentar vermerkt; keine Änderung am Auswahlkriterium ohne erneute Rückmeldung des Nutzers.
-- CI/CD (Lint-Workflow, Deployment) noch nicht Teil dieses Arbeitsschritts; folgt in einem eigenen Schritt sobald relevant.
+- Lint-Workflow (separater CI-Check bei Push/PR, siehe Skill-Aufgabe 2) ist weiterhin nicht eingerichtet — bisher nur der Pages-Deployment-Workflow. Eigener Folge-Schritt, falls gewünscht.
+- Post-Merge-Verifikation von Issue #104 (Actions-Lauf grün, Live-URL, Mobile-Test) steht noch aus — Aufgabe von `qa-engineer` nach dem Merge von PR #105.
