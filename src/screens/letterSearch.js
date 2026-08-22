@@ -243,7 +243,6 @@ export function renderLetterSearchScreen(
           <div class="letter-search__sticker-frame">
             <img class="letter-search__sticker-img" alt="" />
             <p class="feedback-panel__sticker-name"></p>
-            <span class="feedback-panel__sticker-badge"></span>
           </div>
           <div class="feedback-panel__confetti" aria-hidden="true"></div>
           <button type="button" class="next-button k-btn" hidden>Weiter</button>
@@ -279,9 +278,6 @@ export function renderLetterSearchScreen(
   const stickerImgEl = container.querySelector(".letter-search__sticker-img");
   const stickerNameEl = container.querySelector(
     ".feedback-panel__sticker-name",
-  );
-  const stickerBadgeEl = container.querySelector(
-    ".feedback-panel__sticker-badge",
   );
   const feedbackEl = container.querySelector(".question-screen__feedback");
   const infoSentenceEl = container.querySelector(
@@ -331,7 +327,6 @@ export function renderLetterSearchScreen(
     stickerImgEl.src = "";
     stickerImgEl.alt = "";
     stickerNameEl.textContent = "";
-    stickerBadgeEl.textContent = "";
     infoSentenceEl.hidden = true;
     infoSentenceTextEl.textContent = "";
     wikipediaLinkEl.hidden = true;
@@ -498,13 +493,14 @@ export function renderLetterSearchScreen(
     // zeigen") — dieser Modus hat strukturell kein "falsch beantwortet", nur
     // "selbst gelöst" vs. "aufgelöst" (siehe architecture.md, Punkt 5). Bild
     // wird aus dem bereits geladenen reverse-image-frame-Bild übernommen
-    // (keine zweite Netzwerkanfrage, gleiches Prinzip wie #73). Album-Eintrag
-    // entfällt seit Issue #91 (Tier-Album-Modul entfernt).
+    // (keine zweite Netzwerkanfrage, gleiches Prinzip wie #73). Issue #92:
+    // kein Badge mehr -- nur noch Bild+Name (das ehemalige NEU!/SCHAU
+    // MAL-Badge war seit #91 fest auf "NEU!" verdrahtet, auch für längst
+    // bekannte Tiere).
     if (answeredAnimal) {
       stickerImgEl.src = imageEl.src;
       stickerImgEl.alt = "";
       stickerNameEl.textContent = answeredAnimal.name_de;
-      stickerBadgeEl.textContent = "NEU!";
     }
 
     if (answeredAnimal) {

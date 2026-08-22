@@ -235,7 +235,6 @@ export function renderReverseQuestionScreen(
           <div class="reverse-question__sticker-frame">
             <img class="reverse-question__sticker-img" alt="" />
             <p class="feedback-panel__sticker-name"></p>
-            <span class="feedback-panel__sticker-badge"></span>
           </div>
           <div class="feedback-panel__confetti" aria-hidden="true"></div>
           <button type="button" class="next-button k-btn" hidden>Weiter</button>
@@ -272,9 +271,6 @@ export function renderReverseQuestionScreen(
   );
   const stickerNameEl = container.querySelector(
     ".feedback-panel__sticker-name",
-  );
-  const stickerBadgeEl = container.querySelector(
-    ".feedback-panel__sticker-badge",
   );
   const feedbackEl = container.querySelector(".question-screen__feedback");
   // Issue #35: Infosatz-/Wikipedia-Link-Elemente — identische Referenz-Namen
@@ -339,7 +335,6 @@ export function renderReverseQuestionScreen(
     stickerImgEl.src = "";
     stickerImgEl.alt = "";
     stickerNameEl.textContent = "";
-    stickerBadgeEl.textContent = "";
     // Issue #35: bei jeder neuen Frage vollständig zurücksetzen, damit
     // Infosatz/Wikipedia-Link des vorherigen Tieres nie kurz sichtbar/
     // erreichbar bleiben (identisches Muster wie showQuestion() in
@@ -491,14 +486,14 @@ export function renderReverseQuestionScreen(
     // Redesign (Issue #68/#73, design.md "Sticker-Karte"): Sticker-Bild wird
     // aus dem bereits geladenen reverse-image-frame-Bild übernommen (keine
     // zweite Netzwerkanfrage, siehe Template-Kommentar oben), unabhängig von
-    // richtig/falsch, gleiches Prinzip wie question.js. Album-Eintrag
-    // entfällt seit Issue #91 (Tier-Album-Modul entfernt).
+    // richtig/falsch, gleiches Prinzip wie question.js. Issue #92: kein Badge
+    // mehr -- nur noch Bild+Name (das ehemalige NEU!/SCHAU MAL-Badge war seit
+    // #91 fest auf "NEU!" verdrahtet, auch für längst bekannte Tiere).
     const answeredAnimalForSticker = animalById.get(question.animalId);
     if (answeredAnimalForSticker) {
       stickerImgEl.src = imageEl.src;
       stickerImgEl.alt = "";
       stickerNameEl.textContent = answeredAnimalForSticker.name_de;
-      stickerBadgeEl.textContent = "NEU!";
     }
 
     // Issue #35: Infosatz IMMER anzeigen, unabhängig davon, ob richtig oder
