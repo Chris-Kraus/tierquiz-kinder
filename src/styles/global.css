@@ -2143,6 +2143,55 @@ button {
     min-height: 4rem;
     padding: 0.6rem var(--space-sm);
   }
+
+  /* QA-Fund Zyklus 3 (Issue #100): die Badge-Größe von .answer-tile__icon
+     (36x18px, `transform: translate(40%, -100%)`) wurde beim Zyklus-2-Fix
+     gegen den DEFAULT-Grid-Gap `var(--space-md)` = 20px gerechnet (siehe
+     Kommentar dort: 18px Höhe -> 2px Marge zum 20px-Gap; 40% von 36px = 14.4px
+     Rechtsversatz -> 5.6px Marge). Diese Medienabfrage hier (bereits vor
+     diesem Issue vorhanden) reduziert `.answer-grid`'s `gap`-Shorthand aber
+     auf `var(--space-sm)` = 12px -- und zwar fuer BEIDE Achsen (row-gap UND
+     column-gap), da `gap` ein Shorthand ist und keine der Grid-Varianten
+     (--reverse/--sound/--pair) es je einzeln ueberschreibt. Beide Zyklus-2-
+     Margen werden dadurch negativ: 18px Badge-Hoehe > 12px Row-Gap (von QA
+     gemessen: 25.6px x 2px Overlap mit der Kachel darueber bei 320x568 und
+     375x600) UND 14.4px horizontaler Versatz > 12px Column-Gap (von QA noch
+     nicht gemeldet, aber aus identischem Grund latent vorhanden -- haette bei
+     einer Kachel in Spalte 1 eines 2x2-Rasters die Nachbarkachel rechts
+     getroffen).
+
+     Fix: Badge-Groesse fuer diesen Breakpoint exakt HALBIERT (36x18 -> 18x9,
+     gleiches 2:1-Seitenverhaeltnis) statt den Transform anzufassen. Wichtig:
+     `translate(40%, -100%)` bezieht sich per CSS-Spec auf die Groesse des
+     Elements SELBST -- bei einer kleineren Box skalieren die resultierenden
+     Px-Versaetze automatisch mit, ohne dass die Transform-Regel selbst
+     geaendert werden muss. Rechnung fuer die neuen 12px-Gaps (mit expliziter
+     Sicherheitsmarge, nicht nur knapp bemessen):
+       - Vertikal: Hoehe 9px, `translate(..., -100%)` = -9px -> Badge sitzt
+         weiterhin zu 100% oberhalb von y=0 (Kachel-Oberkante). Das erhaelt
+         die Zyklus-2-Garantie unveraendert: eine Ueberlappung mit dem
+         EIGENEN Tiernamen bleibt geometrisch ausgeschlossen, unabhaengig von
+         Zeilenzahl/Kachelhoehe -- diese Garantie haengt nur an `-100%`, nicht
+         an der absoluten Groesse. Abstand zur Kachel DARUEBER: 12px Gap - 9px
+         Hoehe = 3px Marge (ggue. 2px im urspruenglichen 20px-Fall bewusst
+         grosszuegiger, da QA hier explizit erneut den Grenzfall testen wird).
+       - Horizontal: Breite 18px, `translate(40%, ...)` = 0.4 * 18px = 7.2px
+         Rechtsversatz in den 12px Column-Gap -> 4.8px Marge zur seitlichen
+         Nachbarkachel.
+     Border (3px -> 2px) und Schriftgroesse (0.8rem -> 0.4rem) proportional
+     mitverkleinert, damit die Badge bei 9px Hoehe nicht ueberwiegend aus
+     Border besteht (border-box: 2x2px Border liessen bei 9px Hoehe nur 5px
+     Content -- bei unveraendert 3px Border waeren es nur 3px). Die Badge
+     bleibt bei sehr kurzen Viewports dadurch klein, aber das ist laut
+     bestehendem Kommentar bei .answer-tile__icon oben bewusst unkritisch: der
+     Farbwechsel der ganzen Kachel (--sky/--blush) ist das primaere Signal,
+     die Badge nur redundante Verstaerkung. */
+  .answer-tile__icon {
+    width: 18px;
+    height: 9px;
+    border-width: 2px;
+    font-size: 0.4rem;
+  }
 }
 
 /* Tier-Memory-Bildschirm (Issue #45, design.md "Neuer Spielmodus
