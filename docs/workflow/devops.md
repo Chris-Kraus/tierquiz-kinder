@@ -251,9 +251,21 @@ gh run list --repo Chris-Kraus/tierquiz-kinder --workflow=deploy-pages.yml
 1. Ursprünglich `ANTHROPIC_API_KEY` (Console-API-Key) geplant, aber Nutzer hat nur ein Pro-Abo und wollte kein separates API-Billing dafür einrichten. Beide Workflows umgestellt auf `claude_code_oauth_token`/`CLAUDE_CODE_OAUTH_TOKEN`.
 2. Beim ersten `gh secret set` versehentlich unter dem alten Namen `ANTHROPIC_API_KEY` gesetzt, dabei ist zusätzlich ein echter Anthropic-API-Key im Klartext im Terminal/Chat gelandet (geleakt) — sofort revoked, Secret gelöscht, korrekt unter `CLAUDE_CODE_OAUTH_TOKEN` neu gesetzt.
 3. **Alle echten PR-Workflow-Läufe (PRs #123-#127) scheiterten mit `API Error: 401 Invalid bearer token`.** Verifiziert per Wegwerf-Debug-PRs mit `show_full_output: true`, zweimal, auch mit komplett frisch erzeugtem Token (`claude setup-token`) — beide Male derselbe 401-Fehler. Passt zu einem aktiv gemeldeten Upstream-Bug in `anthropics/claude-code` (OAuth-Token wird sofort nach Ausstellung als ungültig abgelehnt, siehe z. B. deren Issues #17402/#48996/#10503/#33879) — kein Konfigurationsfehler unsererseits.
-4. **Endgültige Entscheidung (23.08.2026):** zurück auf `ANTHROPIC_API_KEY`/Console-API-Key, da der OAuth-Pfad nachweislich kaputt ist. Beide Workflows wieder umgestellt. Nutzer hat bereits ein Console-Konto (siehe Schritt 2), Umstellung war also nur noch Secret-Name ändern + neuen Key erzeugen.
+4. Zwischenzeitlich probeweise auf `ANTHROPIC_API_KEY`/Console-API-Key umgestellt, da der OAuth-Pfad nachweislich kaputt ist.
+5. **Tatsächliche Entscheidung des Nutzers (23.08.2026): auf Eis, nicht auf API-Key umsteigen.** Nutzer will ausschließlich im Rahmen des Pro-Abo-Nutzungslimits arbeiten (Pay-as-you-go-Abrechnung ohne Cap explizit nicht gewollt). Da der OAuth-Pfad kaputt ist und das der einzige Pro-Abo-kompatible Weg ist, bleibt die Integration **pausiert, bis der Upstream-Bug behoben ist** — kein API-Key-Workaround.
 
-**Für künftige Projekte:** `CLAUDE_CODE_OAUTH_TOKEN` als Default weiterhin sinnvoll (kein separates Billing), aber bei anhaltendem `401 Invalid bearer token` trotz frisch generiertem Token nicht weiter Zeit in Retries stecken — das ist ein bekanntes Upstream-Problem, direkt auf `ANTHROPIC_API_KEY` wechseln.
+**Status: PAUSIERT (23.08.2026).** Umgesetzt:
+- Beide Workflow-Dateien zurück auf `claude_code_oauth_token`/`CLAUDE_CODE_OAUTH_TOKEN` (den eigentlich richtigen, nur aktuell kaputten Pfad) — kein Code-Änderungsbedarf beim späteren Reaktivieren.
+- Beide Workflows per `gh workflow disable "Code Review"` / `gh workflow disable "Claude Assistant"` deaktiviert (Status `disabled_manually`, verifiziert per `gh api .../actions/workflows`) — laufen dadurch bei keinem Event mehr an, kein Rauschen durch dauerhaft fehlschlagende Checks auf künftigen PRs.
+- `CLAUDE_CODE_OAUTH_TOKEN`-Secret entfernt (war ohnehin ungültig) — kein Secret aktuell im Repo gesetzt.
+
+**Reaktivieren, sobald der Anthropic-Bug behoben ist:**
+1. Prüfen, ob das Problem noch besteht (`claude setup-token`, kurzer Testlauf).
+2. `gh secret set CLAUDE_CODE_OAUTH_TOKEN --repo Chris-Kraus/tierquiz-kinder`.
+3. `gh workflow enable "Code Review" --repo Chris-Kraus/tierquiz-kinder` und `gh workflow enable "Claude Assistant" --repo Chris-Kraus/tierquiz-kinder`.
+4. Mit einem Test-PR verifizieren, bevor es als aktiv gemeldet wird.
+
+**Für künftige Projekte:** `CLAUDE_CODE_OAUTH_TOKEN` als Default weiterhin sinnvoll (kein separates Billing), aber bei anhaltendem `401 Invalid bearer token` trotz frisch generiertem Token nicht weiter Zeit in Retries stecken. Anders als hier angenommen ist `ANTHROPIC_API_KEY` dabei **kein neutraler Fallback**, sondern ein bewusster Wechsel von "Pro-Abo-Limit" zu "unbegrenztes Pay-as-you-go mit Spend-Limit als einzigem Schutz" — vor dem Umstieg explizit beim Nutzer nachfragen, nicht automatisch wechseln (siehe diese Session: Nutzer hat sich am Ende bewusst dagegen entschieden).
 
 **Bekannte technische Einschränkung:** `claude-assistant.yml` reagiert auf `issue_comment`/`pull_request_review_comment` — GitHub liest solche Workflows nur vom Default-Branch (`main`), nicht vom PR-Branch selbst. Der `@claude`-Bot funktioniert also erst nach dem Merge des jeweiligen PRs, nicht schon während der Review-Phase. `code-review.yml` (Trigger `pull_request`) validiert sich dagegen bereits auf dem PR selbst.
 
