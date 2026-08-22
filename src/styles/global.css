@@ -510,6 +510,30 @@ button {
   }
 }
 
+/* Bugfix Issue #117 (Root-Cause per getBoundingClientRect()-Messung
+   verifiziert, analog zu Issue #111): `.app-header__brand` (Home-Button
+   52px + Wordmark + Modus-Pille, plus Gaps) hat ein `min-content` von
+   ~302px. Ohne `min-width: 0` als Flex-Kind kann es nicht darunter
+   schrumpfen, wodurch die Seite bei sehr schmalen Viewports (getestet:
+   320-345px, 28px Overflow bei genau 320px) überläuft -- bei 350px+
+   (inkl. 375-390px, dort laut Issue bereits sauber) passt die Zeile ohne
+   Umbruch, ein pauschaler `flex-wrap` hätte dort unnötig eine zweite Zeile
+   erzwungen (per Messung verifiziert: 298px gerenderte Breite vs. 302px
+   Content-Bedarf bei 390px -- knapp unter der Zeilenbreite, aber ein
+   generischer `flex-wrap` bricht trotzdem um). Deshalb bewusst als eigener,
+   enger Breakpoint (349px, per Bisektion ermittelt: 345px noch 3px
+   Overflow, 350px bereits 0) statt im 480px-Block oben. */
+@media (max-width: 349px) {
+  .app-header__brand {
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+
+  .app-header__home-button {
+    flex-shrink: 0;
+  }
+}
+
 /* Start-Bildschirm (siehe design.md, "Nutzerfluss" Punkt 1). */
 
 /* Start-Bildschirm -- Zeilenlayout (Issue #87, löst den zweispaltigen
