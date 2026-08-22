@@ -245,9 +245,17 @@ gh run list --repo Chris-Kraus/tierquiz-kinder --workflow=deploy-pages.yml
 
 **Noch offen, nicht durch diese Rolle ausführbar (Nutzer-Aktion nötig):**
 - Claude GitHub App auf `Chris-Kraus/tierquiz-kinder` installieren (`https://github.com/apps/claude`, Browser-Flow) — **erledigt** (22.08.2026, verifiziert per OIDC-Token-Exchange im Workflow-Log).
-- Auth-Secret setzen: **Korrektur (22.08.2026)** — ursprünglich `ANTHROPIC_API_KEY` (Console-API-Key) geplant, aber Nutzer hat nur ein Pro-Abo und wollte kein separates API-Billing dafür einrichten. Beide Workflows umgestellt auf `claude_code_oauth_token`/`CLAUDE_CODE_OAUTH_TOKEN` (Commit `10fa8a3`) — Auth über das bestehende Pro-Abo via `claude setup-token`, kein Console-Spend-Limit nötig (das gilt nur für den API-Key-Pfad). Noch zu setzen: `gh secret set CLAUDE_CODE_OAUTH_TOKEN --repo Chris-Kraus/tierquiz-kinder`.
+- Auth-Secret setzen: **erledigt, aber mit Umweg.**
 
-**Bekannte technische Einschränkung:** `claude-assistant.yml` reagiert auf `issue_comment`/`pull_request_review_comment` — GitHub liest solche Workflows nur vom Default-Branch (`main`), nicht vom PR-Branch selbst. Der `@claude`-Bot funktioniert also erst nach dem Merge dieses PRs, nicht schon während der Review-Phase. `code-review.yml` (Trigger `pull_request`) validiert sich dagegen bereits auf diesem PR selbst.
+**Auth-Odyssee (22.-23.08.2026):**
+1. Ursprünglich `ANTHROPIC_API_KEY` (Console-API-Key) geplant, aber Nutzer hat nur ein Pro-Abo und wollte kein separates API-Billing dafür einrichten. Beide Workflows umgestellt auf `claude_code_oauth_token`/`CLAUDE_CODE_OAUTH_TOKEN`.
+2. Beim ersten `gh secret set` versehentlich unter dem alten Namen `ANTHROPIC_API_KEY` gesetzt, dabei ist zusätzlich ein echter Anthropic-API-Key im Klartext im Terminal/Chat gelandet (geleakt) — sofort revoked, Secret gelöscht, korrekt unter `CLAUDE_CODE_OAUTH_TOKEN` neu gesetzt.
+3. **Alle echten PR-Workflow-Läufe (PRs #123-#127) scheiterten mit `API Error: 401 Invalid bearer token`.** Verifiziert per Wegwerf-Debug-PRs mit `show_full_output: true`, zweimal, auch mit komplett frisch erzeugtem Token (`claude setup-token`) — beide Male derselbe 401-Fehler. Passt zu einem aktiv gemeldeten Upstream-Bug in `anthropics/claude-code` (OAuth-Token wird sofort nach Ausstellung als ungültig abgelehnt, siehe z. B. deren Issues #17402/#48996/#10503/#33879) — kein Konfigurationsfehler unsererseits.
+4. **Endgültige Entscheidung (23.08.2026):** zurück auf `ANTHROPIC_API_KEY`/Console-API-Key, da der OAuth-Pfad nachweislich kaputt ist. Beide Workflows wieder umgestellt. Nutzer hat bereits ein Console-Konto (siehe Schritt 2), Umstellung war also nur noch Secret-Name ändern + neuen Key erzeugen.
+
+**Für künftige Projekte:** `CLAUDE_CODE_OAUTH_TOKEN` als Default weiterhin sinnvoll (kein separates Billing), aber bei anhaltendem `401 Invalid bearer token` trotz frisch generiertem Token nicht weiter Zeit in Retries stecken — das ist ein bekanntes Upstream-Problem, direkt auf `ANTHROPIC_API_KEY` wechseln.
+
+**Bekannte technische Einschränkung:** `claude-assistant.yml` reagiert auf `issue_comment`/`pull_request_review_comment` — GitHub liest solche Workflows nur vom Default-Branch (`main`), nicht vom PR-Branch selbst. Der `@claude`-Bot funktioniert also erst nach dem Merge des jeweiligen PRs, nicht schon während der Review-Phase. `code-review.yml` (Trigger `pull_request`) validiert sich dagegen bereits auf dem PR selbst.
 
 ## Offene Infrastruktur-Fragen
 
