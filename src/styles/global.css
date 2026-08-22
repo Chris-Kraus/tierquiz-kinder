@@ -1701,29 +1701,72 @@ button {
    "Bruch-wasser-läufer") mit Browser-Messung sogar bis auf 29px an die
    Kachel-Oberkante heran -- jede eingerückte Ecken-Badge landet damit
    zwangsläufig im vom Text belegten Bereich, unabhängig von der
-   Badge-Größe. Die "auf dem Eckpunkt sitzende" Badge dagegen ragt zu drei
-   Vierteln über den Kachelrand hinaus (in den Grid-Gap, `var(--space-md)` =
-   20px, siehe .answer-grid) und beansprucht auf der Kachel selbst nur eine
-   kleine 18×18px-Ecke (halbe Breite/Höhe der 36px-Badge) -- deutlich über der
-   gemessenen 29px-Textgrenze, dadurch mit echtem Text (kurz wie lang,
-   ein- wie zweizeilig) überlappungsfrei getestet. 36px statt der bisherigen
-   60px: kleiner, aber als Eckpunkt-Badge (halb über dem Rand) trotzdem gut
-   erkennbar -- 60px hätte entweder die Kachel weiter überlappt oder zu weit
-   in den 20px-Grid-Gap Richtung Nachbarkachel hineingeragt. */
+   Badge-Größe.
+
+   QA-Bugfix (Issue #100, Zyklus 2): die oben beschriebene "auf dem Eckpunkt
+   sitzende" Badge (halb innerhalb/halb außerhalb der Kachel, `translate(50%,
+   -50%)`) hat auf der Kachel selbst weiterhin eine kleine 18×18px-Ecke
+   beansprucht -- das reichte für den im PR getesteten 2-zeiligen Fall bei
+   1280px, aber NICHT allgemein: bei 3+ Zeilen (z. B. "Nordafrikanische
+   Kuhantilope", 28 Zeichen, echtes Datensatz-Maximum aus `data/animals.json`)
+   oder bereits bei 2 Zeilen auf schmalen 375px-Kacheln wächst die Kachel in
+   der Höhe, um den mehrzeiligen Text unterzubringen, UND der Text bleibt dabei
+   vertikal zentriert -- die erste Zeile kann der Kachel-Oberkante dadurch
+   beliebig nahekommen (von QA gemessen: 11-20px Überlappung mit der
+   verbleibenden 18×18px-Ecke, u. a. bei "Weißkopfseeadler",
+   "Fichtenkreuzschnabel", "Hirschziegenantilope"). Jede Badge, die auch nur
+   TEILWEISE auf der Kachel selbst sitzt, ist damit prinzipiell verwundbar,
+   unabhängig von der genau gewählten Restfläche -- die 29px/18px-Grenzwerte
+   aus dem ersten Versuch gelten nachweislich nur für den einen getesteten
+   Fall, nicht generell.
+
+   Fix: Badge vollständig aus der Kachel heraus verschoben (0px Überlappung
+   mit der Kachel-Fläche, statt nur "größtenteils"). `transform: translate(40%,
+   -100%)` bei `top: 0; right: 0`: der Y-Anteil (`-100%`, volle eigene
+   Badge-Höhe) verschiebt die Badge komplett über die Kachel-Oberkante hinaus
+   -- ihr Y-Bereich liegt danach zu 100% außerhalb der Kachel (y < 0), während
+   jeglicher Kachel-Inhalt (Text, mit Padding) bei y >= 0 beginnt. Da sich zwei
+   Rechtecke nur überlappen können, wenn sich SOWOHL ihr X- als auch ihr
+   Y-Bereich schneiden, ist eine Überlappung mit dem Tiernamen dadurch
+   GEOMETRISCH ausgeschlossen -- unabhängig davon, wie viele Zeilen der Name
+   umbricht oder wie nah der Text an die Kachel-Oberkante heranwächst (anders
+   als beim vorigen Fix beruht das nicht mehr auf einem gemessenen, aber nur
+   für einen Einzelfall gültigen Abstand).
+
+   Badge-Höhe bewusst auf 18px reduziert (statt bisher 36px): das 2×2-Raster
+   hat einen Grid-Gap von `var(--space-md)` = 20px (siehe .answer-grid) sowohl
+   zwischen Zeilen als auch Spalten. Bei einer in Zeile 2 stehenden Kachel
+   ragt die vollständig oberhalb sitzende Badge in genau diesen 20px-Zeilen-
+   Zwischenraum hinein -- bei 18px Höhe bleiben davon 2px Sicherheitsabstand
+   zur Kachel der Zeile darüber, die Badge kann also auch bei einer Kachel in
+   Zeile 2 nicht in die (potenziell selbst mehrzeilige) Nachbarkachel
+   hineinragen. `translate(40%, ...)` (statt 50%) aus demselben Grund für die
+   X-Achse: 40% von 36px Breite = 14.4px Verschiebung nach rechts in den
+   20px-Spalten-Zwischenraum, bleibt mit 5.6px Puffer klar innerhalb des Gaps,
+   berührt also auch die rechte Nachbarkachel nicht. Badge-Breite (36px)
+   unverändert gegenüber der bisherigen Größe, nur die Höhe wurde
+   gekürzt -- das Häkchen/●-Symbol bleibt dadurch bewusst breiter als hoch
+   (ribbon-/Fähnchen-Form) statt insgesamt zu schrumpfen, um trotz der
+   Höhenbeschränkung gut erkennbar zu bleiben (Farbwechsel der ganzen Kachel
+   auf --sky/--blush bleibt ohnehin das primäre Signal, die Badge verstärkt
+   nur redundant). Mit echten `getBoundingClientRect()`-Messungen bei 1280px
+   und 375px gegen die längsten echten Tiernamen aus `data/animals.json`
+   verifiziert: 0px Überlappung in jedem getesteten Fall (siehe PR/Issue-
+   Kommentar für die konkreten Messwerte). */
 .answer-tile__icon {
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(50%, -50%);
+  transform: translate(40%, -100%);
   width: 36px;
-  height: 36px;
+  height: 18px;
   border-radius: var(--k-radius-sm);
   background: var(--card);
   border: var(--k-border-sm) solid var(--ink);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.125rem;
+  font-size: 0.8rem;
   line-height: 1;
   visibility: hidden;
 }
