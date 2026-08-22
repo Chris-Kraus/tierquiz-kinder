@@ -232,6 +232,23 @@ gh api repos/Chris-Kraus/tierquiz-kinder/pages --jq '{build_type, html_url, stat
 gh run list --repo Chris-Kraus/tierquiz-kinder --workflow=deploy-pages.yml
 ```
 
+## Claude Code GitHub Actions eingerichtet (22.08.2026)
+
+**Kontext:** Umsetzung von `Chris-Kraus/claude-setup` #16 (automatisches PR-Review) und #18 (`@claude`-Kommentar-Bot), dort gedraftet und mit `qa-engineer`/`devops-engineer` abgestimmt (Details/Rationale in `claude-setup`, `docs/workflow/github-actions.md` — hier nur die konkrete Umsetzung für dieses Repo).
+
+**Umgesetzt (Branch `setup/claude-code-actions`):**
+
+1. `.github/workflows/code-review.yml` — automatisches PR-Review über `anthropics/claude-code-action`, nutzt das offizielle `code-review`-Plugin, postet Inline-Kommentare auf `pull_request`-Events. `--max-turns 5`, `timeout-minutes: 15`, Concurrency-Gruppe pro PR mit `cancel-in-progress: true`. **Kein Merge-Gate** — reiner Kommentar, kein Required Status Check (qa-engineer-Bedingung aus #16).
+2. `.github/workflows/claude-assistant.yml` — `@claude`-Kommentar-Bot, **bewusst comment-only, kein Code-Push** (Nutzerentscheidung, siehe `claude-setup` #18): `contents: read` + `--disallowedTools` blockiert `Edit`/`Write`/`git push`/`git commit` zusätzlich zur Permission-Einschränkung.
+
+**Sicherheitsrelevant für dieses Repo:** Das Action-eigene Write-Access-Gate (nur Nutzer mit Repo-Schreibrechten können `@claude` triggern) greift hier zusätzlich zu den bereits bestehenden `contributors_only`-Interaction-Limits — einziger Collaborator mit Push-Rechten ist der Repo-Owner selbst, also trotz öffentlichem Repo kein zusätzliches Risiko durch Fremd-Trigger.
+
+**Noch offen, nicht durch diese Rolle ausführbar (Nutzer-Aktion nötig):**
+- Claude GitHub App auf `Chris-Kraus/tierquiz-kinder` installieren (`https://github.com/apps/claude`, Browser-Flow) — **erledigt** (22.08.2026, verifiziert per OIDC-Token-Exchange im Workflow-Log).
+- Auth-Secret setzen: **Korrektur (22.08.2026)** — ursprünglich `ANTHROPIC_API_KEY` (Console-API-Key) geplant, aber Nutzer hat nur ein Pro-Abo und wollte kein separates API-Billing dafür einrichten. Beide Workflows umgestellt auf `claude_code_oauth_token`/`CLAUDE_CODE_OAUTH_TOKEN` (Commit `10fa8a3`) — Auth über das bestehende Pro-Abo via `claude setup-token`, kein Console-Spend-Limit nötig (das gilt nur für den API-Key-Pfad). Noch zu setzen: `gh secret set CLAUDE_CODE_OAUTH_TOKEN --repo Chris-Kraus/tierquiz-kinder`.
+
+**Bekannte technische Einschränkung:** `claude-assistant.yml` reagiert auf `issue_comment`/`pull_request_review_comment` — GitHub liest solche Workflows nur vom Default-Branch (`main`), nicht vom PR-Branch selbst. Der `@claude`-Bot funktioniert also erst nach dem Merge dieses PRs, nicht schon während der Review-Phase. `code-review.yml` (Trigger `pull_request`) validiert sich dagegen bereits auf diesem PR selbst.
+
 ## Offene Infrastruktur-Fragen
 
 - Follow-up-Empfehlung an `web-developer`: totes `color`-Feld aus `src/quiz/difficulty.js` (`EASY_FIELDS`) und `src/quiz/questionGenerator.js` (`FIELD_DEFINITIONS.color`) entfernen (siehe oben) — keine funktionale Dringlichkeit, nur Code-Hygiene.
