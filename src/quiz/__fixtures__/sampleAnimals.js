@@ -27,7 +27,6 @@ export const sampleAnimals = [
     diet: "Fleischfresser",
     weight_kg: 190,
     length_cm: 250,
-    color: ["Goldbraun"],
     lifespan_years: 14,
     conservation_status: "gefährdet",
     fun_fact: "Löwen sind die einzigen Katzen, die in Gruppen (Rudeln) leben.",
@@ -42,7 +41,6 @@ export const sampleAnimals = [
     diet: "Pflanzenfresser",
     weight_kg: 5000,
     length_cm: 400,
-    color: ["Grau"],
     lifespan_years: 60,
     conservation_status: "gefährdet",
   },
@@ -55,7 +53,6 @@ export const sampleAnimals = [
     diet: "Pflanzenfresser",
     weight_kg: 350,
     length_cm: 250,
-    color: ["Schwarz", "Weiß"],
     lifespan_years: 25,
     conservation_status: "nicht gefährdet",
   },
@@ -68,7 +65,6 @@ export const sampleAnimals = [
     diet: "Pflanzenfresser",
     weight_kg: 800,
     length_cm: 500,
-    color: ["Gelb", "Braun"],
     lifespan_years: 25,
     conservation_status: "gefährdet",
   },
@@ -82,7 +78,6 @@ export const sampleAnimals = [
     diet: "Fleischfresser",
     weight_kg: 220,
     length_cm: 300,
-    color: ["Orange", "Schwarz"],
     lifespan_years: 20,
     conservation_status: "stark gefährdet",
   },
@@ -95,7 +90,6 @@ export const sampleAnimals = [
     diet: "Allesfresser",
     weight_kg: 300,
     length_cm: 200,
-    color: ["Braun"],
     lifespan_years: 25,
     conservation_status: "nicht gefährdet",
   },
@@ -108,7 +102,6 @@ export const sampleAnimals = [
     diet: "Fleischfresser",
     weight_kg: 20,
     // length_cm absichtlich nicht gesetzt (optionales Feld fehlt)
-    color: ["Schwarz", "Weiß"],
     lifespan_years: 20,
     // conservation_status absichtlich nicht gesetzt
   },
@@ -120,7 +113,6 @@ export const sampleAnimals = [
     continent: ["Südamerika"],
     diet: "Pflanzenfresser",
     weight_kg: 1,
-    color: ["Grün", "Rot"],
     lifespan_years: 50,
     // conservation_status, length_cm absichtlich nicht gesetzt
   },
@@ -133,7 +125,6 @@ export const sampleAnimals = [
     diet: "Fleischfresser",
     weight_kg: 6,
     length_cm: 90,
-    color: ["Braun"],
     lifespan_years: 20,
     conservation_status: "nicht gefährdet",
   },
@@ -146,7 +137,6 @@ export const sampleAnimals = [
     diet: "Fleischfresser",
     weight_kg: 400,
     length_cm: 500,
-    color: ["Grün"],
     lifespan_years: 70,
     conservation_status: "gefährdet",
   },
@@ -159,7 +149,6 @@ export const sampleAnimals = [
     diet: "Allesfresser",
     weight_kg: 150,
     length_cm: 100,
-    color: ["Grün", "Braun"],
     lifespan_years: 80,
     conservation_status: "vom Aussterben bedroht",
   },
@@ -171,7 +160,6 @@ export const sampleAnimals = [
     continent: ["Europa"],
     diet: "Fleischfresser",
     weight_kg: 0.05,
-    color: ["Grün"],
     // length_cm, lifespan_years, conservation_status absichtlich nicht gesetzt
   },
   {
@@ -183,7 +171,6 @@ export const sampleAnimals = [
     diet: "Fleischfresser",
     weight_kg: 0.03,
     length_cm: 15,
-    color: ["Schwarz", "Gelb"],
     lifespan_years: 15,
     conservation_status: "nicht gefährdet",
   },
@@ -196,7 +183,6 @@ export const sampleAnimals = [
     diet: "Allesfresser",
     weight_kg: 0.03,
     length_cm: 10,
-    color: ["Orange", "Weiß"],
     lifespan_years: 8,
     // conservation_status absichtlich nicht gesetzt
   },
@@ -210,7 +196,6 @@ export const sampleAnimals = [
     diet: "Fleischfresser",
     weight_kg: 1100,
     length_cm: 600,
-    color: ["Grau", "Weiß"],
     lifespan_years: 30,
     conservation_status: "gefährdet",
   },
@@ -222,7 +207,6 @@ export const sampleAnimals = [
     continent: ["Europa", "Asien", "Afrika"],
     diet: "Pflanzenfresser",
     weight_kg: 0.0001,
-    color: ["Gelb", "Schwarz"],
     // length_cm, lifespan_years, conservation_status absichtlich nicht gesetzt
   },
   {
@@ -234,7 +218,6 @@ export const sampleAnimals = [
     diet: "Pflanzenfresser",
     weight_kg: 0.0005,
     length_cm: 5,
-    color: ["Bunt"],
     lifespan_years: 1,
     // conservation_status absichtlich nicht gesetzt
   },
@@ -247,7 +230,6 @@ export const sampleAnimals = [
     diet: "Fleischfresser",
     weight_kg: 0.1,
     length_cm: 10,
-    color: ["Braun", "Schwarz"],
     lifespan_years: 15,
     // conservation_status absichtlich nicht gesetzt
   },
@@ -261,7 +243,6 @@ export const sampleAnimals = [
     diet: "Fleischfresser",
     weight_kg: 10,
     length_cm: 60,
-    color: ["Braun", "Rot"],
     lifespan_years: 2,
     // conservation_status absichtlich nicht gesetzt
   },
@@ -272,7 +253,6 @@ export const sampleAnimals = [
     habitat: ["Ozean"],
     continent: ["Atlantik"],
     weight_kg: 0.5,
-    color: ["Orange"],
     // Nur Pflichtfelder gesetzt: diet, length_cm, lifespan_years,
     // conservation_status, name_scientific, fun_fact absichtlich nicht gesetzt
     // (Randfall: Tier mit ausschließlich Pflichtfeldern).
