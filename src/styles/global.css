@@ -1641,11 +1641,16 @@ button {
      bisherigen Aussehen nichts (Kacheln waren nie so schmal, dass das
      bisher sichtbar wurde). */
   min-width: 0;
+  /* Issue #100: Bezugsrahmen für die absolut positionierte Badge
+     (.answer-tile__icon, siehe dort). Dadurch beeinflusst die Badge die
+     Zentrierung von .answer-tile__text nie mehr -- weder sichtbar noch
+     unsichtbar, da sie komplett aus dem Flex-Fluss der Kachel raus ist. Kein
+     `gap` mehr nötig: .answer-tile__text ist jetzt das einzige Flex-Kind. */
+  position: relative;
   padding: var(--k-space-3);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--k-space-2);
   background: var(--card);
   color: var(--ink);
   font-family: var(--font-body);
@@ -1673,20 +1678,53 @@ button {
    keine A11y-Auswirkung). Nach der Antwort (.answer-tile--correct/
    --selected-wrong) wird sie wieder eingeblendet und zeigt das von der
    bestehenden JS-Logik unverändert gesetzte Feedback-Icon (✓/●). Kein
-   `display: none`, damit die Flex-Gap/Zentrierung zwischen den beiden
-   Zuständen nicht "springt". */
+   `display: none`, damit beim Umschalten kein Reflow/Sprung entsteht.
+
+   Issue #100 (Regression aus #79): die Badge war bis hierher trotz
+   `visibility: hidden` weiterhin echtes Flex-Geschwister von
+   .answer-tile__text in der Flex-Zeile von .answer-tile (inline-flex + Gap) —
+   `justify-content: center` zentrierte dadurch das Paar (Badge+Text), nicht
+   den Text allein, was den Text dauerhaft sichtbar Richtung rechts verschob.
+   Fix: Badge per `position: absolute` (Bezugsrahmen: .answer-tile, siehe
+   dort) komplett aus dem Flex-Fluss der Kachel genommen. Dadurch hat ihr
+   Sichtbarkeits-Zustand (hidden/visible) exakt null Einfluss auf die Position
+   von .answer-tile__text -- die Zentrierung ist in beiden Zuständen
+   identisch (mit echtem Browser-Messwerten verifiziert, Abweichung < 0.01px).
+
+   Platzierung oben rechts, exakt auf dem Eckpunkt der Kachel (`top: 0; right:
+   0; transform: translate(50%, -50%)`), nicht innerhalb der Kachel eingerückt:
+   ein per Screenshot gefundener erster Versuch (Badge mit Abstand zur Kachel-
+   Ecke, weiterhin vollständig innerhalb der Kachel) überlappte den Tiernamen
+   sichtbar, sobald dieser breiter als der verbleibende Randbereich war (z. B.
+   "Ozeanien") -- der Text ist vertikal ÜBER DIE GESAMTE Kachelhöhe zentriert
+   (align-items: center), bei zweizeiligem/silbengetrenntem Text (z. B.
+   "Bruch-wasser-läufer") mit Browser-Messung sogar bis auf 29px an die
+   Kachel-Oberkante heran -- jede eingerückte Ecken-Badge landet damit
+   zwangsläufig im vom Text belegten Bereich, unabhängig von der
+   Badge-Größe. Die "auf dem Eckpunkt sitzende" Badge dagegen ragt zu drei
+   Vierteln über den Kachelrand hinaus (in den Grid-Gap, `var(--space-md)` =
+   20px, siehe .answer-grid) und beansprucht auf der Kachel selbst nur eine
+   kleine 18×18px-Ecke (halbe Breite/Höhe der 36px-Badge) -- deutlich über der
+   gemessenen 29px-Textgrenze, dadurch mit echtem Text (kurz wie lang,
+   ein- wie zweizeilig) überlappungsfrei getestet. 36px statt der bisherigen
+   60px: kleiner, aber als Eckpunkt-Badge (halb über dem Rand) trotzdem gut
+   erkennbar -- 60px hätte entweder die Kachel weiter überlappt oder zu weit
+   in den 20px-Grid-Gap Richtung Nachbarkachel hineingeragt. */
 .answer-tile__icon {
-  width: 60px;
-  height: 60px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  width: 36px;
+  height: 36px;
   border-radius: var(--k-radius-sm);
   background: var(--card);
   border: var(--k-border-sm) solid var(--ink);
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.125rem;
   line-height: 1;
-  flex-shrink: 0;
   visibility: hidden;
 }
 
@@ -1718,8 +1756,15 @@ button {
      `overflow-wrap: break-word` allein nicht auffängt (automatische
      Flex-Mindestbreite bemisst sich sonst am längsten unteilbaren Wort). Per
      echtem Browser-Screenshot gefunden: Badge und Text liefen symmetrisch
-     links/rechts über den Kachelrand hinaus. */
+     links/rechts über den Kachelrand hinaus. Seit Issue #100 ist
+     .answer-tile__icon zwar kein Flex-Geschwister mehr (siehe dort), dieses
+     min-width: 0 bleibt aber unabhängig davon nötig, weil .answer-tile__text
+     selbst weiterhin das (jetzt einzige) Flex-Kind von .answer-tile ist. */
   min-width: 0;
+  /* Issue #100: explizite Zentrierung, damit auch mehrzeiliger/
+     silbengetrennter Text (z. B. "Bruch-wasser-läufer") in jeder Zeile sauber
+     zentriert umbricht statt linksbündig innerhalb der zentrierten Textbox. */
+  text-align: center;
   hyphens: auto;
   overflow-wrap: break-word;
 }
