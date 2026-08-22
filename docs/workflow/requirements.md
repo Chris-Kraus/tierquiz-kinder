@@ -341,6 +341,16 @@ Roher Nutzer-Bugreport, zwei Sätze: (1) "das angezeigte Bild in der Auflösung 
 
 Story-Zuschnitt: zwei Issues — **#94 überarbeitet** (Abschneidung, CSS-Fix, behält die Nummer, da der ursprüngliche Titel bereits exakt darauf zielt) und ein **neues Issue** (Retry-Robustheit für das automatische Feedbackbild im Quizfragen-Modus). Beide `status:ready` (keine offenen Fachfragen mehr, technische Lösung mit `software-architect` abgestimmt).
 
+## Ergänzung 22.08.2026: Triage roher Bugreport (Fragenanzahl-Kachel zeigt keine Auswahl-Farbe) → Issue #98
+
+Roher Nutzer-Bugreport: Antippen einer Fragenanzahl-Kachel ("5/10/15/20 Fragen") wählt zwar aus, ändert aber nicht sichtbar die Hintergrundfarbe; Nutzer vermutete zusätzlich, dass "die anderen Spielmodi mit Fragenauswahl" betroffen seien.
+
+Architektonisch geklärt (Code-Abgleich statt Vermutung): Es existiert nur eine Fragenanzahl-Picker-Instanz, auf der Startseite (`.round-length-picker` in `start.js`); die vier anderen Spielmodi haben keinen eigenen Picker, sondern übernehmen nur den dort gewählten Wert (`state.roundLength`). Der Bug betrifft also technisch eine einzige Komponente, nicht mehrere unabhängige.
+
+Root Cause im Code verifiziert, reiner CSS-Bug (JS-Klick-Handler ist korrekt und symmetrisch zum funktionierenden Schwierigkeitsstufen-Picker): Seit der #87-Restrukturierung ist `.round-length-chip--selected { background: var(--sky); }` Teil einer gemeinsamen Selected-Regel weiter oben in `global.css` (Zeile ~671), während die `.round-length-chip`-Basisregel (`background: var(--card)`) weiter unten steht (Zeile ~757) — bei gleicher Spezifität gewinnt die spätere Regel im Stylesheet und überschreibt die Selected-Farbe. Vor #87 stand die (damals noch dedizierte) Selected-Regel korrekt nach der Basisregel. Bei `.difficulty-button`/`.mode-button` tritt das Problem nicht auf, da deren Basisregel vor der gemeinsamen Selected-Regel steht.
+
+Als **Issue #98** angelegt und auf dem Board auf `Ready` gesetzt (Root Cause und Scope eindeutig geklärt, keine offene Fachfrage) — bewusst keine ausführlichere Analyse hier, da Ursache und Fix-Richtung bereits im Issue selbst vollständig dokumentiert sind (einzelne CSS-Regel-Reihenfolge, kein architektonisches Thema).
+
 ## Korrektur (13.08.2026)
 
 Im Zuge der realen Datenbeschaffung für Issue #2 (Wikidata) wurde festgestellt, dass die reale Feldabdeckung deutlich von der ursprünglichen Annahme abweicht (kein Testartefakt, gemessen an 1.480 hydrierten Tier-Datensätzen). Daraufhin wurde mit dem Nutzer abgestimmt: **"Farbe" entfällt als Basisfeld** (0% Abdeckung), und die Pflichtfelder wurden auf `id`, `name_de`, `category` reduziert — die übrigen Felder bleiben optional mit variierender Abdeckung je Tier. Details siehe "Datenbasis (Tierdatenbank)" oben sowie `architecture.md`.
