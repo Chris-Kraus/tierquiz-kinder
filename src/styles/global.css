@@ -916,6 +916,141 @@ button {
   color: var(--ink);
 }
 
+/* "Meine Sammlung"-Raster (Issue #89, neue Handoff-Datei
+   "CHANGES-startseite-sammlung.md", Abschnitt 3) -- ersetzt die bisherige
+   Album-Vorschau (`.start-album-preview*` unten, dort weiterhin für
+   result.js/#90 erhalten) an derselben Stelle im Layout, zeigt aber die 50
+   Maskottchen statt gesammelter Tierarten. 9 Kacheln/Seite, 3 Spalten. */
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.collection-grid__tile {
+  min-height: 108px;
+  border-radius: 18px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px;
+}
+
+.collection-grid__tile--unlocked {
+  border: var(--k-border-sm) solid var(--ink);
+}
+
+.collection-grid__tile--locked {
+  background: #fff8ec;
+  border: var(--k-border-sm) solid #e4d6be;
+}
+
+.collection-grid__figure {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.collection-grid__name {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  /* Handoff: "15px (Minimum!)" -- bewusst nicht kleiner, auch nicht bei
+     langen Maskottchen-Namen (z. B. "Oktavia der Oktopus"); Umbruch statt
+     Verkleinerung. */
+  font-size: 15px;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--ink);
+}
+
+.collection-grid__mark {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 34px;
+  /* Kontrast gegen #FFF8EC laut design.md-Verifikationshinweis geprüft:
+     ~3,01:1 -- erfüllt knapp die WCAG-AA-Mindestanforderung für große Schrift
+     (>=3:1 ab 24px fett; hier 34px). Kein --muted-Ersatz wie beim
+     ursprünglichen Redesign nötig, da der Handoff-Wert den Schwellenwert
+     (anders als das damalige #8B7BA8) tatsächlich erreicht. */
+  color: #b08a55;
+}
+
+.start-collection-card__hint {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* Start-spezifisches Sterne-Badge (Issue #89) -- mittig unter der "Meine
+   Sammlung"-Karte, ersetzt an dieser einen Stelle das Kopfzeilen-Badge aus
+   Issue #81 (Kopfzeile ist auf dem Start-Bildschirm ausgeblendet, #87). */
+.start-star-badge-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.start-star-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 72px;
+  padding: 4px 24px;
+  /* Unter 5 Sternen laut Handoff bewusst "unsichtbar/ohne Fläche" --
+     background: transparent, kein Rahmen/Schatten, reiner Text. */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 24px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--ink);
+  cursor: default;
+}
+
+.start-star-badge:disabled {
+  opacity: 1; /* kein ausgegrautes Aussehen, analog .app-header__star-badge:disabled */
+}
+
+/* Ab 5 Sternen: Optik wie der CTA "Los geht's" (.start-button) -- Fläche,
+   Schrift, Radius, Schatten laut Handoff explizit genannt; der 4px-Ink-Rahmen
+   ist hier zusätzlich übernommen (Handoff-Aufzählung nennt ihn nicht explizit,
+   aber "Optik wie der CTA" schließt dessen projektweite Basis-Button-Optik
+   mit ein -- bewusste Konsistenz mit .start-button/.k-btn, kein Einzelfall
+   ohne Rahmen in der sonstigen Button-Sprache der App). */
+.start-star-badge--redeemable {
+  min-height: 88px;
+  padding: var(--k-space-3) var(--k-space-6);
+  background: var(--ink);
+  color: var(--paper);
+  border: var(--k-border-lg) solid var(--ink);
+  box-shadow: 0 8px 0 var(--ink);
+  font-size: 24px;
+  cursor: pointer;
+  animation: k-nudge 1.6s ease-in-out infinite;
+}
+
+.start-star-badge--redeemable:hover {
+  transform: translateY(3px);
+  box-shadow: 0 5px 0 var(--ink);
+}
+
+.start-star-badge--redeemable:active {
+  transform: translateY(8px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+.start-star-badge--redeemable:focus-visible {
+  outline: 5px solid var(--sky);
+  outline-offset: 4px;
+}
+
 /* Album-Vorschau (design.md: Grid 3x3, 68px-Felder; gesammelt = Platzhalter-
    Textur + Tiername, offen = #FFF8EC-Fläche mit "?"). Dieselbe Komponente
    wird auf dem Ergebnis-Bildschirm mit 118px-Feldern wiederverwendet (Issue

@@ -73,7 +73,20 @@ const appContent = document.querySelector("#app-content");
 // und wie die Kopfzeile gerendert wird.
 function showStartScreen() {
   appHeader.innerHTML = "";
-  renderStartScreen(appContent, { onStart: showQuestionScreen });
+  // Issue #89: das neue start-spezifische Sterne-Badge unter der "Meine
+  // Sammlung"-Karte braucht dieselbe Art Closure wie das Kopfzeilen-Badge
+  // (Issue #81) bzw. die Sterne-Box im Ergebnis (Issue #83) --
+  // architecture.md Punkt 3: kein String-basiertes `backTo`, sondern eine
+  // Closure über den aktuellen Navigationszustand. Der Start-Bildschirm hat
+  // keinen zu bewahrenden Zustand (anders als quizState bei den anderen
+  // beiden Stellen) -- der Rücksprung ruft deshalb einfach erneut
+  // showStartScreen() auf, das den Bildschirm ohnehin komplett frisch (inkl.
+  // aktualisiertem Sternestand/freigeschalteten Maskottchen) neu aufbaut.
+  renderStartScreen(appContent, {
+    onStart: showQuestionScreen,
+    onOpenMascotChooser: () =>
+      renderMascotChooserScreen(appContent, { onDone: () => showStartScreen() }),
+  });
 }
 
 function showQuestionScreen(quizState) {

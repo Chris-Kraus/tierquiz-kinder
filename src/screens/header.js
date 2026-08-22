@@ -18,6 +18,25 @@
 // übergebenen Callback beim Klick auf.
 import { loadProgress } from "../quiz/progress.js";
 
+/**
+ * Zentrale `canRedeem`-Berechnung (Issue #81: "mindestens 5 Sterne UND noch
+ * nicht alle 50 Maskottchen freigeschaltet"). Exportiert seit Issue #89,
+ * damit das start-spezifische Sterne-Badge (src/screens/start.js) dieselbe
+ * Formel wiederverwendet statt sie ein zweites Mal zu berechnen (Single
+ * Source of Truth für die Freischalt-Bedingung, siehe design.md/
+ * requirements.md, "Startseiten-/Sammlungs-Neuaufbau": "Wiederverwendet die
+ * bestehende canRedeem-Berechnung aus header.js"). `result.js` dupliziert
+ * dieselbe Formel weiterhin bewusst lokal (siehe dortiger Kommentar,
+ * `renderStarsBoxMarkup`) -- diese Datei bleibt trotzdem die kanonische
+ * Quelle, ein Umstellen von result.js auf diesen Export ist nicht Teil
+ * dieser Story (kein Scope-Creep über Issue #89 hinaus).
+ * @param {{stars: number, unlockedIds: number[]}} progress
+ * @returns {boolean}
+ */
+export function canRedeemMascot({ stars, unlockedIds }) {
+  return stars >= 5 && unlockedIds.length < 50;
+}
+
 // Kopfzeile (Redesign, Issue #70, schließt Issue #66 "back to home button"
 // ab). Wird von main.js bei jedem Bildschirm-Wechsel in einen eigenen
 // Kopfzeilen-Container gerendert (siehe main.js, `#app-header` getrennt von
@@ -124,8 +143,9 @@ export function renderHeader(
 ) {
   const modeLabel = mode ? HEADER_MODE_LABELS[mode] : null;
 
-  const { stars, unlockedIds } = loadProgress();
-  const canRedeem = stars >= 5 && unlockedIds.length < 50;
+  const mascotProgress = loadProgress();
+  const { stars } = mascotProgress;
+  const canRedeem = canRedeemMascot(mascotProgress);
   const starBadgeHtml = renderStarBadgeMarkup({ stars, canRedeem });
 
   const progressHtml = progress

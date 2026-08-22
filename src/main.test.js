@@ -129,5 +129,36 @@ describe("Kopfzeilen-Sichtbarkeit über die App-Navigation (Issue #87: showHeade
 
     expect(renderStartScreen).toHaveBeenCalledTimes(2);
     expect(renderHeader).toHaveBeenCalledTimes(2);
+
+    // 5) Issue #89: das start-spezifische Sterne-Badge (unter der "Meine
+    //    Sammlung"-Karte) öffnet die Maskottchen-Auswahl direkt aus start.js
+    //    heraus -- KEIN Umweg über renderHeader (die Kopfzeile ist auf dem
+    //    Start-Bildschirm ja ausgeblendet, s. o.), sondern über einen neuen
+    //    onOpenMascotChooser-Callback, den main.js beim (zweiten, s. o.)
+    //    renderStartScreen()-Aufruf mitgibt (architecture.md Punkt 5: "ruft
+    //    renderMascotChooserScreen stattdessen direkt aus start.js heraus
+    //    auf"). Fortsetzung derselben Navigations-Reise, kein eigener
+    //    Testfall (siehe Datei-Kommentar oben, Begründung "eine
+    //    zusammenhängende Reise" -- main.js hat keine Exports, gegen die man
+    //    isoliert neu booten könnte, ohne für jeden Fall vi.resetModules()
+    //    plus frischen dynamischen Import samt Mock-Neuverdrahtung zu
+    //    wiederholen).
+    const { onOpenMascotChooser } = renderStartScreen.mock.calls[1][1];
+    expect(typeof onOpenMascotChooser).toBe("function");
+
+    onOpenMascotChooser();
+
+    expect(renderMascotChooserScreen).toHaveBeenCalledTimes(1);
+    const { onDone } = renderMascotChooserScreen.mock.calls[0][1];
+    expect(typeof onDone).toBe("function");
+
+    // "Später ↩" bzw. eine erfolgreiche Auswahl -> Rücksprung zum Start,
+    // kein zu bewahrender quizState nötig (anders als bei Frage-Runde/
+    // Ergebnis oben) -- ein weiterer, komplett frischer
+    // showStartScreen()-Aufruf genügt und baut Sternestand/Sammlung ohnehin
+    // neu auf.
+    onDone();
+
+    expect(renderStartScreen).toHaveBeenCalledTimes(3);
   });
 });

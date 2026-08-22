@@ -20,7 +20,6 @@ import {
 } from "../quiz/progress.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
 import { MASCOTS, tintOf } from "../quiz/mascots.js";
-import { ALBUM_TARGET } from "../quiz/album.js";
 
 vi.mock("../../data/animals.json", () => ({
   default: { animals: [] },
@@ -52,11 +51,17 @@ vi.mock("../quiz/letterSearchQuestionGenerator.js", () => ({
 
 const { renderStartScreen } = await import("./start.js");
 
-function render() {
+// Issue #89: optionaler `onOpenMascotChooser`-Callback fürs neue
+// start-spezifische Sterne-Badge -- Standardaufruf `render()` bleibt für
+// bereits bestehende Tests unverändert nutzbar (Callback dann `undefined`,
+// genau wie main.js es beim allerersten Aufruf von renderStartScreen niemals
+// ohne diesen Callback tut, hier für isolierte Tests aber unproblematisch, da
+// er nur beim Klick auf ein einlösbares Badge überhaupt aufgerufen wird).
+function render({ onOpenMascotChooser } = {}) {
   const container = document.createElement("div");
   document.body.appendChild(container);
   const onStart = vi.fn();
-  renderStartScreen(container, { onStart });
+  renderStartScreen(container, { onStart, onOpenMascotChooser });
   return { container, onStart };
 }
 
@@ -101,16 +106,257 @@ beforeEach(() => {
   globalThis.localStorage = createFakeStorage();
 });
 
-describe("Album 3×3-Raster (Issue #82)", () => {
-  it("rendert genau ALBUM_TARGET (9) Album-Felder in einem 3-Spalten-Grid", () => {
+// Issue #89: "Meine Sammlung"-Karte -- ersetzt die vorherige Album-Vorschau
+// (siehe entfernter Test oben in der Git-Historie) komplett durch ein
+// paginiertes 50-Maskottchen-Raster. Sowohl die Maskottchen- als auch die
+// Sammlungs-Karte nutzen jetzt dieselbe navControl.js-Komponente
+// (`.nav-control__badge`/`.nav-control__arrow--prev`/`--next` sind daher
+// zweimal im DOM vorhanden) -- Tests hier grenzen deshalb bewusst über
+// `[data-collection-card-body]` ein, statt (wie die bereits bestehenden
+// Maskottchen-Karten-Tests oben, die als erstes im Dokument stehende Nav
+// unqualifiziert per `.nav-control__badge` treffen) versehentlich das falsche
+// der beiden Nav-Elemente zu prüfen.
+describe("'Meine Sammlung'-Karte (Issue #89, ersetzt die Album-Vorschau)", () => {
+  function collectionBody(container) {
+    return container.querySelector("[data-collection-card-body]");
+  }
+
+  it("zeigt auf Seite 1 das freigeschaltete Start-Maskottchen (Fine der Fuchs) mit Name+Tint, die restlichen 8 Kacheln bleiben als '?' verdeckt", () => {
     const { container } = render();
 
-    const slots = container.querySelectorAll(".start-album-preview__slot");
-    expect(slots).toHaveLength(ALBUM_TARGET);
-    expect(ALBUM_TARGET).toBe(9);
+    const tiles = collectionBody(container).querySelectorAll(
+      ".collection-grid__tile",
+    );
+    expect(tiles).toHaveLength(9);
 
-    const badge = container.querySelector(".start-album-preview__badge");
-    expect(badge.textContent).toBe(`0/${ALBUM_TARGET}`);
+    expect(
+      tiles[0].classList.contains("collection-grid__tile--unlocked"),
+    ).toBe(true);
+    expect(tiles[0].querySelector(".collection-grid__name").textContent).toBe(
+      MASCOTS[0].name,
+    );
+    expect(tiles[0].getAttribute("style")).toContain(tintOf(0));
+
+    for (let i = 1; i < 9; i += 1) {
+      expect(
+        tiles[i].classList.contains("collection-grid__tile--locked"),
+      ).toBe(true);
+      expect(tiles[i].querySelector(".collection-grid__mark").textContent).toBe(
+        "?",
+      );
+      expect(tiles[i].querySelector(".collection-grid__name")).toBeNull();
+    }
+  });
+
+  it("zeigt auf Seite 2 einen Mix aus freigeschalteten (Tint+Name) und verdeckten ('?') Kacheln bei 12 freigeschalteten Maskottchen", () => {
+    // unlockedIds = [0..11] (12 Stück): IDs 9, 10, 11 fallen auf Seite 2
+    // (0-indexiert Seite 1, IDs 9-17), Rest der Seite (12-17) bleibt verdeckt.
+    for (let id = 1; id <= 11; id += 1) {
+      unlockMascot(id);
+    }
+    const { container } = render();
+
+    collectionBody(container)
+      .querySelector(".nav-control__arrow--next")
+      .click();
+
+    const tiles = collectionBody(container).querySelectorAll(
+      ".collection-grid__tile",
+    );
+    expect(tiles).toHaveLength(9);
+
+    for (let i = 0; i < 3; i += 1) {
+      const mascotId = 9 + i;
+      expect(
+        tiles[i].classList.contains("collection-grid__tile--unlocked"),
+      ).toBe(true);
+      expect(tiles[i].querySelector(".collection-grid__name").textContent).toBe(
+        MASCOTS[mascotId].name,
+      );
+    }
+    for (let i = 3; i < 9; i += 1) {
+      expect(
+        tiles[i].classList.contains("collection-grid__tile--locked"),
+      ).toBe(true);
+    }
+  });
+
+  it("Raster trägt aria-live='polite' (Ankündigung bei Seitenwechsel ohne Fokuswechsel)", () => {
+    const { container } = render();
+
+    expect(
+      collectionBody(container)
+        .querySelector(".collection-grid")
+        .getAttribute("aria-live"),
+    ).toBe("polite");
+  });
+
+  it("nutzt navControl.js fürs Seiten-Nav -- Badge zeigt 'Seite 1/6', 'zurück' disabled auf Seite 1, kontextspezifische aria-labels", () => {
+    const { container } = render();
+    const body = collectionBody(container);
+
+    expect(body.querySelector(".nav-control__badge").textContent).toBe(
+      "Seite 1/6",
+    );
+    expect(body.querySelector(".nav-control__arrow--prev").disabled).toBe(
+      true,
+    );
+    expect(body.querySelector(".nav-control__arrow--next").disabled).toBe(
+      false,
+    );
+    expect(
+      body
+        .querySelector(".nav-control__arrow--prev")
+        .getAttribute("aria-label"),
+    ).toBe("Vorherige Sammlungsseite");
+    expect(
+      body
+        .querySelector(".nav-control__arrow--next")
+        .getAttribute("aria-label"),
+    ).toBe("Nächste Sammlungsseite");
+  });
+
+  it("blättert per Klick zur nächsten/vorherigen Seite und aktualisiert das Badge", () => {
+    const { container } = render();
+    const body = collectionBody(container);
+
+    body.querySelector(".nav-control__arrow--next").click();
+    expect(body.querySelector(".nav-control__badge").textContent).toBe(
+      "Seite 2/6",
+    );
+
+    body.querySelector(".nav-control__arrow--prev").click();
+    expect(body.querySelector(".nav-control__badge").textContent).toBe(
+      "Seite 1/6",
+    );
+  });
+
+  it("registriert zwei schnell aufeinanderfolgende Klicks auf 'weiter' als zwei Seiten, nicht nur eine (Doppel-Tap-Test, gleiches Prinzip wie beim Maskottchen-Nav oben)", () => {
+    const { container } = render();
+    const body = collectionBody(container);
+
+    // Zwei synchrone click()-Aufrufe auf dasselbe ursprünglich gerenderte
+    // Element, kein await/Timeout dazwischen -- `colPage` ist zwar rein
+    // lokaler UI-Zustand (kein loadProgress()-Neulesen wie beim
+    // Maskottchen-Nav), dieselbe Garantie muss trotzdem gelten: der erste
+    // Klick rendert die Kartenbody komplett neu (frischer, neu verdrahteter
+    // Button), der zweite Klick trifft also bereits den aktualisierten Stand.
+    body.querySelector(".nav-control__arrow--next").click();
+    body.querySelector(".nav-control__arrow--next").click();
+
+    expect(
+      collectionBody(container).querySelector(".nav-control__badge")
+        .textContent,
+    ).toBe("Seite 3/6");
+  });
+
+  it("letzte Seite (6/6) rendert genau 5 Kacheln (Math.min(9, 50 - 5*9)), keine leeren Kästen, 'weiter' disabled", () => {
+    const { container } = render();
+    let body = collectionBody(container);
+
+    for (let i = 0; i < 5; i += 1) {
+      body.querySelector(".nav-control__arrow--next").click();
+      body = collectionBody(container);
+    }
+
+    expect(body.querySelector(".nav-control__badge").textContent).toBe(
+      "Seite 6/6",
+    );
+    expect(body.querySelector(".nav-control__arrow--next").disabled).toBe(
+      true,
+    );
+    expect(body.querySelector(".nav-control__arrow--prev").disabled).toBe(
+      false,
+    );
+
+    const tiles = body.querySelectorAll(".collection-grid__tile");
+    expect(tiles).toHaveLength(5);
+  });
+
+  it("zeigt die Hinweiszeile wörtlich laut Handoff", () => {
+    const { container } = render();
+
+    expect(
+      collectionBody(container).querySelector(
+        ".start-collection-card__hint",
+      ).textContent,
+    ).toBe(
+      "Hinter jedem ? versteckt sich ein Maskottchen: 5 Sterne sammeln, dann darfst du eins aussuchen.",
+    );
+  });
+
+  it("rendert keine Reste der entfernten Album-Vorschau mehr", () => {
+    const { container } = render();
+
+    expect(container.querySelector(".start-album-preview")).toBeNull();
+  });
+});
+
+describe("Start-spezifisches Sterne-Badge (Issue #89, ersetzt das Kopfzeilen-Badge #81 auf dieser einen Seite)", () => {
+  it("unter 5 Sternen: '⭐ {stars}/5 Sterne', disabled, ohne --redeemable-Klasse", () => {
+    setStars(3);
+    const { container } = render();
+
+    const badge = container.querySelector(".start-star-badge");
+    expect(badge.textContent).toBe("⭐ 3/5 Sterne");
+    expect(badge.disabled).toBe(true);
+    expect(badge.classList.contains("start-star-badge--redeemable")).toBe(
+      false,
+    );
+  });
+
+  it("bei 0 Sternen (Start-Default): '⭐ 0/5 Sterne', disabled", () => {
+    const { container } = render();
+
+    const badge = container.querySelector(".start-star-badge");
+    expect(badge.textContent).toBe("⭐ 0/5 Sterne");
+    expect(badge.disabled).toBe(true);
+  });
+
+  it("ab 5 Sternen: '⭐ {stars} Sterne · Maskottchen aussuchen', klickbar, --redeemable-Klasse gesetzt", () => {
+    setStars(5);
+    const { container } = render();
+
+    const badge = container.querySelector(".start-star-badge");
+    expect(badge.textContent).toBe("⭐ 5 Sterne · Maskottchen aussuchen");
+    expect(badge.disabled).toBe(false);
+    expect(badge.classList.contains("start-star-badge--redeemable")).toBe(
+      true,
+    );
+  });
+
+  it("bleibt trotz 5+ Sternen nicht einlösbar, sobald bereits alle 50 Maskottchen freigeschaltet sind (canRedeemMascot: unlockedIds.length < 50)", () => {
+    for (let id = 1; id < MASCOTS.length; id += 1) {
+      unlockMascot(id);
+    }
+    setStars(5);
+    const { container } = render();
+
+    const badge = container.querySelector(".start-star-badge");
+    expect(badge.disabled).toBe(true);
+    expect(badge.classList.contains("start-star-badge--redeemable")).toBe(
+      false,
+    );
+  });
+
+  it("Klick auf das einlösbare Badge ruft onOpenMascotChooser auf (gleiches Callback-Muster wie Header-Badge #81/Sterne-Box-CTA #83)", () => {
+    setStars(5);
+    const onOpenMascotChooser = vi.fn();
+    const { container } = render({ onOpenMascotChooser });
+
+    container.querySelector(".start-star-badge").click();
+
+    expect(onOpenMascotChooser).toHaveBeenCalledTimes(1);
+  });
+
+  it("ein Klick auf das nicht einlösbare (disabled) Badge löst keinen Callback aus", () => {
+    setStars(3);
+    const onOpenMascotChooser = vi.fn();
+    const { container } = render({ onOpenMascotChooser });
+
+    container.querySelector(".start-star-badge").click();
+
+    expect(onOpenMascotChooser).not.toHaveBeenCalled();
   });
 });
 
