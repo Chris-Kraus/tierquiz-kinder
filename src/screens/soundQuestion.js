@@ -133,16 +133,7 @@ export function renderSoundQuestionScreen(
     <section class="question-screen" aria-labelledby="sound-question-heading">
       <p class="question-screen__progress"></p>
 
-      <!-- Redesign (Issue #74): Medienkarte, gleiche Gruppierung wie
-           question.js/reverseQuestion.js (Issue #72/#73) — reine
-           Layout-Ergänzung, kein Verhaltens-/Klassen-Unterschied an den
-           bestehenden Elementen. -->
       <div class="question-screen__media">
-        <!-- Fester, moderat großer Player-Rahmen (design.md: "reservierter
-             Player-Bereich", analog zum Bildrahmen bei #28, kein Layout-Sprung)
-             — enthält je nach Zustand genau EINEN der drei Bereiche darunter.
-             aria-live/aria-busy kündigen Lade-/Fehlerzustands-Wechsel für
-             Screenreader an (design.md, "Barrierefreiheit"). -->
         <div class="sound-player-frame" aria-live="polite" aria-busy="true">
           <div class="sound-player-frame__loading">
             <span class="sound-player-frame__loading-icon" aria-hidden="true"
@@ -151,16 +142,6 @@ export function renderSoundQuestionScreen(
             <p class="sound-player-frame__loading-text">Ton wird geladen …</p>
           </div>
 
-          <!-- Play-Button: echtes <button>-Element, per Tastatur fokussierbar
-               und auslösbar (Enter/Space), aussagekräftiges aria-label (design.md,
-               "Barrierefreiheit") — Label wechselt nach dem ersten Abspielen von
-               "Tierlaut abspielen" zu "Tierlaut noch einmal abspielen"
-               (updatePlayButtonLabel unten). Derselbe Button kann beliebig oft
-               erneut angetippt werden (kein separater "Nochmal"-Button, kein
-               Limit). aria-busy kennzeichnet den kurzen Pufferzustand beim
-               (ersten) Abspielen — dezenter Indikator IM Button selbst statt
-               Vollbild-Spinner, gleiches Muster wie image-hint-button in
-               question.js. -->
           <button
             type="button"
             class="sound-play-button k-btn"
@@ -171,10 +152,6 @@ export function renderSoundQuestionScreen(
             <span class="sound-play-button__icon" aria-hidden="true">🔊</span>
             <span class="sound-play-button__spinner" aria-hidden="true"></span>
           </button>
-          <!-- Redesign (Issue #74, design.md "weiße Play-Karte"): rein
-               dekorativer Hinweistext, folgt demselben hidden-Zustand wie
-               playButtonEl (siehe Aufrufstellen von playButtonEl.hidden in
-               dieser Datei). -->
           <p class="sound-player-frame__hint" hidden>Tippe und hör genau hin!</p>
 
           <div class="sound-player-frame__error" hidden>
@@ -193,22 +170,8 @@ export function renderSoundQuestionScreen(
           </div>
         </div>
 
-        <!-- Das eigentliche Audio-Element bleibt unsichtbar (keine nativen
-             Browser-Bedienelemente) — die Bedienung läuft ausschließlich über
-             den Play-Button oben (design.md: "Abspielen startet ausschließlich
-             durch expliziten Tap auf den Play-Button"). preload=none, da die
-             URL laut #32 zwar bereits vorab aufgelöst (Metadaten-Check), die
-             eigentliche Audiodatei aber bewusst erst beim ersten Play-Tap
-             geladen wird (progressive Wiedergabe, siehe architecture.md,
-             "Tiergeräusche: Finale technische Leitplanken", Punkt 2). -->
         <audio class="sound-question__audio" preload="none" hidden></audio>
 
-        <!-- Pflicht-Attributionszeile auf jeder Frage (design.md: "gleiches
-             Format wie #16/#28", hier fest statt optional) — bewusst dieselben
-             Klassen wie image-hint__attribution* in question.js/global.css
-             (identisches Optik-/Formulierungs-Muster gefordert, keine
-             Geschmacksfrage). Standardmäßig hidden, da beim ersten Rendern noch
-             kein Ton aufgelöst ist (Reset-Prinzip analog zu #16/#28). -->
         <p class="image-hint__attribution" hidden>
           <span class="sound-question__attribution-text"></span>
           <a
@@ -223,24 +186,10 @@ export function renderSoundQuestionScreen(
       </div>
 
       <div class="question-screen__body">
-      <!-- design.md: feste Überschrift statt wechselndem Fragetext, da die
-           eigentliche "Frage" der Ton selbst ist. -->
       <h2 id="sound-question-heading" class="question-screen__text">
         Welches Tier ist das?
       </h2>
 
-      <!-- answer-grid--sound (global.css): manuell auf 375px (iPhone SE)
-           gegengeprüft (npm run dev, Playwright-Screenshot) — ohne diese
-           Zusatzklasse scrollt die Kernaufgabe (Player + Attribution + 4
-           Antwortkacheln) auf schmalen Telefonen leicht (der bestehende
-           Ein-Spalten-Fallback des Basis-.answer-grid unterhalb 30rem
-           braucht dafür zu viel vertikale Höhe, zusammen mit dem
-           Player-Rahmen + der Pflicht-Attribution). Gleiches Prinzip wie
-           beim strukturell verwandten "Wer bin ich?"-Frage-Bildschirm
-           (design.md, "Frage-/Feedback-Bildschirm 'Tiergeräusche'": "Kein
-           Scrollen bei der Kernaufgabe" gilt unverändert) — Tiernamen sind
-           zudem durchweg kurze Einzelwörter, daher bleibt 2×2 auch bei
-           schmalen Kachelbreiten gut lesbar. -->
       <div
         class="answer-grid answer-grid--sound"
         role="group"
@@ -248,12 +197,6 @@ export function renderSoundQuestionScreen(
       ></div>
       </div>
 
-      <!-- Redesign (Issue #74): dasselbe Feedback-Panel wie question.js
-           (Issue #72) — bewusst außerhalb von .question-screen__body als
-           eigenes Grid-Item (siehe dortiger Kommentar zum Overflow-Fund in
-           #72). Dieser Modus behält Fun Fact + automatisches Feedback-Bild
-           (anders als "Wer bin ich?"/#73 — hier ist ein Foto nach der
-           Antwort keine Dopplung, da vorher nur Ton zu hören war). -->
       <div class="feedback-panel" hidden>
         <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};">
           <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
