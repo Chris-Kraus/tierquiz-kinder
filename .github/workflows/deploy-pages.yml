@@ -29,6 +29,20 @@ jobs:
           node-version: 22.23.2
           cache: npm
 
+      # Node 22.23.2 bündelt npm 10.9.8. Diese (und alle npm-Versionen bis
+      # einschließlich 11.11.0) haben einen bestätigten Bug: `npm ci` markiert
+      # Plattform-Binärpakete, die nur über eine optionale Peer-Dependency in
+      # den Baum gelangen (hier: esbuild@0.28.2 via vitest -> genestetes vite),
+      # im Lockfile korrekt als "extraneous", vergisst dabei aber das
+      # "optional"-Flag zu berücksichtigen – npm ci behandelt sie dadurch als
+      # hart erforderlich und bricht mit EBADPLATFORM ab, sobald die aktuelle
+      # Plattform (z. B. Linux x64) nicht zufällig zum ersten gefundenen
+      # Plattform-Paket passt. Ab npm 11.12.0 ist das behoben
+      # (empirisch verifiziert: 11.11.0 schlägt fehl, 11.12.0 nicht mehr).
+      # Siehe Issue #108.
+      - name: Pin npm to a version without the EBADPLATFORM/extraneous bug
+        run: npm install -g npm@11.19.0
+
       - name: Install dependencies
         run: npm ci
 
