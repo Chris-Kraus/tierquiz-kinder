@@ -108,16 +108,7 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     <section class="question-screen" aria-labelledby="question-heading">
       <p class="question-screen__progress"></p>
 
-      <!-- Redesign (Issue #72, design.md "Medien-Karte"): reine Layout-
-           Gruppierung, kein Verhaltens-/Klassen-Unterschied an den bereits
-           bestehenden Elementen (Issue #16/#30) darin. -->
       <div class="question-screen__media">
-        <!-- Issue #16 (Option D′): Bild-Rateshilfe. Kleiner, sekundärer Button
-             oberhalb der Antwortkacheln (design.md, "Bild-Rateshilfe (Issue
-             #16)"), nur sichtbar, wenn image_filename für das aktuelle Tier
-             vorhanden ist (siehe showQuestion/resetImageHint unten). Reserviert
-             bewusst keinen festen Platz, wenn kein Bild ermittelbar ist — kein
-             Leerraum-Rätsel fürs Kind. -->
         <button
           type="button"
           class="image-hint-button k-btn"
@@ -155,17 +146,6 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
       ></div>
       </div>
 
-      <!-- Redesign (Issue #72, design.md "Feedback-Panel"): gemeinsamer
-           Wrapper um die bereits bestehenden Feedback-Elemente (Issue #12/
-           #15/#24/#30) — reine visuelle Gruppierung per CSS-Grid, keine
-           Änderung an deren einzelner hidden/Text-Logik unten. Sichtbarkeit
-           des Wrappers folgt exakt feedbackEl.hidden (siehe showQuestion/
-           handleAnswer), damit vor der ersten Antwort kein leerer Rahmen
-           erscheint. Bewusst als eigenes Grid-Item AUSSERHALB von
-           .question-screen__body (nicht darin verschachtelt), damit
-           grid-column: 1 / -1 gegen das echte 2-Spalten-Grid von
-           .question-screen wirkt statt gegen die schmale rechte Spalte —
-           sonst Overflow, siehe PR-Beschreibung/Commit-Historie. -->
       <div class="feedback-panel" hidden>
         <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};">
           <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
@@ -181,20 +161,7 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
           ></p>
 
           <p class="question-screen__info-sentence" hidden>
-            <!-- Issue #24 QA-Bugfix (14.08.2026): Icon + "Wusstest du schon?"-
-                 Einleitung entfernt, die hier fälschlich dupliziert waren (siehe
-                 design.md, "Klarstellung 14.08.2026 (Rückfrage aus Issue #24)").
-                 Icon+Wording sind laut Klarstellung das exklusive Erkennungs-
-                 merkmal des Fun-Fact-Blocks unten; der Infosatz-Block behält sein
-                 ursprüngliches Überschrift-/Doppelpunkt-Format ("{name_de}:
-                 Ein/e {category}...", siehe infoSentence.js) ohne Icon/Lead. -->
             <span class="question-screen__info-sentence-text"></span>
-            <!-- Issue #15: Wikipedia-Link, seit dem Zusammenführungs-Wunsch als
-                 letztes Element INNERHALB des Infosatz-Blocks statt als eigener,
-                 danebenstehender Block (siehe Datei-Kommentar unten bei
-                 wikipediaLinkEl). Eigenes hidden-Attribut unabhängig vom
-                 umschließenden p-Element -- der Infosatz bleibt unverändert
-                 sichtbar, wenn das Tier keinen wikipedia_url_de-Eintrag hat. -->
             <a
               class="question-screen__info-sentence-wikipedia-link"
               href="#"
@@ -207,12 +174,6 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
             </a>
           </p>
 
-          <!-- Issue #24: Fun Fact — eigenständiger Block unterhalb des Infosatz-
-               Blocks oben (design.md, "Fun Fact im Feedback-Schritt"). Nur
-               sichtbar, wenn animal.fun_fact vorhanden ist (siehe
-               showQuestion/handleAnswer unten) — kein Platzhalter/Hinweis bei
-               fehlendem Wert, damit sich das Layout nicht abhängig vom
-               Vorhandensein verschiebt. -->
           <p class="question-screen__fun-fact" hidden>
             <span class="question-screen__fun-fact-icon" aria-hidden="true">💡</span>
             <span class="question-screen__fun-fact-lead">Wusstest du schon?</span>
@@ -221,24 +182,6 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
         </div>
 
         <div class="feedback-panel__sticker">
-          <!-- Issue #30: automatische Bild-Anzeige NACH der Antwort —
-               eigenständige DOM-Instanz neben dem unveränderten Pre-Answer-
-               Bereich oben (Issue #16), analog zum Fun-Fact-Block als
-               eigenständigem Block statt geteiltem Zustand (siehe
-               architecture.md, "Bild-Rateshilfe: Automatische Anzeige nach der
-               Antwort"). Kein Button/Icon/Klick-Ladezustand (design.md: "poppt
-               still ein, sobald geladen") — bleibt per hidden-Attribut
-               versteckt, bis startFeedbackImageFetch() unten einen Treffer
-               liefert. Wird übersprungen, wenn das Bild bereits vor der
-               Antwort manuell aufgedeckt wurde (Duplikat-Vermeidung, siehe
-               dort). Redesign (Issue #72): bildet jetzt visuell die
-               "Sticker-Karte" — Name ist neu (feedback-panel__sticker-name
-               unten), das Bild selbst und sein Lade-/Fehlerverhalten bleiben
-               unverändert. Issue #92: das ehemalige NEU!/SCHAU MAL-Badge
-               (feedback-panel__sticker-badge) wurde entfernt -- seit #91
-               (Tier-Album-Modul entfernt) war es fest auf "NEU!" verdrahtet,
-               auch für längst bekannte Tiere (BA-Entscheidung: Sticker-Karte
-               zeigt nur noch Bild+Name, kein Ersatz-Badge). -->
           <div class="question-screen__feedback-image" hidden>
             <img class="question-screen__feedback-image-img" alt="" />
             <p class="question-screen__feedback-image-attribution">

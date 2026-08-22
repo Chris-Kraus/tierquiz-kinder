@@ -113,16 +113,7 @@ export function renderReverseQuestionScreen(
     <section class="question-screen" aria-labelledby="reverse-question-heading">
       <p class="question-screen__progress"></p>
 
-      <!-- Redesign (Issue #73): Medienkarte, gleiche Gruppierung wie
-           question.js (Issue #72) — reine Layout-Ergänzung, kein
-           Verhaltens-/Klassen-Unterschied an den bestehenden Elementen. -->
       <div class="question-screen__media">
-        <!-- Fester, moderat großer Bildrahmen (design.md: "reserviert den
-             späteren Bildrahmen bereits während des Ladens, kein Layout-
-             Sprung") — enthält je nach Zustand genau EINEN der drei Bereiche
-             darunter. aria-live/aria-busy kündigen Lade-/Fehlerzustands-
-             Wechsel für Screenreader an (wichtige Abweichung von Issue #16,
-             siehe design.md "Barrierefreiheit"). -->
         <div class="reverse-image-frame" aria-live="polite" aria-busy="true">
           <div class="reverse-image-frame__loading">
             <span class="reverse-image-frame__loading-icon" aria-hidden="true"
@@ -151,12 +142,6 @@ export function renderReverseQuestionScreen(
           </div>
         </div>
 
-        <!-- Pflicht-Attributionszeile auf jeder Frage (design.md: "gleiches
-             Format wie Issue #16", hier fest statt optional) — bewusst
-             dieselben Klassen wie image-hint__attribution* in question.js/
-             global.css (identische Optik/Formulierung gefordert, keine
-             Geschmacksfrage). Standardmäßig hidden, da beim ersten Rendern
-             noch kein Bild aufgelöst ist (Reset-Prinzip analog zu #16). -->
         <p class="image-hint__attribution" hidden>
           <span class="reverse-question__attribution-text"></span>
           <a
@@ -171,19 +156,10 @@ export function renderReverseQuestionScreen(
       </div>
 
       <div class="question-screen__body">
-      <!-- design.md: feste Überschrift statt wechselndem Fragetext, da die
-           eigentliche "Frage" das Bild selbst ist. -->
       <h2 id="reverse-question-heading" class="question-screen__text">
         Wer bin ich?
       </h2>
 
-      <!-- answer-grid--reverse (global.css): hält das echte 2×2-Raster auch
-           auf schmalen Telefonen bei (anders als der bestehende
-           Ein-Spalten-Fallback unterhalb 30rem in question.js) -- ohne diese
-           Zusatzklasse würden 4 gestapelte Kacheln zusammen mit dem neuen
-           Bildrahmen + der Pflicht-Attribution auf gängigen Telefongrößen
-           (z. B. iPhone SE) scrollen, siehe Datei-Kommentar bei
-           .reverse-image-frame in global.css. -->
       <div
         class="answer-grid answer-grid--reverse"
         role="group"
@@ -191,13 +167,6 @@ export function renderReverseQuestionScreen(
       ></div>
       </div>
 
-      <!-- Redesign (Issue #73): dasselbe Feedback-Panel wie question.js
-           (Issue #72) — bewusst außerhalb von .question-screen__body als
-           eigenes Grid-Item (siehe dortiger Kommentar zum Overflow-Fund).
-           Kein Fun-Fact-Block (bleibt außerhalb des #35-Scopes, siehe
-           Datei-Kommentar oben) und kein separater Bild-Refetch für die
-           Sticker-Karte — das bereits geladene reverse-image-frame-Bild wird
-           direkt wiederverwendet (keine zweite Netzwerkanfrage nötig). -->
       <div class="feedback-panel" hidden>
         <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};">
           <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
@@ -212,10 +181,6 @@ export function renderReverseQuestionScreen(
             hidden
           ></p>
 
-          <!-- Issue #35: Infosatz inkl. Wikipedia-Link, unterhalb des
-               Richtig/Falsch-Feedbacks (design.md, "Infosatz + Wikipedia-Link
-               im 'Wer bin ich?'-Modus") — identisches Markup/identische
-               Klassen wie question.js. -->
           <p class="question-screen__info-sentence" hidden>
             <span class="question-screen__info-sentence-text"></span>
             <a

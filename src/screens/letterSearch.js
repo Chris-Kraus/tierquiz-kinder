@@ -110,13 +110,7 @@ export function renderLetterSearchScreen(
     <section class="question-screen" aria-labelledby="letter-search-heading">
       <p class="question-screen__progress"></p>
 
-      <!-- Redesign (Issue #75): Medienkarte, gleiche Gruppierung wie
-           question.js/reverseQuestion.js/soundQuestion.js (#72-#74). -->
       <div class="question-screen__media">
-        <!-- Identisches Markup/identische Klassen wie in reverseQuestion.js
-             (Bildrahmen mit Lade-/Fehlerzustand) -- bewusste Wiederverwendung
-             desselben, bereits QA-geprüften CSS (design.md, "Bildschirmaufbau:
-             gleiche Bildrahmen-Optik/Größe wie beim 'Wer bin ich?'-Modus"). -->
         <div class="reverse-image-frame" aria-live="polite" aria-busy="true">
           <div class="reverse-image-frame__loading">
             <span class="reverse-image-frame__loading-icon" aria-hidden="true"
@@ -145,8 +139,6 @@ export function renderLetterSearchScreen(
           </div>
         </div>
 
-        <!-- Pflicht-Attributionszeile auf jeder Frage (design.md: "identisches
-             Pflicht-Attributions-Muster wie bei #28"). -->
         <p class="image-hint__attribution" hidden>
           <span class="letter-search__attribution-text"></span>
           <a
@@ -161,31 +153,18 @@ export function renderLetterSearchScreen(
       </div>
 
       <div class="question-screen__body">
-      <!-- design.md: feste Überschrift statt wechselndem Fragetext, analog
-           zu reverseQuestion.js/soundQuestion.js. -->
       <h2 id="letter-search-heading" class="question-screen__text">
         Wie heißt dieses Tier?
       </h2>
 
-      <!-- Buchstaben-Kästchen-Reihe(n) (design.md, "Eingabemechanik") --
-           wird pro Frage komplett neu aufgebaut (renderLetterPuzzle unten). -->
       <div
         class="letter-puzzle"
         role="group"
         aria-label="Tiername ergänzen"
       ></div>
 
-      <!-- Kurze, freundliche Fehlermeldung pro Buchstabe (design.md,
-           "Fehlerfall pro Buchstabe"), per aria-live angekündigt (Akzeptanz-
-           kriterium: "Fehlermeldung per aria-live angekündigt"). -->
       <p class="letter-puzzle__error" role="status" aria-live="polite" hidden></p>
 
-      <!-- "Lösung zeigen"-Button (Issue #52, design.md "Buchstabensuche:
-           Lösung anzeigen"): durchgehend sichtbar, sobald die Frage geladen
-           ist, verschwindet nach Anzeige der Lösung (analog zum Zustand nach
-           korrektem Lösen). Bewusst nach den Buchstaben-Kästchen und vor dem
-           "Weiter"-Button im Markup, damit die Tab-Reihenfolge ohne
-           zusätzliches tabindex-Handling passt. -->
       <button
         type="button"
         class="letter-puzzle__solve-button k-btn"
@@ -196,11 +175,6 @@ export function renderLetterSearchScreen(
       </button>
       </div>
 
-      <!-- Redesign (Issue #75): dasselbe Feedback-Panel wie question.js
-           (Issue #72) — bewusst außerhalb von .question-screen__body als
-           eigenes Grid-Item (siehe dortiger Kommentar zum Overflow-Fund).
-           Kein separater Bild-Refetch für die Sticker-Karte — wie #73 wird
-           das bereits geladene reverse-image-frame-Bild wiederverwendet. -->
       <div class="feedback-panel" hidden>
         <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};">
           <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
@@ -215,8 +189,6 @@ export function renderLetterSearchScreen(
             hidden
           ></p>
 
-          <!-- Infosatz + Wikipedia-Link, identisches Markup wie reverseQuestion.js/
-               soundQuestion.js. -->
           <p class="question-screen__info-sentence" hidden>
             <span class="question-screen__info-sentence-text"></span>
             <a
@@ -231,7 +203,6 @@ export function renderLetterSearchScreen(
             </a>
           </p>
 
-          <!-- Fun Fact, identisches Markup wie soundQuestion.js (Issue #24). -->
           <p class="question-screen__fun-fact" hidden>
             <span class="question-screen__fun-fact-icon" aria-hidden="true">💡</span>
             <span class="question-screen__fun-fact-lead">Wusstest du schon?</span>

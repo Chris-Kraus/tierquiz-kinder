@@ -69,12 +69,6 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
 
   container.innerHTML = `
     <section class="memory-screen" aria-labelledby="memory-heading">
-      <!-- Redesign (Issue #76, design.md "Tier-Memory"): Kopfzeile mit Titel
-           + zwei Pills (Paare/Versuche) statt reinem Fließtext-Fortschritt.
-           .memory-screen__progress bleibt als reines Live-Region-Element für
-           Screenreader erhalten (visuell redundant zu den Pills, aber schon
-           vorhandene, funktionierende aria-live-Ankündigung — kein Grund,
-           das anzufassen). -->
       <div class="memory-screen__header">
         <h2 id="memory-heading" class="memory-screen__title">Finde die Tierpaare!</h2>
         <div class="memory-screen__pills">
@@ -82,19 +76,8 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
           <span class="memory-screen__pill memory-screen__pill--attempts"></span>
         </div>
       </div>
-      <!-- Bleibt in der Barrierefreiheits-Struktur (kein hidden-Attribut,
-           das würde auch aria-live für Screenreader unwirksam machen) --
-           visuell versteckt, da dieselbe Information jetzt in den Pills
-           oben sichtbar ist (siehe .visually-hidden in global.css). -->
       <p class="memory-screen__progress visually-hidden" aria-live="polite"></p>
 
-      <!-- Ladezustand vor Rundenstart (architecture.md: "einheitlicher
-           Ladebildschirm vor Rundenstart, keinen Pro-Karte-Ladezustand") —
-           deckt sowohl den initialen Deck-Aufbau als auch einen erneuten
-           Aufbau bei fehlendem/nicht wiederverwendbarem Testabruf-Ergebnis
-           ab (siehe Datei-Kommentar oben). Gleiches Lade-/Fehlerzustand-Muster
-           wie .reverse-image-frame in reverseQuestion.js, hier aber für das
-           gesamte Brett statt ein einzelnes Bild. -->
       <div class="memory-board-status" aria-live="polite" aria-busy="true">
         <div class="memory-board-status__loading">
           <span class="memory-board-status__icon" aria-hidden="true">🐾</span>
@@ -111,10 +94,6 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
         </div>
       </div>
 
-      <!-- Karten-Grid (design.md: "Scrollen ist hier ausdrücklich zulässig",
-           anders als question.js/reverseQuestion.js — kein
-           Kein-Scrollen-Zwang für dieses Board). Echte <button>-Elemente,
-           per Tastatur bedienbar (design.md, "Barrierefreiheit"). -->
       <div
         class="memory-board"
         role="group"
@@ -122,12 +101,6 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
         hidden
       ></div>
 
-      <!-- Infosatz + Wikipedia-Link nach einem Treffer: identisches
-           Markup/dieselben CSS-Klassen wie question.js/reverseQuestion.js
-           (Issue #12/#15), bewusst wiederverwendet statt eines neuen
-           Textstils. Bleibt sichtbar bis zur nächsten Kartenauswahl (siehe
-           resetFeedback() unten), fester reservierter Bereich (kein
-           Layout-Sprung). -->
       <p class="question-screen__info-sentence" hidden>
         <span class="question-screen__info-sentence-text"></span>
         <a
@@ -142,16 +115,12 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
         </a>
       </p>
 
-      <!-- Fun Fact (Issue #24), identisches Markup wie question.js. -->
       <p class="question-screen__fun-fact" hidden>
         <span class="question-screen__fun-fact-icon" aria-hidden="true">💡</span>
         <span class="question-screen__fun-fact-lead">Wusstest du schon?</span>
         <span class="question-screen__fun-fact-text"></span>
       </p>
 
-      <!-- Redesign (Issue #76, design.md "Tier-Memory"): Fußnote unterhalb
-           des Bretts + Konfetti-Container (Trigger bei jedem gefundenen
-           Paar, siehe #69/handleCardClick unten). -->
       <p class="memory-screen__footnote">
         Tippe zwei Karten an. Passen sie zusammen, bleiben sie offen.
       </p>
