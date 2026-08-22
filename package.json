@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "description": "Tierquiz für Kinder – interaktives Multiple-Choice-Quiz zu Tieren",
   "type": "module",
+  "engines": {
+    "node": ">=22.19.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
