@@ -317,6 +317,18 @@ Reihenfolge folgt technischen Abhängigkeiten (siehe `architecture.md`, Abschnit
 
 Alle 6 Stories auf `status:ready` — keine offene, nur vom Nutzer entscheidbare Frage (beide Fach-Prüfungen mit `ux-design`/`software-architect` sind abschließend geklärt, gleiche Vorgehensweise wie bei der vorherigen Runde).
 
+## Ergänzung 22.08.2026: Drei rohe Alt-Issues geprüft und abschließend triagiert (#85, #86, #92)
+
+Nach Abschluss des Sterne-/Maskottchen-Batches (#83, #87–#91) auf Relevanz gegen den jetzt gemergten Code-Stand geprüft (`business-analyst`, Code-Abgleich statt Vermutung):
+
+**#85 "Textanpassungen" — teilweise obsolet.** Punkte 1+2 (Headline "Hallo! Wollen wir Tiere entdecken?" → neuer Text, Schriftgröße für eine Zeile anpassen; Intro-Absatz-Text ändern) sind weiterhin unverändert gültig — reine Copy-Änderungen ohne Bezug zum Struktur-Umbau. **Punkt 3 (Zitat-Formatierung in der Maskottchen-Box) ist durch #88 vollständig gegenstandslos geworden**: Der damalige Sprechblasen-/Zitat-Block existiert seit #88 nicht mehr (Handoff "CHANGES-startseite-sammlung.md": "Der frühere Sprechblasen-Block ist entfallen") — die "Mein Maskottchen"-Karte zeigt seither direkt Name+Rolle ohne Anführungszeichen, bereits in derselben Schriftart/-farbe wie die Maskottchen-Auswahl-Kacheln (`.mascot-stage__name`/`.mascot-tile__name` beide `var(--font-heading)`/800, verifiziert im Code). Punkt 3 wird daher nicht separat umgesetzt, sondern als bereits erledigt vermerkt.
+
+**#86 "Weiter-Button farblich absetzen" — unverändert relevant.** Reine CSS-Farbanpassung (`.next-button` aktuell `background: var(--card)`, soll wie `.start-button` `background: var(--ink)`/`color: var(--paper)` werden), betrifft keinen der umgebauten Bereiche.
+
+**#92 "NEU!"-Badge — Entscheidung getroffen: Badge entfernen (Option 1 der vier in Issue #92 vorgeschlagenen Richtungen).** Begründung: Die Sticker-Karte (Bild + Tiername) ist der eigentliche Belohnungsmoment; der Text-Badge war ohnehin nur ein sekundäres Detail, dessen einzige fachliche Grundlage (Album-Mitgliedschaft) mit #91 komplett entfallen ist. Eine neue, semantisch korrekte Ersatz-Information (Optionen 2/3 aus Issue #92) würde neue Zustands-Logik einführen, die für ein reines Kosmetik-Detail nicht gerechtfertigt ist — Option 4 (so lassen) verbleibt als aktive Falschaussage ("NEU!" bei bereits X-mal gesehenem Tier), das ist der schlechteste der vier Wege. Entfernen ist die einfachste, risikoärmste Lösung ohne neuen Zustand.
+
+Alle drei Tickets damit umsetzungsreif: #85 (nur Punkte 1+2), #86 (unverändert), #92 (Badge-Entfernung, jetzt spezifiziert statt offen).
+
 ## Korrektur (13.08.2026)
 
 Im Zuge der realen Datenbeschaffung für Issue #2 (Wikidata) wurde festgestellt, dass die reale Feldabdeckung deutlich von der ursprünglichen Annahme abweicht (kein Testartefakt, gemessen an 1.480 hydrierten Tier-Datensätzen). Daraufhin wurde mit dem Nutzer abgestimmt: **"Farbe" entfällt als Basisfeld** (0% Abdeckung), und die Pflichtfelder wurden auf `id`, `name_de`, `category` reduziert — die übrigen Felder bleiben optional mit variierender Abdeckung je Tier. Details siehe "Datenbasis (Tierdatenbank)" oben sowie `architecture.md`.
