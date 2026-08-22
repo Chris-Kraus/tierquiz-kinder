@@ -667,10 +667,15 @@ button {
 
 /* "Ausgewählt" wird nicht nur über Farbe kommuniziert, sondern zusätzlich über
    Häkchen-Symbol und aria-pressed (siehe design.md, "Barrierefreiheit",
-   "Keine ausschließlich farbbasierte Codierung"). */
+   "Keine ausschließlich farbbasierte Codierung").
+   .round-length-chip--selected ist hier bewusst NICHT mit aufgeführt (siehe
+   dedizierte Regel direkt nach der .round-length-chip-Basisregel unten,
+   Issue #98): bei gleicher Spezifität würde die weiter unten stehende
+   .round-length-chip-Basisregel (background: var(--card)) diese Regel sonst
+   per Cascade-Reihenfolge überschreiben, da .difficulty-button/.mode-button
+   ihre Basisregeln vor dieser Stelle haben, .round-length-chip aber danach. */
 .difficulty-button--selected,
-.mode-button--selected,
-.round-length-chip--selected {
+.mode-button--selected {
   background: var(--sky);
 }
 
@@ -769,6 +774,16 @@ button {
   font-size: 32px;
   font-weight: 800;
   border-radius: var(--k-radius-card);
+}
+
+/* Dedizierte Selected-Regel (Issue #98, Cascade-Fix der #87-Regression):
+   muss NACH der .round-length-chip-Basisregel oben stehen, damit sie bei
+   gleicher Spezifität (je eine Klasse) im Stylesheet gewinnt -- exakt wie vor
+   #87, wo diese Regel bereits so positioniert war. .difficulty-button--selected
+   und .mode-button--selected brauchen dieses Muster nicht, da deren
+   Basisregeln bereits vor der gemeinsamen Selected-Regel weiter oben stehen. */
+.round-length-chip--selected {
+  background: var(--sky);
 }
 
 .start-button {
