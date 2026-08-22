@@ -90,52 +90,71 @@ function showStartScreen() {
 }
 
 function showQuestionScreen(quizState) {
-  renderHeader(appHeader, {
-    onBackToStart: showStartScreen,
-    mode: quizState.mode,
-    progress:
-      quizState.mode === GAME_MODE.MEMORY
-        ? undefined // Tier-Memory hat keine Fragen-Fortschritts-Anzeige (siehe memory.js, eigener Paare-Fortschritt)
-        : {
-            currentIndex: quizState.currentIndex,
-            roundLength: quizState.roundLength,
-            score: quizState.score,
-          },
-    // Issue #81: Closure über denselben (mutierten) quizState -- der
-    // jeweilige Frage-Bildschirm hält currentIndex/score direkt auf diesem
-    // Objekt, daher landet "Später ↩"/Einlösen exakt bei der Frage, von der
-    // aus geöffnet wurde, nicht bei Frage 1 (siehe question.js: baut
-    // quizState.questions nur einmal auf, ein erneuter renderQuestionScreen-
-    // Aufruf für denselben quizState ist idempotent).
-    onOpenMascotChooser: () =>
-      renderMascotChooserScreen(appContent, {
-        onDone: () => showQuestionScreen(quizState),
-      }),
-  });
+  // Issue #120: Fortschritts-Punkte/Score-Badge sollen sich live aktualisieren
+  // (nach jeder Antwort bzw. beim Weiterschalten zur nächsten Frage), nicht
+  // erst beim nächsten Bildschirm-Wechsel. `updateHeader` bündelt den bisher
+  // einmaligen renderHeader()-Aufruf in eine wiederverwendbare Funktion, die
+  // main.js weiterhin exklusiv besitzt (siehe Datei-Kommentar oben) -- die
+  // einzelnen Frage-Bildschirme rufen sie nur über den neuen `onProgress`-
+  // Callback auf, kennen `renderHeader`/`appHeader` selbst weiterhin nicht.
+  const updateHeader = () => {
+    renderHeader(appHeader, {
+      onBackToStart: showStartScreen,
+      mode: quizState.mode,
+      progress:
+        quizState.mode === GAME_MODE.MEMORY
+          ? undefined // Tier-Memory hat keine Fragen-Fortschritts-Anzeige (siehe memory.js, eigener Paare-Fortschritt)
+          : {
+              currentIndex: quizState.currentIndex,
+              roundLength: quizState.roundLength,
+              score: quizState.score,
+            },
+      // Issue #81: Closure über denselben (mutierten) quizState -- der
+      // jeweilige Frage-Bildschirm hält currentIndex/score direkt auf diesem
+      // Objekt, daher landet "Später ↩"/Einlösen exakt bei der Frage, von der
+      // aus geöffnet wurde, nicht bei Frage 1 (siehe question.js: baut
+      // quizState.questions nur einmal auf, ein erneuter renderQuestionScreen-
+      // Aufruf für denselben quizState ist idempotent).
+      onOpenMascotChooser: () =>
+        renderMascotChooserScreen(appContent, {
+          onDone: () => showQuestionScreen(quizState),
+        }),
+    });
+  };
+  updateHeader();
 
   if (quizState.mode === GAME_MODE.REVERSE) {
     renderReverseQuestionScreen(appContent, quizState, {
       onFinish: showResultScreen,
+      onProgress: updateHeader,
     });
     return;
   }
   if (quizState.mode === GAME_MODE.SOUND) {
     renderSoundQuestionScreen(appContent, quizState, {
       onFinish: showResultScreen,
+      onProgress: updateHeader,
     });
     return;
   }
   if (quizState.mode === GAME_MODE.MEMORY) {
+    // Kein onProgress: Tier-Memory zeigt keine Fortschritts-Punkte/Score-
+    // Badge in der Kopfzeile (siehe updateHeader oben), hat also nichts, das
+    // hier live zu aktualisieren wäre.
     renderMemoryScreen(appContent, quizState, { onFinish: showResultScreen });
     return;
   }
   if (quizState.mode === GAME_MODE.LETTER_SEARCH) {
     renderLetterSearchScreen(appContent, quizState, {
       onFinish: showResultScreen,
+      onProgress: updateHeader,
     });
     return;
   }
-  renderQuestionScreen(appContent, quizState, { onFinish: showResultScreen });
+  renderQuestionScreen(appContent, quizState, {
+    onFinish: showResultScreen,
+    onProgress: updateHeader,
+  });
 }
 
 function showResultScreen(quizState) {
