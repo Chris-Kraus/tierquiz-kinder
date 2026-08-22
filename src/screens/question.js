@@ -463,6 +463,15 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     feedbackImageAttributionLinkEl.href = "#";
   }
 
+  // Issue #96: begrenzter Retry, falls der automatische Abruf fehlschlägt
+  // (Timeout, Netzwerkfehler, nicht auflösbare Datei). Anders als bei Issue
+  // #27/28 (reverseQuestionGenerator.js) gibt es hier kein Ausweichen auf ein
+  // anderes Zieltier — das Tier steht durch die bereits gegebene Antwort
+  // fest, es wird lediglich derselbe Abruf erneut versucht. 3 Versuche
+  // insgesamt (architecture.md, "Bugfix Issue #94" → Fix-Empfehlung: "2–3
+  // Versuche insgesamt").
+  const FEEDBACK_IMAGE_MAX_ATTEMPTS = 3;
+
   // Löst den automatischen Bildabruf für den Feedback-Bereich aus (Issue #30:
   // "Bild-Rateshilfe: Automatische Anzeige nach der Antwort"). Wiederverwendet
   // bewusst dieselben reinen Hilfsfunktionen wie handleImageHintClick oben
@@ -483,53 +492,83 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     if (!imageHintEl.hidden) return;
 
     const requestId = ++feedbackImageRequestId;
-    const controller = new AbortController();
-    feedbackImageAbortController = controller;
-    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
-    fetch(buildCommonsImageInfoUrl(animal.image_filename), {
-      signal: controller.signal,
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return response.json();
-      })
-      .then((json) => {
-        // Zwischenzeitlich wurde bereits zur nächsten Frage gewechselt (z. B.
-        // "Weiter" vor Abschluss des Abrufs getippt) -> diese Antwort gehört
-        // nicht mehr zum aktuell sichtbaren Feedback-Bereich, nicht mehr
-        // anwenden (design.md, "nicht-blockierend").
-        if (requestId !== feedbackImageRequestId) return;
+    // Ein Versuch (attemptIndex, 0-basiert). Bei Fehlschlag ruft sich die
+    // Funktion selbst mit dem nächsten Index auf, solange
+    // FEEDBACK_IMAGE_MAX_ATTEMPTS noch nicht erreicht ist und die Frage
+    // zwischenzeitlich nicht gewechselt hat (Stale-Response-Schutz bleibt
+    // über alle Versuche hinweg wirksam, da requestId je Frage konstant
+    // bleibt und bei jedem Reset erhöht wird).
+    function attemptFetch(attemptIndex) {
+      const controller = new AbortController();
+      feedbackImageAbortController = controller;
+      const timeoutId = setTimeout(
+        () => controller.abort(),
+        REQUEST_TIMEOUT_MS,
+      );
 
-        const info = extractImageInfo(json);
-        if (!info) return;
+      fetch(buildCommonsImageInfoUrl(animal.image_filename), {
+        signal: controller.signal,
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return response.json();
+        })
+        .then((json) => {
+          // Zwischenzeitlich wurde bereits zur nächsten Frage gewechselt
+          // (z. B. "Weiter" vor Abschluss des Abrufs getippt) -> diese
+          // Antwort gehört nicht mehr zum aktuell sichtbaren Feedback-
+          // Bereich, nicht mehr anwenden (design.md, "nicht-blockierend").
+          if (requestId !== feedbackImageRequestId) return;
 
-        const attribution = buildAttribution(info);
-        // Bewusst MIT Tiernamen im Alt-Text (anders als beim Umkehr-Quiz-
-        // Modus #28): die richtige Antwort ist an dieser Stelle bereits
-        // bekannt/angezeigt, ein Klartext-Alt-Text verrät hier nichts.
-        feedbackImageImgEl.src = info.thumbUrl;
-        feedbackImageImgEl.alt = animal.name_de;
-        feedbackImageAttributionTextEl.textContent = attribution.text;
-        if (attribution.licenseUrl) {
-          feedbackImageAttributionLinkEl.href = attribution.licenseUrl;
-          feedbackImageAttributionLinkEl.hidden = false;
-        }
-        // Poppt still ein (design.md) -- kein Button/Ladezustand, der hier
-        // vorher etwas anderes angezeigt hätte.
-        feedbackImageEl.hidden = false;
-      })
-      .catch(() => {
-        // Identisch zu Issue #16: kein Netz, Timeout oder keine verwertbare
-        // Antwort -> Block bleibt schlicht ausgeblendet (Default-Zustand),
-        // kein Fehlertext, kein Layout-Sprung.
-      })
-      .finally(() => {
-        clearTimeout(timeoutId);
-        if (requestId === feedbackImageRequestId) {
-          feedbackImageAbortController = null;
-        }
-      });
+          const info = extractImageInfo(json);
+          // Keine verwertbare Antwort (z. B. nicht auflösbare Datei) zählt
+          // wie ein Fehlschlag -> löst einen Retry aus, siehe .catch unten.
+          if (!info) throw new Error("Kein verwertbares Bild in der Antwort");
+
+          const attribution = buildAttribution(info);
+          // Bewusst MIT Tiernamen im Alt-Text (anders als beim Umkehr-Quiz-
+          // Modus #28): die richtige Antwort ist an dieser Stelle bereits
+          // bekannt/angezeigt, ein Klartext-Alt-Text verrät hier nichts.
+          feedbackImageImgEl.src = info.thumbUrl;
+          feedbackImageImgEl.alt = animal.name_de;
+          feedbackImageAttributionTextEl.textContent = attribution.text;
+          if (attribution.licenseUrl) {
+            feedbackImageAttributionLinkEl.href = attribution.licenseUrl;
+            feedbackImageAttributionLinkEl.hidden = false;
+          }
+          // Poppt still ein (design.md) -- kein Button/Ladezustand, der hier
+          // vorher etwas anderes angezeigt hätte.
+          feedbackImageEl.hidden = false;
+        })
+        .catch(() => {
+          // Zwischenzeitlich zur nächsten Frage gewechselt -> keinen Retry
+          // mehr anstoßen, die Frage ist nicht mehr aktuell.
+          if (requestId !== feedbackImageRequestId) return;
+
+          if (attemptIndex + 1 < FEEDBACK_IMAGE_MAX_ATTEMPTS) {
+            attemptFetch(attemptIndex + 1);
+            return;
+          }
+
+          // Identisch zu Issue #16/#30: nach dem letzten Versuch bleibt der
+          // Block schlicht ausgeblendet (Default-Zustand), kein Fehlertext,
+          // kein Layout-Sprung — der Retry macht dieses stille Ausblenden
+          // nur seltener, ändert aber nicht dessen Charakter (Issue #96).
+        })
+        .finally(() => {
+          clearTimeout(timeoutId);
+          // Nur den eigenen AbortController zurücksetzen, nicht den eines
+          // inzwischen gestarteten Retry-Versuchs (der synchron im .catch
+          // oben bereits einen neuen Controller gesetzt haben kann, bevor
+          // dieses .finally hier ausgeführt wird).
+          if (feedbackImageAbortController === controller) {
+            feedbackImageAbortController = null;
+          }
+        });
+    }
+
+    attemptFetch(0);
   }
 
   // Baut die Antwortkacheln für `question` komplett neu auf (statt nur

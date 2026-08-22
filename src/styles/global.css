@@ -1925,12 +1925,22 @@ button {
   gap: 6px;
 }
 
+/* Issue #94: object-fit: contain statt cover, damit Tierfotos mit
+   abweichendem Seitenverhältnis (v. a. Hochformat) in der Sticker-Karte
+   nicht mehr sichtbar abgeschnitten werden. Das bereits vorhandene
+   background: var(--sand-soft) dieser Box füllt den entstehenden
+   Letterboxing-Leerraum (oben/unten oder seitlich) — keine neue Farbe
+   nötig (siehe design.md, "Bugfix-Triage: Bild in der Auflösung
+   abgeschnitten..."). Bewusst NICHT geändert: .image-hint__image
+   (Pre-Answer-Hint, Issue #16) und .reverse-image-frame__image
+   ("Wer bin ich?"-Hauptbild, Issue #28) — beide sind laut BA-Triage
+   Issue #94 explizit außerhalb des Scopes dieser Story. */
 .question-screen__feedback-image-img,
 .reverse-question__sticker-img,
 .letter-search__sticker-img {
   width: 100%;
   height: 130px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: var(--k-radius-sm);
   border: var(--k-border-sm) solid var(--ink);
   background: var(--sand-soft);
