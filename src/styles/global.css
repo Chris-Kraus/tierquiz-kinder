@@ -352,19 +352,56 @@ button {
   color: var(--ink);
 }
 
+/* Bugfix Issue #111 (Root-Cause per getBoundingClientRect()/scrollWidth
+   verifiziert, byte-identisch zu QAs Messwerten aus Issue #111: scrollWidth
+   678 vs. clientWidth 390, 288px Overflow bei 390px + 20 Fragen): eine Runde
+   mit 20 Fragen rendert 20 `.app-header__progress-dot` (16px + 6px gap =
+   434px reine Punkte-Breite) in `.app-header__progress`, das dafür keinerlei
+   Breitenbegrenzung hatte. Als Flex-Kind von `.app-header__status` (selbst
+   Flex-Kind von `.app-header`) hat ein Flex-Item ohne explizites
+   `min-width: 0` als Untergrenze sein eigenes Content-`min-content` -- bei
+   20 Dots ohne Wrap-Möglichkeit ist das `min-content` gleich dem vollen
+   434px, wodurch `.app-header__status` nie unter diese Breite schrumpfen
+   konnte (identisches Muster wie die `minmax(0, ...)`-Fixes weiter unten bei
+   `.start-cards`/`.mode-picker__group`). Fix, kombiniert (robust statt nur
+   auf exakt 20 Dots bei 390px zurechtgestutzt):
+   1) `.app-header__progress` bekommt `flex: 1 1 auto; min-width: 0;
+      flex-wrap: wrap` -- die Punkte-Reihe kann jetzt selbst auf mehrere
+      Zeilen umbrechen, ihr eigenes `min-content` sinkt dadurch auf die
+      Breite eines einzelnen Punkts, wodurch `.app-header__status` (mit
+      eigenem `min-width: 0`) wieder korrekt auf die verfügbare Breite
+      schrumpft/umbricht statt die Seite zu sprengen -- unabhängig von der
+      Rundenlänge (5/10/15/20), da rein layoutgetrieben statt auf einen
+      bestimmten Dot-Count zugeschnitten.
+   2) Sterne-Badge und Score-Badge bekommen `flex-shrink: 0`, damit der
+      gesamte nötige Shrink/Wrap ausschließlich bei den Punkten passiert und
+      keines der beiden Badges gestaucht/abgeschnitten wird (Score-Badge
+      bleibt so in jedem Fall sichtbar, zweites Akzeptanzkriterium).
+   3) Zusätzlich unten ein `@media (max-width: 480px)`-Block (gleicher
+      Breakpoint wie `.start-screen__title`), der Punktgröße/-abstand sowie
+      Badge-Innenabstand kompaktiert -- rein kosmetisch, damit bei 20 Fragen
+      auf Phone-Breite nur 1-2 statt bis zu 4 Umbruchzeilen entstehen, ohne
+      Wrap (1) als eigentliche Overflow-Absicherung zu ersetzen. Tablet
+      (820px)/Desktop (1280px) bleiben unverändert -- dort reichen 20 Dots in
+      einer Zeile ohnehin bequem neben den Badges. */
 .app-header__status {
   display: flex;
   align-items: center;
   gap: var(--k-space-3);
+  min-width: 0;
 }
 
 .app-header__progress {
   display: flex;
   align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-wrap: wrap;
   gap: 6px;
 }
 
 .app-header__progress-dot {
+  flex-shrink: 0;
   width: 16px;
   height: 16px;
   border-radius: var(--k-radius-pill);
@@ -381,6 +418,7 @@ button {
 }
 
 .app-header__score {
+  flex-shrink: 0;
   background: var(--sky);
   border: var(--k-border-sm) solid var(--ink);
   border-radius: var(--k-radius-pill);
@@ -403,6 +441,7 @@ button {
 .app-header__star-badge {
   display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
   white-space: nowrap;
   min-height: 60px;
   padding: 4px 20px;
@@ -435,6 +474,40 @@ button {
   opacity: 1; /* bewusst kein ausgegrautes Aussehen -- design.md nennt keine
     eigene "nicht einlösbar"-Optik jenseits von cursor/Animation, das Badge
     soll weiterhin klar den aktuellen Sternestand zeigen können. */
+}
+
+/* Bugfix Issue #111, Teil 2/3 (siehe Kommentar bei .app-header__status oben):
+   rein kosmetische Kompaktierung auf Phone-Breite, kein eigenständiger
+   Overflow-Schutz (der kommt bereits vom flex-wrap/min-width-Fix oben) --
+   ohne diesen Block würde eine 20-Fragen-Runde bei 390px auf bis zu 4
+   Umbruchzeilen kommen (gemessen); mit kleineren Punkten/Abständen und
+   knapperem Badge-Padding passen 20 Punkte auf 1-2 Zeilen. Gleicher
+   Breakpoint wie `.start-screen__title` oben (480px, gängige Phone-Grenze,
+   Tablet/Desktop bleiben unverändert). */
+@media (max-width: 480px) {
+  .app-header__status {
+    gap: var(--k-space-2);
+  }
+
+  .app-header__progress {
+    gap: 4px;
+  }
+
+  .app-header__progress-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .app-header__score {
+    padding: 4px 10px;
+    font-size: 18px;
+  }
+
+  .app-header__star-badge {
+    min-height: 44px;
+    padding: 4px 12px;
+    font-size: 18px;
+  }
 }
 
 /* Start-Bildschirm (siehe design.md, "Nutzerfluss" Punkt 1). */
