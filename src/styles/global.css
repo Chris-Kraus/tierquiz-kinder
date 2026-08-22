@@ -1641,11 +1641,16 @@ button {
      bisherigen Aussehen nichts (Kacheln waren nie so schmal, dass das
      bisher sichtbar wurde). */
   min-width: 0;
+  /* Issue #100: Bezugsrahmen für die absolut positionierte Badge
+     (.answer-tile__icon, siehe dort). Dadurch beeinflusst die Badge die
+     Zentrierung von .answer-tile__text nie mehr -- weder sichtbar noch
+     unsichtbar, da sie komplett aus dem Flex-Fluss der Kachel raus ist. Kein
+     `gap` mehr nötig: .answer-tile__text ist jetzt das einzige Flex-Kind. */
+  position: relative;
   padding: var(--k-space-3);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--k-space-2);
   background: var(--card);
   color: var(--ink);
   font-family: var(--font-body);
@@ -1673,20 +1678,96 @@ button {
    keine A11y-Auswirkung). Nach der Antwort (.answer-tile--correct/
    --selected-wrong) wird sie wieder eingeblendet und zeigt das von der
    bestehenden JS-Logik unverändert gesetzte Feedback-Icon (✓/●). Kein
-   `display: none`, damit die Flex-Gap/Zentrierung zwischen den beiden
-   Zuständen nicht "springt". */
+   `display: none`, damit beim Umschalten kein Reflow/Sprung entsteht.
+
+   Issue #100 (Regression aus #79): die Badge war bis hierher trotz
+   `visibility: hidden` weiterhin echtes Flex-Geschwister von
+   .answer-tile__text in der Flex-Zeile von .answer-tile (inline-flex + Gap) —
+   `justify-content: center` zentrierte dadurch das Paar (Badge+Text), nicht
+   den Text allein, was den Text dauerhaft sichtbar Richtung rechts verschob.
+   Fix: Badge per `position: absolute` (Bezugsrahmen: .answer-tile, siehe
+   dort) komplett aus dem Flex-Fluss der Kachel genommen. Dadurch hat ihr
+   Sichtbarkeits-Zustand (hidden/visible) exakt null Einfluss auf die Position
+   von .answer-tile__text -- die Zentrierung ist in beiden Zuständen
+   identisch (mit echtem Browser-Messwerten verifiziert, Abweichung < 0.01px).
+
+   Platzierung oben rechts, exakt auf dem Eckpunkt der Kachel (`top: 0; right:
+   0; transform: translate(50%, -50%)`), nicht innerhalb der Kachel eingerückt:
+   ein per Screenshot gefundener erster Versuch (Badge mit Abstand zur Kachel-
+   Ecke, weiterhin vollständig innerhalb der Kachel) überlappte den Tiernamen
+   sichtbar, sobald dieser breiter als der verbleibende Randbereich war (z. B.
+   "Ozeanien") -- der Text ist vertikal ÜBER DIE GESAMTE Kachelhöhe zentriert
+   (align-items: center), bei zweizeiligem/silbengetrenntem Text (z. B.
+   "Bruch-wasser-läufer") mit Browser-Messung sogar bis auf 29px an die
+   Kachel-Oberkante heran -- jede eingerückte Ecken-Badge landet damit
+   zwangsläufig im vom Text belegten Bereich, unabhängig von der
+   Badge-Größe.
+
+   QA-Bugfix (Issue #100, Zyklus 2): die oben beschriebene "auf dem Eckpunkt
+   sitzende" Badge (halb innerhalb/halb außerhalb der Kachel, `translate(50%,
+   -50%)`) hat auf der Kachel selbst weiterhin eine kleine 18×18px-Ecke
+   beansprucht -- das reichte für den im PR getesteten 2-zeiligen Fall bei
+   1280px, aber NICHT allgemein: bei 3+ Zeilen (z. B. "Nordafrikanische
+   Kuhantilope", 28 Zeichen, echtes Datensatz-Maximum aus `data/animals.json`)
+   oder bereits bei 2 Zeilen auf schmalen 375px-Kacheln wächst die Kachel in
+   der Höhe, um den mehrzeiligen Text unterzubringen, UND der Text bleibt dabei
+   vertikal zentriert -- die erste Zeile kann der Kachel-Oberkante dadurch
+   beliebig nahekommen (von QA gemessen: 11-20px Überlappung mit der
+   verbleibenden 18×18px-Ecke, u. a. bei "Weißkopfseeadler",
+   "Fichtenkreuzschnabel", "Hirschziegenantilope"). Jede Badge, die auch nur
+   TEILWEISE auf der Kachel selbst sitzt, ist damit prinzipiell verwundbar,
+   unabhängig von der genau gewählten Restfläche -- die 29px/18px-Grenzwerte
+   aus dem ersten Versuch gelten nachweislich nur für den einen getesteten
+   Fall, nicht generell.
+
+   Fix: Badge vollständig aus der Kachel heraus verschoben (0px Überlappung
+   mit der Kachel-Fläche, statt nur "größtenteils"). `transform: translate(40%,
+   -100%)` bei `top: 0; right: 0`: der Y-Anteil (`-100%`, volle eigene
+   Badge-Höhe) verschiebt die Badge komplett über die Kachel-Oberkante hinaus
+   -- ihr Y-Bereich liegt danach zu 100% außerhalb der Kachel (y < 0), während
+   jeglicher Kachel-Inhalt (Text, mit Padding) bei y >= 0 beginnt. Da sich zwei
+   Rechtecke nur überlappen können, wenn sich SOWOHL ihr X- als auch ihr
+   Y-Bereich schneiden, ist eine Überlappung mit dem Tiernamen dadurch
+   GEOMETRISCH ausgeschlossen -- unabhängig davon, wie viele Zeilen der Name
+   umbricht oder wie nah der Text an die Kachel-Oberkante heranwächst (anders
+   als beim vorigen Fix beruht das nicht mehr auf einem gemessenen, aber nur
+   für einen Einzelfall gültigen Abstand).
+
+   Badge-Höhe bewusst auf 18px reduziert (statt bisher 36px): das 2×2-Raster
+   hat einen Grid-Gap von `var(--space-md)` = 20px (siehe .answer-grid) sowohl
+   zwischen Zeilen als auch Spalten. Bei einer in Zeile 2 stehenden Kachel
+   ragt die vollständig oberhalb sitzende Badge in genau diesen 20px-Zeilen-
+   Zwischenraum hinein -- bei 18px Höhe bleiben davon 2px Sicherheitsabstand
+   zur Kachel der Zeile darüber, die Badge kann also auch bei einer Kachel in
+   Zeile 2 nicht in die (potenziell selbst mehrzeilige) Nachbarkachel
+   hineinragen. `translate(40%, ...)` (statt 50%) aus demselben Grund für die
+   X-Achse: 40% von 36px Breite = 14.4px Verschiebung nach rechts in den
+   20px-Spalten-Zwischenraum, bleibt mit 5.6px Puffer klar innerhalb des Gaps,
+   berührt also auch die rechte Nachbarkachel nicht. Badge-Breite (36px)
+   unverändert gegenüber der bisherigen Größe, nur die Höhe wurde
+   gekürzt -- das Häkchen/●-Symbol bleibt dadurch bewusst breiter als hoch
+   (ribbon-/Fähnchen-Form) statt insgesamt zu schrumpfen, um trotz der
+   Höhenbeschränkung gut erkennbar zu bleiben (Farbwechsel der ganzen Kachel
+   auf --sky/--blush bleibt ohnehin das primäre Signal, die Badge verstärkt
+   nur redundant). Mit echten `getBoundingClientRect()`-Messungen bei 1280px
+   und 375px gegen die längsten echten Tiernamen aus `data/animals.json`
+   verifiziert: 0px Überlappung in jedem getesteten Fall (siehe PR/Issue-
+   Kommentar für die konkreten Messwerte). */
 .answer-tile__icon {
-  width: 60px;
-  height: 60px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(40%, -100%);
+  width: 36px;
+  height: 18px;
   border-radius: var(--k-radius-sm);
   background: var(--card);
   border: var(--k-border-sm) solid var(--ink);
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 0.8rem;
   line-height: 1;
-  flex-shrink: 0;
   visibility: hidden;
 }
 
@@ -1718,8 +1799,15 @@ button {
      `overflow-wrap: break-word` allein nicht auffängt (automatische
      Flex-Mindestbreite bemisst sich sonst am längsten unteilbaren Wort). Per
      echtem Browser-Screenshot gefunden: Badge und Text liefen symmetrisch
-     links/rechts über den Kachelrand hinaus. */
+     links/rechts über den Kachelrand hinaus. Seit Issue #100 ist
+     .answer-tile__icon zwar kein Flex-Geschwister mehr (siehe dort), dieses
+     min-width: 0 bleibt aber unabhängig davon nötig, weil .answer-tile__text
+     selbst weiterhin das (jetzt einzige) Flex-Kind von .answer-tile ist. */
   min-width: 0;
+  /* Issue #100: explizite Zentrierung, damit auch mehrzeiliger/
+     silbengetrennter Text (z. B. "Bruch-wasser-läufer") in jeder Zeile sauber
+     zentriert umbricht statt linksbündig innerhalb der zentrierten Textbox. */
+  text-align: center;
   hyphens: auto;
   overflow-wrap: break-word;
 }
@@ -2054,6 +2142,55 @@ button {
   .answer-tile {
     min-height: 4rem;
     padding: 0.6rem var(--space-sm);
+  }
+
+  /* QA-Fund Zyklus 3 (Issue #100): die Badge-Größe von .answer-tile__icon
+     (36x18px, `transform: translate(40%, -100%)`) wurde beim Zyklus-2-Fix
+     gegen den DEFAULT-Grid-Gap `var(--space-md)` = 20px gerechnet (siehe
+     Kommentar dort: 18px Höhe -> 2px Marge zum 20px-Gap; 40% von 36px = 14.4px
+     Rechtsversatz -> 5.6px Marge). Diese Medienabfrage hier (bereits vor
+     diesem Issue vorhanden) reduziert `.answer-grid`'s `gap`-Shorthand aber
+     auf `var(--space-sm)` = 12px -- und zwar fuer BEIDE Achsen (row-gap UND
+     column-gap), da `gap` ein Shorthand ist und keine der Grid-Varianten
+     (--reverse/--sound/--pair) es je einzeln ueberschreibt. Beide Zyklus-2-
+     Margen werden dadurch negativ: 18px Badge-Hoehe > 12px Row-Gap (von QA
+     gemessen: 25.6px x 2px Overlap mit der Kachel darueber bei 320x568 und
+     375x600) UND 14.4px horizontaler Versatz > 12px Column-Gap (von QA noch
+     nicht gemeldet, aber aus identischem Grund latent vorhanden -- haette bei
+     einer Kachel in Spalte 1 eines 2x2-Rasters die Nachbarkachel rechts
+     getroffen).
+
+     Fix: Badge-Groesse fuer diesen Breakpoint exakt HALBIERT (36x18 -> 18x9,
+     gleiches 2:1-Seitenverhaeltnis) statt den Transform anzufassen. Wichtig:
+     `translate(40%, -100%)` bezieht sich per CSS-Spec auf die Groesse des
+     Elements SELBST -- bei einer kleineren Box skalieren die resultierenden
+     Px-Versaetze automatisch mit, ohne dass die Transform-Regel selbst
+     geaendert werden muss. Rechnung fuer die neuen 12px-Gaps (mit expliziter
+     Sicherheitsmarge, nicht nur knapp bemessen):
+       - Vertikal: Hoehe 9px, `translate(..., -100%)` = -9px -> Badge sitzt
+         weiterhin zu 100% oberhalb von y=0 (Kachel-Oberkante). Das erhaelt
+         die Zyklus-2-Garantie unveraendert: eine Ueberlappung mit dem
+         EIGENEN Tiernamen bleibt geometrisch ausgeschlossen, unabhaengig von
+         Zeilenzahl/Kachelhoehe -- diese Garantie haengt nur an `-100%`, nicht
+         an der absoluten Groesse. Abstand zur Kachel DARUEBER: 12px Gap - 9px
+         Hoehe = 3px Marge (ggue. 2px im urspruenglichen 20px-Fall bewusst
+         grosszuegiger, da QA hier explizit erneut den Grenzfall testen wird).
+       - Horizontal: Breite 18px, `translate(40%, ...)` = 0.4 * 18px = 7.2px
+         Rechtsversatz in den 12px Column-Gap -> 4.8px Marge zur seitlichen
+         Nachbarkachel.
+     Border (3px -> 2px) und Schriftgroesse (0.8rem -> 0.4rem) proportional
+     mitverkleinert, damit die Badge bei 9px Hoehe nicht ueberwiegend aus
+     Border besteht (border-box: 2x2px Border liessen bei 9px Hoehe nur 5px
+     Content -- bei unveraendert 3px Border waeren es nur 3px). Die Badge
+     bleibt bei sehr kurzen Viewports dadurch klein, aber das ist laut
+     bestehendem Kommentar bei .answer-tile__icon oben bewusst unkritisch: der
+     Farbwechsel der ganzen Kachel (--sky/--blush) ist das primaere Signal,
+     die Badge nur redundante Verstaerkung. */
+  .answer-tile__icon {
+    width: 18px;
+    height: 9px;
+    border-width: 2px;
+    font-size: 0.4rem;
   }
 }
 
