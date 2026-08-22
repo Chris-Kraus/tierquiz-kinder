@@ -44,8 +44,14 @@ import { buildLetterPuzzle } from "../quiz/letterPuzzle.js";
 import { recordAnswer, advanceToNextQuestion } from "../quiz/state.js";
 import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 import { buildInfoSentence } from "../quiz/infoSentence.js";
-import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
+// Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
+// (#80-#83): das `.feedback-panel__mascot`-Feld zeigt Tint + Emoji + Name +
+// Rolle des aktiven Maskottchens (siehe question.js, gleiches Prinzip --
+// QA-Bugfix Test-Fix-Zyklus 1: Name/Rolle fehlten ursprünglich als Text).
+// Rein darstellend bis auf das Emoji, keine Live-Aktualisierung nötig.
+import { loadProgress } from "../quiz/progress.js";
+import { MASCOTS, tintOf } from "../quiz/mascots.js";
 
 // Kindgerechte, kurze Fehlermeldung bei falscher Buchstaben-Eingabe
 // (design.md, "Fehlerfall pro Buchstabe": "kein 'Falsch!', kein Rot/Buzzer-
@@ -95,6 +101,10 @@ export function renderLetterSearchScreen(
   const animalById = new Map(
     animalsData.animals.map((animal) => [animal.id, animal]),
   );
+
+  const { unlockedIds, activeIdx } = loadProgress();
+  const activeMascotId = unlockedIds[activeIdx] ?? 0;
+  const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
 
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="letter-search-heading">
@@ -192,7 +202,11 @@ export function renderLetterSearchScreen(
            Kein separater Bild-Refetch für die Sticker-Karte — wie #73 wird
            das bereits geladene reverse-image-frame-Bild wiederverwendet. -->
       <div class="feedback-panel" hidden>
-        <div class="feedback-panel__mascot" aria-hidden="true"></div>
+        <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};">
+          <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
+          <p class="feedback-panel__mascot-name">${activeMascot.name}</p>
+          <p class="feedback-panel__mascot-role">${activeMascot.role}</p>
+        </div>
         <div class="feedback-panel__body">
           <p
             class="question-screen__feedback"
@@ -479,21 +493,18 @@ export function renderLetterSearchScreen(
   function revealAnswerExtrasAndNext(question) {
     const answeredAnimal = animalById.get(question.animalId);
 
-    // Redesign (Issue #68/#75, design.md "Sticker-Karte"): Sammeln gilt für
-    // beide Abschluss-Pfade (eigenständig gelöst UND "Lösung zeigen") — dieser
-    // Modus hat strukturell kein "falsch beantwortet", nur "selbst gelöst"
-    // vs. "aufgelöst" (siehe architecture.md, Punkt 5). Bild wird aus dem
-    // bereits geladenen reverse-image-frame-Bild übernommen (keine zweite
-    // Netzwerkanfrage, gleiches Prinzip wie #73).
+    // Redesign (Issue #68/#75, design.md "Sticker-Karte"): Sticker-Karte
+    // gilt für beide Abschluss-Pfade (eigenständig gelöst UND "Lösung
+    // zeigen") — dieser Modus hat strukturell kein "falsch beantwortet", nur
+    // "selbst gelöst" vs. "aufgelöst" (siehe architecture.md, Punkt 5). Bild
+    // wird aus dem bereits geladenen reverse-image-frame-Bild übernommen
+    // (keine zweite Netzwerkanfrage, gleiches Prinzip wie #73). Album-Eintrag
+    // entfällt seit Issue #91 (Tier-Album-Modul entfernt).
     if (answeredAnimal) {
-      const wasAlreadyCollected = loadCollectedAnimals().includes(
-        answeredAnimal.id,
-      );
-      addCollectedAnimal(answeredAnimal.id);
       stickerImgEl.src = imageEl.src;
       stickerImgEl.alt = "";
       stickerNameEl.textContent = answeredAnimal.name_de;
-      stickerBadgeEl.textContent = wasAlreadyCollected ? "SCHAU MAL" : "NEU!";
+      stickerBadgeEl.textContent = "NEU!";
     }
 
     if (answeredAnimal) {

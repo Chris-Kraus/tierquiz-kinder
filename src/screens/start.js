@@ -102,6 +102,19 @@
 // bestehenden max-width des Start-Bildschirms passen ohnehin nur 2 Kacheln
 // pro Zeile) — kein zusätzlicher Grid-Umbau nötig.
 
+// Seit Issue #87 (neue Handoff-Datei "CHANGES-startseite-sammlung.md",
+// Abschnitt 1, siehe requirements.md/design.md "Startseiten-/Sammlungs-
+// Neuaufbau"): reiner Zeilenlayout-Umbau, keine Logik-Änderung. `.start-screen`
+// ist jetzt eine einzige Spalte aus Vollbreite-"Zeilen" (Titel -> Kartenzeile
+// "Mein Maskottchen"/"Meine Sammlung" -> Modus-Auswahl -> Schwierigkeit ->
+// Fragenanzahl -> CTA) statt des bisherigen zweispaltigen Haupt-/
+// Seitenspalten-Layouts (Issue #71). Die Modus-Kacheln stehen jetzt bewusst
+// wieder in EINER Reihe (`.mode-picker__group`, 5 Spalten) -- eine explizite
+// Reversion der 2-zeiligen Umbruch-Entscheidung vom 16.08.2026 (design.md,
+// "Modus-Auswahl auf dem Start-Bildschirm: Fünfter/sechster Modus"), siehe
+// dortige neue Ergänzung. Die Kopfzeile wird auf diesem Bildschirm nicht mehr
+// gerendert (siehe main.js, `showStartScreen()`) -- diese Datei kannte die
+// Kopfzeile ohnehin nie direkt, daher keine Änderung hier nötig.
 import animalsData from "../../data/animals.json";
 import { DIFFICULTY_LEVELS, DIFFICULTY_LABELS } from "../quiz/difficulty.js";
 import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
@@ -116,57 +129,90 @@ import { generateNextSoundQuestion } from "../quiz/soundQuestionGenerator.js";
 import { buildMemoryDeck } from "../quiz/memory.js";
 import { generateNextLetterSearchQuestion } from "../quiz/letterSearchQuestionGenerator.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
-import { loadCollectedAnimals, getAlbumProgress, ALBUM_TARGET } from "../quiz/album.js";
-
-// Nachschlage-Karte Tier-ID -> deutscher Name fürs Album (Redesign, Issue
-// #71) — einmalig aus der ohnehin schon importierten animals.json gebaut,
-// kein zusätzlicher Datenzugriff nötig.
-const ANIMAL_NAME_BY_ID = new Map(
-  animalsData.animals.map((animal) => [animal.id, animal.name_de]),
-);
+// Issue #82 (Datengrundlage weiterhin genutzt), Issue #88 (Markup/Wiring
+// ersetzt): `loadProgress` liefert den aktiven Maskottchen-Index/Sternestand
+// (siehe progress.js) für das start-spezifische Sterne-Badge unten --
+// `setActiveIdx`/`MASCOTS`/`tintOf` braucht start.js seit der Issue
+// #90-Extraktion (siehe Imports weiter unten) nicht mehr direkt, das
+// übernimmt jetzt src/quiz/mascotStageCard.js intern.
+//
+// Issue #89: der bisherige Album-Vorschau-Import (`loadCollectedAnimals`/
+// `getAlbumProgress`/`ALBUM_TARGET` aus `quiz/album.js`) entfällt hier
+// ersatzlos -- die rechte Karte ("Meine Sammlung") zeigt ab jetzt die 50
+// Maskottchen, nicht mehr die gesammelten Tierarten. `album.js` selbst
+// bleibt unangetastet (wird noch von den 5 Frage-Bildschirmen sowie
+// result.js verwendet, vollständige Modul-Entfernung ist die separate
+// Story #91).
+import { loadProgress } from "../quiz/progress.js";
+// Issue #89: dieselbe canRedeem-Berechnung wie im Kopfzeilen-Sterne-Badge
+// (Issue #81), jetzt aus header.js exportiert statt ein zweites Mal lokal
+// berechnet (siehe dortiger Kommentar zu canRedeemMascot()).
+import { canRedeemMascot } from "./header.js";
+// Issue #88 baute die "Mein Maskottchen"-Bühne+Nav ursprünglich direkt hier
+// (renderMascotStageCardMarkup()/renderMascotCard()); Issue #90 (Ergebnis-
+// Bildschirm braucht laut design.md "technisch dieselbe Komponente wie oben,
+// nur zweitplatziert") hat sie nach src/quiz/mascotStageCard.js extrahiert,
+// damit result.js sie importieren kann statt sie nachzubauen -- start.js
+// nutzt jetzt denselben geteilten Mount-Helper statt seiner vorherigen
+// lokalen Fassung, unverändertes Markup/Verhalten.
+import { mountMascotStage } from "../quiz/mascotStageCard.js";
+// Analog: die "Meine Sammlung"-Karte (Issue #89, renderCollectionCardMarkup()/
+// renderCollectionCard() ursprünglich hier) ist mit Issue #90 nach
+// src/quiz/collectionCard.js extrahiert (zweite Verwendungsstelle auf dem
+// Ergebnis-Bildschirm, andere Kachelgröße/andere Hinweiszeile dort -- siehe
+// dortiger Datei-Kommentar).
+import { mountCollectionCard } from "../quiz/collectionCard.js";
 
 /**
- * Baut das Markup für die Album-Vorschau auf dem Start-Bildschirm (siehe
- * design.md, "Kindgerechtes Redesign" -> Screens -> Start). Zeigt bis zu
- * ALBUM_TARGET Felder: gesammelte Tiere mit Namen, offene Felder als "?".
- * Rein darstellend, keine eigene Interaktion.
+ * Baut das Markup für das start-spezifische Sterne-Badge (Issue #89) --
+ * mittig unter der "Meine Sammlung"-Karte, ersetzt an dieser einen Stelle das
+ * Kopfzeilen-Badge aus Issue #81 (die Kopfzeile ist auf dem Start-Bildschirm
+ * ausgeblendet, siehe Issue #87). Nutzt dieselbe `canRedeem`-Berechnung wie
+ * `header.js` (jetzt von dort exportiert statt ein zweites Mal berechnet,
+ * siehe Import oben) -- reine Darstellungs-Variante, keine zweite
+ * Freischalt-Logik-Kopie.
+ *
+ * Unter 5 Sternen laut Handoff bewusst "unsichtbar/ohne Fläche" (kein
+ * Rahmen/Hintergrund/Schatten, nur Text) und `disabled` -- ab 5 Sternen
+ * dunkle CTA-Optik (analog `.start-button`) samt `k-nudge`-Animation,
+ * klickbar.
+ * @param {{stars: number, canRedeem: boolean}} state
+ * @returns {string}
  */
-function renderAlbumPreviewMarkup() {
-  const collectedIds = loadCollectedAnimals();
-  const { collected, target } = getAlbumProgress(undefined, ALBUM_TARGET);
-
-  const slots = [];
-  for (let i = 0; i < target; i += 1) {
-    const animalId = collectedIds[i];
-    if (animalId) {
-      const name = ANIMAL_NAME_BY_ID.get(animalId) ?? "?";
-      slots.push(
-        `<div class="start-album-preview__slot start-album-preview__slot--collected">
-          <span class="start-album-preview__slot-name">${name}</span>
-        </div>`,
-      );
-    } else {
-      slots.push(
-        `<div class="start-album-preview__slot" aria-hidden="true">?</div>`,
-      );
-    }
+function renderStartStarBadgeMarkup({ stars, canRedeem }) {
+  if (canRedeem) {
+    return `
+      <button
+        type="button"
+        class="start-star-badge start-star-badge--redeemable"
+        aria-label="${stars} Sterne — neues Maskottchen wählen"
+      >⭐ ${stars} Sterne · Maskottchen aussuchen</button>
+    `;
   }
 
   return `
-    <div class="start-album-preview">
-      <div class="start-album-preview__header">
-        <p class="start-album-preview__title">Mein Album</p>
-        <span class="start-album-preview__badge">${collected}/${target}</span>
-      </div>
-      <div class="start-album-preview__grid">
-        ${slots.join("")}
-      </div>
-    </div>
+    <button
+      type="button"
+      class="start-star-badge"
+      disabled
+      aria-disabled="true"
+    >⭐ ${stars}/5 Sterne</button>
   `;
 }
 
 // Werte laut UX-Abstimmung zu Issue #13: 4 Chips, gleichermaßen für beide
 // Schwierigkeitsstufen (PM-Entscheidung 13.08.2026, siehe Issue-Kommentar).
+//
+// Issue #87: die neue Handoff-Datei ("CHANGES-startseite-sammlung.md",
+// Abschnitt 1) nennt für die Fragenanzahl-Zeile nur noch 3 Kacheln ("5
+// Fragen/10 Fragen/15 Fragen") -- ohne zu erwähnen, dass die vierte Option
+// (20) damit bewusst entfallen soll, und ohne die PM-Entscheidung zu Issue
+// #13 (13.08.2026, s.o.) explizit aufzuheben. Da eine echte Funktions-
+// reduktion (Option "20 Fragen" komplett entfernen) etwas anderes ist als der
+// hier beauftragte reine Layout-/CSS-Umbau, bleibt die Option bewusst
+// erhalten -- nur das Zeilenlayout (volle Breite, "flex: 1"-Kacheln statt
+// kleiner Chips) wird umgesetzt. Siehe PR-Beschreibung/Issue-Kommentar zu #87
+// für die explizite Rückfrage an business-analyst/PM.
 const ROUND_LENGTH_OPTIONS = [5, 10, 15, 20];
 
 // Labels: design.md nennt "6–10 Jahre"/"10–12 Jahre" und "Einfach"/"Knifflig" als
@@ -194,8 +240,14 @@ const DIFFICULTY_OPTIONS = [
  * @param {(quizState: object) => void} [callbacks.onStart] wird aufgerufen,
  *   sobald das Kind nach Stufenauswahl auf "Los geht's!" tippt; erhält den neu
  *   erzeugten Quiz-Zustand (siehe createQuizState).
+ * @param {() => void} [callbacks.onOpenMascotChooser] Issue #89: wird beim
+ *   Klick auf das start-spezifische Sterne-Badge aufgerufen, sofern
+ *   `canRedeem` (siehe renderStartStarBadgeMarkup) -- main.js übergibt hier
+ *   dieselbe Art Closure wie beim Kopfzeilen-Badge (Issue #81) bzw. der
+ *   Sterne-Box im Ergebnis (Issue #83), architecture.md Punkt 3, inkl.
+ *   Rücksprung zum Start-Bildschirm über `onDone`.
  */
-export function renderStartScreen(container, { onStart } = {}) {
+export function renderStartScreen(container, { onStart, onOpenMascotChooser } = {}) {
   let selectedDifficulty = null;
   let selectedRoundLength = DEFAULT_ROUND_LENGTH;
   // Seit Issue #28: welcher Modus aktuell ausgewählt ist, plus (nur für
@@ -218,14 +270,28 @@ export function renderStartScreen(container, { onStart } = {}) {
 
   container.innerHTML = `
     <section class="start-screen" aria-labelledby="start-title">
-    <div class="start-screen__main">
-      <h1 id="start-title" class="start-screen__title">Hallo! Wollen wir Tiere entdecken?</h1>
-      <p class="start-screen__intro">Wähle dir ein Spiel aus. Ich lese jede Frage vor — und falsch raten ist völlig okay, dann schauen wir uns das Tier zusammen an.</p>
+      <div class="start-screen__title-row">
+        <h1 id="start-title" class="start-screen__title">Hallo! Wollen wir Tiere entdecken?</h1>
+        <p class="start-screen__intro">Wähle dir ein Spiel aus. Ich lese jede Frage vor — und falsch raten ist völlig okay, dann schauen wir uns das Tier zusammen an.</p>
+      </div>
+
+      <div class="start-cards">
+        <div class="start-card start-card--mascot">
+          <h3 class="start-card__title">Mein Maskottchen</h3>
+          <div class="start-card__body" data-mascot-card-body></div>
+        </div>
+        <div class="start-card start-card--collection">
+          <h3 class="start-card__title">Meine Sammlung</h3>
+          <div class="start-card__body" data-collection-card-body></div>
+        </div>
+      </div>
+
+      <div class="start-star-badge-row" data-star-badge-row></div>
 
       <div class="mode-picker">
-        <p id="mode-picker-label" class="mode-picker__label">
-          1 · Welches Spiel?
-        </p>
+        <h2 id="mode-picker-label" class="mode-picker__label">
+          1 · Welches Spiel möchtest du spielen?
+        </h2>
         <div
           class="mode-picker__group"
           role="group"
@@ -241,7 +307,10 @@ export function renderStartScreen(container, { onStart } = {}) {
             <span class="mode-button__icon-box" aria-hidden="true">
               <span class="mode-button__icon">❓</span>
             </span>
-            <span class="mode-button__label">Quizfragen</span>
+            <span class="mode-button__text">
+              <span class="mode-button__label">Quizfragen</span>
+              <span class="mode-button__hint">Antwort antippen</span>
+            </span>
           </button>
           <button
             type="button"
@@ -252,10 +321,13 @@ export function renderStartScreen(container, { onStart } = {}) {
           >
             <span class="mode-button__check" aria-hidden="true">✓</span>
             <span class="mode-button__icon-box" aria-hidden="true">
-              <span class="mode-button__icon">🔎</span>
+              <span class="mode-button__icon">🎭</span>
               <span class="mode-button__spinner" aria-hidden="true"></span>
             </span>
-            <span class="mode-button__label">Wer bin ich?</span>
+            <span class="mode-button__text">
+              <span class="mode-button__label">Wer bin ich?</span>
+              <span class="mode-button__hint">Tier erraten</span>
+            </span>
             <span
               class="mode-button__online-icon"
               role="img"
@@ -275,7 +347,10 @@ export function renderStartScreen(container, { onStart } = {}) {
               <span class="mode-button__icon">🔊</span>
               <span class="mode-button__spinner" aria-hidden="true"></span>
             </span>
-            <span class="mode-button__label">Tiergeräusche</span>
+            <span class="mode-button__text">
+              <span class="mode-button__label">Tierlaute</span>
+              <span class="mode-button__hint">Hören &amp; raten</span>
+            </span>
             <span
               class="mode-button__online-icon"
               role="img"
@@ -292,10 +367,13 @@ export function renderStartScreen(container, { onStart } = {}) {
           >
             <span class="mode-button__check" aria-hidden="true">✓</span>
             <span class="mode-button__icon-box" aria-hidden="true">
-              <span class="mode-button__icon">🧠</span>
+              <span class="mode-button__icon">🃏</span>
               <span class="mode-button__spinner" aria-hidden="true"></span>
             </span>
-            <span class="mode-button__label">Tier-Memory</span>
+            <span class="mode-button__text">
+              <span class="mode-button__label">Tier-Memory</span>
+              <span class="mode-button__hint">Paare finden</span>
+            </span>
             <span
               class="mode-button__online-icon"
               role="img"
@@ -315,7 +393,10 @@ export function renderStartScreen(container, { onStart } = {}) {
               <span class="mode-button__icon">🔤</span>
               <span class="mode-button__spinner" aria-hidden="true"></span>
             </span>
-            <span class="mode-button__label">Buchstabensuche</span>
+            <span class="mode-button__text">
+              <span class="mode-button__label">Buchstaben</span>
+              <span class="mode-button__hint">Wort füllen</span>
+            </span>
             <span
               class="mode-button__online-icon"
               role="img"
@@ -332,34 +413,36 @@ export function renderStartScreen(container, { onStart } = {}) {
         ></p>
       </div>
 
-      <p id="difficulty-picker-label" class="difficulty-picker__label">
-        2 · Wie schwer?
-      </p>
-      <div
-        class="difficulty-picker"
-        role="group"
-        aria-labelledby="difficulty-picker-label"
-      >
-        ${DIFFICULTY_OPTIONS.map(
-          (option) => `
-          <button
-            type="button"
-            class="difficulty-button k-btn"
-            data-difficulty="${option.value}"
-            aria-pressed="false"
-          >
-            <span class="difficulty-button__check" aria-hidden="true">✓</span>
-            <span class="difficulty-button__label">${option.label}</span>
-            <span class="difficulty-button__hint">${option.hint}</span>
-          </button>
-        `,
-        ).join("")}
+      <div class="difficulty-picker-row">
+        <h2 id="difficulty-picker-label" class="difficulty-picker__label">
+          2 · Wie schwer soll das Spiel sein?
+        </h2>
+        <div
+          class="difficulty-picker"
+          role="group"
+          aria-labelledby="difficulty-picker-label"
+        >
+          ${DIFFICULTY_OPTIONS.map(
+            (option) => `
+            <button
+              type="button"
+              class="difficulty-button k-btn"
+              data-difficulty="${option.value}"
+              aria-pressed="false"
+            >
+              <span class="difficulty-button__check" aria-hidden="true">✓</span>
+              <span class="difficulty-button__label">${option.label}</span>
+              <span class="difficulty-button__hint">${option.hint}</span>
+            </button>
+          `,
+          ).join("")}
+        </div>
       </div>
 
       <div class="round-length-picker">
-        <p id="round-length-label" class="round-length-picker__label">
-          3 · Wie viele Fragen?
-        </p>
+        <h2 id="round-length-label" class="round-length-picker__label">
+          3 · Wie viele Fragen möchtest du beantworten?
+        </h2>
         <div
           class="round-length-chip-group"
           role="group"
@@ -376,27 +459,64 @@ export function renderStartScreen(container, { onStart } = {}) {
               }"
               data-round-length="${value}"
               aria-pressed="${value === DEFAULT_ROUND_LENGTH}"
-            >${value}</button>
+            >${value} Fragen</button>
           `,
           ).join("")}
         </div>
       </div>
 
       <button type="button" class="start-button k-btn" disabled>Los geht's! 🚀</button>
-    </div>
-
-    <div class="start-screen__side">
-      <div class="start-mascot-card">
-        <div class="start-mascot-card__placeholder" aria-hidden="true"></div>
-        <div class="start-mascot-card__bubble">
-          <p class="start-mascot-card__label">Fine, dein Tierguide</p>
-          <p class="start-mascot-card__quote">„Tippe auf mich, wenn du die Frage nochmal hören willst!“</p>
-        </div>
-      </div>
-      ${renderAlbumPreviewMarkup()}
-    </div>
     </section>
   `;
+
+  // Issue #87 richtete die Kartenzeile (`.start-cards`, "Mein Maskottchen"
+  // / "Meine Sammlung") als reinen Layout-Rahmen ein. Issue #88 füllte die
+  // linke Karte mit der echten Bühne + dem neuen navControl.js-Element,
+  // Issue #89 die rechte Karte mit dem 50-Maskottchen-Raster (ersetzt die
+  // bisherige Album-Vorschau vollständig -- #91 entfernt album.js selbst)
+  // plus dem start-spezifischen Sterne-Badge darunter. Mit Issue #90 sind
+  // beide Karten-Bausteine nach src/quiz/mascotStageCard.js bzw.
+  // src/quiz/collectionCard.js extrahiert (siehe Imports oben) -- die
+  // jeweiligen mount*()-Funktionen übernehmen jetzt selbst das komplette
+  // Render+Wiring (inkl. Doppel-Tap-robustem Neu-Rendern bei jedem
+  // Pfeil-Klick), start.js muss dafür keine eigenen Funktionen mehr
+  // definieren.
+  const mascotCardBodyEl = container.querySelector("[data-mascot-card-body]");
+  const collectionCardBodyEl = container.querySelector(
+    "[data-collection-card-body]",
+  );
+  const starBadgeRowEl = container.querySelector("[data-star-badge-row]");
+
+  mountMascotStage(mascotCardBodyEl);
+  mountCollectionCard(collectionCardBodyEl, {
+    hintText:
+      "Hinter jedem ? versteckt sich ein Maskottchen: 5 Sterne sammeln, dann darfst du eins aussuchen.",
+  });
+
+  // Issue #89: start-spezifisches Sterne-Badge -- einmalig beim Aufbau des
+  // Bildschirms gerendert (gleiches Prinzip wie header.js: main.js ruft
+  // renderHeader() einmal pro Navigation auf, kein Live-Update *innerhalb*
+  // eines Bildschirms nötig). Der Sternestand ändert sich hier nur über die
+  // Maskottchen-Auswahl (onOpenMascotChooser), die main.js beim Rücksprung
+  // ohnehin per komplett frischem renderStartScreen()-Aufruf neu aufbaut.
+  function renderStarBadge() {
+    const progress = loadProgress();
+    const { stars } = progress;
+    const canRedeem = canRedeemMascot(progress);
+    starBadgeRowEl.innerHTML = renderStartStarBadgeMarkup({
+      stars,
+      canRedeem,
+    });
+
+    if (canRedeem) {
+      const badgeButton = starBadgeRowEl.querySelector(".start-star-badge");
+      badgeButton?.addEventListener("click", () => {
+        onOpenMascotChooser?.();
+      });
+    }
+  }
+
+  renderStarBadge();
 
   const modeButtons = Array.from(container.querySelectorAll(".mode-button"));
   const quizModeButton = container.querySelector(
@@ -467,21 +587,27 @@ export function renderStartScreen(container, { onStart } = {}) {
   }
 
   // Identisches Ladezustand-Muster wie setReverseModeBusy oben (Issue #31,
-  // design.md-Vorgabe "identisches Muster wie bei 'Wer bin ich?'").
+  // design.md-Vorgabe "identisches Muster wie bei 'Wer bin ich?'"). Seit
+  // Issue #87: Label-Text auf der Kachel selbst ist "Tierlaute" (Kurzlabel
+  // aus der neuen Handoff-Datei, vermeidet Mitten-im-Wort-Umbruch in der
+  // schmaleren Einzeilen-Kachel -- die Kopfzeilen-Modus-Pille aus header.js
+  // bleibt bewusst unverändert bei "Tiergeräusche", andere Anzeigeort/nicht
+  // Teil dieser Story).
   function setSoundModeBusy(isBusy) {
     soundModeButton.disabled = isBusy;
     soundModeButton.setAttribute("aria-busy", String(isBusy));
-    soundModeLabelEl.textContent = isBusy ? "Wird geprüft …" : "Tiergeräusche";
+    soundModeLabelEl.textContent = isBusy ? "Wird geprüft …" : "Tierlaute";
   }
 
-  // Identisches Ladezustand-Muster wie oben (Issue #46, gleiches Muster wie
-  // "Wer bin ich?"/"Tiergeräusche").
+  // Identisches Ladezustand-Muster wie oben (Issue #46). Seit Issue #87:
+  // Kurzlabel "Buchstaben" (dieselbe Kurzform, die header.js für die
+  // Kopfzeilen-Modus-Pille bereits verwendet, siehe HEADER_MODE_LABELS).
   function setLetterSearchModeBusy(isBusy) {
     letterSearchModeButton.disabled = isBusy;
     letterSearchModeButton.setAttribute("aria-busy", String(isBusy));
     letterSearchModeLabelEl.textContent = isBusy
       ? "Wird geprüft …"
-      : "Buchstabensuche";
+      : "Buchstaben";
   }
 
   // Identisches Ladezustand-Muster wie oben (Issue #45).

@@ -11,6 +11,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { DIFFICULTY_LEVELS } from "../quiz/difficulty.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
+import { MASCOTS, tintOf } from "../quiz/mascots.js";
+import { recordRoundCompletion, redeemMascot, setActiveIdx } from "../quiz/progress.js";
 
 const LION = {
   id: "Q1",
@@ -677,5 +679,59 @@ describe("'Lösung zeigen' (Issue #52)", () => {
       container.querySelector(".letter-puzzle__solve-button").hidden,
     ).toBe(true);
     expect(quizState.answers[0].resolved).toBe(false);
+  });
+});
+
+// Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
+// (#80-#83): das `.feedback-panel__mascot`-Feld zeigt Tint + Emoji + Name +
+// Rolle des aktiven Maskottchens, konsistent mit question.test.js (QA-Bugfix
+// Test-Fix-Zyklus 1: Name/Rolle fehlten ursprünglich komplett als Text, nur
+// Tint+Emoji wurden geprüft). Rendert synchron in container.innerHTML, bevor
+// die (hier gemockte) generateNextLetterSearchQuestion-Promise aufgelöst ist
+// -- kein await/waitFor nötig, um das Feld zu prüfen.
+describe("Dynamisches Maskottchen im Feedback-Panel (Issue #82)", () => {
+  function createFakeStorage() {
+    const store = new Map();
+    return {
+      getItem: (key) => (store.has(key) ? store.get(key) : null),
+      setItem: (key, value) => {
+        store.set(key, String(value));
+      },
+    };
+  }
+
+  beforeEach(() => {
+    globalThis.localStorage = createFakeStorage();
+  });
+
+  it("zeigt das über activeIdx aktive Maskottchen mit Name, Rolle und Tint", () => {
+    recordRoundCompletion({ mode: GAME_MODE.QUIZ, score: 5, roundLength: 10 });
+    recordRoundCompletion({ mode: GAME_MODE.QUIZ, score: 5, roundLength: 10 });
+    recordRoundCompletion({ mode: GAME_MODE.QUIZ, score: 5, roundLength: 10 });
+    recordRoundCompletion({ mode: GAME_MODE.QUIZ, score: 5, roundLength: 10 });
+    recordRoundCompletion({ mode: GAME_MODE.QUIZ, score: 5, roundLength: 10 });
+    redeemMascot(3);
+    setActiveIdx(1); // unlockedIds = [0, 3] -> Position 1 = Maskottchen id 3
+
+    generateNextLetterSearchQuestion.mockResolvedValueOnce(buildQuestion());
+    const quizState = createQuizState(
+      DIFFICULTY_LEVELS.EASY,
+      [],
+      3,
+      GAME_MODE.LETTER_SEARCH,
+    );
+    const { container } = render(quizState);
+
+    const mascotEl = container.querySelector(".feedback-panel__mascot");
+    expect(mascotEl.getAttribute("style")).toContain(tintOf(3));
+    expect(
+      mascotEl.querySelector(".feedback-panel__mascot-emoji").textContent,
+    ).toBe(MASCOTS[3].emoji);
+    expect(
+      mascotEl.querySelector(".feedback-panel__mascot-name").textContent,
+    ).toBe(MASCOTS[3].name);
+    expect(
+      mascotEl.querySelector(".feedback-panel__mascot-role").textContent,
+    ).toBe(MASCOTS[3].role);
   });
 });

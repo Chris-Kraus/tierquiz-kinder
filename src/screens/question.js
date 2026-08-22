@@ -53,8 +53,20 @@ import {
   buildAttribution,
   REQUEST_TIMEOUT_MS,
 } from "../quiz/imageHint.js";
-import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
+// Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
+// (#80-#83): das `.feedback-panel__mascot`-Feld zeigt Tint + Emoji + Name +
+// Rolle des über `loadProgress().activeIdx` aktiven Maskottchen -- konsistent
+// mit der Guide-Karte auf dem Start-Bildschirm (siehe start.js,
+// renderMascotAreaMarkup). QA-Bugfix (Test-Fix-Zyklus 1, Issue-82-Kommentare):
+// Name/Rolle fehlten ursprünglich komplett als Text (nur Tint+Emoji). Rein
+// darstellend bis auf das Emoji (aria-hidden nur dort), daher reicht ein
+// einmaliger Wert beim Rendern, keine Live-Aktualisierung nötig (ein Wechsel
+// des aktiven Maskottchens passiert nur über die Maskottchen-Auswahl, die
+// diesen Bildschirm ohnehin per onDone -> showQuestionScreen komplett neu
+// rendert, siehe main.js).
+import { loadProgress } from "../quiz/progress.js";
+import { MASCOTS, tintOf } from "../quiz/mascots.js";
 
 /**
  * Rendert den Frage-Bildschirm in den übergebenen Container und steuert den
@@ -87,6 +99,10 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   const animalById = new Map(
     animalsData.animals.map((animal) => [animal.id, animal]),
   );
+
+  const { unlockedIds, activeIdx } = loadProgress();
+  const activeMascotId = unlockedIds[activeIdx] ?? 0;
+  const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
 
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="question-heading">
@@ -151,7 +167,11 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
            .question-screen wirkt statt gegen die schmale rechte Spalte —
            sonst Overflow, siehe PR-Beschreibung/Commit-Historie. -->
       <div class="feedback-panel" hidden>
-        <div class="feedback-panel__mascot" aria-hidden="true"></div>
+        <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};">
+          <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
+          <p class="feedback-panel__mascot-name">${activeMascot.name}</p>
+          <p class="feedback-panel__mascot-role">${activeMascot.role}</p>
+        </div>
         <div class="feedback-panel__body">
           <p
             class="question-screen__feedback"
@@ -646,18 +666,15 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     feedbackPanelEl.hidden = false;
     feedbackEl.hidden = false;
 
-    // Redesign (Issue #68/#72, design.md "Sticker-Karte"): jede beantwortete
-    // Frage sammelt das Tier ins Album — unabhängig davon, ob richtig oder
-    // falsch geantwortet wurde (gleiches "richtig wie falsch"-Prinzip wie
-    // beim Infosatz/Fun Fact oben, kein Straf-Framing). "NEU!" nur beim
-    // ersten Sammeln dieses Tieres, sonst "SCHAU MAL".
+    // Redesign (Issue #68/#72, design.md "Sticker-Karte"): Sticker-Karte
+    // zeigt das beantwortete Tier unabhängig davon, ob richtig oder falsch
+    // geantwortet wurde (gleiches "richtig wie falsch"-Prinzip wie beim
+    // Infosatz/Fun Fact oben, kein Straf-Framing). Album-Eintrag entfällt
+    // seit Issue #91 (Tier-Album-Modul entfernt) -- die frühere "SCHAU
+    // MAL"/"NEU!"-Unterscheidung nach Album-Status ist damit gegenstandslos.
     if (answeredAnimal) {
-      const wasAlreadyCollected = loadCollectedAnimals().includes(
-        answeredAnimal.id,
-      );
-      addCollectedAnimal(answeredAnimal.id);
       stickerNameEl.textContent = answeredAnimal.name_de;
-      stickerBadgeEl.textContent = wasAlreadyCollected ? "SCHAU MAL" : "NEU!";
+      stickerBadgeEl.textContent = "NEU!";
     }
 
     // Issue #30: automatischer Bildabruf startet in dem Moment, in dem der

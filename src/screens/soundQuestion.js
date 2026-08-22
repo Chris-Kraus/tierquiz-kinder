@@ -65,7 +65,6 @@ import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 // wiederverwendet (architecture.md, Issues #41/#42: "buildInfoSentence() ...
 // unverändert übertragbar").
 import { buildInfoSentence } from "../quiz/infoSentence.js";
-import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
 // Issue #42: automatisches Feedback-Bild — dieselben reinen, DOM-/fetch-
 // freien Hilfsfunktionen wie question.js (Issue #30), keine eigene Kopie
@@ -77,6 +76,13 @@ import {
   buildAttribution,
   REQUEST_TIMEOUT_MS,
 } from "../quiz/imageHint.js";
+// Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
+// (#80-#83): das `.feedback-panel__mascot`-Feld zeigt Tint + Emoji + Name +
+// Rolle des aktiven Maskottchens (siehe question.js, gleiches Prinzip --
+// QA-Bugfix Test-Fix-Zyklus 1: Name/Rolle fehlten ursprünglich als Text).
+// Rein darstellend bis auf das Emoji, keine Live-Aktualisierung nötig.
+import { loadProgress } from "../quiz/progress.js";
+import { MASCOTS, tintOf } from "../quiz/mascots.js";
 
 /**
  * Rendert den "Tiergeräusche"-Frage-Bildschirm in den übergebenen Container
@@ -118,6 +124,10 @@ export function renderSoundQuestionScreen(
   const animalById = new Map(
     animalsData.animals.map((animal) => [animal.id, animal]),
   );
+
+  const { unlockedIds, activeIdx } = loadProgress();
+  const activeMascotId = unlockedIds[activeIdx] ?? 0;
+  const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
 
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="sound-question-heading">
@@ -245,7 +255,11 @@ export function renderSoundQuestionScreen(
            (anders als "Wer bin ich?"/#73 — hier ist ein Foto nach der
            Antwort keine Dopplung, da vorher nur Ton zu hören war). -->
       <div class="feedback-panel" hidden>
-        <div class="feedback-panel__mascot" aria-hidden="true"></div>
+        <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};">
+          <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
+          <p class="feedback-panel__mascot-name">${activeMascot.name}</p>
+          <p class="feedback-panel__mascot-role">${activeMascot.role}</p>
+        </div>
         <div class="feedback-panel__body">
           <p
             class="question-screen__feedback"
@@ -808,16 +822,13 @@ export function renderSoundQuestionScreen(
     feedbackPanelEl.hidden = false;
     feedbackEl.hidden = false;
 
-    // Redesign (Issue #68/#74, design.md "Sticker-Karte"): jede beantwortete
-    // Frage sammelt das Tier ins Album, unabhängig von richtig/falsch
-    // (gleiches Prinzip wie question.js/reverseQuestion.js).
+    // Redesign (Issue #68/#74, design.md "Sticker-Karte"): Sticker-Karte
+    // zeigt das beantwortete Tier, unabhängig von richtig/falsch (gleiches
+    // Prinzip wie question.js/reverseQuestion.js). Album-Eintrag entfällt
+    // seit Issue #91 (Tier-Album-Modul entfernt).
     if (answeredAnimal) {
-      const wasAlreadyCollected = loadCollectedAnimals().includes(
-        answeredAnimal.id,
-      );
-      addCollectedAnimal(answeredAnimal.id);
       stickerNameEl.textContent = answeredAnimal.name_de;
-      stickerBadgeEl.textContent = wasAlreadyCollected ? "SCHAU MAL" : "NEU!";
+      stickerBadgeEl.textContent = "NEU!";
     }
 
     // Issue #42: automatischer Bildabruf startet in dem Moment, in dem der

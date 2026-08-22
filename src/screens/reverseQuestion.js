@@ -51,8 +51,14 @@ import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 // Wiederverwendbarkeit" — buildInfoSentence ist vollständig entkoppelt von
 // Fragetyp/Spielmodus, nur die Rendering-Verdrahtung unten ist neu).
 import { buildInfoSentence } from "../quiz/infoSentence.js";
-import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
+// Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
+// (#80-#83): das `.feedback-panel__mascot`-Feld zeigt Tint + Emoji + Name +
+// Rolle des aktiven Maskottchens (siehe question.js, gleiches Prinzip --
+// QA-Bugfix Test-Fix-Zyklus 1: Name/Rolle fehlten ursprünglich als Text).
+// Rein darstellend bis auf das Emoji, keine Live-Aktualisierung nötig.
+import { loadProgress } from "../quiz/progress.js";
+import { MASCOTS, tintOf } from "../quiz/mascots.js";
 
 /**
  * Rendert den "Wer bin ich?"-Frage-Bildschirm in den übergebenen Container
@@ -98,6 +104,10 @@ export function renderReverseQuestionScreen(
   const animalById = new Map(
     animalsData.animals.map((animal) => [animal.id, animal]),
   );
+
+  const { unlockedIds, activeIdx } = loadProgress();
+  const activeMascotId = unlockedIds[activeIdx] ?? 0;
+  const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
 
   container.innerHTML = `
     <section class="question-screen" aria-labelledby="reverse-question-heading">
@@ -189,7 +199,11 @@ export function renderReverseQuestionScreen(
            Sticker-Karte — das bereits geladene reverse-image-frame-Bild wird
            direkt wiederverwendet (keine zweite Netzwerkanfrage nötig). -->
       <div class="feedback-panel" hidden>
-        <div class="feedback-panel__mascot" aria-hidden="true"></div>
+        <div class="feedback-panel__mascot" style="background: ${tintOf(activeMascotId)};">
+          <span class="feedback-panel__mascot-emoji" aria-hidden="true">${activeMascot.emoji}</span>
+          <p class="feedback-panel__mascot-name">${activeMascot.name}</p>
+          <p class="feedback-panel__mascot-role">${activeMascot.role}</p>
+        </div>
         <div class="feedback-panel__body">
           <p
             class="question-screen__feedback"
@@ -476,18 +490,15 @@ export function renderReverseQuestionScreen(
 
     // Redesign (Issue #68/#73, design.md "Sticker-Karte"): Sticker-Bild wird
     // aus dem bereits geladenen reverse-image-frame-Bild übernommen (keine
-    // zweite Netzwerkanfrage, siehe Template-Kommentar oben). Album-Sammeln
-    // unabhängig von richtig/falsch, gleiches Prinzip wie question.js.
+    // zweite Netzwerkanfrage, siehe Template-Kommentar oben), unabhängig von
+    // richtig/falsch, gleiches Prinzip wie question.js. Album-Eintrag
+    // entfällt seit Issue #91 (Tier-Album-Modul entfernt).
     const answeredAnimalForSticker = animalById.get(question.animalId);
     if (answeredAnimalForSticker) {
-      const wasAlreadyCollected = loadCollectedAnimals().includes(
-        answeredAnimalForSticker.id,
-      );
-      addCollectedAnimal(answeredAnimalForSticker.id);
       stickerImgEl.src = imageEl.src;
       stickerImgEl.alt = "";
       stickerNameEl.textContent = answeredAnimalForSticker.name_de;
-      stickerBadgeEl.textContent = wasAlreadyCollected ? "SCHAU MAL" : "NEU!";
+      stickerBadgeEl.textContent = "NEU!";
     }
 
     // Issue #35: Infosatz IMMER anzeigen, unabhängig davon, ob richtig oder

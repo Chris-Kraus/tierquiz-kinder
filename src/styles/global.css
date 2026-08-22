@@ -169,6 +169,21 @@
   }
 }
 
+/* Sterne-Badge-Animation (Issue #81, Sterne-/Maskottchen-Freischaltsystem):
+   sanftes Auf-und-Ab, sobald das Badge einlösbar ist (siehe Handoff,
+   "Header-Badge"). Respektiert die bereits bestehende
+   prefers-reduced-motion-Regel weiter unten (gleiches Muster wie alle
+   anderen @keyframes hier — keine eigene Ausnahme nötig). */
+@keyframes k-nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
 @keyframes k-conf {
   0% {
     transform: translate3d(0, -30px, 0) rotate(0);
@@ -350,46 +365,87 @@ button {
   color: var(--ink);
 }
 
+/* Sterne-Badge (Issue #81, Sterne-/Maskottchen-Freischaltsystem): persistentes
+   "⭐ {stars}/5"-Badge, unabhängig vom Rundenfortschritt oben — daher immer
+   sichtbar, auch auf Start-/Ergebnis-Bildschirm ohne .app-header__progress/
+   .app-header__score. Werte laut Handoff, "Header-Badge": white-space nowrap
+   (sonst bricht der Text aus der Pille aus), min-height 60, Radius 999 (=
+   --k-radius-pill), 4px Rahmen, Schatten 0 6px 0. Normal: --sky-Fläche
+   (identisch zur bestehenden .app-header__score-Fläche, bewusst dieselbe
+   Farbe -- beide sind "neutrale" Zustände, nur die einlösbare
+   --redeemable-Variante unten sticht farblich hervor). */
+.app-header__star-badge {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  min-height: 60px;
+  padding: 4px 20px;
+  background: var(--sky);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-pill);
+  box-shadow: 0 6px 0 var(--ink);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--ink);
+  cursor: default;
+}
+
+/* Einlösbar (stars >= 5 && unlockedIds.length < 50): --sand-Fläche + sanftes
+   Auf-und-Ab (k-nudge), Klick öffnet die Maskottchen-Auswahl (siehe
+   header.js, onOpenMascotChooser). */
+.app-header__star-badge--redeemable {
+  background: var(--sand);
+  cursor: pointer;
+  animation: k-nudge 1.6s ease-in-out infinite;
+}
+
+.app-header__star-badge--redeemable:focus-visible {
+  outline: 5px solid var(--sky);
+  outline-offset: 4px;
+}
+
+.app-header__star-badge:disabled {
+  opacity: 1; /* bewusst kein ausgegrautes Aussehen -- design.md nennt keine
+    eigene "nicht einlösbar"-Optik jenseits von cursor/Animation, das Badge
+    soll weiterhin klar den aktuellen Sternestand zeigen können. */
+}
+
 /* Start-Bildschirm (siehe design.md, "Nutzerfluss" Punkt 1). */
 
-/* Start-Bildschirm (Redesign, Issue #71; siehe design.md, "Kindgerechtes
-   Redesign" -> Screens -> Start). Grid 1fr 400px: links Titel/Auswahl-Schritte
-   (.start-screen__main), rechts Maskottchen-Karte + Album-Vorschau
-   (.start-screen__side, beide neu in dieser Story). Unter 860px Breite fällt
-   die Seitenspalte unter die Hauptspalte (kein horizontales Scrollen auf
-   kleinen Bildschirmen, siehe Issue #37). */
+/* Start-Bildschirm -- Zeilenlayout (Issue #87, löst den zweispaltigen
+   Haupt-/Seitenspalten-Aufbau aus Issue #71 ab; siehe requirements.md/
+   design.md "Startseiten-/Sammlungs-Neuaufbau", CHANGES-startseite-
+   sammlung.md Abschnitt 1). Container ist jetzt eine einzige Flex-Spalte aus
+   Vollbreite-"Zeilen" (Titel -> Kartenzeile -> Modus -> Schwierigkeit ->
+   Fragenanzahl -> CTA), `gap: 34px` trennt die Zeilen. Kein Grid-Zwei-
+   Spalten-Layout mehr, daher auch kein Bedarf mehr für den früheren
+   860px-Umbruch-Breakpoint auf `.start-screen` selbst (die einzige verbliebene
+   Zwei-Spalten-Stelle ist die neue Kartenzeile, siehe `.start-cards` unten,
+   die weiterhin einen eigenen schmalen Fallback bekommt). */
 .start-screen {
   width: 100%;
-  max-width: 1200px;
-  display: grid;
-  grid-template-columns: 1fr 400px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px 28px 0;
+  display: flex;
+  flex-direction: column;
   gap: var(--k-space-6);
   text-align: left;
 }
 
-@media (max-width: 860px) {
-  .start-screen {
-    grid-template-columns: 1fr;
-  }
-}
-
-.start-screen__main {
+.start-screen__title-row {
   display: flex;
   flex-direction: column;
-  gap: var(--k-space-4);
-}
-
-.start-screen__side {
-  display: flex;
-  flex-direction: column;
-  gap: var(--k-space-4);
+  gap: var(--k-space-3);
+  width: 100%;
 }
 
 .start-screen__title {
   margin: 0;
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: clamp(2.5rem, 6vw, 76px);
+  font-size: 80px;
   color: var(--ink);
 }
 
@@ -397,22 +453,70 @@ button {
   margin: 0;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 19px;
+  font-size: 26px;
   color: var(--ink);
 }
 
-/* Gemeinsamer Schritt-Label-Stil ("1 · Welches Spiel?" usw., siehe design.md,
-   "Layout-Empfehlungen"). */
+/* Kartenzeile (Issue #87, Punkt 2): links "Mein Maskottchen", rechts "Meine
+   Sammlung", gleich hoch (`align-items: stretch`). Reiner Zeilen-/Grid-
+   Rahmen für diese Story -- der eigentliche Karteninhalt ist Platzhalter
+   (siehe start.js, `renderSideSection()`) und wird in den Folge-Stories
+   #88/#89 ersetzt. Unter 860px (gleicher Breakpoint wie zuvor auf
+   `.start-screen`, siehe Issue #37) fällt die zweite Karte unter die erste,
+   damit auf kleinen Bildschirmen kein horizontales Scrollen entsteht. */
+.start-cards {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 26px;
+  align-items: stretch;
+}
+
+@media (max-width: 860px) {
+  .start-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.start-card {
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  box-shadow: var(--k-shadow-card);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-3);
+  text-align: center;
+}
+
+.start-card__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 26px;
+  color: var(--ink);
+}
+
+.start-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-3);
+  flex: 1;
+}
+
+/* Gemeinsamer Schritt-Überschrift-Stil ("1 · Welches Spiel möchtest du
+   spielen?" usw.) -- seit Issue #87 H2-große Überschriften (40px, "gleiche
+   Größe wie der CTA-Text", CHANGES-startseite-sammlung.md Abschnitt 1)
+   statt der vorherigen kleinen Uppercase-Labels. */
 .mode-picker__label,
 .difficulty-picker__label,
 .round-length-picker__label {
   margin: 0;
-  font-family: var(--font-body);
+  font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--muted);
+  font-size: 40px;
+  color: var(--ink);
 }
 
 .mode-picker {
@@ -420,14 +524,20 @@ button {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: var(--k-space-1);
+  gap: var(--k-space-3);
 }
 
+/* Issue #87: bewusste Reversion der Skalierungsentscheidung vom 16.08.2026
+   (design.md, "Modus-Auswahl auf dem Start-Bildschirm: Fünfter/sechster
+   Modus" -- dort: 2-zeiliger Umbruch bei 5 Kacheln). `minmax(0, 1fr)` ist
+   Pflicht (Handoff-Warnung): ohne die 0-Untergrenze hängen die Spalten an
+   ihrem min-content fest und die Seite scrollt horizontal, siehe
+   CHANGES-startseite-sammlung.md Abschnitt 1. */
 .mode-picker__group {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-  gap: var(--k-space-3);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
 }
 
 /* Kindgerechter, nicht-technischer Hinweis bei fehlgeschlagenem Testabruf
@@ -444,6 +554,14 @@ button {
   display: none;
 }
 
+.difficulty-picker-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--k-space-3);
+  width: 100%;
+}
+
 .difficulty-picker {
   width: 100%;
   display: flex;
@@ -453,28 +571,42 @@ button {
 
 /* Große Touch-Zielflächen, deutlich über dem 44×44-px-Minimum (siehe design.md,
    "Barrierefreiheit"). Echtes <button>-Element, per Tastatur bedienbar.
-   min-height 104px (Modus-Kacheln)/92px (Schwierigkeit) laut design.md — die
-   haptische Druck-Mechanik selbst kommt von der zusätzlichen `.k-btn`-Klasse
-   (siehe start.js, Issue #67), hier nur Größe/Fläche/Layout. */
+   Seit Issue #87: min-height 100px (Schwierigkeit/Fragenanzahl) laut neuer
+   Handoff-Datei (CHANGES-startseite-sammlung.md Abschnitt 1) statt der
+   vorherigen 92px -- die haptische Druck-Mechanik selbst kommt von der
+   zusätzlichen `.k-btn`-Klasse (siehe start.js, Issue #67), hier nur Größe/
+   Fläche/Layout. Inhalt zentriert (`text-align: center` zusätzlich zum
+   bestehenden `align-items: center`), siehe Handoff-Vorgabe. */
 .difficulty-button,
 .mode-button {
   flex: 1 1 12rem;
-  min-height: 92px;
+  min-height: 100px;
   padding: var(--k-space-3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   gap: 6px;
   background: var(--card);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 20px;
   font-weight: 800;
+  min-width: 0;
 }
 
+/* Modus-Kacheln (Issue #87, Punkt 3): jetzt in einer einzigen Reihe (siehe
+   `.mode-picker__group` oben) statt der vorherigen Mehrzeilen-Umbruchs --
+   Icon oben/Text darunter (Spalten-Ausrichtung, unverändert gegenüber der
+   bisherigen Kachel-internen Anordnung), aber deutlich schmaler pro Kachel,
+   daher `min-width: 0` (siehe oben) + `overflow-wrap: anywhere` im Textblock
+   (`.mode-button__text` unten) Pflicht gegen Textüberlauf/horizontales
+   Scrollen bei den fünf gleichzeitig sichtbaren Kacheln. */
 .mode-button {
-  min-height: 104px;
+  min-height: 168px;
+  padding: 18px 12px;
+  gap: 12px;
   border-radius: 26px;
 }
 
@@ -503,17 +635,42 @@ button {
   justify-content: center;
   font-size: 28px;
   position: relative;
+  flex-shrink: 0;
+}
+
+/* Textblock (Label + Hinweis) einer Modus-Kachel -- eigener min-width: 0
+   nötig, damit `overflow-wrap: anywhere` in der schmalen Einzeilen-Kachel
+   tatsächlich greift (ein Flex-/Grid-Kind ohne `min-width: 0` wächst sonst
+   über seinen Content hinaus und verhindert den Umbruch, Handoff-Warnung zu
+   horizontalem Scroll). */
+.mode-button__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  width: 100%;
 }
 
 .mode-button__label {
-  font-size: 24px;
+  font-size: 21px;
+  overflow-wrap: anywhere;
+}
+
+.mode-button__hint {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  overflow-wrap: anywhere;
 }
 
 /* "Ausgewählt" wird nicht nur über Farbe kommuniziert, sondern zusätzlich über
    Häkchen-Symbol und aria-pressed (siehe design.md, "Barrierefreiheit",
    "Keine ausschließlich farbbasierte Codierung"). */
 .difficulty-button--selected,
-.mode-button--selected {
+.mode-button--selected,
+.round-length-chip--selected {
   background: var(--sky);
 }
 
@@ -562,16 +719,19 @@ button {
   display: inline-block;
 }
 
-/* Fragenanzahl-Auswahl (Issue #13): bewusst deutlich kleiner/dezenter als
-   .difficulty-picker (Chip-Reihe statt große Kacheln), damit sie klar
-   sekundär zur Schwierigkeitsstufen-Auswahl bleibt (design.md-Abstimmung mit
-   ux-design, siehe Issue-Kommentar). */
+/* Fragenanzahl-Auswahl (Issue #13, Zeilenlayout seit Issue #87): früher eine
+   bewusst kleine/dezente Chip-Reihe (design.md-Abstimmung mit ux-design), die
+   neue Handoff-Datei (CHANGES-startseite-sammlung.md Abschnitt 1) verlangt
+   für diese Zeile jetzt aber volle Kachel-Größe wie beim Schwierigkeitsstufen-
+   Picker ("flex: 1", 32px) -- siehe `.round-length-chip` unten, das dieselbe
+   Größenordnung wie `.difficulty-button` bekommt statt der vorherigen kleinen
+   Pillen-Chips. */
 .round-length-picker {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: var(--k-space-1);
+  gap: var(--k-space-3);
 }
 
 /* CSS-Cascade-Falle wie bei .image-hint[hidden]/.mode-picker__hint[hidden]
@@ -586,35 +746,34 @@ button {
 
 .round-length-chip-group {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--k-space-2);
+  gap: 16px;
 }
 
-/* Kleiner als .difficulty-button, aber weiterhin deutlich über dem
-   44×44-px-Touch-Zielgrößen-Minimum (design.md, "Barrierefreiheit"). Echtes
-   <button>-Element, per Tastatur bedienbar. */
+/* Seit Issue #87: volle Kachel-Größe (analog `.difficulty-button`, min-height
+   100px, `flex: 1`, zentriert) statt der vorherigen kleinen Pillen-Chips --
+   die Auswahl bleibt weiterhin ein echtes <button>-Element, per Tastatur
+   bedienbar, deutlich über dem 44×44-px-Touch-Zielgrößen-Minimum (design.md,
+   "Barrierefreiheit"). */
 .round-length-chip {
-  min-width: 2.75rem;
-  min-height: 2.75rem;
-  padding: 0.4rem 0.9rem;
+  flex: 1;
+  min-height: 100px;
+  min-width: 0;
+  padding: var(--k-space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   background: var(--card);
   color: var(--ink);
   font-family: var(--font-heading);
   font-size: 32px;
   font-weight: 800;
-  border-radius: var(--k-radius-pill);
-}
-
-/* "Ausgewählt" wird wie beim Schwierigkeitsstufen-Picker nicht nur über Farbe
-   kommuniziert, sondern zusätzlich über aria-pressed (design.md,
-   "Barrierefreiheit", "Keine ausschließlich farbbasierte Codierung"). */
-.round-length-chip--selected {
-  background: var(--sky);
+  border-radius: var(--k-radius-card);
 }
 
 .start-button {
   width: 100%;
-  min-height: 108px;
+  min-height: 112px;
   padding: var(--k-space-3) var(--k-space-5);
   background: var(--ink);
   color: var(--paper);
@@ -634,129 +793,262 @@ button {
   cursor: not-allowed;
 }
 
-/* Maskottchen-Karte (design.md: --sand Fläche, Platzhalter 200px + k-float,
-   darunter weiße Sprechblase). Echte Illustration fehlt noch (siehe
-   architecture.md, "Kindgerechtes Redesign" -> Maskottchen "Fine") — die
-   Platzhalter-Textur unten ist bewusst über eine einzige Regel referenziert,
-   damit ein späterer Austausch keine Markup-Änderung braucht. */
-.start-mascot-card {
-  background: var(--sand);
+/* "Mein Maskottchen"-Bühne (Issue #88, neue Handoff-Datei
+   "CHANGES-startseite-sammlung.md", Abschnitt 2) -- ersetzt die frühere,
+   kleinere Guide-Karte + Karussell-Bühne aus Issue #82
+   (die alten Klassen .start-mascot-card und .mascot-carousel__stage, siehe
+   Bugfix-/Story-Historie). `aspect-ratio: 1.1` + `box-sizing: border-box` sind laut
+   Handoff PFLICHT -- ohne Letzteres würden Rahmen (4px) und Padding
+   (28px/22px) über die 100% Kartenbreite hinauslaufen (der globale
+   `* { box-sizing: border-box }`-Reset oben deckt das zwar bereits ab, die
+   Regel steht hier trotzdem explizit, wie im Handoff ausdrücklich als
+   Warnhinweis festgehalten). */
+.mascot-stage {
+  width: 100%;
+  aspect-ratio: 1.1;
+  box-sizing: border-box;
   border: var(--k-border-lg) solid var(--ink);
-  border-radius: var(--k-radius-card);
-  box-shadow: var(--k-shadow-card);
-  padding: var(--k-space-4);
+  border-radius: 22px;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
 }
 
-.start-mascot-card__placeholder {
-  height: 200px;
-  border-radius: var(--k-radius-btn);
-  background: repeating-linear-gradient(
-    135deg,
-    #ffe3b8 0 14px,
-    #ffefd6 14px 28px
-  );
-  animation: k-float 3s ease-in-out infinite;
+/* Emoji-Platzhalter für das aktive Maskottchen -- siehe mascots.js-Datei-
+   Kommentar: Emojis sind bewusst nur Platzhalter für spätere Comic-
+   Illustrationen, ein späterer Austausch braucht nur diese eine Regel/dieses
+   eine Markup-Element anzufassen. */
+.mascot-stage__figure {
+  font-size: 96px;
+  line-height: 1;
+  animation: k-float 4s ease-in-out infinite;
 }
 
-.start-mascot-card__bubble {
-  margin-top: var(--k-space-3);
-  background: var(--card);
-  border: var(--k-border-lg) solid var(--ink);
-  border-radius: var(--k-radius-sm);
-  padding: var(--k-space-3);
-}
-
-.start-mascot-card__label {
-  margin: 0 0 4px;
-  font-family: var(--font-body);
-  font-weight: 800;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--link);
-}
-
-.start-mascot-card__quote {
+.mascot-stage__name {
   margin: 0;
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 20px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 28px;
   color: var(--ink);
 }
 
-/* Album-Vorschau (design.md: Grid 4x3, 68px-Felder; gesammelt = Platzhalter-
-   Textur + Tiername, offen = #FFF8EC-Fläche mit "?"). Dieselbe Komponente
-   wird auf dem Ergebnis-Bildschirm mit 3 Spalten/118px wiederverwendet
-   (Issue #77) — hier die Start-Bildschirm-Variante (4 Spalten/68px). */
-.start-album-preview {
-  background: var(--card);
-  border: var(--k-border-lg) solid var(--ink);
-  border-radius: var(--k-radius-card);
-  padding: var(--k-space-4);
+.mascot-stage__role {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 17px;
+  /* Handoff nennt hier wörtlich #5C5470 -- dieselbe gedeckte Lila-Familie,
+     die beim ursprünglichen Redesign bereits einmal gegen WCAG AA geprüft
+     und als --muted (#685C7E) festgelegt wurde (siehe Token-Kommentar oben).
+     Bewusst der bereits verifizierte Token statt eines zweiten, ungeprüften
+     Lila-Werts an derselben Stelle (dieselbe Karte, dieselbe Aufgabe wie die
+     frühere .mascot-carousel__stage-role, die ebenfalls --muted nutzt). */
+  color: var(--muted);
 }
 
-.start-album-preview__header {
+.start-mascot-card__select-label {
+  /* fängt den Höhenausgleich zur "Meine Sammlung"-Nachbarkarte ab (Handoff:
+     "damit die Bühne ihr Verhältnis behält") -- .start-card__body ist bereits
+     ein Flex-Container, `margin-top: auto` schiebt Label+Nav+Hinweis als
+     Gruppe an den unteren Kartenrand, ohne die Bühne selbst zu stauchen. */
+  margin: 0;
+  margin-top: auto;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  /* Siehe Kommentar bei .mascot-stage__role -- Handoff nennt #8B7BA8,
+     bewusst durch den bereits WCAG-AA-geprüften --muted-Token ersetzt. */
+  color: var(--muted);
+}
+
+.start-mascot-card__hint {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* Wiederverwendbare 3-teilige Nav-Komponente (src/quiz/navControl.js, Issue
+   #88): Pfeil ← / weißes Badge / Pfeil →, zentriert, 12px gap. Erste von 4
+   geplanten Verwendungsstellen (architecture.md) -- .mascot-carousel* bleibt
+   vorerst bestehen, da result.js (Issue #90) noch darauf verweist. */
+.nav-control {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--k-space-3);
+  justify-content: center;
+  gap: 12px;
 }
 
-.start-album-preview__title {
+/* .k-btn (oben) liefert Rahmen/Haptik-Übergänge; die drei Werte hier
+   überschreiben bewusst .k-btns Standard-Radius/-Schatten (24px/"0 8px 0"),
+   da der Handoff für dieses kleinere Nav-Element explizit andere Maße nennt
+   (Radius 12, Schatten "0 5px 0"). Reihenfolge im Stylesheet ist hier
+   relevant: diese Regel steht bewusst NACH der .k-btn-Definition, damit sie
+   bei gleicher Selektor-Spezifität gewinnt. */
+.nav-control__arrow {
+  background: var(--card);
+  min-height: 48px;
+  font-size: 22px;
+  padding: 0 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 0 var(--ink);
+}
+
+.nav-control__arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.nav-control__badge {
+  background: var(--card);
+  border: var(--k-border-sm) solid var(--ink);
+  border-radius: 12px;
+  padding: 8px 22px;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  white-space: nowrap;
+  color: var(--ink);
+}
+
+/* "Meine Sammlung"-Raster (Issue #89, neue Handoff-Datei
+   "CHANGES-startseite-sammlung.md", Abschnitt 3) -- ersetzt die bisherige
+   Album-Vorschau (`.start-album-preview*`, mit Issue #91 vollständig aus
+   global.css entfernt) an derselben Stelle im Layout, zeigt aber die 50
+   Maskottchen statt gesammelter Tierarten. 9 Kacheln/Seite, 3 Spalten. */
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.collection-grid__tile {
+  min-height: 108px;
+  border-radius: 18px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px;
+}
+
+.collection-grid__tile--unlocked {
+  border: var(--k-border-sm) solid var(--ink);
+}
+
+.collection-grid__tile--locked {
+  background: #fff8ec;
+  border: var(--k-border-sm) solid #e4d6be;
+}
+
+.collection-grid__figure {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.collection-grid__name {
   margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  /* Handoff: "15px (Minimum!)" -- bewusst nicht kleiner, auch nicht bei
+     langen Maskottchen-Namen (z. B. "Oktavia der Oktopus"); Umbruch statt
+     Verkleinerung. */
+  font-size: 15px;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--ink);
+}
+
+.collection-grid__mark {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 34px;
+  /* Kontrast gegen #FFF8EC laut design.md-Verifikationshinweis geprüft:
+     ~3,01:1 -- erfüllt knapp die WCAG-AA-Mindestanforderung für große Schrift
+     (>=3:1 ab 24px fett; hier 34px). Kein --muted-Ersatz wie beim
+     ursprünglichen Redesign nötig, da der Handoff-Wert den Schwellenwert
+     (anders als das damalige #8B7BA8) tatsächlich erreicht. */
+  color: #b08a55;
+}
+
+.start-collection-card__hint {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* Start-spezifisches Sterne-Badge (Issue #89) -- mittig unter der "Meine
+   Sammlung"-Karte, ersetzt an dieser einen Stelle das Kopfzeilen-Badge aus
+   Issue #81 (Kopfzeile ist auf dem Start-Bildschirm ausgeblendet, #87). */
+.start-star-badge-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.start-star-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 72px;
+  padding: 4px 24px;
+  /* Unter 5 Sternen laut Handoff bewusst "unsichtbar/ohne Fläche" --
+     background: transparent, kein Rahmen/Schatten, reiner Text. */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 24px;
   font-family: var(--font-heading);
   font-weight: 800;
   font-size: 22px;
   color: var(--ink);
+  cursor: default;
 }
 
-.start-album-preview__badge {
-  background: var(--sand);
-  border: var(--k-border-sm) solid var(--ink);
-  border-radius: var(--k-radius-pill);
-  padding: 2px 14px;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 15px;
-  color: var(--ink);
+.start-star-badge:disabled {
+  opacity: 1; /* kein ausgegrautes Aussehen, analog .app-header__star-badge:disabled */
 }
 
-.start-album-preview__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+/* Ab 5 Sternen: Optik wie der CTA "Los geht's" (.start-button) -- Fläche,
+   Schrift, Radius, Schatten laut Handoff explizit genannt; der 4px-Ink-Rahmen
+   ist hier zusätzlich übernommen (Handoff-Aufzählung nennt ihn nicht explizit,
+   aber "Optik wie der CTA" schließt dessen projektweite Basis-Button-Optik
+   mit ein -- bewusste Konsistenz mit .start-button/.k-btn, kein Einzelfall
+   ohne Rahmen in der sonstigen Button-Sprache der App). */
+.start-star-badge--redeemable {
+  min-height: 88px;
+  padding: var(--k-space-3) var(--k-space-6);
+  background: var(--ink);
+  color: var(--paper);
+  border: var(--k-border-lg) solid var(--ink);
+  box-shadow: 0 8px 0 var(--ink);
+  font-size: 24px;
+  cursor: pointer;
+  animation: k-nudge 1.6s ease-in-out infinite;
 }
 
-.start-album-preview__slot {
-  aspect-ratio: 1;
-  min-height: 68px;
-  border-radius: 14px;
-  background: #fff8ec;
-  border: 2px solid #e4d6be;
-  color: #cbb795;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 18px;
+.start-star-badge--redeemable:hover {
+  transform: translateY(3px);
+  box-shadow: 0 5px 0 var(--ink);
 }
 
-.start-album-preview__slot--collected {
-  background: repeating-linear-gradient(
-    135deg,
-    #ffe3b8 0 14px,
-    #ffefd6 14px 28px
-  );
-  border: 2px solid var(--ink);
-  color: var(--ink);
-  padding: 4px;
+.start-star-badge--redeemable:active {
+  transform: translateY(8px);
+  box-shadow: 0 0 0 var(--ink);
 }
 
-.start-album-preview__slot-name {
-  font-size: 12px;
-  text-align: center;
-  line-height: 1.1;
+.start-star-badge--redeemable:focus-visible {
+  outline: 5px solid var(--sky);
+  outline-offset: 4px;
 }
 
 /* Frage-Bildschirm (siehe design.md, "Nutzerfluss" Punkte 2–5,
@@ -1464,9 +1756,54 @@ button {
 
 .feedback-panel__mascot {
   width: 100%;
-  aspect-ratio: 1;
+  min-height: 130px;
   border-radius: var(--k-radius-sm);
+  /* Fallback, falls kein Inline-Tint ankommt -- im Normalfall überschreibt
+     der Inline-`background` diese Regel mit `tintOf(activeMascotId)` (Issue
+     #82: "Maskottchen-Feld im Feedback-Panel (130px)" bekommt denselben Tint
+     wie Guide-Fläche/Karussell-Bühne, siehe question.js/reverseQuestion.js/
+     soundQuestion.js/letterSearch.js/memory.js). */
   background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2px;
+  padding: var(--k-space-2);
+  /* QA-Bugfix (Issue #82, Test-Fix-Zyklus 1): Feld zeigte ursprünglich nur
+     Tint+Emoji ohne aria-hidden-Wrapper-Ausschluss der Textinhalte -- jetzt,
+     wo Name+Rolle als echter Text dazukommen, bleibt nur das Emoji selbst
+     dekorativ/aria-hidden (siehe Markup), das Feld wächst dafür über die
+     feste 130px-Quadratform hinaus (aspect-ratio entfernt zugunsten von
+     min-height), analog zu .mascot-carousel__stage, das dieselbe
+     Emoji+Name+Rolle-Kombination bereits in einem flexiblen Feld zeigt. */
+}
+
+.feedback-panel__mascot-emoji {
+  font-size: 48px;
+  line-height: 1;
+}
+
+/* Name + Rolle im Feedback-Panel-Guide-Feld (Issue #82, QA-Bugfix Test-Fix-
+   Zyklus 1): kleinere Variante von .mascot-carousel__stage-name/-role für
+   das schmalere 130px-Feld, gleiche Rollen-/Farbzuordnung wie dort. */
+.feedback-panel__mascot-name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.feedback-panel__mascot-role {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
 }
 
 .feedback-panel__body {
@@ -1906,7 +2243,8 @@ button {
    wiederverwendet. */
 
 /* Ergebnis-Bildschirm (Redesign, Issue #77; design.md "Ergebnis"): Grid
-   1fr 460px — links Score-Panel (--sky), rechts Album-Karte. */
+   1fr 460px — links Score-Panel (--sky), rechts "Meine Sammlung"-Karte
+   (ursprünglich Album-Karte, seit Issue #90 ersetzt). */
 .result-screen {
   width: 100%;
   max-width: 1200px;
@@ -1970,6 +2308,70 @@ button {
   opacity: 0.75;
 }
 
+/* Sterne-Box (Issue #83, vierter/letzter Teil des Sterne-/Maskottchen-
+   Freischaltsystems #80-#83): weiße Karte im Ergebnis-Panel, zeigt den
+   aktuellen Sternestand + situativen Satz + optionalen CTA-Button (siehe
+   Handoff, "Sterne-Box im Ergebnis"). Werte laut Handoff: 4px Rahmen,
+   Radius 24, Padding 18, margin-top 16. */
+.stars-box {
+  width: 100%;
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: 24px;
+  padding: 18px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-2);
+}
+
+.stars-box__label {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+
+.stars-box__row {
+  display: flex;
+  gap: 6px;
+  font-size: 28px;
+  line-height: 1;
+}
+
+/* Der in dieser Runde neu verdiente Stern (siehe renderStarsBoxMarkup in
+   result.js) -- respektiert die projektweite prefers-reduced-motion-Regel
+   oben automatisch (gilt pauschal für alle animation-duration, keine eigene
+   Ausnahme nötig). */
+.stars-box__star--new {
+  display: inline-block;
+  animation: k-pop 0.4s ease-out;
+}
+
+.stars-box__sentence {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--ink);
+}
+
+/* CTA-Button, nur bei canRedeem gerendert (design.md/Handoff: Fläche --sky,
+   volle Breite, min-height 88). */
+.stars-box__cta {
+  width: 100%;
+  min-height: 88px;
+  padding: var(--k-space-2) var(--k-space-4);
+  background: var(--sky);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 800;
+  border-radius: var(--k-radius-btn);
+}
+
 .result-screen__actions {
   width: 100%;
   display: flex;
@@ -2008,23 +2410,50 @@ button {
   flex-direction: column;
 }
 
-/* Album-Karte auf dem Ergebnis-Bildschirm: gleiche Komponente wie auf dem
-   Start-Bildschirm (Issue #71), aber 3 statt 4 Spalten mit größeren
-   118px-Feldern (design.md: "Rechts Album-Karte wie Start, aber Grid 3
-   Spalten, Felder 118px, Fußnote 16px"). */
-.start-album-preview--result .start-album-preview__grid {
-  grid-template-columns: repeat(3, 1fr);
+/* Issue #90: rechte Spalte des Ergebnis-Bildschirms zeigt jetzt dieselbe
+   "Meine Sammlung"-Karte + denselben "Mein Maskottchen"-Baustein wie der
+   Start-Bildschirm (Issue #89/#88, src/quiz/collectionCard.js/
+   mascotStageCard.js) -- ersetzt das bisherige Maskottchen-Karussell (Issue
+   #82, `.mascot-carousel*` oben, jetzt entfernt: mit dieser Story verliert
+   es seine letzte Verwendungsstelle) sowie die alte Album-Karte
+   (`.start-album-preview*`, mit Issue #91 vollständig aus global.css
+   entfernt). */
+
+/* "Meine Sammlung"-Karte auf dem Ergebnis-Bildschirm: gleiche Kacheln wie auf
+   dem Start-Bildschirm (`.collection-grid*`, s. o.), aber größere
+   Mindesthöhe/Namensschrift laut Handoff-Abschnitt 5 ("Ergebnis-Screen
+   (Änderungen)": "gleiche Kacheln, min-height 130px, Name 16px") --
+   überschrieben per CSS-Scoping auf dem Kartencontainer, ohne die geteilte
+   Render-Funktion selbst zu verzweigen (gleiches Prinzip, das
+   `.start-album-preview--result` zuvor für die inzwischen -- Issue #91 --
+   entfernte Album-Karte verwendet hat). */
+.result-collection-card .collection-grid__tile {
+  min-height: 130px;
 }
 
-.start-album-preview--result .start-album-preview__slot {
-  min-height: 118px;
-}
-
-.start-album-preview__footnote {
-  margin: var(--k-space-3) 0 0;
-  font-family: var(--font-body);
+.result-collection-card .collection-grid__name {
   font-size: 16px;
-  color: var(--muted);
+}
+
+/* "Mein Maskottchen"-Bühne+Nav unterhalb der Sammlungs-Karte -- design.md:
+   "separatem Maskottchen-Nav+Bühne darunter ... technisch dieselbe
+   Komponente wie oben, nur zweitplatziert". Keine eigene weiße Kartenfläche
+   (anders als die Sammlungs-Karte), nur durch eine gestrichelte Trennlinie
+   abgesetzt -- gleiches visuelle Prinzip wie das entfernte
+   `.mascot-carousel` oben, das dieser Abschnitt ersetzt. */
+.result-mascot-section {
+  border-top: 4px dashed #e4d6be;
+  margin-top: 20px;
+  padding-top: 16px;
+  text-align: center;
+}
+
+.result-mascot-section__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--ink);
 }
 
 /* Verlaufsliste der letzten Ergebnisse (Issue #14): dezenter, standardmäßig
@@ -2314,6 +2743,134 @@ button {
 
 .sound-play-button[aria-busy="true"] .sound-play-button__spinner {
   display: inline-block;
+}
+
+/* Maskottchen-Auswahl-Bildschirm (Issue #81, siehe screens/mascotChooser.js,
+   Handoff "CHANGES-sterne-maskottchen.md" -> "Maskottchen-Auswahl"). Weiße
+   Karte (--card), Kopfzeile mit Label/H1/Intro links, "Später ↩" rechts,
+   darunter das Raster aller noch offenen Maskottchen. */
+.mascot-chooser {
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+  text-align: left;
+}
+
+.mascot-chooser__card {
+  background: var(--card);
+  border: var(--k-border-lg) solid var(--ink);
+  border-radius: var(--k-radius-card);
+  box-shadow: var(--k-shadow-card);
+  padding: var(--k-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--k-space-5);
+}
+
+.mascot-chooser__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--k-space-4);
+  flex-wrap: wrap;
+}
+
+.mascot-chooser__label {
+  margin: 0 0 4px;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.mascot-chooser__title {
+  margin: 0 0 var(--k-space-2);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 52px);
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.mascot-chooser__intro {
+  margin: 0;
+  max-width: 60ch;
+  font-family: var(--font-body);
+  font-size: clamp(1.1rem, 2vw, 22px);
+  color: var(--ink);
+}
+
+/* "Später ↩" (Handoff: "weiß, min-height 88") — bewusst zurückhaltend, keine
+   Sekundäraktion, die visuell mit dem Einlösen konkurriert. */
+.mascot-chooser__later {
+  flex-shrink: 0;
+  min-height: 88px;
+  padding: var(--k-space-2) var(--k-space-5);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.mascot-chooser__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Maskottchen-Kachel (Handoff: "Fläche = Tint des Maskottchens, min-height
+   132, Radius 24, 4px Rahmen, Schatten 0 8px 0; Emoji/Illustration 60px
+   links, rechts Name 26px + Rolle 15px"). Radius/Rahmen/Schatten kommen
+   bereits von .k-btn (24px/4px/0 8px 0) — hier nur Layout + Typografie
+   zusätzlich. Hintergrundfarbe kommt als Inline-Style direkt aus
+   `tintOf(id)` (siehe mascotChooser.js) statt sechs eigener CSS-Klassen für
+   die rotierenden TINTS-Werte. */
+.mascot-tile {
+  display: flex;
+  align-items: center;
+  gap: var(--k-space-3);
+  min-height: 132px;
+  padding: var(--k-space-3) var(--k-space-4);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mascot-tile__emoji {
+  flex-shrink: 0;
+  font-size: 60px;
+  line-height: 1;
+}
+
+.mascot-tile__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.mascot-tile__name {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 26px;
+  color: var(--ink);
+}
+
+.mascot-tile__role {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* Gleiches Konfetti-Container-Muster wie .feedback-panel__confetti (Issue
+   #69/#77): zero-height, position: relative -- Partikel selbst sind
+   position: absolute und laufen dank .mascot-chooser { position: relative }
+   oben über den ganzen Bildschirm. */
+.mascot-chooser__confetti {
+  position: relative;
+  height: 0;
 }
 
 /* Issue #43: leicht abgedunkelter Hintergrund während der Wiedergabe, damit

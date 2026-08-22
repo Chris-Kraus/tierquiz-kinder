@@ -20,6 +20,21 @@ import { renderLetterSearchScreen } from "./screens/letterSearch.js";
 import { createQuizState } from "./quiz/state.js";
 import { GAME_MODE } from "./quiz/gameMode.js";
 import { renderHeader } from "./screens/header.js";
+// Issue #81: neuer Maskottchen-Auswahl-Bildschirm, geöffnet über das im
+// Header neu hinzugekommene Sterne-Badge (siehe screens/header.js,
+// `onOpenMascotChooser`). Rendert wie jeder andere Screen ausschließlich in
+// `appContent` -- main.js bleibt die einzige Stelle, die renderHeader() UND
+// den jeweiligen Content-Screen kennt (siehe unten, `onOpenMascotChooser`-
+// Closures pro Navigationszustand, architecture.md Punkt 3).
+import { renderMascotChooserScreen } from "./screens/mascotChooser.js";
+// Issue #80: Sterne-/Maskottchen-Freischaltsystem (erster Teil, reine
+// Datengrundlage ohne sichtbare UI). showResultScreen ist bereits die
+// einzige Stelle, durch die jeder Rundenabschluss aller fünf Modi läuft
+// (siehe architecture.md, "Sterne-/Maskottchen-Freischaltsystem: Technische
+// Leitplanken") — recordRoundCompletion wird deshalb genau hier einmal
+// aufgerufen statt in den einzelnen Frage-Bildschirmen dupliziert, die
+// bleiben weiterhin frei von Kenntnis des Maskottchen-Systems.
+import { recordRoundCompletion } from "./quiz/progress.js";
 
 // App-Einstiegspunkt: verdrahtet die Navigation zwischen den Bildschirmen.
 // Jeder Bildschirm rendert sich selbst vollständig in `#app-content` (siehe
@@ -42,9 +57,36 @@ app.innerHTML = `
 const appHeader = document.querySelector("#app-header");
 const appContent = document.querySelector("#app-content");
 
+// Issue #87: Kopfzeile wird auf der Startseite komplett ausgeblendet
+// (`showHeader = screen !== "start"`, design.md/requirements.md
+// "Startseiten-/Sammlungs-Neuaufbau") -- das neue Zeilenlayout dort braucht
+// weder Logo/Home-Button noch Modus-Pille/Sterne-Badge (Letzteres bekommt in
+// einer Folge-Story #89 eine eigene Platzierung unter der neuen "Meine
+// Sammlung"-Karte). `appHeader.innerHTML` wird hier bewusst geleert statt gar
+// nicht angefasst zu lassen -- kommt man von einem anderen Bildschirm zurück
+// zum Start (z. B. über den Home-Button), muss die zuvor dort gerenderte
+// Kopfzeile verschwinden, nicht nur beim allerersten Aufruf leer bleiben.
+// Alle anderen Bildschirme (Frage-Runde, Ergebnis, Maskottchen-Auswahl) rufen
+// weiterhin unverändert renderHeader() auf (siehe showQuestionScreen/
+// showResultScreen unten) -- keine neue header.js-Option nötig, da main.js
+// bereits die einzige Stelle ist, die pro Bildschirm-Wechsel entscheidet, ob
+// und wie die Kopfzeile gerendert wird.
 function showStartScreen() {
-  renderHeader(appHeader, { onBackToStart: showStartScreen });
-  renderStartScreen(appContent, { onStart: showQuestionScreen });
+  appHeader.innerHTML = "";
+  // Issue #89: das neue start-spezifische Sterne-Badge unter der "Meine
+  // Sammlung"-Karte braucht dieselbe Art Closure wie das Kopfzeilen-Badge
+  // (Issue #81) bzw. die Sterne-Box im Ergebnis (Issue #83) --
+  // architecture.md Punkt 3: kein String-basiertes `backTo`, sondern eine
+  // Closure über den aktuellen Navigationszustand. Der Start-Bildschirm hat
+  // keinen zu bewahrenden Zustand (anders als quizState bei den anderen
+  // beiden Stellen) -- der Rücksprung ruft deshalb einfach erneut
+  // showStartScreen() auf, das den Bildschirm ohnehin komplett frisch (inkl.
+  // aktualisiertem Sternestand/freigeschalteten Maskottchen) neu aufbaut.
+  renderStartScreen(appContent, {
+    onStart: showQuestionScreen,
+    onOpenMascotChooser: () =>
+      renderMascotChooserScreen(appContent, { onDone: () => showStartScreen() }),
+  });
 }
 
 function showQuestionScreen(quizState) {
@@ -59,6 +101,16 @@ function showQuestionScreen(quizState) {
             roundLength: quizState.roundLength,
             score: quizState.score,
           },
+    // Issue #81: Closure über denselben (mutierten) quizState -- der
+    // jeweilige Frage-Bildschirm hält currentIndex/score direkt auf diesem
+    // Objekt, daher landet "Später ↩"/Einlösen exakt bei der Frage, von der
+    // aus geöffnet wurde, nicht bei Frage 1 (siehe question.js: baut
+    // quizState.questions nur einmal auf, ein erneuter renderQuestionScreen-
+    // Aufruf für denselben quizState ist idempotent).
+    onOpenMascotChooser: () =>
+      renderMascotChooserScreen(appContent, {
+        onDone: () => showQuestionScreen(quizState),
+      }),
   });
 
   if (quizState.mode === GAME_MODE.REVERSE) {
@@ -87,9 +139,44 @@ function showQuestionScreen(quizState) {
 }
 
 function showResultScreen(quizState) {
+  // Stern-Vergabe zentral hier auswerten (siehe Import-Kommentar oben).
+  // Seit Issue #81 kann dieselbe Funktion für denselben quizState/
+  // Ergebnis-Objekt MEHRFACH aufgerufen werden: öffnet das Kind über das neue
+  // Sterne-Badge die Maskottchen-Auswahl mitten vom Ergebnis-Bildschirm aus
+  // und kehrt danach hierher zurück (`onOpenMascotChooser` unten,
+  // architecture.md Punkt 3), ruft main.js showResultScreen(quizState) ein
+  // zweites Mal mit demselben Objekt auf. Ohne Schutz würde
+  // recordRoundCompletion() dabei fälschlich ein zweites Mal ausgewertet und
+  // bei score >= 5 ein zweiter, unverdienter Stern vergeben. Der `starsAwarded`-
+  // Merker wird direkt auf das Ergebnis-Objekt geschrieben (gleiches Muster
+  // wie die transienten `pending*`-Felder in start.js) und verhindert das --
+  // rein lokale main.js-Absicherung, keine Änderung an progress.js nötig.
+  //
+  // Seit Issue #83 wird zusätzlich das `earned`-Ergebnis von
+  // recordRoundCompletion() als transientes `quizState.earned`-Feld
+  // gemerkt (gleiches Muster wie `starsAwarded` direkt darüber) -- result.js
+  // braucht diesen Wert für das bedingte Panel-Label ("Runde geschafft
+  // 🎉"/"Runde beendet") sowie die Sterne-Box, auch bei einem erneuten
+  // showResultScreen()-Aufruf nach Rücksprung aus der Maskottchen-Auswahl
+  // (dann liefert recordRoundCompletion selbst nichts mehr, der `if`-Zweig
+  // wird ja übersprungen).
+  if (!quizState.starsAwarded) {
+    const { earned } = recordRoundCompletion({
+      mode: quizState.mode,
+      score: quizState.score,
+      roundLength: quizState.roundLength,
+    });
+    quizState.starsAwarded = true;
+    quizState.earned = earned;
+  }
+
   renderHeader(appHeader, {
     onBackToStart: showStartScreen,
     mode: quizState.mode,
+    onOpenMascotChooser: () =>
+      renderMascotChooserScreen(appContent, {
+        onDone: () => showResultScreen(quizState),
+      }),
   });
   // "Nochmal spielen" und "Zurück zum Start" führen laut design.md bewusst
   // zu zwei getrennten Pfaden (QA-Feedback zu Issue #7, siehe Issue-Kommentar):
@@ -120,6 +207,13 @@ function showResultScreen(quizState) {
       );
     },
     onBackToStart: showStartScreen,
+    // Issue #83: CTA-Button der Sterne-Box ("Neues Maskottchen wählen 🎁")
+    // -- dieselbe Closure wie beim Header-Sterne-Badge oben (Issue #81,
+    // architecture.md Punkt 3), inkl. Rücksprung genau hierher.
+    onOpenMascotChooser: () =>
+      renderMascotChooserScreen(appContent, {
+        onDone: () => showResultScreen(quizState),
+      }),
   });
 }
 

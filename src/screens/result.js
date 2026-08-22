@@ -52,59 +52,97 @@ import {
 import { DIFFICULTY_LABELS } from "../quiz/difficulty.js";
 import { QUIZ_MODES, getModeLabel } from "../quiz/mode.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
-import animalsData from "../../data/animals.json";
-import { loadCollectedAnimals, getAlbumProgress, ALBUM_TARGET } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
+// Issue #83, vierter/letzter Teil des Sterne-/Maskottchen-Freischaltsystems
+// (#80-#83): renderStarsBoxMarkup() unten braucht den aktuellen
+// Sternestand/unlockedIds.
+import { loadProgress } from "../quiz/progress.js";
+// Issue #90: die alte Album-Karte (`renderAlbumCardMarkup()`, Issue #77) und
+// das alte Maskottchen-Karussell (`renderMascotCarouselMarkup()`, Issue #82)
+// sind komplett entfernt -- die rechte Spalte zeigt jetzt dieselbe "Meine
+// Sammlung"-Karte + denselben "Mein Maskottchen"-Baustein wie der
+// Start-Bildschirm (Issue #89/#88), aus den mit dieser Story neu
+// extrahierten gemeinsamen Modulen importiert statt hier nachgebaut (siehe
+// renderSideSection() weiter unten sowie die jeweiligen Datei-Kommentare in
+// src/quiz/collectionCard.js/mascotStageCard.js). `album.js` selbst wurde
+// zum Zeitpunkt dieser Story noch von den 5 Frage-Bildschirmen verwendet;
+// die vollständige Modul-Entfernung erfolgte in der separaten Story #91.
+import { mountCollectionCard } from "../quiz/collectionCard.js";
+import { mountMascotStage } from "../quiz/mascotStageCard.js";
 
-const ANIMAL_NAME_BY_ID = new Map(
-  animalsData.animals.map((animal) => [animal.id, animal.name_de]),
-);
+// Singular/Plural-Copy für die Sterne-Box (Issue #83) -- Deutsch
+// unterscheidet beim Zählen nur zwischen genau 1 und allem anderen, kein
+// Sonderfall für 0 nötig.
+function formatStars(n) {
+  return n === 1 ? "1 Stern" : `${n} Sterne`;
+}
 
 /**
- * Baut das Markup für die Album-Karte auf dem Ergebnis-Bildschirm (Redesign,
- * Issue #77, design.md "Ergebnis": "Album-Karte wie Start, aber Grid 3
- * Spalten, Felder 118px"). Gleiche Datenquelle/Logik wie die Start-Bildschirm-
- * Vorschau (Issue #71), bewusst hier dupliziert statt importiert (start.js
- * exportiert seine Version nicht, beide Bildschirme kennen einander nicht
- * direkt — gleiches Kopplungsprinzip wie im gesamten Projekt).
+ * Baut das Markup für die Sterne-Box im Ergebnis-Bildschirm (Issue #83,
+ * vierter/letzter Teil des Sterne-/Maskottchen-Freischaltsystems #80-#83).
+ * Weiße Karte (4px Rahmen, Radius 24, Padding 18, margin-top 16, siehe
+ * Issue/Handoff "Sterne-Box im Ergebnis"): Label + Reihe aus 5 Zeichen
+ * (gefüllt ⭐ / offen ☆) + situativer Satz (drei Fälle) + optionaler
+ * CTA-Button.
+ *
+ * `canRedeem`-Formel identisch zu header.js (stars >= 5 &&
+ * unlockedIds.length < 50), hier bewusst dupliziert statt geteilt importiert
+ * (kleines, bewusst in Kauf genommenes Duplikat zwischen genau 2 Screens,
+ * siehe architecture.md, Punkt 2 -- kippt erst bei 4 Verwendungsstellen wie
+ * beim navControl.js-Nav).
+ *
+ * Die Sterne-Reihe zeigt `min(stars, 5)` gefüllte Sterne -- im normalen
+ * Spielfluss ist `stars` ohnehin nie größer als 5 (Einlösen setzt sofort auf
+ * `stars - 5` zurück, siehe progress.js redeemMascot), der `min()`-Schutz
+ * greift nur in dem seltenen Fall, dass ein Kind nach Erreichen von 5 Sternen
+ * noch eine weitere Runde spielt, ohne zwischendurch einzulösen. Der in
+ * dieser Runde neu verdiente Stern (`earned === true`) ist dabei immer der
+ * zuletzt gefüllte (`filledCount - 1`) und bekommt die `k-pop`-Animation aus
+ * dem Redesign (bereits bestehendes Keyframe, siehe global.css) --
+ * respektiert automatisch die projektweite `prefers-reduced-motion`-Regel
+ * (global.css, gilt pauschal für alle `animation-duration`n, keine eigene
+ * Ausnahme nötig).
+ * @param {{stars: number, unlockedIds: number[]}} progress
+ * @param {boolean} earned ob in dieser Runde tatsächlich ein Stern verdient wurde
+ * @returns {string}
  */
-function renderAlbumCardMarkup() {
-  const collectedIds = loadCollectedAnimals();
-  const { collected, target } = getAlbumProgress(undefined, ALBUM_TARGET);
+function renderStarsBoxMarkup(progress, earned) {
+  const { stars, unlockedIds } = progress;
+  const canRedeem = stars >= 5 && unlockedIds.length < 50;
+  const filledCount = Math.min(stars, 5);
+  const poppedIndex = earned ? filledCount - 1 : -1;
 
-  const slots = [];
-  for (let i = 0; i < target; i += 1) {
-    const animalId = collectedIds[i];
-    if (animalId) {
-      const name = ANIMAL_NAME_BY_ID.get(animalId) ?? "?";
-      slots.push(
-        `<div class="start-album-preview__slot start-album-preview__slot--collected">
-          <span class="start-album-preview__slot-name">${name}</span>
-        </div>`,
-      );
-    } else {
-      slots.push(
-        `<div class="start-album-preview__slot" aria-hidden="true">?</div>`,
-      );
-    }
+  const starsRow = Array.from({ length: 5 }, (_, i) => {
+    const filled = i < filledCount;
+    const isNew = filled && i === poppedIndex;
+    return `<span
+      class="stars-box__star${isNew ? " stars-box__star--new" : ""}"
+      style="${filled ? "" : "opacity: .4;"}"
+    >${filled ? "⭐" : "☆"}</span>`;
+  }).join("");
+
+  let sentence;
+  if (canRedeem) {
+    sentence = "Du darfst dir jetzt ein neues Maskottchen aussuchen.";
+  } else if (earned) {
+    sentence = `Runde geschafft — dafür gibt es 1 Stern! Noch ${formatStars(5 - stars)} bis zum nächsten Maskottchen.`;
+  } else {
+    sentence =
+      "Ab 5 richtigen Tieren in einer Runde gibt es einen Stern. Probier es gleich nochmal!";
   }
 
+  const ctaHtml = canRedeem
+    ? `<button type="button" class="stars-box__cta k-btn">Neues Maskottchen wählen 🎁</button>`
+    : "";
+
   return `
-    <div class="start-album-preview start-album-preview--result">
-      <div class="start-album-preview__header">
-        <p class="start-album-preview__title">Mein Album</p>
-        <span class="start-album-preview__badge">${collected}/${target}</span>
+    <div class="stars-box">
+      <p class="stars-box__label">${canRedeem ? "5 Sterne voll!" : "Sterne"}</p>
+      <div class="stars-box__row" aria-label="${stars} von 5 Sternen">
+        ${starsRow}
       </div>
-      <div class="start-album-preview__grid">
-        ${slots.join("")}
-      </div>
-      <p class="start-album-preview__footnote">
-        ${
-          collected >= target
-            ? "Du hast schon alle Tiere gesammelt! 🎉"
-            : `Noch ${target - collected} ${target - collected === 1 ? "Tier" : "Tiere"} zu sammeln!`
-        }
-      </p>
+      <p class="stars-box__sentence">${sentence}</p>
+      ${ctaHtml}
     </div>
   `;
 }
@@ -298,12 +336,28 @@ function getEncouragement(score, total) {
  *   (neuer Zustand, neue Fragen) zu starten.
  * @param {() => void} [callbacks.onBackToStart] wird bei Klick auf "Zurück
  *   zum Start" aufgerufen; führt ebenfalls zum Start-Bildschirm zurück.
+ * @param {() => void} [callbacks.onOpenMascotChooser] Issue #83: wird beim
+ *   Klick auf den CTA-Button der Sterne-Box aufgerufen (nur gerendert bei
+ *   `canRedeem`) — main.js übergibt hier dieselbe Closure wie beim
+ *   Header-Badge (Issue #81, architecture.md Punkt 3), inkl. Rücksprung zum
+ *   Ergebnis-Bildschirm über `onDone`.
  */
 export function renderResultScreen(
   container,
   quizState,
-  { onPlayAgain, onBackToStart } = {},
+  { onPlayAgain, onBackToStart, onOpenMascotChooser } = {},
 ) {
+  // Issue #83, vierter/letzter Teil des Sterne-/Maskottchen-
+  // Freischaltsystems (#80-#83): main.js wertet recordRoundCompletion()
+  // zentral in showResultScreen() aus und schreibt das Ergebnis (`earned`)
+  // als transientes Feld auf denselben quizState (analog zum bestehenden
+  // `starsAwarded`-Merker dort) -- dieser Screen kennt recordRoundCompletion
+  // selbst nicht, liest nur das fertige Ergebnis. Fehlt das Feld (z. B. in
+  // bestehenden Tests, die renderResultScreen ohne main.js direkt aufrufen),
+  // gilt `earned === undefined` als falsy -> "Runde beendet"/kein Stern
+  // verdient, ein sinnvoller Default statt eines Absturzes.
+  const earned = quizState.earned === true;
+
   // Issue #45, design.md ("Rundenende"): Tier-Memory hat kein "richtig von N
   // Fragen"-Ergebnis (score/questions passen konzeptionell nicht, siehe
   // architecture.md Punkt 4) — eigener, durchweg wertschätzender Text statt
@@ -370,15 +424,19 @@ export function renderResultScreen(
     ? `${quizState.memoryPairCount}/${quizState.memoryPairCount}`
     : `${quizState.score}/${quizState.questions.length}`;
 
+  const progress = loadProgress();
+
   container.innerHTML = `
     <section class="result-screen" aria-labelledby="result-title">
       <div class="result-screen__panel">
-        <p id="result-title" class="result-screen__label">Runde geschafft 🎉</p>
+        <p id="result-title" class="result-screen__label">${earned ? "Runde geschafft 🎉" : "Runde beendet"}</p>
         <p class="result-screen__score-number">${scoreNumber}</p>
         <p class="result-screen__encouragement">${encouragement}</p>
         <p class="result-screen__score">
           ${scoreText}
         </p>
+
+        ${renderStarsBoxMarkup(progress, earned)}
 
         <div class="result-screen__actions">
           <button type="button" class="result-screen__play-again k-btn">
@@ -393,7 +451,14 @@ export function renderResultScreen(
       </div>
 
       <div class="result-screen__side">
-        ${renderAlbumCardMarkup()}
+        <div class="start-card result-collection-card">
+          <h3 class="start-card__title">Meine Sammlung</h3>
+          <div class="start-card__body" data-collection-card-body></div>
+        </div>
+        <div class="result-mascot-section">
+          <h3 class="result-mascot-section__title">Mein Maskottchen</h3>
+          <div class="start-card__body" data-mascot-stage-body></div>
+        </div>
       </div>
 
       <div class="feedback-panel__confetti" aria-hidden="true"></div>
@@ -416,9 +481,41 @@ export function renderResultScreen(
     onBackToStart?.();
   });
 
+  // Issue #83: CTA-Button der Sterne-Box, nur vorhanden bei `canRedeem`
+  // (siehe renderStarsBoxMarkup) -- öffnet dieselbe Maskottchen-Auswahl wie
+  // das Header-Badge, über dieselbe main.js-Closure (Issue #81,
+  // architecture.md Punkt 3).
+  const starsBoxCta = container.querySelector(".stars-box__cta");
+  starsBoxCta?.addEventListener("click", () => {
+    onOpenMascotChooser?.();
+  });
+
   if (historyWrapper) {
     wireHistoryControls(historyWrapper);
   }
+
+  // Issue #90: rechte Spalte zeigt jetzt dieselbe "Meine Sammlung"-Karte +
+  // denselben "Mein Maskottchen"-Baustein wie der Start-Bildschirm (Issue
+  // #89/#88), ersetzt die alte Album-Karte + das alte Maskottchen-Karussell
+  // (Issue #82/#77) vollständig. Beide mount*()-Funktionen (aus den geteilten
+  // Modulen src/quiz/collectionCard.js/mascotStageCard.js) übernehmen ihr
+  // eigenes Rendern + Doppel-Tap-robustes Pfeil-Wiring komplett selbst --
+  // result.js muss dafür (anders als vorher bei renderSideSection()/
+  // wireMascotCarousel()) keine eigene Wiring-Funktion mehr bereitstellen.
+  //
+  // Kachel-Mindestgröße (130px)/Name-Schriftgröße (16px) laut Handoff-
+  // Abschnitt 5 unterscheiden sich von der Start-Bildschirm-Variante
+  // (108px/15px) -- gelöst über die zusätzliche `.result-collection-card`-
+  // Klasse auf dem Kartencontainer (CSS-Scoping, siehe global.css), nicht
+  // über einen Parameter an der geteilten Render-Funktion (siehe
+  // collectionCard.js-Datei-Kommentar).
+  const sideEl = container.querySelector(".result-screen__side");
+
+  mountCollectionCard(sideEl.querySelector("[data-collection-card-body]"), {
+    hintText:
+      "Runde geschafft = 1 Stern. Für 5 Sterne darfst du ein neues Maskottchen aus der Sammlung freischalten.",
+  });
+  mountMascotStage(sideEl.querySelector("[data-mascot-stage-body]"));
 
   // Redesign (Issue #69/#77, design.md "Ergebnis"): Konfetti bei Rundenende
   // (README: "Auslöser: ... Rundenende").

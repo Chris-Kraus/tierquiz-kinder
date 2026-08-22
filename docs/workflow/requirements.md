@@ -220,6 +220,103 @@ Der Nutzer hatte zwei Issues direkt auf GitHub angelegt (leerer Body, kein Label
 1. **Issue #51 — Buchstaben-Kästchen verkleinern.** Ausgangslage per Chrome-DevTools-Messung verifiziert: `.letter-box` (`src/styles/global.css`) ist aktuell fest 44×52px (Breite × Höhe), Wert stammt aus dem QA-Bugfix in PR #62 (Issue #46). **Entscheidung: Zielgröße 44×44px (quadratisch).** Die Breite (44px) entspricht bereits exakt der projektweit etablierten Mindest-Touchfläche (siehe "Layout-Empfehlungen"/`design.md`, ~44×44 px nach Apple HIG) und darf nicht weiter sinken; die Höhe hatte bisher einen Sicherheitspuffer (52px statt 44px), der abgebaut werden kann, ohne die Mindestgröße zu unterschreiten (–15 % Fläche, spürbar kompakter). Kein neuer, willkürlicher Zwischenwert nötig — 44×44px ist die bereits im Projekt dokumentierte, etablierte Zahl. Bestehendes `flex-wrap: wrap` reicht für lange Tiernamen weiterhin aus (Overflow-Risiko sinkt bei kleineren Kästchen eher, statt zu steigen). **Vollständig spezifiziert, keine offene Frage — `status:ready`.**
 2. **Issue #52 — Option, sich die Lösung anzeigen/auflösen zu lassen.** Button "Lösung zeigen" unterhalb der Buchstaben-Kästchen-Reihe, visuell zurückhaltend (Sekundär-Stil, damit er nicht zum Überspringen verlockt), `aria-label="Lösung anzeigen und Namen auflösen"`, per Tastatur erreichbar. Danach werden alle Lücken mit dem korrekten Namen aufgefüllt, Infosatz + Wikipedia-Link + Fun Fact + "Weiter"-Button wie beim regulären Lösen — **aber sichtbar unterschieden** (neutraler statt grüner Kästchen-Zustand, Feedback-Text "Hier ist die Lösung: {Name}" statt "✓ Super gemacht!"), damit kein falsches "selbst richtig gelöst"-Signal entsteht. **Rückfrage an den Nutzer final beantwortet (20.08.2026): Zählung im Rundenergebnis = separat ausweisen (Option 2 der drei vorgelegten Optionen).** Score/Total bleiben unverändert "N von N richtig" (bewusste Design-Entscheidung aus Issue #46 bleibt erhalten), zusätzlich wird aber ausgewiesen, wie viele der N Fragen aufgelöst statt eigenständig gelöst wurden, z. B. "10 von 10 Fragen richtig beantwortet, davon 2 aufgelöst" (Zusatz nur bei mindestens 1 aufgelöster Frage, sowohl im Hauptsatz des Ergebnis-Bildschirms als auch in der Verlaufsliste, Issue #14/#36). Technisch: `recordAnswer()` (`src/quiz/state.js`) bekommt einen optionalen `resolved`-Parameter je Antwort (Single Source of Truth statt separater Zählvariable), `saveResultToHistory()` (`src/quiz/history.js`) ein zusätzliches optionales Feld `resolvedCount` — mit `software-architect` abgestimmt (20.08.2026): rückwärtskompatibel, exakt dasselbe Muster wie das optionale `mode`-Feld aus Issue #36, keine Breaking Change der bestehenden `results`-Datenstruktur. Details/vollständige Akzeptanzkriterien siehe Issue #52 und `design.md`. **Vollständig spezifiziert, keine offene Frage mehr — `status:ready`.**
 
+## Ergänzung 21.08.2026: Zeilenumbruch der Tiernamen in Antwortkacheln (Issue #79)
+
+**Anlass:** Nutzer-Feedback nach Merge des Kids-Redesigns (PR #78): In den Antwortkacheln (`.answer-tile`, geteiltes Redesign-Bauteil aus Ziffern-Badge + Tiername) brechen lange Tiernamen unschön um — Badge und Text konkurrieren um die schmale Kachelbreite, ein langes Wort bricht mitten im Wort statt an einer sinnvollen Stelle.
+
+**Befund (`business-analyst`, Code-Abgleich):** `.answer-tile` (`src/styles/global.css`) wird identisch von allen drei Modi mit klassischer Mehrfachauswahl verwendet — Quizfragen (`question.js`), "Wer bin ich?" (`reverseQuestion.js`) und Tiergeräusche (`soundQuestion.js`), jeweils Ziffern-Badge (`.answer-tile__icon`, aktuell 1/2/3/4 vor der Antwort, danach ✓/● als Feedback-Icon) + Tiername (`.answer-tile__text`) nebeneinander in einer Flex-Zeile. Tier-Memory (`memory.js`) und Buchstabensuche (`letterSearch.js`) nutzen eine andere Kachel-Mechanik und sind nicht betroffen.
+
+**Erste Lösungsidee des Nutzers** (Ziffer oben, Name kleiner darunter, Silbentrennung nach deutscher Rechtschreibung bei zu langen Wörtern) wurde vom Nutzer selbst noch während der Konkretisierung vereinfacht:
+
+**Finale Entscheidung (Nutzer, 21.08.2026):** Die Ziffern-Badge (1/2/3/4) wird vor der Antwort komplett aus der Kachel entfernt, der Tiername bekommt dafür etwas mehr Platz und eine etwas kleinere Schrift. Das bestehende Feedback-Icon (✓ bei richtig, ● bei gewählt-falsch) bleibt nach der Antwort unverändert erhalten — die Badge-Fläche wird also nicht dauerhaft entfernt, sondern nur vor der Antwort ausgeblendet (rein visuell, das Icon-Element ist ohnehin `aria-hidden="true"`, keine Auswirkung auf Screenreader-Nutzung, die sich nie auf die sichtbare Nummer gestützt hat). Betrifft alle drei Modi mit `.answer-tile` (Quizfragen, "Wer bin ich?", Tiergeräusche) einheitlich, da es sich um dasselbe CSS-Bauteil handelt — eine Lösung nur für "Wer bin ich?" wäre inkonsistent und würde das geteilte Bauteil unnötig aufspalten.
+
+**Funktionale Anforderung:** Vor der Antwort zeigt jede Antwortkachel nur den Tiernamen (keine Ziffer/Badge). Nach der Antwort erscheint wie bisher das Feedback-Icon (✓/●) neben/über dem Namen der betroffenen Kachel(n). Schriftgröße des Tiernamens sinkt moderat (genaue Größe: Entscheidung `ux-design`).
+
+**Nicht-funktionale Anforderung (Robustheit):** Auch mit entfernter Badge und kleinerer Schrift kann ein einzelnes, ungewöhnlich langes Tierwort (z. B. "Bruchwasserläufer") theoretisch noch zu breit für eine sehr schmale Kachel sein — als Sicherheitsnetz sollte deshalb echte Silbentrennung (`hyphens: auto` mit dem bereits vorhandenen `lang="de"` auf `<html>`, siehe `index.html`) statt des bisherigen harten `overflow-wrap: break-word`-Umbruchs greifen, damit ein nötiger Umbruch an einer sinnvollen Stelle erfolgt statt mitten im Wort. Browser-Support von `hyphens: auto` ist für die Zielgeräte (aktuelle Chrome/Safari/Firefox, siehe bestehende NFR zu Zielgeräten) ausreichend; ohne Wörterbuch-Unterstützung fällt der Browser auf keine Trennung zurück (kein Verschlechterung gegenüber vorher).
+
+**Explizit außerhalb des Scopes:** Tier-Memory und Buchstabensuche (andere Kachel-Mechanik, nicht betroffen). Keine Änderung an der Spiellogik/Antwortauswertung, rein visuell.
+
+## Ergänzung 21.08.2026: Sterne-/Maskottchen-Freischaltsystem (Issues #80–#83)
+
+**Anlass:** Weitere Handoff-Ergänzung des Nutzers zum bereits gemergten Kids-Redesign (PR #78), Datei "CHANGES-sterne-maskottchen.md" (Ordner `design_handoff_tierquiz_kids 2`). Mit `ux-design` und `software-architect` abgestimmt (Details siehe `design.md`/`architecture.md`, jeweils Abschnitt "Sterne-/Maskottchen-Freischaltsystem").
+
+**Funktionale Anforderungen:**
+1. Eine Runde gilt als "geschafft", wenn mindestens 5 Tiere richtig beantwortet wurden (`score >= 5`); bei Tier-Memory gilt jede vollständig gelöste Runde immer als geschafft. Bei "geschafft" gibt es 1 Stern, persistent gespeichert (`localStorage`), rundenübergreifend.
+2. Ab 5 gesammelten Sternen kann sich das Kind eines von 50 noch nicht freigeschalteten Maskottchen frei aussuchen (kein festes Freischalt-Nacheinander); dabei werden 5 Sterne abgezogen.
+3. Ein Stern-Badge im Header öffnet ab 5 Sternen (als Button, sonst inaktiv) die Maskottchen-Auswahl aus jedem Bildschirm heraus und kehrt danach zum ursprünglichen Bildschirm zurück (auch mitten in einer laufenden Frage-Runde).
+4. Ein Maskottchen-Karussell unter dem Album (Start- und Ergebnis-Bildschirm) zeigt/wechselt das aktuell aktive, freigeschaltete Maskottchen — dieses erscheint automatisch auch als Guide auf dem Start-Bildschirm und im Feedback-Bereich (ersetzt die bisherige feste "Fine"-Platzhalter-Anzeige aus dem ursprünglichen Redesign durch eine dynamische, aber weiterhin platzhalterbasierte Anzeige — siehe Punkt 6).
+5. Das Sticker-Album wird von 12 auf 9 Tiere verkleinert (3×3 statt bisher 4×3).
+6. Alle 50 Maskottchen (Namen/Rollen siehe Handoff-Datei) sind ab Tag 1 als Emoji-Platzhalter nutzbar — echte Illustrationen sind explizit eine spätere, unabhängige Folge-Aufgabe (gleiche Entscheidung wie bereits für die einzelne "Fine"-Illustration im ursprünglichen Redesign getroffen, jetzt konsequent auf alle 50 ausgeweitet).
+7. Sterne-Box im Ergebnis-Bildschirm mit drei Textfällen (einlösbar / Stern gerade verdient / kein Stern), korrekter Singular-/Pluralform ("1 Stern" vs. "N Sterne") und CTA-Button bei Einlösbarkeit.
+
+**Nicht-funktionale Anforderungen:**
+- Bestehende Barrierefreiheits-Standards gelten unverändert (Tastaturbedienbarkeit, Kontrast, `aria-label`/`aria-live` für Badge/Karussell/Freischalt-Ankündigung — siehe `design.md`).
+- Persistenz fehlertolerant bei blockiertem `localStorage` (Spiel bleibt vollständig spielbar, Sterne/Freischaltungen werden dann einfach nicht gespeichert) — gleiches Muster wie `album.js`/`history.js`.
+- Keine Änderung an Spiellogik/Antwortauswertung der fünf Spielmodi selbst.
+
+**Zwei bei der Analyse gefundene Konflikte mit dem bestehenden Code, beide aufgelöst (siehe `architecture.md`/`design.md` für die vollständige Begründung):**
+- Das bereits gemergte `album.js` bleibt alleinige Quelle für gesammelte Tiere (nur `ALBUM_TARGET` sinkt auf 9) — das neue `progress.js` bekommt kein eigenes, doppeltes `collected`-Feld.
+- Der bestehende Rundenpunktestand im Header ("⭐ {score}") wechselt auf "✓ {score}", damit ⭐ projektweit eindeutig der neuen Sterne-Währung vorbehalten bleibt (sonst zwei verschiedene ⭐-Zahlen gleichzeitig im selben Header während einer laufenden Runde).
+
+**Explizit außerhalb des Scopes:** Echte Illustrationen der 50 Maskottchen (separate Folge-Story/Auftrag), geräteübergreifender Abgleich des Fortschritts (weiterhin rein lokal, wie Album/Verlauf).
+
+**Story-Zuschnitt (4 Issues, ein gemeinsamer Feature-Branch `feature/mascot-unlock-system` — Begründung wie beim ursprünglichen Redesign: ein nur teilweise umgesetztes System wäre ein inkonsistenter Zwischenzustand auf `main`, z. B. ein Stern-Badge ohne erreichbares Ziel):**
+1. **#80 — Datengrundlage** (`mascots.js` + `progress.js` inkl. Tests, stille Rundenauswertung in `main.js`). Keine sichtbare UI-Änderung, Grundlage für alle folgenden Stories.
+2. **#81 — Stern-Badge im Header + Maskottchen-Auswahl-Bildschirm** (End-to-End: Badge → Auswahl → Einlösen → Konfetti → Rücksprung). Abhängig von #80.
+3. **#82 — Maskottchen-Karussell + dynamischer Guide + Album auf 9 Tiere.** Abhängig von #80/#81.
+4. **#83 — Sterne-Box im Ergebnis-Bildschirm.** Abhängig von #80.
+
+Alle vier auf `status:ready` — keine offene, nur vom Nutzer entscheidbare Frage mehr übrig (beide technischen Konflikte sind mit `software-architect`/`ux-design` abschließend geklärt, Maskottchen-Illustration folgt der bereits vom Nutzer bestätigten Platzhalter-Präzedenz aus dem ursprünglichen Redesign).
+
+## Ergänzung 21.08.2026: Startseiten-/Sammlungs-Neuaufbau, Tier-Album-Entfernung (löst Teile von Issues #80–#83 ab)
+
+**Anlass:** Neue Handoff-Datei "CHANGES-startseite-sammlung.md" (Ordner `design_handoff_tierquiz_kids`). Die Datei sagt in ihrem eigenen Kopftext ausdrücklich, dass sie **die aktuelle, verbindliche Fassung ist und frühere Beschreibungen der Startseite und des Album-/Sammlungs-Bereichs ersetzt** — konkret die Startseiten-Beschreibung in `README.md` sowie mehrere Punkte aus dem Abschnitt "Ergänzung 21.08.2026: Sterne-/Maskottchen-Freischaltsystem (Issues #80–#83)" oben. Nutzer-Vorgabe für diese Analyse: reine Text-/Copy-Änderungen werden hier bewusst nicht bewertet (Fokus liegt auf strukturellen/funktionalen Unterschieden zum bereits gebauten Stand).
+
+Geprüft gegen den tatsächlich existierenden Code auf `feature/mascot-unlock-system` (PR #84, **noch nicht gemerged nach `main`**) — Issues #80–#82 sind darauf bereits `status:done`/QA-abgenommen, #83 ist `status:ready`, noch nicht umgesetzt.
+
+### Wichtigste Feststellung: Das Tier-Sticker-Album wird vollständig zurückgenommen — keine Weiterentwicklung, sondern eine echte Rücknahme bereits ausgelieferter Funktionalität
+
+Zitat aus dem Handoff, Abschnitt 5: *"Das Tier-Album (9 Tiere) ist **ersatzlos entfallen** — inklusive aller Texte, die 'Album' erwähnen."* Das betrifft nicht nur die kürzlich (Issue #80) auf 3×3 verkleinerte Fassung, sondern das **komplette ursprüngliche Sticker-Album-Feature aus dem allerersten Redesign-Auftrag** (Issue #68, PR #78 — seit dem 21.08.2026 bereits regulär nach `main` gemerged, also produktiv gebaute, abgenommene Funktionalität). Verifiziert im echten Code (nicht nur angenommen): `src/quiz/album.js` (`addCollectedAnimal`/`loadCollectedAnimals`/`getAlbumProgress`) wird aktuell aus **7 Dateien** heraus verwendet — nicht nur `start.js`/`result.js`, sondern zusätzlich aus allen fünf Frage-Bildschirmen (Quizfragen, Wer-bin-ich?, Tiergeräusche, Buchstabensuche, Tier-Memory), die jeweils bei richtiger Antwort/gefundenem Paar ein Tier ins Album eintragen.
+
+**Das ersetzende Konzept "Meine Sammlung"** (paginiertes Raster der 50 Maskottchen, 9 pro Seite, 6 Seiten, freigeschaltet vs. "?"-Platzhalter) ist **kein Wiederverwenden des Album-Rasters für einen neuen Zweck**, sondern trackt eine komplett andere Sache: freigeschaltete Maskottchen statt gesammelte Tierarten. Die beiden Konzepte sind nicht austauschbar, das eine ersetzt das andere funktional, nicht nur optisch.
+
+Diese Rücknahme ist mit `ux-design` und `software-architect` bestätigt (siehe `design.md`/`architecture.md`, jeweils Abschnitt "Startseite- & Sammlungs-Neuaufbau, Tier-Album-Entfernung"): **keine fachlichen Einwände gegen die Entfernung selbst**, da "Meine Sammlung" die motivierende Sammel-Funktion vollständig übernimmt und sogar direkter an die neue Sterne-Währung gekoppelt ist. **Diese Feststellung wird hier trotzdem explizit als eigener Punkt festgehalten, damit sie niemandem entgeht, der die Doku später liest** — es handelt sich um eine echte Rücknahme von Produktumfang (Issue #68, seit Monaten auf `main`), keine bloße Detailanpassung.
+
+### Weitere funktionale Anforderungen aus dem neuen Handoff (strukturell/funktional, nicht Copy)
+
+1. **Kopfzeile auf der Startseite entfällt vollständig** (`showHeader = screen !== "start"`) — bleibt unverändert auf allen anderen Bildschirmen (Frage-Runde, Ergebnis, Maskottchen-Auswahl).
+2. **Startseite: neuer Zeilenaufbau** — Titel-Zeile (volle Breite) → Kartenzeile ("Mein Maskottchen" + "Meine Sammlung", `1fr 1.5fr`) → Modus-Auswahl (1 Reihe, 5 Kacheln) → Schwierigkeit → Fragenanzahl → CTA. Ersetzt das bisherige zweispaltige Haupt-/Seitenspalten-Layout aus dem ursprünglichen Redesign (Issue #71).
+3. **"Mein Maskottchen"-Karte:** große quadratische Bühne + 3-teiliges Nav-Element (Pfeil/Badge "{position}/{anzahl}"/Pfeil) — ersetzt das kleinere Karussell aus Issue #82 strukturell, gleiche Funktion (durch freigeschaltete Maskottchen blättern).
+4. **"Meine Sammlung"-Karte** (neu): 50-Maskottchen-Raster, 9/Seite, 6 Seiten, gleiche Nav-Komponente wie 3 (Badge zeigt "Seite {n}/{gesamt}"). Ersetzt das entfallene Tier-Album an derselben Stelle im Layout, trackt aber inhaltlich etwas anderes (siehe oben).
+5. **Sterne-Badge auf der Startseite:** eigene Platzierung/Optik (mittig unter der Sammlungs-Karte, da keine Kopfzeile dort existiert) — inhaltlich dieselbe Freischalt-Regel wie das bestehende Header-Badge aus #81 (`stars >= 5 && unlockedIds.length < 50`), nur andere Darstellung an diesem einen Ort.
+6. **Modus-Kacheln: eine Reihe statt zwei** bei 1280px (`repeat(5, minmax(0,1fr))`) — **bewusste Reversion** der dokumentierten Entscheidung vom 16.08.2026 ("Modus-Auswahl auf dem Start-Bildschirm: Fünfter/sechster Modus — Skalierungsentscheidung", damals: 2-zeiliger Umbruch 3+2). Mit `ux-design` geprüft: bei fester 1280px-Breite unproblematisch für Touch-Zielgrößen, die "6. Modus = harte Grenze"-Regel aus der alten Entscheidung bleibt unverändert bestehen.
+7. **Ergebnis-Bildschirm:** Label wechselt von immer "Runde geschafft 🎉" zu bedingt — nur wenn in dieser Runde tatsächlich ein Stern verdient wurde (`earned === true` aus `recordRoundCompletion`, bereits von #80 geliefert), sonst "Runde beendet". Rechte Spalte wechselt vom Album auf dieselbe "Meine Sammlung"-Karte wie auf der Startseite, plus separatem Maskottchen-Nav+Bühne darunter.
+8. **"Funktionale Updater"-Hinweis aus dem Handoff (React `setState(st => ...)`) ist technisch nicht anwendbar** (Vanilla JS, kein React-State-Batching) — als N/A gekennzeichnet. Die zugrunde liegende Anforderung bleibt aber ein echtes, zu prüfendes Akzeptanzkriterium: **zwei schnelle Taps auf einen Nav-Pfeil müssen zwei Schritte weiterblättern**, nicht nur einen (siehe `architecture.md`: das bestehende synchrone Lese-Schreib-Re-Render-Muster erfüllt das bereits, sofern kein Debounce ergänzt wird — bei der QA-Abnahme trotzdem manuell zu verifizieren).
+
+### Nicht-funktionale Anforderungen
+
+- Bestehende Barrierefreiheits-Standards gelten unverändert (siehe `design.md` für die Detail-Anpassungen: kontextspezifische `aria-label` an den 4 Nav-Stellen, `aria-live` bei Seiten-/Positionswechsel).
+- Keine Persistenz-Erweiterung für die Sammlungs-Paginierung (rein lokaler UI-Zustand, kein neues `localStorage`-Feld).
+- Keine Änderung an Spiellogik/Antwortauswertung der fünf Spielmodi selbst.
+
+### Explizit außerhalb des Scopes
+
+- Echte Illustrationen der 50 Maskottchen (weiterhin separate Folge-Story, unverändert gegenüber der vorherigen Entscheidung).
+- Zwei bereits bestehende, unabhängige und noch nicht triagierte Nutzer-Issues (#85 "Textanpassungen", #86 "Weiter-Button farblich absetzen") sind **nicht** Teil dieser Analyse — reine Copy-/Farbanpassungen ohne Bezug zum hier behandelten Struktur-Umbau, bleiben unangetastet im Draft-Status für eine separate Triage.
+
+### Story-Zuschnitt (löst #83 teilweise ab, 5 neue Stories)
+
+Reihenfolge folgt technischen Abhängigkeiten (siehe `architecture.md`, Abschnitt "Story-Zuschnitt-Empfehlung"):
+
+1. **#83 (überarbeitet)** — Sterne-Box im Ergebnis-Bildschirm: inhaltlich fast unverändert gegenüber der ursprünglichen Fassung, aber die dortige Regressions-Annahme "Album unverändert" ist jetzt falsch (entfernt) und das neue bedingte Runde-Label (Punkt 7 oben) kommt mit dazu. Unabhängig von den folgenden 5 Stories umsetzbar.
+2. **Neue Story — Startseiten-Restrukturierung:** Zeilenlayout, Kopfzeile auf Start ausblenden, Modus-Kacheln einzeilig (Punkte 1, 2, 6).
+3. **Neue Story — "Mein Maskottchen"-Karte + wiederverwendbare Nav-Komponente:** neues `navControl.js`-Modul, große Bühne + Nav (Punkt 3).
+4. **Neue Story — "Meine Sammlung"-Karte auf dem Start-Bildschirm:** Maskottchen-Paginierung, Start-Sterne-Badge, entfernt dabei den Album-Vorschau-Aufruf aus `start.js` (Punkte 4, 5).
+5. **Neue Story — Ergebnis-Bildschirm-Umbau:** rechte Spalte auf "Meine Sammlung" + Maskottchen-Nav, bedingtes Label, entfernt Album-Kartenaufruf aus `result.js` (Punkt 7).
+6. **Neue Story — Tier-Album-Modul endgültig entfernen:** verbleibende `addCollectedAnimal()`-Aufrufe in den 5 Frage-Bildschirmen, Löschung von `album.js`/`album.test.js`, CSS-Bereinigung. Kann parallel zu den beiden vorherigen laufen, muss vor dem Merge des Gesamt-Branches abgeschlossen sein.
+
+Alle 6 Stories auf `status:ready` — keine offene, nur vom Nutzer entscheidbare Frage (beide Fach-Prüfungen mit `ux-design`/`software-architect` sind abschließend geklärt, gleiche Vorgehensweise wie bei der vorherigen Runde).
+
 ## Korrektur (13.08.2026)
 
 Im Zuge der realen Datenbeschaffung für Issue #2 (Wikidata) wurde festgestellt, dass die reale Feldabdeckung deutlich von der ursprünglichen Annahme abweicht (kein Testartefakt, gemessen an 1.480 hydrierten Tier-Datensätzen). Daraufhin wurde mit dem Nutzer abgestimmt: **"Farbe" entfällt als Basisfeld** (0% Abdeckung), und die Pflichtfelder wurden auf `id`, `name_de`, `category` reduziert — die übrigen Felder bleiben optional mit variierender Abdeckung je Tier. Details siehe "Datenbasis (Tierdatenbank)" oben sowie `architecture.md`.
