@@ -304,7 +304,6 @@ export function renderSoundQuestionScreen(
               >
             </p>
             <p class="feedback-panel__sticker-name"></p>
-            <span class="feedback-panel__sticker-badge"></span>
           </div>
           <div class="feedback-panel__confetti" aria-hidden="true"></div>
           <button type="button" class="next-button k-btn" hidden>Weiter</button>
@@ -346,9 +345,6 @@ export function renderSoundQuestionScreen(
   );
   const stickerNameEl = container.querySelector(
     ".feedback-panel__sticker-name",
-  );
-  const stickerBadgeEl = container.querySelector(
-    ".feedback-panel__sticker-badge",
   );
   const feedbackEl = container.querySelector(".question-screen__feedback");
 
@@ -464,7 +460,6 @@ export function renderSoundQuestionScreen(
       "feedback-panel--incorrect",
     );
     stickerNameEl.textContent = "";
-    stickerBadgeEl.textContent = "";
     // Issue #41: bei jeder neuen Frage vollständig zurücksetzen, damit
     // Infosatz/Wikipedia-Link/Fun Fact des vorherigen Tieres nie kurz
     // sichtbar/erreichbar bleiben (identisches Muster wie in question.js/
@@ -824,11 +819,11 @@ export function renderSoundQuestionScreen(
 
     // Redesign (Issue #68/#74, design.md "Sticker-Karte"): Sticker-Karte
     // zeigt das beantwortete Tier, unabhängig von richtig/falsch (gleiches
-    // Prinzip wie question.js/reverseQuestion.js). Album-Eintrag entfällt
-    // seit Issue #91 (Tier-Album-Modul entfernt).
+    // Prinzip wie question.js/reverseQuestion.js). Issue #92: kein Badge mehr
+    // -- nur noch Bild+Name (das ehemalige NEU!/SCHAU MAL-Badge war seit #91
+    // fest auf "NEU!" verdrahtet, auch für längst bekannte Tiere).
     if (answeredAnimal) {
       stickerNameEl.textContent = answeredAnimal.name_de;
-      stickerBadgeEl.textContent = "NEU!";
     }
 
     // Issue #42: automatischer Bildabruf startet in dem Moment, in dem der

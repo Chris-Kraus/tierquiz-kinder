@@ -1958,17 +1958,6 @@ button {
   color: var(--ink);
 }
 
-.feedback-panel__sticker-badge {
-  background: var(--sand);
-  border: var(--k-border-sm) solid var(--ink);
-  border-radius: var(--k-radius-pill);
-  padding: 2px 14px;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 13px;
-  color: var(--ink);
-}
-
 .feedback-panel__confetti {
   position: relative;
   height: 0;
@@ -1978,8 +1967,13 @@ button {
   width: 100%;
   min-height: 96px;
   padding: var(--k-space-3) var(--k-space-5);
-  background: var(--card);
-  color: var(--ink);
+  /* Issue #86: gleiche Farbgebung wie .start-button (dunkler CTA statt der
+     bisherigen neutralen Kartenfarbe) -- .start-button hat aktuell weder
+     eigene :hover/:active/:focus-Regeln noch wird .next-button je disabled
+     gerendert (kein disabled-Attribut in question.js/soundQuestion.js/
+     reverseQuestion.js/letterSearch.js), daher genügt die Basisfarbe. */
+  background: var(--ink);
+  color: var(--paper);
   font-family: var(--font-heading);
   font-size: 28px;
   font-weight: 800;

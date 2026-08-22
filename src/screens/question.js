@@ -232,9 +232,13 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
                liefert. Wird übersprungen, wenn das Bild bereits vor der
                Antwort manuell aufgedeckt wurde (Duplikat-Vermeidung, siehe
                dort). Redesign (Issue #72): bildet jetzt visuell die
-               "Sticker-Karte" — Name + NEU!/SCHAU MAL-Pill sind neu
-               (feedback-panel__sticker-name/-badge unten), das Bild selbst
-               und sein Lade-/Fehlerverhalten bleiben unverändert. -->
+               "Sticker-Karte" — Name ist neu (feedback-panel__sticker-name
+               unten), das Bild selbst und sein Lade-/Fehlerverhalten bleiben
+               unverändert. Issue #92: das ehemalige NEU!/SCHAU MAL-Badge
+               (feedback-panel__sticker-badge) wurde entfernt -- seit #91
+               (Tier-Album-Modul entfernt) war es fest auf "NEU!" verdrahtet,
+               auch für längst bekannte Tiere (BA-Entscheidung: Sticker-Karte
+               zeigt nur noch Bild+Name, kein Ersatz-Badge). -->
           <div class="question-screen__feedback-image" hidden>
             <img class="question-screen__feedback-image-img" alt="" />
             <p class="question-screen__feedback-image-attribution">
@@ -249,7 +253,6 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
               >
             </p>
             <p class="feedback-panel__sticker-name"></p>
-            <span class="feedback-panel__sticker-badge"></span>
           </div>
           <div class="feedback-panel__confetti" aria-hidden="true"></div>
           <button type="button" class="next-button k-btn" hidden>Weiter</button>
@@ -277,9 +280,6 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
   );
   const stickerNameEl = container.querySelector(
     ".feedback-panel__sticker-name",
-  );
-  const stickerBadgeEl = container.querySelector(
-    ".feedback-panel__sticker-badge",
   );
   const feedbackEl = container.querySelector(".question-screen__feedback");
   const infoSentenceEl = container.querySelector(
@@ -583,7 +583,6 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
       "feedback-panel--incorrect",
     );
     stickerNameEl.textContent = "";
-    stickerBadgeEl.textContent = "";
     infoSentenceEl.hidden = true;
     infoSentenceTextEl.textContent = "";
     // Issue #15: bei jeder neuen Frage vollständig zurücksetzen, damit der
@@ -669,12 +668,10 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     // Redesign (Issue #68/#72, design.md "Sticker-Karte"): Sticker-Karte
     // zeigt das beantwortete Tier unabhängig davon, ob richtig oder falsch
     // geantwortet wurde (gleiches "richtig wie falsch"-Prinzip wie beim
-    // Infosatz/Fun Fact oben, kein Straf-Framing). Album-Eintrag entfällt
-    // seit Issue #91 (Tier-Album-Modul entfernt) -- die frühere "SCHAU
-    // MAL"/"NEU!"-Unterscheidung nach Album-Status ist damit gegenstandslos.
+    // Infosatz/Fun Fact oben, kein Straf-Framing). Issue #92: kein Badge mehr
+    // (siehe Template-Kommentar oben) -- nur noch Bild+Name.
     if (answeredAnimal) {
       stickerNameEl.textContent = answeredAnimal.name_de;
-      stickerBadgeEl.textContent = "NEU!";
     }
 
     // Issue #30: automatischer Bildabruf startet in dem Moment, in dem der

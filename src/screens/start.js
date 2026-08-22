@@ -271,8 +271,8 @@ export function renderStartScreen(container, { onStart, onOpenMascotChooser } = 
   container.innerHTML = `
     <section class="start-screen" aria-labelledby="start-title">
       <div class="start-screen__title-row">
-        <h1 id="start-title" class="start-screen__title">Hallo! Wollen wir Tiere entdecken?</h1>
-        <p class="start-screen__intro">Wähle dir ein Spiel aus. Ich lese jede Frage vor — und falsch raten ist völlig okay, dann schauen wir uns das Tier zusammen an.</p>
+        <h1 id="start-title" class="start-screen__title">Lass uns Tiere entdecken!</h1>
+        <p class="start-screen__intro">Um zu starten, wähle ein Spiel aus. Dann können wir die Tiere gemeinsam kennenlernen.</p>
       </div>
 
       <div class="start-cards">
