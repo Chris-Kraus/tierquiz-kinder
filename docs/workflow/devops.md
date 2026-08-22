@@ -194,6 +194,44 @@ Keine weiteren Kandidaten: keine verwaisten Branches (Feature-Branch aus PR #44 
 
 **Status:** PR #105 offen, nicht gemerged (Merge bleibt bei `web-developer`). Committen/Pushen für diese reine Infrastruktur-Story (kein Application-Code unter `src/**`) direkt durch `devops-engineer` vorgenommen, analog zum bereits etablierten Präzedenzfall für reine GitHub-Settings-/Infra-Änderungen in diesem Projekt.
 
+## Referenz: GitHub-Repo-Settings (Stand 22.08.2026)
+
+Übersicht der aktuellen Konfiguration von `https://github.com/Chris-Kraus/tierquiz-kinder/settings`, inkl. der `gh`-CLI-Aufrufe zum Prüfen/Ändern — als Nachschlagestelle für künftige Sessions, damit der Stand nicht jedes Mal neu erhoben werden muss. Hintergrund/Begründung der Entscheidungen siehe `requirements.md`, Abschnitt "Ergänzung 22.08.2026: Deployment-Entscheidung — GitHub Pages, Repo öffentlich".
+
+**Sichtbarkeit:** `public` (vom Nutzer selbst umgestellt, ursprünglich `private`).
+```bash
+gh repo view Chris-Kraus/tierquiz-kinder --json visibility
+# Ändern (Vorsicht, siehe requirements.md zur Begründung):
+gh repo edit Chris-Kraus/tierquiz-kinder --visibility public   # bzw. --visibility private
+```
+
+**Collaborators:** Einziger Collaborator ist der Repo-Owner selbst (`Chris-Kraus`, `admin`/`push`) — niemand sonst kann direkt committen/pushen, unabhängig von der öffentlichen Sichtbarkeit. Fremde können forken + PRs öffnen (auf öffentlichen Repos technisch nicht verhinderbar), aber ein PR landet nie ohne expliziten Merge durch den Owner im Repo.
+```bash
+gh api repos/Chris-Kraus/tierquiz-kinder/collaborators --jq '.[] | {login, permissions}'
+```
+
+**Interaction Limits:** `contributors_only`, gültig bis **22.02.2027** — schränkt ein, wer auf Issues/PRs kommentieren/neue Issues öffnen darf, als Absicherung gegen unerwünschte Fremdkommentare auf dem jetzt öffentlichen Repo (einzige verfügbare GitHub-Bordmaßnahme dafür, da Issues aktiv bleiben müssen fürs Story-Tracking dieses Projekts). **Befristet, nicht dauerhaft** — muss nach Ablauf erneuert werden, sonst kann wieder jeder beliebige GitHub-Account kommentieren.
+```bash
+gh api repos/Chris-Kraus/tierquiz-kinder/interaction-limits
+# Erneuern/ändern (limit: existing_users | contributors_only | collaborators_only; expiry: one_day|three_days|one_week|one_month|six_months):
+gh api -X PUT repos/Chris-Kraus/tierquiz-kinder/interaction-limits -f limit=contributors_only -f expiry=six_months
+# Aufheben:
+gh api -X DELETE repos/Chris-Kraus/tierquiz-kinder/interaction-limits
+```
+
+**Issues/Pull Requests:** Beide aktiv (`has_issues: true`, `has_pull_requests: true`). Story-Tracking dieses Projekts läuft vollständig über GitHub Issues + Project Board — beide Features dürfen nicht deaktiviert werden, ohne den gesamten `pm-workflow`-Prozess zu brechen.
+```bash
+gh api repos/Chris-Kraus/tierquiz-kinder --jq '{has_issues, has_pull_requests, has_discussions, allow_forking}'
+```
+*Historischer Hinweis:* `has_pull_requests` war zwischenzeitlich versehentlich auf `false` gestanden (vermutlich Nebeneffekt der private→public-Umstellung), wurde im Rahmen von Issue #104 wiederhergestellt.
+
+**GitHub Pages:** Aktiv, Quelle "GitHub Actions" (nicht ein fester Branch), Live-URL `https://chris-kraus.github.io/tierquiz-kinder/`. Deployment läuft automatisch bei jedem Push auf `main` über `.github/workflows/deploy-pages.yml` (Issue #104).
+```bash
+gh api repos/Chris-Kraus/tierquiz-kinder/pages --jq '{build_type, html_url, status}'
+# Deploy-Historie:
+gh run list --repo Chris-Kraus/tierquiz-kinder --workflow=deploy-pages.yml
+```
+
 ## Offene Infrastruktur-Fragen
 
 - Follow-up-Empfehlung an `web-developer`: totes `color`-Feld aus `src/quiz/difficulty.js` (`EASY_FIELDS`) und `src/quiz/questionGenerator.js` (`FIELD_DEFINITIONS.color`) entfernen (siehe oben) — keine funktionale Dringlichkeit, nur Code-Hygiene.
