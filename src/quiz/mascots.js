@@ -37,7 +37,7 @@ export const MASCOTS = Object.freeze(
       role: "schleicht sich an Antworten ran",
     },
     { name: "Hugo der Hund", emoji: "🐶", role: "bleibt treu an deiner Seite" },
-    { name: "Emma das Erdmännchen", emoji: "🐾", role: "hält Wache und späht" },
+    { name: "Emma das Erdmännchen", emoji: "🦝", role: "hält Wache und späht" },
     { name: "Pauli das Pferd", emoji: "🐴", role: "galoppiert zur nächsten Frage" },
     { name: "Kasimir der Kater", emoji: "🐈", role: "gähnt vornehm" },
     { name: "Klara das Kamel", emoji: "🐪", role: "kennt jede Wüste" },
