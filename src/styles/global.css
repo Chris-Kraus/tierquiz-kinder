@@ -918,8 +918,8 @@ button {
 
 /* "Meine Sammlung"-Raster (Issue #89, neue Handoff-Datei
    "CHANGES-startseite-sammlung.md", Abschnitt 3) -- ersetzt die bisherige
-   Album-Vorschau (`.start-album-preview*` unten, dort weiterhin für
-   result.js/#90 erhalten) an derselben Stelle im Layout, zeigt aber die 50
+   Album-Vorschau (`.start-album-preview*`, mit Issue #91 vollständig aus
+   global.css entfernt) an derselben Stelle im Layout, zeigt aber die 50
    Maskottchen statt gesammelter Tierarten. 9 Kacheln/Seite, 3 Spalten. */
 .collection-grid {
   display: grid;
@@ -1049,87 +1049,6 @@ button {
 .start-star-badge--redeemable:focus-visible {
   outline: 5px solid var(--sky);
   outline-offset: 4px;
-}
-
-/* Album-Vorschau (design.md: Grid 3x3, 68px-Felder; gesammelt = Platzhalter-
-   Textur + Tiername, offen = #FFF8EC-Fläche mit "?"). Dieselbe Komponente
-   wird auf dem Ergebnis-Bildschirm mit 118px-Feldern wiederverwendet (Issue
-   #77) — hier die Start-Bildschirm-Variante (68px). Seit Issue #82: 3 statt
-   4 Spalten (ALBUM_TARGET von 12 auf 9 gesenkt, siehe album.js), damit das
-   Grid auch visuell als 3×3 statt als 3 volle + 1 angebrochene Reihe
-   erscheint -- die Ergebnis-Variante brauchte zuvor bereits einen eigenen
-   3-Spalten-Override (`.start-album-preview--result`), der jetzt mit der
-   Basis-Regel übereinstimmt und deshalb entfernt wurde (kein doppelt
-   gepflegter Wert mehr). */
-.start-album-preview {
-  background: var(--card);
-  border: var(--k-border-lg) solid var(--ink);
-  border-radius: var(--k-radius-card);
-  padding: var(--k-space-4);
-}
-
-.start-album-preview__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--k-space-3);
-}
-
-.start-album-preview__title {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 22px;
-  color: var(--ink);
-}
-
-.start-album-preview__badge {
-  background: var(--sand);
-  border: var(--k-border-sm) solid var(--ink);
-  border-radius: var(--k-radius-pill);
-  padding: 2px 14px;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 15px;
-  color: var(--ink);
-}
-
-.start-album-preview__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-
-.start-album-preview__slot {
-  aspect-ratio: 1;
-  min-height: 68px;
-  border-radius: 14px;
-  background: #fff8ec;
-  border: 2px solid #e4d6be;
-  color: #cbb795;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 18px;
-}
-
-.start-album-preview__slot--collected {
-  background: repeating-linear-gradient(
-    135deg,
-    #ffe3b8 0 14px,
-    #ffefd6 14px 28px
-  );
-  border: 2px solid var(--ink);
-  color: var(--ink);
-  padding: 4px;
-}
-
-.start-album-preview__slot-name {
-  font-size: 12px;
-  text-align: center;
-  line-height: 1.1;
 }
 
 /* Frage-Bildschirm (siehe design.md, "Nutzerfluss" Punkte 2–5,
@@ -2324,7 +2243,8 @@ button {
    wiederverwendet. */
 
 /* Ergebnis-Bildschirm (Redesign, Issue #77; design.md "Ergebnis"): Grid
-   1fr 460px — links Score-Panel (--sky), rechts Album-Karte. */
+   1fr 460px — links Score-Panel (--sky), rechts "Meine Sammlung"-Karte
+   (ursprünglich Album-Karte, seit Issue #90 ersetzt). */
 .result-screen {
   width: 100%;
   max-width: 1200px;
@@ -2490,31 +2410,14 @@ button {
   flex-direction: column;
 }
 
-/* Album-Karte auf dem Ergebnis-Bildschirm: gleiche Komponente wie auf dem
-   Start-Bildschirm (Issue #71), aber mit größeren 118px-Feldern statt 68px
-   (design.md: "Rechts Album-Karte wie Start, aber Grid 3 Spalten, Felder
-   118px, Fußnote 16px"). Die Spaltenzahl selbst (3) kommt seit Issue #82
-   bereits aus der Basis-Regel `.start-album-preview__grid` -- der frühere
-   3-Spalten-Override hier ist entfallen (siehe Kommentar dort). */
-.start-album-preview--result .start-album-preview__slot {
-  min-height: 118px;
-}
-
-.start-album-preview__footnote {
-  margin: var(--k-space-3) 0 0;
-  font-family: var(--font-body);
-  font-size: 16px;
-  color: var(--muted);
-}
-
 /* Issue #90: rechte Spalte des Ergebnis-Bildschirms zeigt jetzt dieselbe
    "Meine Sammlung"-Karte + denselben "Mein Maskottchen"-Baustein wie der
    Start-Bildschirm (Issue #89/#88, src/quiz/collectionCard.js/
    mascotStageCard.js) -- ersetzt das bisherige Maskottchen-Karussell (Issue
    #82, `.mascot-carousel*` oben, jetzt entfernt: mit dieser Story verliert
-   es seine letzte Verwendungsstelle) sowie die Album-Karte (`.start-album-preview*`
-   oben bleibt vorerst als toter Code bestehen -- deren Bereinigung ist Teil
-   der separaten Story #91, siehe architecture.md "Story E"). */
+   es seine letzte Verwendungsstelle) sowie die alte Album-Karte
+   (`.start-album-preview*`, mit Issue #91 vollständig aus global.css
+   entfernt). */
 
 /* "Meine Sammlung"-Karte auf dem Ergebnis-Bildschirm: gleiche Kacheln wie auf
    dem Start-Bildschirm (`.collection-grid*`, s. o.), aber größere
@@ -2522,8 +2425,8 @@ button {
    (Änderungen)": "gleiche Kacheln, min-height 130px, Name 16px") --
    überschrieben per CSS-Scoping auf dem Kartencontainer, ohne die geteilte
    Render-Funktion selbst zu verzweigen (gleiches Prinzip, das
-   `.start-album-preview--result` zuvor für die jetzt entfernte Album-Karte
-   verwendet hat). */
+   `.start-album-preview--result` zuvor für die inzwischen -- Issue #91 --
+   entfernte Album-Karte verwendet hat). */
 .result-collection-card .collection-grid__tile {
   min-height: 130px;
 }

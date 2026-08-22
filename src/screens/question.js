@@ -53,7 +53,6 @@ import {
   buildAttribution,
   REQUEST_TIMEOUT_MS,
 } from "../quiz/imageHint.js";
-import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
 // Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
 // (#80-#83): das `.feedback-panel__mascot`-Feld zeigt Tint + Emoji + Name +
@@ -667,18 +666,15 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
     feedbackPanelEl.hidden = false;
     feedbackEl.hidden = false;
 
-    // Redesign (Issue #68/#72, design.md "Sticker-Karte"): jede beantwortete
-    // Frage sammelt das Tier ins Album — unabhängig davon, ob richtig oder
-    // falsch geantwortet wurde (gleiches "richtig wie falsch"-Prinzip wie
-    // beim Infosatz/Fun Fact oben, kein Straf-Framing). "NEU!" nur beim
-    // ersten Sammeln dieses Tieres, sonst "SCHAU MAL".
+    // Redesign (Issue #68/#72, design.md "Sticker-Karte"): Sticker-Karte
+    // zeigt das beantwortete Tier unabhängig davon, ob richtig oder falsch
+    // geantwortet wurde (gleiches "richtig wie falsch"-Prinzip wie beim
+    // Infosatz/Fun Fact oben, kein Straf-Framing). Album-Eintrag entfällt
+    // seit Issue #91 (Tier-Album-Modul entfernt) -- die frühere "SCHAU
+    // MAL"/"NEU!"-Unterscheidung nach Album-Status ist damit gegenstandslos.
     if (answeredAnimal) {
-      const wasAlreadyCollected = loadCollectedAnimals().includes(
-        answeredAnimal.id,
-      );
-      addCollectedAnimal(answeredAnimal.id);
       stickerNameEl.textContent = answeredAnimal.name_de;
-      stickerBadgeEl.textContent = wasAlreadyCollected ? "SCHAU MAL" : "NEU!";
+      stickerBadgeEl.textContent = "NEU!";
     }
 
     // Issue #30: automatischer Bildabruf startet in dem Moment, in dem der

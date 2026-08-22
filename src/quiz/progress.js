@@ -1,20 +1,22 @@
 // Persistenz für das Sterne-/Maskottchen-Freischaltsystem (Issue #80, erster
 // Teil eines 4-Story-Vorhabens #80-#83). Gleiches Muster wie src/quiz/
-// album.js und src/quiz/history.js: eigener STORAGE_KEY, `resolveStorage`-
-// Helper (dupliziert statt geteiltes Utility-Modul, siehe architecture.md,
-// "Sterne-/Maskottchen-Freischaltsystem: Technische Leitplanken", Punkt 2),
-// defensives JSON-Parsing, fehlertolerant bei blockiertem localStorage
-// (Spiel bleibt vollständig spielbar, Sterne/Freischaltungen werden dann
-// einfach nicht persistiert).
+// history.js: eigener STORAGE_KEY, `resolveStorage`-Helper (dupliziert statt
+// geteiltes Utility-Modul, siehe architecture.md, "Sterne-/Maskottchen-
+// Freischaltsystem: Technische Leitplanken", Punkt 2), defensives
+// JSON-Parsing, fehlertolerant bei blockiertem localStorage (Spiel bleibt
+// vollständig spielbar, Sterne/Freischaltungen werden dann einfach nicht
+// persistiert).
 //
 // Datenmodell bewusst **nur** { stars, unlockedIds, activeIdx } — KEIN
-// eigenes `collected`-Feld. Das bereits gemergte src/quiz/album.js (Issue
-// #68) bleibt die alleinige Quelle für gesammelte Tiere; ein zweites
+// eigenes `collected`-Feld. Zum Zeitpunkt dieser Entscheidung war das
+// inzwischen (Issue #91) vollständig entfernte src/quiz/album.js (Issue #68)
+// noch die alleinige Quelle für gesammelte Tiere; ein zweites
 // `collected`-Array hier wäre eine redundante zweite Quelle für dieselbe
-// Information (siehe architecture.md für die vollständige Begründung, sowie
-// requirements.md, "Ergänzung 21.08.2026: Sterne-/Maskottchen-
-// Freischaltsystem"). Das im Nutzer-Handoff vorgeschlagene `collected`-Feld
-// im progress.js-Beispielobjekt ist bewusst verworfen, nicht übernommen.
+// Information gewesen (siehe architecture.md für die vollständige
+// Begründung, sowie requirements.md, "Ergänzung 21.08.2026: Sterne-/
+// Maskottchen-Freischaltsystem"). Das im Nutzer-Handoff vorgeschlagene
+// `collected`-Feld im progress.js-Beispielobjekt wurde bewusst verworfen,
+// nicht übernommen.
 //
 // `unlockedIds` wächst ausschließlich an (append-only, nie umsortiert oder
 // gelöscht) — `activeIdx` referenziert deshalb stabil die Position

@@ -64,9 +64,9 @@ import { loadProgress } from "../quiz/progress.js";
 // Start-Bildschirm (Issue #89/#88), aus den mit dieser Story neu
 // extrahierten gemeinsamen Modulen importiert statt hier nachgebaut (siehe
 // renderSideSection() weiter unten sowie die jeweiligen Datei-Kommentare in
-// src/quiz/collectionCard.js/mascotStageCard.js). `album.js` selbst bleibt
-// unangetastet (wird noch von den 5 Frage-Bildschirmen verwendet,
-// vollständige Modul-Entfernung ist die separate Story #91).
+// src/quiz/collectionCard.js/mascotStageCard.js). `album.js` selbst wurde
+// zum Zeitpunkt dieser Story noch von den 5 Frage-Bildschirmen verwendet;
+// die vollständige Modul-Entfernung erfolgte in der separaten Story #91.
 import { mountCollectionCard } from "../quiz/collectionCard.js";
 import { mountMascotStage } from "../quiz/mascotStageCard.js";
 

@@ -40,7 +40,7 @@
  * Baut das Markup für Pfeil-links/Badge/Pfeil-rechts. Reine Stringfunktion,
  * kein DOM-Zugriff -- der Aufrufer fügt das Ergebnis selbst per innerHTML
  * ein (gleiches Muster wie alle anderen *Markup()-Funktionen im Projekt,
- * z. B. renderAlbumPreviewMarkup() in start.js).
+ * z. B. renderCollectionGridMarkup() in collectionCard.js).
  * @param {object} options
  * @param {string} options.label Fertig formatierter Badge-Text, z. B. "1/3"
  *   oder "Seite 2/6" -- diese Komponente kennt das Format nicht, der

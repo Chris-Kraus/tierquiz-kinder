@@ -75,7 +75,7 @@ export const MASCOTS = Object.freeze(
       role: "versteckt Belohnungen",
     },
     { name: "Wanda der Wolf", emoji: "🐺", role: "heult vor Freude" },
-    { name: "Bruno der Biber", emoji: "🦫", role: "baut das Album aus" },
+    { name: "Bruno der Biber", emoji: "🦫", role: "baut die Sammlung aus" },
     { name: "Nala das Nashorn", emoji: "🦏", role: "geht durch jede Frage" },
     { name: "Hanna das Hippo", emoji: "🦛", role: "macht große Sprünge" },
     { name: "Kroko der Krokodil", emoji: "🐊", role: "grinst breit" },

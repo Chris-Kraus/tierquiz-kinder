@@ -44,7 +44,6 @@ import { buildLetterPuzzle } from "../quiz/letterPuzzle.js";
 import { recordAnswer, advanceToNextQuestion } from "../quiz/state.js";
 import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 import { buildInfoSentence } from "../quiz/infoSentence.js";
-import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
 // Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
 // (#80-#83): das `.feedback-panel__mascot`-Feld zeigt Tint + Emoji + Name +
@@ -494,21 +493,18 @@ export function renderLetterSearchScreen(
   function revealAnswerExtrasAndNext(question) {
     const answeredAnimal = animalById.get(question.animalId);
 
-    // Redesign (Issue #68/#75, design.md "Sticker-Karte"): Sammeln gilt für
-    // beide Abschluss-Pfade (eigenständig gelöst UND "Lösung zeigen") — dieser
-    // Modus hat strukturell kein "falsch beantwortet", nur "selbst gelöst"
-    // vs. "aufgelöst" (siehe architecture.md, Punkt 5). Bild wird aus dem
-    // bereits geladenen reverse-image-frame-Bild übernommen (keine zweite
-    // Netzwerkanfrage, gleiches Prinzip wie #73).
+    // Redesign (Issue #68/#75, design.md "Sticker-Karte"): Sticker-Karte
+    // gilt für beide Abschluss-Pfade (eigenständig gelöst UND "Lösung
+    // zeigen") — dieser Modus hat strukturell kein "falsch beantwortet", nur
+    // "selbst gelöst" vs. "aufgelöst" (siehe architecture.md, Punkt 5). Bild
+    // wird aus dem bereits geladenen reverse-image-frame-Bild übernommen
+    // (keine zweite Netzwerkanfrage, gleiches Prinzip wie #73). Album-Eintrag
+    // entfällt seit Issue #91 (Tier-Album-Modul entfernt).
     if (answeredAnimal) {
-      const wasAlreadyCollected = loadCollectedAnimals().includes(
-        answeredAnimal.id,
-      );
-      addCollectedAnimal(answeredAnimal.id);
       stickerImgEl.src = imageEl.src;
       stickerImgEl.alt = "";
       stickerNameEl.textContent = answeredAnimal.name_de;
-      stickerBadgeEl.textContent = wasAlreadyCollected ? "SCHAU MAL" : "NEU!";
+      stickerBadgeEl.textContent = "NEU!";
     }
 
     if (answeredAnimal) {

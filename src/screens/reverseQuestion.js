@@ -51,7 +51,6 @@ import { DEFAULT_ROUND_LENGTH } from "../quiz/questionGenerator.js";
 // Wiederverwendbarkeit" — buildInfoSentence ist vollständig entkoppelt von
 // Fragetyp/Spielmodus, nur die Rendering-Verdrahtung unten ist neu).
 import { buildInfoSentence } from "../quiz/infoSentence.js";
-import { addCollectedAnimal, loadCollectedAnimals } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
 // Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
 // (#80-#83): das `.feedback-panel__mascot`-Feld zeigt Tint + Emoji + Name +
@@ -491,18 +490,15 @@ export function renderReverseQuestionScreen(
 
     // Redesign (Issue #68/#73, design.md "Sticker-Karte"): Sticker-Bild wird
     // aus dem bereits geladenen reverse-image-frame-Bild übernommen (keine
-    // zweite Netzwerkanfrage, siehe Template-Kommentar oben). Album-Sammeln
-    // unabhängig von richtig/falsch, gleiches Prinzip wie question.js.
+    // zweite Netzwerkanfrage, siehe Template-Kommentar oben), unabhängig von
+    // richtig/falsch, gleiches Prinzip wie question.js. Album-Eintrag
+    // entfällt seit Issue #91 (Tier-Album-Modul entfernt).
     const answeredAnimalForSticker = animalById.get(question.animalId);
     if (answeredAnimalForSticker) {
-      const wasAlreadyCollected = loadCollectedAnimals().includes(
-        answeredAnimalForSticker.id,
-      );
-      addCollectedAnimal(answeredAnimalForSticker.id);
       stickerImgEl.src = imageEl.src;
       stickerImgEl.alt = "";
       stickerNameEl.textContent = answeredAnimalForSticker.name_de;
-      stickerBadgeEl.textContent = wasAlreadyCollected ? "SCHAU MAL" : "NEU!";
+      stickerBadgeEl.textContent = "NEU!";
     }
 
     // Issue #35: Infosatz IMMER anzeigen, unabhängig davon, ob richtig oder

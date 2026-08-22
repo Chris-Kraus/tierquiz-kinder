@@ -41,7 +41,6 @@ import {
 import { getMemoryPairCountForDifficulty } from "../quiz/difficulty.js";
 import { buildInfoSentence } from "../quiz/infoSentence.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
-import { addCollectedAnimal } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
 
 // design.md, "Interaktion": "ca. 1 Sekunde — lang genug zum Erkennen, kurz
@@ -154,8 +153,7 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
            des Bretts + Konfetti-Container (Trigger bei jedem gefundenen
            Paar, siehe #69/handleCardClick unten). -->
       <p class="memory-screen__footnote">
-        Tippe zwei Karten an. Passen sie zusammen, bleiben sie offen — und
-        das Tier wandert ins Album.
+        Tippe zwei Karten an. Passen sie zusammen, bleiben sie offen.
       </p>
       <div class="feedback-panel__confetti" aria-hidden="true"></div>
     </section>
@@ -349,10 +347,10 @@ export function renderMemoryScreen(container, quizState, { onFinish } = {}) {
     const animal = animalById.get(animalId);
     if (!animal) return;
 
-    // Redesign (Issue #68/#69/#76, design.md "Tier-Memory"/"Album"): jedes
-    // gefundene Paar sammelt das Tier ins Album und löst Konfetti aus
-    // (README: "Auslöser: jede richtige Antwort, jedes Memory-Paar").
-    addCollectedAnimal(animal.id);
+    // Redesign (Issue #68/#69/#76, design.md "Tier-Memory"): jedes gefundene
+    // Paar löst Konfetti aus (README: "Auslöser: jede richtige Antwort, jedes
+    // Memory-Paar"). Album-Eintrag entfällt seit Issue #91 (Tier-Album-Modul
+    // entfernt).
     triggerConfetti(confettiContainerEl);
 
     infoSentenceTextEl.textContent = buildInfoSentence(animal);
