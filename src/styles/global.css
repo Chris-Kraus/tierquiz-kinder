@@ -242,12 +242,38 @@ button {
    nebeneinander in einer Flex-Reihe statt übereinander (per echtem
    Screenshot gefunden, nicht nur vermutet: die Kopfzeile erschien dadurch
    mittig auf der Seite statt oben, gestreckt auf die volle Höhe des viel
-   höheren #app-content-Nachbarn). */
+   höheren #app-content-Nachbarn).
+
+   Bugfix Issue #104 (Root-Cause-Analyse, live per getBoundingClientRect()
+   verifiziert): `align-items` MUSS bei `stretch` bleiben (Flexbox-Default für
+   `flex-direction: column`) statt `center`, das seit Issue #71 hier stand.
+   `#app-content` (siehe main.js) ist ein unstyled Wrapper-Div ohne eigene
+   `width` -- bei `align-items: center` wird so ein Flex-Kind nicht auf die
+   Breite von `#app` gestreckt, sondern per "shrink-to-fit" (`fit-content`)
+   anhand seines EIGENEN Inhalts bemessen. Das fiel jahrelang nicht auf, weil
+   `.start-screen`'s min-content (der längste nicht umbrechbare "Wortblock")
+   bis Issue #87 unter dem verfügbaren Platz jeder getesteten Breite blieb.
+   Seit #87 hat `.start-screen__title` eine feste `font-size: 80px` (vorher
+   responsives `clamp()`, siehe dortige Regel) -- das einzelne Wort
+   "entdecken!" bei dieser Schriftgröße ist breiter als ein 390px-Phone-
+   Viewport, wodurch `#app-content`'s min-content jetzt bei schmalen
+   Viewports über die Verfügbarkeit hinausschießt: die shrink-to-fit-Formel
+   `min(max(min-content, verfügbar), max-content)` liefert dann den
+   überbreiten min-content-Wert (gemessen 666.9px bei 390px Viewport) statt
+   der verfügbaren Breite. Da `#app` selbst korrekt auf die Viewport-Breite
+   begrenzt ist, wird die überbreite `#app-content`-Box mittig darin zentriert
+   -- das erzeugt den negativen `x`-Offset (gemessen -138.5px), der den
+   linken Rand von Titel & Co. abschneidet (QA-Fund, Issue #104). `stretch`
+   gibt `#app-content` stattdessen die tatsächliche `#app`-Breite als
+   definite Größe, wodurch die shrink-to-fit-Falle entfällt. `#app-header`
+   war von diesem Bug nie betroffen, weil es (anders als `#app-content`)
+   bereits ein explizites `width: 100%` trägt, das unabhängig von
+   `align-items` gegen die definite Breite von `#app` auflöst. */
 #app {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
 }
 
 /* Sichtbarer Fokusring für Tastaturbedienung (siehe design.md,
@@ -447,6 +473,36 @@ button {
   font-weight: 800;
   font-size: 80px;
   color: var(--ink);
+  /* Bugfix Issue #104: seit Issue #87 hat dieser Titel eine feste font-size
+     (vorher responsives clamp()) -- ohne Umbruch-Absicherung ist das
+     einzelne Wort "entdecken!" bei 80px breiter als ein 390px-Phone-
+     Viewport und überläuft die Box seitlich, selbst nachdem die eigentliche
+     #app-content-Übergroßen-/Offset-Ursache (siehe #app-Regel oben) behoben
+     ist. Gleiches etabliertes Muster wie .answer-tile__text (Issue #79/#100,
+     deutsche Silbentrennung via lang="de" auf <html>, siehe index.html) statt
+     einer neuen, abweichenden Lösung -- bleibt als Sicherheitsnetz bestehen,
+     greift nach der Media-Query unten (s. u.) im Normalfall aber gar nicht
+     mehr ein. */
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+/* Bugfix Issue #104: 80px (seit Issue #87 fest statt des ursprünglichen
+   responsiven `clamp(2.5rem, 6vw, 3.5rem)`, siehe Git-Historie) ist bei
+   Phone-Breiten technisch zwar dank `hyphens: auto` oben nicht mehr
+   überlaufend/abgeschnitten, silbentrennt den Titel dabei aber in 5 Zeilen
+   ("Lass" / "uns Tie-" / "re" / "entde-" / "cken!") -- für die Zielgruppe
+   (6-12 Jahre) kaum noch als zusammenhängender Satz lesbar. 40px entspricht
+   dem alten `clamp()`-Minimalwert (2.5rem) und liefert wieder einen sauberen
+   2-zeiligen, silbentrennungsfreien Umbruch ("Lass uns Tiere" / "entdecken!"),
+   per Screenshot bei 390px verifiziert. Breite absichtlich an `.start-cards`'
+   Umbruch-Breakpoint (860px) vorbei bis 480px (gängiger Phone-Breakpoint) --
+   Tablet/Desktop (820px/1280px) bleiben unverändert bei 80px, kein
+   Redesign-Eingriff dort. */
+@media (max-width: 480px) {
+  .start-screen__title {
+    font-size: 40px;
+  }
 }
 
 .start-screen__intro {
@@ -463,18 +519,28 @@ button {
    (siehe start.js, `renderSideSection()`) und wird in den Folge-Stories
    #88/#89 ersetzt. Unter 860px (gleicher Breakpoint wie zuvor auf
    `.start-screen`, siehe Issue #37) fällt die zweite Karte unter die erste,
-   damit auf kleinen Bildschirmen kein horizontales Scrollen entsteht. */
+   damit auf kleinen Bildschirmen kein horizontales Scrollen entsteht.
+
+   Bugfix Issue #104: `minmax(0, ...)` statt reinem `1fr`/`1.5fr` -- gleiches
+   Pflicht-Muster wie bei `.mode-picker__group` oben (dortiger Kommentar:
+   "ohne die 0-Untergrenze hängen die Spalten an ihrem min-content fest").
+   Live per getBoundingClientRect() gefunden: bei sehr schmalen Viewports
+   (320px) blieb `.start-card` sonst bei ~332px hängen (min-content von
+   `.collection-grid`, siehe dortiger Kommentar) statt auf die verfügbare
+   Spaltenbreite zu schrumpfen -- zusätzlich zum separaten `min-width: 0`
+   auf `.start-card` selbst unten nötig (Grid-Track- und Grid-Item-
+   Mindestbreite sind zwei unabhängige Stellen im Sizing-Algorithmus). */
 .start-cards {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
   gap: 26px;
   align-items: stretch;
 }
 
 @media (max-width: 860px) {
   .start-cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -488,6 +554,15 @@ button {
   flex-direction: column;
   gap: var(--k-space-3);
   text-align: center;
+  /* Bugfix Issue #104: ohne dieses `min-width: 0` bleibt dieses Grid-Kind bei
+     seinem min-content hängen (getrieben vom `.collection-grid`-Raster,
+     siehe dortiger Kommentar) und übersteigt bei schmalen Viewports (320px,
+     per echter Messung: 332px Kartenbreite bei nur 224px verfügbarer
+     Spaltenbreite) die eigentlich verfügbare Spaltenbreite aus `.start-cards`
+     -- horizontales Überlaufen der ganzen Seite. Gleiches etabliertes Muster
+     wie `.answer-tile`/`.mode-button`/`.difficulty-button` (siehe dortige
+     Kommentare) statt einer neuen Lösung. */
+  min-width: 0;
 }
 
 .start-card__title {
@@ -654,6 +729,15 @@ button {
 
 .mode-button__label {
   font-size: 21px;
+  /* Bugfix Issue #104 (kleiner, nicht-blockierender QA-Nebenfund bei
+     Tablet-Breite 820px): `overflow-wrap: anywhere` allein bricht mitten im
+     Wort ohne Trennzeichen ("Quizfrage-n", "Buchstab-en" -- per Screenshot
+     bei 820px gefunden). `hyphens: auto` nutzt wie bei .answer-tile__text
+     (Issue #79/#100, siehe dortiger Kommentar) die echte deutsche
+     Silbentrennung (lang="de" auf <html>, index.html) und bricht an einer
+     sinnvollen Silbengrenze mit Bindestrich; `overflow-wrap: anywhere`
+     bleibt als Fallback für Browser ohne hyphens-Unterstützung bestehen. */
+  hyphens: auto;
   overflow-wrap: anywhere;
 }
 
@@ -935,15 +1019,24 @@ button {
    "CHANGES-startseite-sammlung.md", Abschnitt 3) -- ersetzt die bisherige
    Album-Vorschau (`.start-album-preview*`, mit Issue #91 vollständig aus
    global.css entfernt) an derselben Stelle im Layout, zeigt aber die 50
-   Maskottchen statt gesammelter Tierarten. 9 Kacheln/Seite, 3 Spalten. */
+   Maskottchen statt gesammelter Tierarten. 9 Kacheln/Seite, 3 Spalten.
+
+   Bugfix Issue #104: `minmax(0, 1fr)` statt reinem `1fr` -- ohne die
+   0-Untergrenze bleiben die 3 Spalten an ihrem min-content (getrieben von
+   `.collection-grid__tile`, das ohne eigenes `min-width: 0` ebenfalls nicht
+   schrumpft) hängen. Live per getBoundingClientRect() gefunden: bei 320px
+   Viewport blieben die Kacheln bei 85.4px fix, unabhängig vom tatsächlich
+   verfügbaren Platz -- Ursache für den `.start-card`-Überlauf (siehe
+   dortiger Kommentar), nicht nur ein Randeffekt. */
 .collection-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
 .collection-grid__tile {
   min-height: 108px;
+  min-width: 0;
   border-radius: 18px;
   box-sizing: border-box;
   display: flex;
