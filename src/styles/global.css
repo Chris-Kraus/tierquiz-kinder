@@ -2186,10 +2186,6 @@ button {
   border-radius: var(--k-radius-btn);
 }
 
-.feedback-panel--incorrect .next-button {
-  background: var(--blush);
-}
-
 /* Issue #37 (Nebenbefund aus #28): "Kein Scrollen bei der Kernaufgabe"
    (design.md, "Layout-Empfehlungen") bezieht sich laut der Klarstellung im
    Abschnitt "Infosatz + Wikipedia-Link im 'Wer bin ich?'-Modus" ausdrücklich
