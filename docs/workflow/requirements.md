@@ -329,6 +329,18 @@ Nach Abschluss des Sterne-/Maskottchen-Batches (#83, #87–#91) auf Relevanz geg
 
 Alle drei Tickets damit umsetzungsreif: #85 (nur Punkte 1+2), #86 (unverändert), #92 (Badge-Entfernung, jetzt spezifiziert statt offen).
 
+## Ergänzung 22.08.2026: Triage roher Bugreport #94 (Bild in der Auflösung abgeschnitten + manchmal kein Bild)
+
+Roher Nutzer-Bugreport, zwei Sätze: (1) "das angezeigte Bild in der Auflösung nach der Antwort in den Rätseln [ist] abgeschnitten [...] könnte durch Verkleinerung verbessert werden", (2) "manchmal wird gar kein Bild angezeigt". Der Report benennt keinen konkreten Spielmodus — mit `ux-design`/`software-architect` geklärt, dass es sich um **zwei fachlich unabhängige Ursachen** handelt (CSS-Layout vs. Netzwerk-Robustheit), siehe `design.md`/`architecture.md` für die technische Herleitung. Daher **zwei getrennte Stories** statt einer gemeinsamen:
+
+**1. Abschneidung (CSS, `object-fit: cover` + feste Höhe):** Betrifft die Sticker-Karte (das Post-Answer-Feedbackbild) in allen drei Modi, die sie verwenden — Quizfragen (Issue #30), "Wer bin ich?" und Buchstabensuche (gemeinsame CSS-Regel). Fix: `object-fit: contain` statt `cover`, vorhandene Kartenhintergrundfarbe dient als Letterboxing-Fläche (siehe `design.md`). **Bewusst NICHT Teil dieser Story:** identisches `object-fit: cover`-Muster besteht unverändert auch beim Pre-Answer-"Bild zeigen"-Hint (Issue #16) und beim durchgehend sichtbaren "Wer bin ich?"-Hauptbild — `ux-design` hat beide Ausweitungsoptionen (in einem Aufwasch vs. separate Folge-Story) als vertretbar bewertet; hier bewusst eng am Wortlaut des Reports ("in der Auflösung") gehalten, um keine ungefragte Scope-Erweiterung vorzunehmen. Bleibt als möglicher, nicht priorisierter Folge-Punkt vermerkt, falls gewünscht.
+
+**2. "Manchmal kein Bild" (Netzwerk-Robustheit, nur Quizfragen-Modus):** Betrifft ausschließlich das automatische Post-Answer-Feedbackbild im normalen Quizfragen-Modus (`question.js`, Issue #30). Datenseitig keine Ursache (500/500 Tiere haben ein `image_filename`) — Root Cause ist ein einzelner, nicht wiederholter Fetch-Versuch mit stillem Fehlschlag bei Timeout/Netzwerkfehler, im Unterschied zu den beiden anderen bildbasierten Modi ("Wer bin ich?"/Buchstabensuche), die bereits bis zu 4 Versuche plus sichtbaren Fehlerzustand haben. Fix: begrenzten Retry (2–3 Versuche, gleiches Tier) ergänzen, weiterhin kein Fehlertext (bestehende #30-Designentscheidung "poppt still ein" bleibt gültig) — siehe `architecture.md`.
+
+**Kein offener, nutzerseitig zu entscheidender Design-Trade-off:** `contain` vs. `cover` ist als Entscheidung bereits mit `ux-design` abgeschlossen (vollständiges Tier sichtbar > randlos gefülltes Bild, für ein Kinder-Tiererkennungsspiel eindeutig die richtige Priorität) — keine Rückfrage an den Nutzer nötig.
+
+Story-Zuschnitt: zwei Issues — **#94 überarbeitet** (Abschneidung, CSS-Fix, behält die Nummer, da der ursprüngliche Titel bereits exakt darauf zielt) und ein **neues Issue** (Retry-Robustheit für das automatische Feedbackbild im Quizfragen-Modus). Beide `status:ready` (keine offenen Fachfragen mehr, technische Lösung mit `software-architect` abgestimmt).
+
 ## Korrektur (13.08.2026)
 
 Im Zuge der realen Datenbeschaffung für Issue #2 (Wikidata) wurde festgestellt, dass die reale Feldabdeckung deutlich von der ursprünglichen Annahme abweicht (kein Testartefakt, gemessen an 1.480 hydrierten Tier-Datensätzen). Daraufhin wurde mit dem Nutzer abgestimmt: **"Farbe" entfällt als Basisfeld** (0% Abdeckung), und die Pflichtfelder wurden auf `id`, `name_de`, `category` reduziert — die übrigen Felder bleiben optional mit variierender Abdeckung je Tier. Details siehe "Datenbasis (Tierdatenbank)" oben sowie `architecture.md`.

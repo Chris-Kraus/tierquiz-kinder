@@ -723,6 +723,29 @@ Label wechselt von immer "Runde geschafft 🎉" zu bedingt: nur bei tatsächlich
 - Start-Sterne-Badge: gleiche `aria-label`/`disabled`-Vorgabe wie Header-Badge (s. o.), keine neue Variante nötig.
 - Konditionales Ergebnis-Label: reiner Text-Austausch, kein zusätzliches `aria-live` nötig (Label ist Teil des initial gerenderten Bildschirminhalts, kein Live-Update nach dem ersten Rendern).
 
+## Bugfix-Triage: Bild in der Auflösung abgeschnitten + manchmal gar kein Bild (Issue #94, 22.08.2026, `ux-design`, konsultiert von `business-analyst`)
+
+**Anlass:** Roher Nutzer-Bugreport (Issue #94): "Aktuell ist das angezeigte Bild in der Auflösung nach der Antwort in den Rätseln abgeschnitten. [...] Zudem wird manchmal gar kein Bild angezeigt." `business-analyst` hat den Code aller Bild-Anzeigeorte gesichtet und zwei getrennte technische Ursachen identifiziert (siehe `architecture.md`, Abschnitt "Bugfix-Historie" → Issue #94-Eintrag, für die "kein Bild"-Ursache); hier nur die gestalterische Bewertung des Zuschneide-Problems.
+
+### Ursache der Abschneidung: `object-fit: cover` in fester Höhen-Box, nicht neu durch das Redesign eingeführt
+
+Verifiziert im Code (`global.css`): alle vier Bild-Anzeigen der App verwenden dasselbe Muster — volle Breite + feste Höhe + `object-fit: cover`:
+- `.image-hint__image` (Pre-Answer-Hint, Issue #16): 11rem/176px.
+- `.reverse-image-frame__image` ("Wer bin ich?"-Hauptbild, Issue #28): `clamp(12rem, 24vh, 14rem)`.
+- `.question-screen__feedback-image-img` (automatisches Post-Answer-Feedbackbild, Issue #30) sowie die baugleichen `.reverse-question__sticker-img`/`.letter-search__sticker-img` (Sticker-Karte, Issues #73/#75): **130px feste Höhe**.
+
+`object-fit: cover` skaliert das Bild so, dass die Box lückenlos gefüllt wird, und schneidet dabei den überstehenden Teil ab — bei Tierfotos mit stark abweichendem Seitenverhältnis (z. B. Hochformat-Aufnahmen von stehenden/hohen Tieren) ist sichtbares Abschneiden (Kopf, Beine, Schwanz) die erwartbare Folge, kein Rand-/Sonderfall. Per Git-Blame bestätigt: Das war bereits **vor** dem Redesign (Issue #72) so (damals 11rem/176px statt 130px) — **keine Regression durch das Redesign**, aber das Redesign hat die Box für die Sticker-Karte von 176px auf 130px verkleinert, was die Abschneidung bei genau dieser (vom Nutzer explizit gemeldeten "Auflösung"-)Anzeige sichtbar verschärft hat.
+
+### Gestaltungsempfehlung: `object-fit: contain` statt `cover` für die Sticker-Karten-Bilder (Kernfix), Hintergrundfarbe der Box als Letterboxing-Fläche
+
+Für ein Kinder-Tierquiz ist das vollständige, unbeschnittene Zeigen des Tieres im Auflösungsmoment wichtiger als eine randlos gefüllte Box — gerade im "Wer bin ich?"-Modus kann ein abgeschnittenes Detail (z. B. Geweih, Schwanzspitze) genau das sein, was das Tier erkennbar gemacht hätte, und auch in den anderen Modi ist die Sticker-Karte der kleine "Belohnungsmoment" nach der Antwort — ein sichtbar beschnittenes Foto wirkt dort schlampig statt wie eine Belohnung. **Empfehlung: `object-fit: contain` statt `cover`** für `.question-screen__feedback-image-img`, `.reverse-question__sticker-img`, `.letter-search__sticker-img` (gemeinsame CSS-Regel, siehe `global.css`). Das erzeugt bei abweichendem Seitenverhältnis Letterboxing (Leerraum oben/unten oder seitlich) statt Beschneidung — das bereits vorhandene `background: var(--sand-soft)` dieser Box reicht als ruhige Letterbox-Fläche, keine neue Farbe nötig.
+
+**Scope-Empfehlung an `business-analyst`:** Der Bugreport benennt wörtlich nur "die Auflösung nach der Antwort" — das ist eindeutig die Sticker-Karte (s. o.), daher als Kernfix so eng geschnitten. Die identische Abschneide-Ursache (`cover` + feste Höhe) besteht aber *unverändert* auch bei `.image-hint__image` und `.reverse-image-frame__image` — Letzteres ist zudem das Bild, das im "Wer bin ich?"-Modus durchgehend (Frage- UND Auflösungsphase) sichtbar bleibt, sodass ein Nutzer dieses Modus das abgeschnittene Hauptbild bereits während der Frage sieht, nicht erst "in der Auflösung". Empfehlung: entweder (a) beide Story-Fixes in einem Aufwasch für alle vier Anzeigeorte umsetzen (konsistentes Bild-Erlebnis, geringer Mehraufwand, da dieselbe CSS-Eigenschaft betroffen ist), oder (b) den Kernfix eng am Wortlaut des Reports halten und die übrigen zwei Orte als eigene, kleine Folge-Story vormerken. Beides ist vertretbar — das ist keine gestalterische Detailfrage mehr, sondern eine reine Scope-Entscheidung von `business-analyst`.
+
+### Barrierefreiheit
+
+Keine Änderung an Alt-Texten/ARIA nötig — reine `object-fit`-Eigenschaft, keine Struktur-/Semantikänderung. Kontrast unverändert (Letterbox-Fläche nutzt ein bereits gegen WCAG-AA genutztes Hintergrundtoken).
+
 ## Entscheidungen aus Klärungsrunde (13.08.2026)
 
 Alle vorherigen offenen Fragen sind geklärt: Zielalter → zwei Stufen 6–10/10–12 (siehe "Zielgruppe"), Sound-Effekte → nein, Fragenanzahl → 10 pro Runde (fest), Weiter-Mechanik → manueller Button, Sprache → Deutsch. Details jeweils in den Abschnitten oben eingearbeitet.
