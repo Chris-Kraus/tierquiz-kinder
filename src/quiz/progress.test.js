@@ -79,14 +79,28 @@ describe("recordRoundCompletion", () => {
     expect(loadProgress(storage).stars).toBe(1);
   });
 
-  it("vergibt keinen Stern unterhalb von score 5", () => {
+  // Issue #119 (PM-Entscheidung): jede abgeschlossene Runde gibt einen
+  // Stern, unabhängig vom Score — die vorherige Schwelle (score >= 5) wurde
+  // entfernt. Ersetzt den bisherigen "vergibt keinen Stern unterhalb von
+  // score 5"-Test.
+  it("vergibt auch bei niedrigem Score (unter der ehemaligen Schwelle von 5) einen Stern", () => {
     const storage = createFakeStorage();
     const result = recordRoundCompletion(
       { mode: GAME_MODE.QUIZ, score: 4, roundLength: 10 },
       storage,
     );
-    expect(result).toEqual({ earned: false, stars: 0 });
-    expect(loadProgress(storage).stars).toBe(0);
+    expect(result).toEqual({ earned: true, stars: 1 });
+    expect(loadProgress(storage).stars).toBe(1);
+  });
+
+  it("vergibt auch bei score 0 einen Stern", () => {
+    const storage = createFakeStorage();
+    const result = recordRoundCompletion(
+      { mode: GAME_MODE.QUIZ, score: 0, roundLength: 10 },
+      storage,
+    );
+    expect(result).toEqual({ earned: true, stars: 1 });
+    expect(loadProgress(storage).stars).toBe(1);
   });
 
   it("Tier-Memory vergibt immer einen Stern, unabhängig vom score", () => {

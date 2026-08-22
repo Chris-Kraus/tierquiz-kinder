@@ -22,8 +22,6 @@
 // gelöscht) — `activeIdx` referenziert deshalb stabil die Position
 // INNERHALB von unlockedIds, nicht die Maskottchen-ID selbst.
 
-import { GAME_MODE } from "./gameMode.js";
-
 const STORAGE_KEY = "tierquiz-kinder:progress";
 
 /** Start-Default: noch keine Sterne, nur das Start-Maskottchen (id 0 =
@@ -132,28 +130,28 @@ function persist(target, progress) {
 }
 
 /**
- * Wertet den Abschluss einer Runde aus und vergibt bei Erfolg einen Stern.
- * Eine Runde gilt als geschafft, wenn mindestens 5 Tiere richtig
- * beantwortet wurden (`score >= 5`) oder es sich um eine (laut main.js
- * ohnehin erst bei vollständig gelöstem Brett aufgerufene) Tier-Memory-
- * Runde handelt. Fehlertolerant: bei blockiertem/fehlendem localStorage
- * wird trotzdem der korrekte `earned`-Wert zurückgegeben, nur eben nicht
- * persistiert (`stars` im Rückgabewert entspricht dann dem nicht
- * gespeicherten, aber korrekt berechneten Zwischenstand).
- * @param {{mode: string, score: number, roundLength: number}} round
+ * Wertet den Abschluss einer Runde aus und vergibt dafür einen Stern.
+ * Issue #119 (PM-Entscheidung): jede abgeschlossene Runde gibt einen Stern,
+ * unabhängig vom Score — die vorherige Schwelle (`score >= 5`) entfiel
+ * bewusst, damit auch schwächere Runden zum Weiterspielen motivieren statt
+ * zu entmutigen. `earned` ist dadurch strukturell immer `true`; die
+ * Rückgabeform bleibt trotzdem `{earned, stars}` (statt nur `stars`), da
+ * result.js weiterhin unterscheidet, ob überhaupt schon eine Runde
+ * ausgewertet wurde (`quizState.earned === undefined` vor dem ersten
+ * Aufruf, siehe dortiger Kommentar). Fehlertolerant: bei blockiertem/
+ * fehlendem localStorage wird trotzdem der korrekte `stars`-Wert
+ * zurückgegeben, nur eben nicht persistiert.
  * @param {Storage} [storage] Storage-Implementierung, Standard `localStorage` (für Tests austauschbar)
  * @returns {{earned: boolean, stars: number}}
  */
-export function recordRoundCompletion({ mode, score }, storage) {
-  const earned = mode === GAME_MODE.MEMORY || score >= 5;
+export function recordRoundCompletion(_round, storage) {
+  const earned = true;
   const current = loadProgress(storage);
-  const stars = earned ? current.stars + 1 : current.stars;
+  const stars = current.stars + 1;
 
-  if (earned) {
-    const target = resolveStorage(storage);
-    if (target) {
-      persist(target, { ...current, stars });
-    }
+  const target = resolveStorage(storage);
+  if (target) {
+    persist(target, { ...current, stars });
   }
 
   return { earned, stars };

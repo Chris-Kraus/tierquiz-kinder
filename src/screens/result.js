@@ -127,8 +127,13 @@ function renderStarsBoxMarkup(progress, earned) {
   } else if (earned) {
     sentence = `Runde geschafft — dafür gibt es 1 Stern! Noch ${formatStars(5 - stars)} bis zum nächsten Maskottchen.`;
   } else {
-    sentence =
-      "Ab 5 richtigen Tieren in einer Runde gibt es einen Stern. Probier es gleich nochmal!";
+    // Issue #119: dieser Zweig ist im echten Spielfluss nicht mehr erreichbar
+    // (recordRoundCompletion vergibt inzwischen immer einen Stern, `earned`
+    // ist also strukturell immer `true`) -- greift nur als Default für
+    // Aufrufe, die renderResultScreen ohne main.js/recordRoundCompletion
+    // direkt aufrufen (siehe result.test.js). Bewusst kein Verweis mehr auf
+    // die entfernte "ab 5 richtigen Tieren"-Schwelle.
+    sentence = "Spiel eine Runde zu Ende, dann gibt es einen Stern.";
   }
 
   const ctaHtml = canRedeem

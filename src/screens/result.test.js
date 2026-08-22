@@ -465,11 +465,11 @@ describe("Sterne-Box im Ergebnis-Bildschirm (Issue #83)", () => {
     );
   });
 
-  it("zeigt bei keinem verdienten Stern den Ermutigungssatz, kein CTA", () => {
+  it("zeigt bei keinem verdienten Stern den Default-Satz, kein CTA", () => {
     const container = renderQuiz({ score: 3, earned: false });
 
     expect(container.querySelector(".stars-box__sentence").textContent).toBe(
-      "Ab 5 richtigen Tieren in einer Runde gibt es einen Stern. Probier es gleich nochmal!",
+      "Spiel eine Runde zu Ende, dann gibt es einen Stern.",
     );
     expect(container.querySelector(".stars-box__cta")).toBeNull();
     expect(container.querySelector(".stars-box__label").textContent).toBe(
