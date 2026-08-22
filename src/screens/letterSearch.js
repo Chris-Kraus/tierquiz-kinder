@@ -76,11 +76,12 @@ function normalizeLetter(value) {
  * @param {object} [callbacks]
  * @param {(quizState: object) => void} [callbacks.onFinish] wird nach der
  *   letzten Frage aufgerufen, sobald das Kind auf "Weiter" tippt.
+ * @param {() => void} [callbacks.onProgress] Issue #120: siehe question.js.
  */
 export function renderLetterSearchScreen(
   container,
   quizState,
-  { onFinish } = {},
+  { onFinish, onProgress } = {},
 ) {
   const totalQuestions = quizState.roundLength ?? DEFAULT_ROUND_LENGTH;
 
@@ -457,6 +458,12 @@ export function renderLetterSearchScreen(
   // `resolved`-Wert unterscheiden sich (siehe handlePuzzleSolved/
   // handleShowSolution unten).
   function revealAnswerExtrasAndNext(question) {
+    // Issue #120: gemeinsame Stelle für beide Abschluss-Pfade (eigenständig
+    // gelöst UND "Lösung zeigen", siehe die beiden recordAnswer()-Aufrufer
+    // oben) -- ein einziger onProgress()-Aufruf genügt, deckt also den
+    // Score-Update-Fall für beide Pfade ab.
+    onProgress?.();
+
     const answeredAnimal = animalById.get(question.animalId);
 
     // Redesign (Issue #68/#75, design.md "Sticker-Karte"): Sticker-Karte
@@ -635,6 +642,7 @@ export function renderLetterSearchScreen(
 
   nextButton.addEventListener("click", () => {
     advanceToNextQuestion(quizState);
+    onProgress?.();
 
     if (quizState.currentIndex >= totalQuestions) {
       onFinish?.(quizState);

@@ -76,8 +76,17 @@ import { MASCOTS, tintOf } from "../quiz/mascots.js";
  * @param {object} [callbacks]
  * @param {(quizState: object) => void} [callbacks.onFinish] wird nach der
  *   letzten Frage aufgerufen, sobald das Kind auf "Weiter" tippt.
+ * @param {() => void} [callbacks.onProgress] Issue #120: wird nach jeder
+ *   Antwort (Score-Änderung) sowie beim Weiterschalten zur nächsten Frage
+ *   (Fortschritts-Punkt-Änderung) aufgerufen, damit main.js die Kopfzeile
+ *   live aktualisieren kann -- diese Datei kennt renderHeader() selbst
+ *   weiterhin nicht (siehe main.js, `updateHeader`).
  */
-export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
+export function renderQuestionScreen(
+  container,
+  quizState,
+  { onFinish, onProgress } = {},
+) {
   if (!Array.isArray(quizState.questions) || quizState.questions.length === 0) {
     // Seit Issue #13: Rundenlänge kommt aus der am Start-Bildschirm
     // gewählten `quizState.roundLength` statt der festen
@@ -695,6 +704,7 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
       selectedText: selectedOption.text,
       correct: selectedOption.correct,
     });
+    onProgress?.();
 
     nextButton.hidden = false;
     nextButton.focus();
@@ -702,6 +712,7 @@ export function renderQuestionScreen(container, quizState, { onFinish } = {}) {
 
   nextButton.addEventListener("click", () => {
     advanceToNextQuestion(quizState);
+    onProgress?.();
 
     if (isQuizFinished(quizState)) {
       onFinish?.(quizState);

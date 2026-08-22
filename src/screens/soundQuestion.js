@@ -93,11 +93,12 @@ import { MASCOTS, tintOf } from "../quiz/mascots.js";
  * @param {object} [callbacks]
  * @param {(quizState: object) => void} [callbacks.onFinish] wird nach der
  *   letzten Frage aufgerufen, sobald das Kind auf "Weiter" tippt.
+ * @param {() => void} [callbacks.onProgress] Issue #120: siehe question.js.
  */
 export function renderSoundQuestionScreen(
   container,
   quizState,
-  { onFinish } = {},
+  { onFinish, onProgress } = {},
 ) {
   // Gleicher Fallback wie question.js/reverseQuestion.js für Zustände ohne
   // roundLength (z. B. in Tests).
@@ -849,6 +850,7 @@ export function renderSoundQuestionScreen(
       selectedText: selectedOption.text,
       correct: selectedOption.correct,
     });
+    onProgress?.();
 
     nextButton.hidden = false;
     nextButton.focus();
@@ -860,6 +862,7 @@ export function renderSoundQuestionScreen(
 
   nextButton.addEventListener("click", () => {
     advanceToNextQuestion(quizState);
+    onProgress?.();
 
     if (quizState.currentIndex >= totalQuestions) {
       onFinish?.(quizState);
