@@ -256,3 +256,4 @@ gh run list --repo Chris-Kraus/tierquiz-kinder --workflow=deploy-pages.yml
 - Lint-Workflow (separater CI-Check bei Push/PR, siehe Skill-Aufgabe 2) ist weiterhin nicht eingerichtet — bisher nur der Pages-Deployment-Workflow. Eigener Folge-Schritt, falls gewünscht.
 - Post-Merge-Verifikation von Issue #104 (Actions-Lauf grün, Live-URL, Mobile-Test) steht noch aus — Aufgabe von `qa-engineer` nach dem Merge von PR #105.
 
+
