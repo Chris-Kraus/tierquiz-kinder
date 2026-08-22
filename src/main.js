@@ -166,7 +166,9 @@ function showResultScreen(quizState) {
   // architecture.md Punkt 3), ruft main.js showResultScreen(quizState) ein
   // zweites Mal mit demselben Objekt auf. Ohne Schutz würde
   // recordRoundCompletion() dabei fälschlich ein zweites Mal ausgewertet und
-  // bei score >= 5 ein zweiter, unverdienter Stern vergeben. Der `starsAwarded`-
+  // ein zweiter, unverdienter Stern vergeben (seit Issue #119 vergibt jede
+  // Runde einen Stern, unabhängig vom Score — die Doppelvergabe-Gefahr
+  // besteht also für JEDE Runde, nicht nur ab einem bestimmten Score). Der `starsAwarded`-
   // Merker wird direkt auf das Ergebnis-Objekt geschrieben (gleiches Muster
   // wie die transienten `pending*`-Felder in start.js) und verhindert das --
   // rein lokale main.js-Absicherung, keine Änderung an progress.js nötig.
