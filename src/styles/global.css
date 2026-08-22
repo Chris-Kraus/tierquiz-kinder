@@ -1652,6 +1652,14 @@ button {
   opacity: 0.55;
 }
 
+/* Issue #79: die Ziffern-Badge (1/2/3/4) ist vor der Antwort rein visuell
+   ausgeblendet (das Element selbst ist aria-hidden="true", siehe question.js/
+   reverseQuestion.js/soundQuestion.js — nie von Screenreadern genutzt, daher
+   keine A11y-Auswirkung). Nach der Antwort (.answer-tile--correct/
+   --selected-wrong) wird sie wieder eingeblendet und zeigt das von der
+   bestehenden JS-Logik unverändert gesetzte Feedback-Icon (✓/●). Kein
+   `display: none`, damit die Flex-Gap/Zentrierung zwischen den beiden
+   Zuständen nicht "springt". */
 .answer-tile__icon {
   width: 60px;
   height: 60px;
@@ -1664,13 +1672,28 @@ button {
   font-size: 1.5rem;
   line-height: 1;
   flex-shrink: 0;
+  visibility: hidden;
 }
 
-/* Zusätzliches Sicherheitsnetz zu min-width: 0 oben: erlaubt notfalls auch
-   einen Umbruch mitten in einem einzelnen sehr langen Wort (normales
-   `white-space` bricht nur zwischen Wörtern), damit eine Kachel auch bei
-   ungewöhnlich langen Tiernamen nie über ihre Spaltenbreite hinausragt. */
+.answer-tile--correct .answer-tile__icon,
+.answer-tile--selected-wrong .answer-tile__icon {
+  visibility: visible;
+}
+
+/* Issue #79: Schriftgröße moderat verkleinert (32px -> 26px, bestehender
+   Karten-Titel-Token dieses Designsystems, siehe .start-card__title/
+   .start-screen__intro), damit der jetzt badge-freie Tiername mehr Raum für
+   sich hat und bei langen Namen seltener/moderater umbricht — bleibt für die
+   Zielgruppe (6-12 Jahre) klar lesbar. Silbentrennung: echte deutsche
+   Silbentrennung (`hyphens: auto`, nutzt das bereits vorhandene lang="de" auf
+   <html>, siehe index.html) als primärer Mechanismus, damit ein nötiger
+   Umbruch bei einem ungewöhnlich langen, bindestrichlosen Tiernamen (z. B.
+   "Bruchwasserläufer") an einer sinnvollen Silbengrenze erfolgt statt mitten
+   im Wort. `overflow-wrap: break-word` bleibt als letzter Fallback bestehen
+   für Browser ohne `hyphens`-Unterstützung (keine Verschlechterung ggü.
+   vorher). */
 .answer-tile__text {
+  font-size: 26px;
   /* min-width: 0 ist hier zusätzlich zum bereits bestehenden min-width: 0 auf
      .answer-tile selbst nötig: seit dem Redesign hat .answer-tile__icon eine
      feste 60x60px-Box (immer sichtbar, auch vor der Antwort, design.md-
@@ -1682,6 +1705,7 @@ button {
      echtem Browser-Screenshot gefunden: Badge und Text liefen symmetrisch
      links/rechts über den Kachelrand hinaus. */
   min-width: 0;
+  hyphens: auto;
   overflow-wrap: break-word;
 }
 
