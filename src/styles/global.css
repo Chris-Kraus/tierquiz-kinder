@@ -2507,115 +2507,50 @@ button {
   color: var(--muted);
 }
 
-/* Maskottchen-Karussell (Issue #82, dritter Teil des Sterne-/Maskottchen-
-   Freischaltsystems #80-#83): unter dem Album auf Start- UND
-   Ergebnis-Bildschirm (siehe start.js/result.js) -- eine gemeinsame Regel
-   genügt, da beide Bildschirme exakt dasselbe Markup/dieselben Klassen
-   erzeugen (gleiches Wiederverwendungsprinzip wie bei `.start-album-preview`
-   oben). Trenner via `border-top` auf dem Container selbst statt eigenem
-   `<hr>`-Element (Handoff, "Maskottchen-Karussell"). */
-.mascot-carousel {
+/* Issue #90: rechte Spalte des Ergebnis-Bildschirms zeigt jetzt dieselbe
+   "Meine Sammlung"-Karte + denselben "Mein Maskottchen"-Baustein wie der
+   Start-Bildschirm (Issue #89/#88, src/quiz/collectionCard.js/
+   mascotStageCard.js) -- ersetzt das bisherige Maskottchen-Karussell (Issue
+   #82, `.mascot-carousel*` oben, jetzt entfernt: mit dieser Story verliert
+   es seine letzte Verwendungsstelle) sowie die Album-Karte (`.start-album-preview*`
+   oben bleibt vorerst als toter Code bestehen -- deren Bereinigung ist Teil
+   der separaten Story #91, siehe architecture.md "Story E"). */
+
+/* "Meine Sammlung"-Karte auf dem Ergebnis-Bildschirm: gleiche Kacheln wie auf
+   dem Start-Bildschirm (`.collection-grid*`, s. o.), aber größere
+   Mindesthöhe/Namensschrift laut Handoff-Abschnitt 5 ("Ergebnis-Screen
+   (Änderungen)": "gleiche Kacheln, min-height 130px, Name 16px") --
+   überschrieben per CSS-Scoping auf dem Kartencontainer, ohne die geteilte
+   Render-Funktion selbst zu verzweigen (gleiches Prinzip, das
+   `.start-album-preview--result` zuvor für die jetzt entfernte Album-Karte
+   verwendet hat). */
+.result-collection-card .collection-grid__tile {
+  min-height: 130px;
+}
+
+.result-collection-card .collection-grid__name {
+  font-size: 16px;
+}
+
+/* "Mein Maskottchen"-Bühne+Nav unterhalb der Sammlungs-Karte -- design.md:
+   "separatem Maskottchen-Nav+Bühne darunter ... technisch dieselbe
+   Komponente wie oben, nur zweitplatziert". Keine eigene weiße Kartenfläche
+   (anders als die Sammlungs-Karte), nur durch eine gestrichelte Trennlinie
+   abgesetzt -- gleiches visuelle Prinzip wie das entfernte
+   `.mascot-carousel` oben, das dieser Abschnitt ersetzt. */
+.result-mascot-section {
   border-top: 4px dashed #e4d6be;
   margin-top: 20px;
   padding-top: 16px;
+  text-align: center;
 }
 
-.mascot-carousel__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--k-space-3);
-}
-
-.mascot-carousel__title {
+.result-mascot-section__title {
   margin: 0;
   font-family: var(--font-heading);
   font-weight: 800;
   font-size: 22px;
   color: var(--ink);
-}
-
-/* Gleiches Pillen-Muster wie `.memory-screen__pill` (Issue #76) -- Fläche
-   `--sky` laut Handoff. */
-.mascot-carousel__pill {
-  background: var(--sky);
-  border: var(--k-border-sm) solid var(--ink);
-  border-radius: var(--k-radius-pill);
-  padding: 4px 16px;
-  font-family: var(--font-body);
-  font-weight: 800;
-  font-size: 15px;
-  color: var(--ink);
-  white-space: nowrap;
-}
-
-.mascot-carousel__row {
-  display: flex;
-  align-items: center;
-  gap: var(--k-space-3);
-}
-
-.mascot-carousel__arrow {
-  flex-shrink: 0;
-  width: 72px;
-  height: 72px;
-  background: var(--card);
-  font-size: 30px;
-  border-radius: var(--k-radius-pill);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Am Rand disabled (Handoff: "opacity: .35"), nur freigeschaltete
-   Maskottchen sind über die Pfeile erreichbar. */
-.mascot-carousel__arrow:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-.mascot-carousel__stage {
-  flex: 1;
-  min-width: 0;
-  border: var(--k-border-lg) solid var(--ink);
-  border-radius: var(--k-radius-btn);
-  padding: var(--k-space-3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 4px;
-}
-
-.mascot-carousel__stage-emoji {
-  font-size: 68px;
-  line-height: 1;
-}
-
-.mascot-carousel__stage-name {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 20px;
-  color: var(--ink);
-}
-
-.mascot-carousel__stage-role {
-  margin: 0;
-  font-family: var(--font-body);
-  font-weight: 800;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-}
-
-.mascot-carousel__hint {
-  margin: var(--k-space-3) 0 0;
-  font-family: var(--font-body);
-  font-size: 15px;
-  color: var(--muted);
 }
 
 /* Verlaufsliste der letzten Ergebnisse (Issue #14): dezenter, standardmäßig

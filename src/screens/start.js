@@ -130,182 +130,38 @@ import { buildMemoryDeck } from "../quiz/memory.js";
 import { generateNextLetterSearchQuestion } from "../quiz/letterSearchQuestionGenerator.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
 // Issue #82 (Datengrundlage weiterhin genutzt), Issue #88 (Markup/Wiring
-// ersetzt -- siehe renderMascotStageCardMarkup() unten): `loadProgress`/
-// `setActiveIdx` liefern/steuern den aktiven Maskottchen-Index (siehe
-// progress.js), `MASCOTS`/`tintOf` die Anzeige-Daten (Name, Emoji, Rolle,
-// Hintergrundfarbe je Maskottchen, siehe mascots.js).
+// ersetzt): `loadProgress` liefert den aktiven Maskottchen-Index/Sternestand
+// (siehe progress.js) für das start-spezifische Sterne-Badge unten --
+// `setActiveIdx`/`MASCOTS`/`tintOf` braucht start.js seit der Issue
+// #90-Extraktion (siehe Imports weiter unten) nicht mehr direkt, das
+// übernimmt jetzt src/quiz/mascotStageCard.js intern.
 //
 // Issue #89: der bisherige Album-Vorschau-Import (`loadCollectedAnimals`/
 // `getAlbumProgress`/`ALBUM_TARGET` aus `quiz/album.js`) entfällt hier
 // ersatzlos -- die rechte Karte ("Meine Sammlung") zeigt ab jetzt die 50
-// Maskottchen (renderCollectionCardMarkup() unten), nicht mehr die
-// gesammelten Tierarten. `album.js` selbst bleibt unangetastet (wird noch
-// von den 5 Frage-Bildschirmen sowie result.js verwendet, vollständige
-// Modul-Entfernung ist die separate Story #91).
-import { loadProgress, setActiveIdx } from "../quiz/progress.js";
-import { MASCOTS, tintOf } from "../quiz/mascots.js";
-// Issue #88: neue wiederverwendbare Nav-Komponente (Pfeil/Badge/Pfeil),
-// ersetzt das bisherige, screen-eigene Karussell-Markup/-Wiring aus Issue
-// #82 (renderMascotCarouselMarkup()/wireMascotCarousel()) an dieser ersten
-// von 4 geplanten Verwendungsstellen (siehe architecture.md,
-// "Wiederverwendbare 3-teilige Nav-Komponente").
-import { buildNavControlMarkup, wireNavControl } from "../quiz/navControl.js";
+// Maskottchen, nicht mehr die gesammelten Tierarten. `album.js` selbst
+// bleibt unangetastet (wird noch von den 5 Frage-Bildschirmen sowie
+// result.js verwendet, vollständige Modul-Entfernung ist die separate
+// Story #91).
+import { loadProgress } from "../quiz/progress.js";
 // Issue #89: dieselbe canRedeem-Berechnung wie im Kopfzeilen-Sterne-Badge
 // (Issue #81), jetzt aus header.js exportiert statt ein zweites Mal lokal
 // berechnet (siehe dortiger Kommentar zu canRedeemMascot()).
 import { canRedeemMascot } from "./header.js";
-
-// Singular/Plural-Copy fürs Karussell-Hinweiszeile (Handoff, "Maskottchen-
-// Karussell": "noch {N Stern|N Sterne} bis zum nächsten") -- Deutsch
-// unterscheidet beim Zählen nur zwischen genau 1 und allem anderen, kein
-// Sonderfall für 0 nötig (siehe design.md, "Singular/Plural-Copy"). Kein
-// bestehender Helper dafür wiederverwendbar (weder header.js noch
-// mascotChooser.js zeigen bislang einen Sterne-Zählsatz), daher neu -- reine
-// Ternary genügt, keine Bibliothek nötig.
-function formatStars(n) {
-  return n === 1 ? "1 Stern" : `${n} Sterne`;
-}
-
-/**
- * Baut das Markup für die "Mein Maskottchen"-Karte (Issue #88, neue
- * Handoff-Datei "CHANGES-startseite-sammlung.md", Abschnitt 2) -- ersetzt
- * die bisherige Kombination aus Guide-Karte (vormals
- * renderMascotGuideMarkup()) + kleinem Karussell (vormals
- * renderMascotCarouselMarkup()) aus Issue #82 durch eine große quadratische
- * Bühne (`aspect-ratio: 1.1`, `box-sizing: border-box` -- Pflicht laut
- * Handoff, sonst laufen Rahmen/Padding über die 100% Kartenbreite hinaus)
- * plus das neue wiederverwendbare Nav-Element (src/quiz/navControl.js). Das
- * frühere Sprechblasen-Element ("Fine, dein Tierguide") entfällt laut
- * Handoff ersatzlos -- der Guide geht vollständig in der neuen Bühne auf.
- * `aria-live="polite"` auf der Bühne (gleiches Muster wie vorher
- * `.mascot-carousel__stage`), damit ein Pfeil-Klick auch ohne visuellen
- * Fokuswechsel angekündigt wird.
- * @param {{stars: number, unlockedIds: number[], activeIdx: number}} progress
- * @returns {string}
- */
-function renderMascotStageCardMarkup(progress) {
-  const { stars, unlockedIds, activeIdx } = progress;
-  const activeMascotId = unlockedIds[activeIdx] ?? 0;
-  const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
-  const tint = tintOf(activeMascotId);
-
-  const allCollected = unlockedIds.length >= MASCOTS.length;
-  const canRedeem = stars >= 5 && !allCollected;
-
-  // Drei-Fälle-Hinweiszeile laut Handoff, Abschnitt 2.5 -- Copy hier bewusst
-  // wörtlich aus der neuen Handoff-Datei übernommen (weicht leicht vom
-  // vorherigen #82-Karussell-Wortlaut ab).
-  let hint;
-  if (allCollected) {
-    hint = "Du hast alle 50 Maskottchen gesammelt!";
-  } else if (canRedeem) {
-    hint = `Du hast ${stars} Sterne — du darfst dir ein neues Maskottchen aussuchen!`;
-  } else {
-    hint = `Noch ${formatStars(5 - stars)}, bis du ein weiteres Maskottchen freischalten kannst.`;
-  }
-
-  const navMarkup = buildNavControlMarkup({
-    label: `${activeIdx + 1}/${unlockedIds.length}`,
-    disabledPrev: activeIdx === 0,
-    disabledNext: activeIdx === unlockedIds.length - 1,
-    ariaLabelPrev: "Vorheriges Maskottchen",
-    ariaLabelNext: "Nächstes Maskottchen",
-  });
-
-  return `
-    <div class="mascot-stage" style="background: ${tint};" aria-live="polite">
-      <span class="mascot-stage__figure" aria-hidden="true">${activeMascot.emoji}</span>
-      <p class="mascot-stage__name">${activeMascot.name}</p>
-      <p class="mascot-stage__role">${activeMascot.role}</p>
-    </div>
-    <p class="start-mascot-card__select-label">Maskottchen auswählen</p>
-    ${navMarkup}
-    <p class="start-mascot-card__hint">${hint}</p>
-  `;
-}
-
-// Issue #89, neue Handoff-Datei "CHANGES-startseite-sammlung.md", Abschnitt 3
-// ("Karte 'Meine Sammlung'"): 9 Kacheln pro Seite, 6 Seiten für die 50
-// Maskottchen aus mascots.js (50 / 9 = 5 volle Seiten + 1 Rest-Seite mit 5
-// Kacheln -- Math.ceil deckt das korrekt ab, keine Rundungs-Sonderbehandlung
-// nötig).
-const COLLECTION_PAGE_SIZE = 9;
-const COLLECTION_PAGE_COUNT = Math.ceil(MASCOTS.length / COLLECTION_PAGE_SIZE);
-
-/**
- * Baut das Markup für die "Meine Sammlung"-Karte (Issue #89) -- ersetzt die
- * bisherige Album-Vorschau (entfernter Import oben) an derselben Stelle im
- * Layout, trackt aber eine komplett andere Sache: freigeschaltete
- * Maskottchen (50 Stück, siehe mascots.js) statt gesammelte Tierarten (siehe
- * requirements.md, "kein Wiederverwenden des Album-Rasters für einen neuen
- * Zweck"). Rein darstellend + die Nav-Verdrahtung passiert wie beim
- * Maskottchen-Karten-Pendant außerhalb dieser Funktion (siehe
- * renderCollectionCard() unten) -- diese Funktion baut nur das Markup für
- * die jeweils aktuelle Seite.
- *
- * `colPage` ist rein lokaler UI-Zustand (Closure-Variable in
- * renderStartScreen(), analog zu selectedDifficulty) -- KEINE eigene
- * localStorage-Persistenz, anders als `activeIdx` beim Maskottchen-Nav
- * (progress.js). Welche Maskottchen bereits freigeschaltet sind, kommt
- * weiterhin aus `progress.unlockedIds` (echte Persistenz), nur die aktuell
- * angezeigte Sammlungs-SEITE ist rein transient.
- *
- * Letzte Seite (0-indexed COLLECTION_PAGE_COUNT - 1, also Seite 6 von 6)
- * rendert laut Handoff nur die real vorhandenen Slots
- * (`Math.min(9, 50 - seite*9)` -- hier ausgedrückt über
- * `Math.min(COLLECTION_PAGE_SIZE, MASCOTS.length - startId)`), keine leeren
- * Platzhalter-Kästen: bei 50 Maskottchen und Seite 5 (0-indexed) ergibt das
- * `Math.min(9, 50 - 45) = 5` Kacheln (Maskottchen-IDs 45-49).
- * @param {{unlockedIds: number[]}} progress
- * @param {number} colPage 0-indexierte aktuelle Sammlungs-Seite
- * @returns {string}
- */
-function renderCollectionCardMarkup(progress, colPage) {
-  const { unlockedIds } = progress;
-  const startId = colPage * COLLECTION_PAGE_SIZE;
-  const slotsOnPage = Math.min(COLLECTION_PAGE_SIZE, MASCOTS.length - startId);
-
-  const tiles = [];
-  for (let i = 0; i < slotsOnPage; i += 1) {
-    const mascotId = startId + i;
-    const mascot = MASCOTS[mascotId];
-    const unlocked = unlockedIds.includes(mascotId);
-
-    if (unlocked) {
-      tiles.push(`
-        <div
-          class="collection-grid__tile collection-grid__tile--unlocked"
-          style="background: ${tintOf(mascotId)};"
-        >
-          <span class="collection-grid__figure" aria-hidden="true">${mascot.emoji}</span>
-          <p class="collection-grid__name">${mascot.name}</p>
-        </div>
-      `);
-    } else {
-      tiles.push(`
-        <div class="collection-grid__tile collection-grid__tile--locked" aria-hidden="true">
-          <span class="collection-grid__mark">?</span>
-        </div>
-      `);
-    }
-  }
-
-  const navMarkup = buildNavControlMarkup({
-    label: `Seite ${colPage + 1}/${COLLECTION_PAGE_COUNT}`,
-    disabledPrev: colPage === 0,
-    disabledNext: colPage === COLLECTION_PAGE_COUNT - 1,
-    ariaLabelPrev: "Vorherige Sammlungsseite",
-    ariaLabelNext: "Nächste Sammlungsseite",
-  });
-
-  return `
-    <div class="collection-grid" aria-live="polite">
-      ${tiles.join("")}
-    </div>
-    ${navMarkup}
-    <p class="start-collection-card__hint">Hinter jedem ? versteckt sich ein Maskottchen: 5 Sterne sammeln, dann darfst du eins aussuchen.</p>
-  `;
-}
+// Issue #88 baute die "Mein Maskottchen"-Bühne+Nav ursprünglich direkt hier
+// (renderMascotStageCardMarkup()/renderMascotCard()); Issue #90 (Ergebnis-
+// Bildschirm braucht laut design.md "technisch dieselbe Komponente wie oben,
+// nur zweitplatziert") hat sie nach src/quiz/mascotStageCard.js extrahiert,
+// damit result.js sie importieren kann statt sie nachzubauen -- start.js
+// nutzt jetzt denselben geteilten Mount-Helper statt seiner vorherigen
+// lokalen Fassung, unverändertes Markup/Verhalten.
+import { mountMascotStage } from "../quiz/mascotStageCard.js";
+// Analog: die "Meine Sammlung"-Karte (Issue #89, renderCollectionCardMarkup()/
+// renderCollectionCard() ursprünglich hier) ist mit Issue #90 nach
+// src/quiz/collectionCard.js extrahiert (zweite Verwendungsstelle auf dem
+// Ergebnis-Bildschirm, andere Kachelgröße/andere Hinweiszeile dort -- siehe
+// dortiger Datei-Kommentar).
+import { mountCollectionCard } from "../quiz/collectionCard.js";
 
 /**
  * Baut das Markup für das start-spezifische Sterne-Badge (Issue #89) --
@@ -411,10 +267,6 @@ export function renderStartScreen(container, { onStart, onOpenMascotChooser } = 
   // Analoges Wiederverwendungsfeld für GAME_MODE.LETTER_SEARCH (Issue #46),
   // gleiches Prinzip wie pendingReverseQuestion/pendingSoundQuestion oben.
   let pendingLetterSearchQuestion = null;
-  // Issue #89: aktuell angezeigte Seite der "Meine Sammlung"-Karte -- rein
-  // lokaler UI-Zustand, analog zu selectedDifficulty oben, KEINE eigene
-  // localStorage-Persistenz (siehe renderCollectionCardMarkup()-Kommentar).
-  let colPage = 0;
 
   container.innerHTML = `
     <section class="start-screen" aria-labelledby="start-title">
@@ -619,75 +471,27 @@ export function renderStartScreen(container, { onStart, onOpenMascotChooser } = 
 
   // Issue #87 richtete die Kartenzeile (`.start-cards`, "Mein Maskottchen"
   // / "Meine Sammlung") als reinen Layout-Rahmen ein. Issue #88 füllte die
-  // linke Karte mit der echten Bühne + dem neuen navControl.js-Element
-  // (siehe renderMascotStageCardMarkup() oben). Issue #89 füllt jetzt die
-  // rechte Karte mit dem echten 50-Maskottchen-Raster
-  // (renderCollectionCardMarkup() oben, ersetzt die bisherige Album-Vorschau
-  // vollständig -- #91 entfernt album.js selbst) plus dem start-spezifischen
-  // Sterne-Badge darunter.
-  //
-  // Zwei getrennte Render-Funktionen (Maskottchen-Karte / Sammlungs-Karte)
-  // statt einer gemeinsamen `renderSideSection()` wie zuvor: beide Karten
-  // haben jetzt unabhängigen, eigenen lokalen/persistenten Navigations-
-  // Zustand (`activeIdx` in progress.js vs. `colPage` rein lokal, s. o.) --
-  // ein Pfeil-Klick in der einen Karte muss die andere nicht unnötig neu
-  // rendern.
+  // linke Karte mit der echten Bühne + dem neuen navControl.js-Element,
+  // Issue #89 die rechte Karte mit dem 50-Maskottchen-Raster (ersetzt die
+  // bisherige Album-Vorschau vollständig -- #91 entfernt album.js selbst)
+  // plus dem start-spezifischen Sterne-Badge darunter. Mit Issue #90 sind
+  // beide Karten-Bausteine nach src/quiz/mascotStageCard.js bzw.
+  // src/quiz/collectionCard.js extrahiert (siehe Imports oben) -- die
+  // jeweiligen mount*()-Funktionen übernehmen jetzt selbst das komplette
+  // Render+Wiring (inkl. Doppel-Tap-robustem Neu-Rendern bei jedem
+  // Pfeil-Klick), start.js muss dafür keine eigenen Funktionen mehr
+  // definieren.
   const mascotCardBodyEl = container.querySelector("[data-mascot-card-body]");
   const collectionCardBodyEl = container.querySelector(
     "[data-collection-card-body]",
   );
   const starBadgeRowEl = container.querySelector("[data-star-badge-row]");
 
-  function renderMascotCard() {
-    const progress = loadProgress();
-    mascotCardBodyEl.innerHTML = renderMascotStageCardMarkup(progress);
-
-    // Doppel-Tap-Robustheit (architecture.md, Punkt 3): onPrev/onNext lesen
-    // hier bewusst JEDES MAL frisch über loadProgress(), statt die oben
-    // bereits geladene `progress`-Variable (eine potenziell veraltete
-    // Kopie) wiederzuverwenden -- kein Debounce/Timeout dazwischen, danach
-    // sofortiges Neu-Rendern (inkl. Neu-Verdrahten frischer Buttons), damit
-    // ein zweiter, schnell folgender Klick garantiert den bereits durch den
-    // ersten Klick geschriebenen Stand liest.
-    wireNavControl(mascotCardBodyEl, {
-      onPrev: () => {
-        const { activeIdx } = loadProgress();
-        setActiveIdx(activeIdx - 1);
-        renderMascotCard();
-      },
-      onNext: () => {
-        const { activeIdx } = loadProgress();
-        setActiveIdx(activeIdx + 1);
-        renderMascotCard();
-      },
-    });
-  }
-
-  function renderCollectionCard() {
-    const progress = loadProgress();
-    collectionCardBodyEl.innerHTML = renderCollectionCardMarkup(
-      progress,
-      colPage,
-    );
-
-    // Doppel-Tap-Robustheit wie bei renderMascotCard() oben -- `colPage`
-    // ist zwar rein lokaler UI-Zustand (kein loadProgress()-Neulesen nötig),
-    // aber dieselbe Garantie gilt: onPrev/onNext schreiben/lesen direkt die
-    // äußere `colPage`-Variable (keine beim Aufruf eingefangene Kopie),
-    // danach sofortiges Neu-Rendern inkl. neu verdrahteter Buttons -- ein
-    // zweiter, schnell folgender Klick liest damit garantiert den bereits
-    // durch den ersten Klick aktualisierten Stand.
-    wireNavControl(collectionCardBodyEl, {
-      onPrev: () => {
-        colPage = Math.max(0, colPage - 1);
-        renderCollectionCard();
-      },
-      onNext: () => {
-        colPage = Math.min(COLLECTION_PAGE_COUNT - 1, colPage + 1);
-        renderCollectionCard();
-      },
-    });
-  }
+  mountMascotStage(mascotCardBodyEl);
+  mountCollectionCard(collectionCardBodyEl, {
+    hintText:
+      "Hinter jedem ? versteckt sich ein Maskottchen: 5 Sterne sammeln, dann darfst du eins aussuchen.",
+  });
 
   // Issue #89: start-spezifisches Sterne-Badge -- einmalig beim Aufbau des
   // Bildschirms gerendert (gleiches Prinzip wie header.js: main.js ruft
@@ -712,8 +516,6 @@ export function renderStartScreen(container, { onStart, onOpenMascotChooser } = 
     }
   }
 
-  renderMascotCard();
-  renderCollectionCard();
   renderStarBadge();
 
   const modeButtons = Array.from(container.querySelectorAll(".mode-button"));

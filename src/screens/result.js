@@ -52,75 +52,27 @@ import {
 import { DIFFICULTY_LABELS } from "../quiz/difficulty.js";
 import { QUIZ_MODES, getModeLabel } from "../quiz/mode.js";
 import { GAME_MODE } from "../quiz/gameMode.js";
-import animalsData from "../../data/animals.json";
-import { loadCollectedAnimals, getAlbumProgress, ALBUM_TARGET } from "../quiz/album.js";
 import { triggerConfetti } from "../quiz/confetti.js";
-// Issue #82, dritter Teil des Sterne-/Maskottchen-Freischaltsystems
-// (#80-#83): Karussell unterhalb des Albums, gleiches Modul-Paar wie in
-// start.js.
-import { loadProgress, setActiveIdx } from "../quiz/progress.js";
-import { MASCOTS, tintOf } from "../quiz/mascots.js";
+// Issue #83, vierter/letzter Teil des Sterne-/Maskottchen-Freischaltsystems
+// (#80-#83): renderStarsBoxMarkup() unten braucht den aktuellen
+// Sternestand/unlockedIds.
+import { loadProgress } from "../quiz/progress.js";
+// Issue #90: die alte Album-Karte (`renderAlbumCardMarkup()`, Issue #77) und
+// das alte Maskottchen-Karussell (`renderMascotCarouselMarkup()`, Issue #82)
+// sind komplett entfernt -- die rechte Spalte zeigt jetzt dieselbe "Meine
+// Sammlung"-Karte + denselben "Mein Maskottchen"-Baustein wie der
+// Start-Bildschirm (Issue #89/#88), aus den mit dieser Story neu
+// extrahierten gemeinsamen Modulen importiert statt hier nachgebaut (siehe
+// renderSideSection() weiter unten sowie die jeweiligen Datei-Kommentare in
+// src/quiz/collectionCard.js/mascotStageCard.js). `album.js` selbst bleibt
+// unangetastet (wird noch von den 5 Frage-Bildschirmen verwendet,
+// vollständige Modul-Entfernung ist die separate Story #91).
+import { mountCollectionCard } from "../quiz/collectionCard.js";
+import { mountMascotStage } from "../quiz/mascotStageCard.js";
 
-const ANIMAL_NAME_BY_ID = new Map(
-  animalsData.animals.map((animal) => [animal.id, animal.name_de]),
-);
-
-/**
- * Baut das Markup für die Album-Karte auf dem Ergebnis-Bildschirm (Redesign,
- * Issue #77, design.md "Ergebnis": "Album-Karte wie Start, aber Grid 3
- * Spalten, Felder 118px"). Gleiche Datenquelle/Logik wie die Start-Bildschirm-
- * Vorschau (Issue #71), bewusst hier dupliziert statt importiert (start.js
- * exportiert seine Version nicht, beide Bildschirme kennen einander nicht
- * direkt — gleiches Kopplungsprinzip wie im gesamten Projekt).
- */
-function renderAlbumCardMarkup() {
-  const collectedIds = loadCollectedAnimals();
-  const { collected, target } = getAlbumProgress(undefined, ALBUM_TARGET);
-
-  const slots = [];
-  for (let i = 0; i < target; i += 1) {
-    const animalId = collectedIds[i];
-    if (animalId) {
-      const name = ANIMAL_NAME_BY_ID.get(animalId) ?? "?";
-      slots.push(
-        `<div class="start-album-preview__slot start-album-preview__slot--collected">
-          <span class="start-album-preview__slot-name">${name}</span>
-        </div>`,
-      );
-    } else {
-      slots.push(
-        `<div class="start-album-preview__slot" aria-hidden="true">?</div>`,
-      );
-    }
-  }
-
-  return `
-    <div class="start-album-preview start-album-preview--result">
-      <div class="start-album-preview__header">
-        <p class="start-album-preview__title">Mein Album</p>
-        <span class="start-album-preview__badge">${collected}/${target}</span>
-      </div>
-      <div class="start-album-preview__grid">
-        ${slots.join("")}
-      </div>
-      <p class="start-album-preview__footnote">
-        ${
-          collected >= target
-            ? "Du hast schon alle Tiere gesammelt! 🎉"
-            : `Noch ${target - collected} ${target - collected === 1 ? "Tier" : "Tiere"} zu sammeln!`
-        }
-      </p>
-    </div>
-  `;
-}
-
-// Singular/Plural-Copy fürs Karussell-Hinweiszeile -- dieselbe Ternary wie in
-// start.js (siehe dortiger Kommentar zu design.md, "Singular/Plural-Copy");
-// bewusst hier dupliziert statt geteilt importiert, gleiches
-// Wiederverwendungsprinzip wie renderAlbumCardMarkup oben (kein gemeinsames
-// UI-Utility-Modul im Projekt). Seit Issue #83 auch von renderStarsBoxMarkup
-// unten wiederverwendet (nicht neu erfunden, siehe design.md,
-// "Singular/Plural-Copy").
+// Singular/Plural-Copy für die Sterne-Box (Issue #83) -- Deutsch
+// unterscheidet beim Zählen nur zwischen genau 1 und allem anderen, kein
+// Sonderfall für 0 nötig.
 function formatStars(n) {
   return n === 1 ? "1 Stern" : `${n} Sterne`;
 }
@@ -135,7 +87,9 @@ function formatStars(n) {
  *
  * `canRedeem`-Formel identisch zu header.js (stars >= 5 &&
  * unlockedIds.length < 50), hier bewusst dupliziert statt geteilt importiert
- * (gleiches Wiederverwendungsprinzip wie renderAlbumCardMarkup oben).
+ * (kleines, bewusst in Kauf genommenes Duplikat zwischen genau 2 Screens,
+ * siehe architecture.md, Punkt 2 -- kippt erst bei 4 Verwendungsstellen wie
+ * beim navControl.js-Nav).
  *
  * Die Sterne-Reihe zeigt `min(stars, 5)` gefüllte Sterne -- im normalen
  * Spielfluss ist `stars` ohnehin nie größer als 5 (Einlösen setzt sofort auf
@@ -189,65 +143,6 @@ function renderStarsBoxMarkup(progress, earned) {
       </div>
       <p class="stars-box__sentence">${sentence}</p>
       ${ctaHtml}
-    </div>
-  `;
-}
-
-/**
- * Baut das Markup für das Maskottchen-Karussell unter dem Album auf dem
- * Ergebnis-Bildschirm (Issue #82, Handoff "Maskottchen-Karussell") --
- * inhaltlich identisch zu renderMascotCarouselMarkup() in start.js, bewusst
- * dupliziert statt geteilt importiert (siehe Kommentar oben).
- * @param {{stars: number, unlockedIds: number[], activeIdx: number}} progress
- * @returns {string}
- */
-function renderMascotCarouselMarkup(progress) {
-  const { stars, unlockedIds, activeIdx } = progress;
-  const activeMascotId = unlockedIds[activeIdx] ?? 0;
-  const activeMascot = MASCOTS[activeMascotId] ?? MASCOTS[0];
-  const tint = tintOf(activeMascotId);
-
-  const allCollected = unlockedIds.length >= MASCOTS.length;
-  const canRedeem = stars >= 5 && !allCollected;
-
-  let hint;
-  if (allCollected) {
-    hint = "Du hast alle 50 Maskottchen gesammelt!";
-  } else if (canRedeem) {
-    hint = `Du hast ${stars} Sterne — du darfst dir ein neues Maskottchen aussuchen!`;
-  } else {
-    hint = `${unlockedIds.length} von 50 dabei · noch ${formatStars(5 - stars)} bis zum nächsten.`;
-  }
-
-  const isFirst = activeIdx === 0;
-  const isLast = activeIdx === unlockedIds.length - 1;
-
-  return `
-    <div class="mascot-carousel">
-      <div class="mascot-carousel__header">
-        <h3 class="mascot-carousel__title">Meine Maskottchen</h3>
-        <span class="mascot-carousel__pill">${activeIdx + 1} von ${unlockedIds.length}</span>
-      </div>
-      <div class="mascot-carousel__row">
-        <button
-          type="button"
-          class="mascot-carousel__arrow mascot-carousel__arrow--prev k-btn"
-          aria-label="Vorheriges Maskottchen"
-          ${isFirst ? "disabled" : ""}
-        >←</button>
-        <div class="mascot-carousel__stage" style="background: ${tint};" aria-live="polite">
-          <span class="mascot-carousel__stage-emoji" aria-hidden="true">${activeMascot.emoji}</span>
-          <p class="mascot-carousel__stage-name">${activeMascot.name}</p>
-          <p class="mascot-carousel__stage-role">${activeMascot.role}</p>
-        </div>
-        <button
-          type="button"
-          class="mascot-carousel__arrow mascot-carousel__arrow--next k-btn"
-          aria-label="Nächstes Maskottchen"
-          ${isLast ? "disabled" : ""}
-        >→</button>
-      </div>
-      <p class="mascot-carousel__hint">${hint}</p>
     </div>
   `;
 }
@@ -555,7 +450,16 @@ export function renderResultScreen(
         <div class="result-history-container">${renderHistorySection(history)}</div>
       </div>
 
-      <div class="result-screen__side"></div>
+      <div class="result-screen__side">
+        <div class="start-card result-collection-card">
+          <h3 class="start-card__title">Meine Sammlung</h3>
+          <div class="start-card__body" data-collection-card-body></div>
+        </div>
+        <div class="result-mascot-section">
+          <h3 class="result-mascot-section__title">Mein Maskottchen</h3>
+          <div class="start-card__body" data-mascot-stage-body></div>
+        </div>
+      </div>
 
       <div class="feedback-panel__confetti" aria-hidden="true"></div>
     </section>
@@ -590,40 +494,28 @@ export function renderResultScreen(
     wireHistoryControls(historyWrapper);
   }
 
-  // Album-Karte + Maskottchen-Karussell (Issue #82) werden zusammen in
-  // `.result-screen__side` gerendert und nach jedem Pfeil-Klick komplett neu
-  // aufgebaut -- gleiches Teilbereich-Update-Idiom wie in start.js
-  // (renderSideSection), hier ohne zusätzlich zu erhaltenden lokalen
-  // Auswahlzustand, da dieser Bildschirm keinen hat.
+  // Issue #90: rechte Spalte zeigt jetzt dieselbe "Meine Sammlung"-Karte +
+  // denselben "Mein Maskottchen"-Baustein wie der Start-Bildschirm (Issue
+  // #89/#88), ersetzt die alte Album-Karte + das alte Maskottchen-Karussell
+  // (Issue #82/#77) vollständig. Beide mount*()-Funktionen (aus den geteilten
+  // Modulen src/quiz/collectionCard.js/mascotStageCard.js) übernehmen ihr
+  // eigenes Rendern + Doppel-Tap-robustes Pfeil-Wiring komplett selbst --
+  // result.js muss dafür (anders als vorher bei renderSideSection()/
+  // wireMascotCarousel()) keine eigene Wiring-Funktion mehr bereitstellen.
+  //
+  // Kachel-Mindestgröße (130px)/Name-Schriftgröße (16px) laut Handoff-
+  // Abschnitt 5 unterscheiden sich von der Start-Bildschirm-Variante
+  // (108px/15px) -- gelöst über die zusätzliche `.result-collection-card`-
+  // Klasse auf dem Kartencontainer (CSS-Scoping, siehe global.css), nicht
+  // über einen Parameter an der geteilten Render-Funktion (siehe
+  // collectionCard.js-Datei-Kommentar).
   const sideEl = container.querySelector(".result-screen__side");
 
-  function renderSideSection() {
-    const progress = loadProgress();
-    sideEl.innerHTML = `
-      ${renderAlbumCardMarkup()}
-      ${renderMascotCarouselMarkup(progress)}
-    `;
-    wireMascotCarousel();
-  }
-
-  function wireMascotCarousel() {
-    const prevButton = sideEl.querySelector(".mascot-carousel__arrow--prev");
-    const nextButton = sideEl.querySelector(".mascot-carousel__arrow--next");
-
-    prevButton?.addEventListener("click", () => {
-      const { activeIdx } = loadProgress();
-      setActiveIdx(activeIdx - 1);
-      renderSideSection();
-    });
-
-    nextButton?.addEventListener("click", () => {
-      const { activeIdx } = loadProgress();
-      setActiveIdx(activeIdx + 1);
-      renderSideSection();
-    });
-  }
-
-  renderSideSection();
+  mountCollectionCard(sideEl.querySelector("[data-collection-card-body]"), {
+    hintText:
+      "Runde geschafft = 1 Stern. Für 5 Sterne darfst du ein neues Maskottchen aus der Sammlung freischalten.",
+  });
+  mountMascotStage(sideEl.querySelector("[data-mascot-stage-body]"));
 
   // Redesign (Issue #69/#77, design.md "Ergebnis"): Konfetti bei Rundenende
   // (README: "Auslöser: ... Rundenende").
