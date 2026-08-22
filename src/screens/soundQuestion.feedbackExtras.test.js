@@ -358,7 +358,7 @@ describe("renderSoundQuestionScreen — automatisches Feedback-Bild (Issue #42)"
     ).toBe(true);
   });
 
-  it("zeigt keinen Bild-Block und wirft keinen Fehler, wenn der automatische Abruf fehlschlägt", async () => {
+  it("zeigt keinen Bild-Block und wirft keinen Fehler, wenn der automatische Abruf auch nach allen Retry-Versuchen fehlschlägt (Issue #103)", async () => {
     fetchMock.mockRejectedValue(new Error("network down"));
     generateNextSoundQuestion.mockResolvedValue(buildQuestion());
     const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);
@@ -376,6 +376,66 @@ describe("renderSoundQuestionScreen — automatisches Feedback-Bild (Issue #42)"
     expect(container.querySelector(".question-screen__feedback").hidden).toBe(
       false,
     );
+    // Issue #103 (portiert aus #96): 3 Versuche insgesamt (1 Erstversuch + 2
+    // Retries), bevor endgültig aufgegeben wird — stilles Fehlschlag-
+    // Verhalten bleibt danach unverändert (kein Fehlertext, kein Crash,
+    // siehe Assertions oben).
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+  });
+
+  it("zeigt das Bild nach einem fehlgeschlagenen ersten Versuch, sobald der zweite Versuch erfolgreich ist (Issue #103, Retry)", async () => {
+    fetchMock
+      .mockRejectedValueOnce(new Error("network down"))
+      .mockResolvedValueOnce(successResponse());
+    generateNextSoundQuestion.mockResolvedValue(buildQuestion());
+    const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".answer-tile")).toHaveLength(4),
+    );
+
+    container.querySelector(".answer-tile").click();
+    // Feedback-Text erscheint sofort, unabhängig vom noch laufenden Abruf.
+    expect(container.querySelector(".question-screen__feedback").hidden).toBe(
+      false,
+    );
+
+    await flushPromises();
+
+    const feedbackImageEl = container.querySelector(
+      ".question-screen__feedback-image",
+    );
+    expect(feedbackImageEl.hidden).toBe(false);
+    expect(
+      container.querySelector(".question-screen__feedback-image-img").src,
+    ).toBe("https://upload.wikimedia.org/thumb/rabe-330px.jpg");
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("gibt nach dem letzten Retry-Versuch endgültig auf, ohne einen weiteren (vierten) Fetch-Aufruf auszulösen (Issue #103)", async () => {
+    fetchMock
+      .mockRejectedValueOnce(new Error("timeout"))
+      .mockRejectedValueOnce(new Error("network down"))
+      .mockRejectedValueOnce(new Error("nicht auflösbare Datei"));
+    generateNextSoundQuestion.mockResolvedValue(buildQuestion());
+    const quizState = createQuizState(DIFFICULTY_LEVELS.EASY, [], 3);
+    const { container } = render(quizState);
+    await vi.waitFor(() =>
+      expect(container.querySelectorAll(".answer-tile")).toHaveLength(4),
+    );
+
+    container.querySelector(".answer-tile").click();
+    await flushPromises();
+
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+    // Rest der Feedback-UI (Text, "Weiter"-Button) bleibt unbeeinflusst.
+    expect(container.querySelector(".question-screen__feedback").hidden).toBe(
+      false,
+    );
+    expect(container.querySelector(".next-button").hidden).toBe(false);
+    expect(
+      container.querySelector(".question-screen__feedback-image").hidden,
+    ).toBe(true);
   });
 
   it("wartet mit Feedback-Text/Infosatz/'Weiter'-Button nicht auf den Bildabruf (nicht-blockierend)", async () => {
