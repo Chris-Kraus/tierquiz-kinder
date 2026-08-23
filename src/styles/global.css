@@ -2218,6 +2218,20 @@ button {
   gap: 6px;
 }
 
+/* Bugfix Issue #133: gleiche CSS-Cascade-Falle wie bei .image-hint[hidden]/
+   .round-length-picker[hidden] (siehe dortige Kommentare) — beim Redesign
+   #72 hier übersehen. `display: flex` oben gewinnt gegen die UA-Regel
+   `[hidden] { display: none }` unabhängig von der Spezifität, wodurch die
+   Box trotz gesetztem `hidden`-Attribut sichtbar blieb (leerer Rahmen ohne
+   Bild, auf Desktop bei schnellem Fetch kaum merklich, auf langsamerem Netz
+   deutlich sichtbar). Nur .question-screen__feedback-image betroffen — die
+   beiden anderen Selektoren oben (.reverse-question__sticker-frame,
+   .letter-search__sticker-frame) bekommen laut Code (reverseQuestion.js/
+   letterSearch.js) nie ein hidden-Attribut, siehe Kommentar oben. */
+.question-screen__feedback-image[hidden] {
+  display: none;
+}
+
 /* Issue #94: object-fit: contain statt cover, damit Tierfotos mit
    abweichendem Seitenverhältnis (v. a. Hochformat) in der Sticker-Karte
    nicht mehr sichtbar abgeschnitten werden. Das bereits vorhandene
